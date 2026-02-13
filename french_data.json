@@ -1,14 +1,24 @@
 {
   "stars": 400,
-  "notebook": [],
+  "notebook": [
+    { "word": "cartable", "lvl": 1, "next": "2026-02-14", "err_days": 0 },
+    { "word": "cahier", "lvl": 1, "next": "2026-02-14", "err_days": 0 },
+    { "word": "stylo", "lvl": 1, "next": "2026-02-14", "err_days": 0 },
+    { "word": "émerveillement", "lvl": 1, "next": "2026-02-14", "err_days": 0 },
+    { "word": "persévérance", "lvl": 1, "next": "2026-02-14", "err_days": 0 },
+    { "word": "curiosité", "lvl": 1, "next": "2026-02-14", "err_days": 0 },
+    { "word": "imprévisible", "lvl": 1, "next": "2026-02-14", "err_days": 0 },
+    { "word": "s'épanouir", "lvl": 1, "next": "2026-02-14", "err_days": 0 },
+    { "word": "vigoureux", "lvl": 1, "next": "2026-02-14", "err_days": 0 }
+  ],
   "daily_stats": {
     "date": "2026-02-13",
     "completed": false,
     "words": [
       "Continent",
       "Bienveillance",
-      "\u00c9lectricit\u00e9",
-      "D\u00e9mocratie",
+      "Électricité",
+      "Démocratie",
       "Symphonie"
     ]
   },
