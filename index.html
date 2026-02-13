@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>💎 Le Trésor des Mots de Jingyi</title>
+    <style>
+        :root { --p: #3498db; --s: #2ecc71; --e: #e74c3c; --w: #f1c40f; --d: #2c3e50; --rv: #9b59b6; }
+        body { font-family: -apple-system, sans-serif; background: #f0f4f8; padding: 20px; color: #333; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 20px; }
+        .stats-bar { display: flex; justify-content: space-around; background: white; padding: 15px; border-radius: 50px; margin-bottom: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .stat-item { font-weight: bold; font-size: 1.1em; }
+        .daily-goal-box { background: white; padding: 15px; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .progress-container { width: 100%; background: #eee; height: 18px; border-radius: 10px; margin-top: 10px; overflow: hidden; display: flex; border: 1px solid #ddd; }
+        .bar { height: 100%; transition: width 0.5s; }
+        .bar-new { background: var(--p); border-right: 2px solid white; } .bar-rev { background: var(--rv); }
+        .card { background: white; border-radius: 15px; padding: 25px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); position: relative; }
+        .mot { font-size: 2.2em; color: var(--p); font-weight: bold; margin: 5px 0; }
+        .definition { margin: 10px 0; font-size: 1.05em; line-height: 1.5; color: #444; }
+        .exemple { background: #f9f9f9; padding: 12px; border-left: 5px solid var(--p); border-radius: 0 10px 10px 0; font-size: 1em; margin: 10px 0; font-style: italic; color: #666; }
+        .daily-item { border-bottom: 1px solid #eee; padding-bottom: 20px; margin-bottom: 20px; }
+        .daily-item:last-child { border-bottom: none; }
+        .game-zone { background: #fffbe6; border: 2px dashed var(--w); }
+        .options-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 20px; }
+        .opt-btn { background: white; border: 2px solid #ddd; padding: 18px; border-radius: 12px; cursor: pointer; text-align: left; font-size: 1.05em; width: 100%; transition: all 0.2s; outline: none; -webkit-tap-highlight-color: transparent; }
+        .opt-btn:hover:not(:disabled) { border-color: #ddd; background: white; }
+        .opt-btn:focus { outline: none; }
+        .correct { background: var(--s) !important; color: white !important; border-color: var(--s) !important; }
+        .wrong { background: var(--e) !important; color: white !important; border-color: var(--e) !important; }
+        button.action-btn { background: var(--s); color: white; border: none; padding: 10px 20px; border-radius: 50px; cursor: pointer; font-size: 0.95em; }
+        .lvl-badge { font-size: 0.7em; background: #eee; padding: 2px 8px; border-radius: 5px; color: #666; margin-left: 5px; }
+        .mode-btn { border: none; padding: 8px 16px; border-radius: 10px; cursor: pointer; font-weight: bold; background: #eee; color: #666; position: relative; }
+        .mode-btn.active { background: var(--p); color: white; }
+        .mode-btn.done::after { content: "✅"; position: absolute; top: -5px; right: -5px; font-size: 0.8em; }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); }
+        .modal-content { background: white; margin: 15% auto; padding: 30px; border-radius: 20px; width: 85%; max-width: 550px; position: relative; max-height: 80vh; overflow-y: auto; }
+        .close { position: absolute; right: 20px; top: 15px; font-size: 32px; cursor: pointer; color: #bbb; }
+        #sync-status { position: fixed; bottom: 10px; right: 10px; font-size: 0.75em; color: white; background: #999; padding: 6px 12px; border-radius: 8px; z-index: 2000; }
+        .notebook-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; border-bottom: 1px solid #eee; background: white; margin-bottom: 5px; border-radius: 10px; }
+        .mastery-indicator { display: flex; gap: 5px; margin-top: 5px; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; background: #ddd; border: 1px solid #ccc; }
+        .dot.full { background: var(--s); border-color: var(--s); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💎 Le Trésor des Mots de Jingyi <span class="lvl-badge" style="background:var(--w); color:black; padding:6px 12px; font-size:0.5em;">CM1</span></h1>
+            <p id="ui-date" style="font-weight: bold; color: var(--p); font-size: 1.1em; margin: 10px 0;"></p>
+            <p style="color: #666; font-size: 0.9em;">Mission : Maîtrise tous les mots !</p>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stat-item">⭐ <span id="ui-stars">0</span> Total</div>
+            <div class="stat-item">🔥 Combo: <span id="ui-combo">0</span></div>
+            <div class="stat-item" onclick="openNotebook()" style="cursor: pointer; color: var(--p); text-decoration: underline;">📓 <span id="ui-count">0</span> Mots</div>
+        </div>
+
+        <div class="daily-goal-box">
+            <div style="display: flex; justify-content: space-between; font-size: 0.9em;">
+                <strong>🎯 Progrès : <span style="color:var(--p)">Nouveaux</span> + <span style="color:var(--rv)">Révision</span></strong>
+                <span id="ui-progress">0%</span>
+            </div>
+            <div class="progress-container"><div class="bar bar-new" id="bar-n"></div><div class="bar bar-rev" id="bar-r"></div></div>
+            <div id="ui-completion-status" style="text-align:center; margin-top:5px; font-weight:bold; font-size:0.9em;"></div>
+        </div>
+
+        <div class="card">
+            <h2>🌟 Mots du Jour</h2>
+            <div id="ui-words-list"></div>
+        </div>
+
+        <div class="card game-zone">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h2 style="margin: 0;">🎮 Défi</h2>
+                <div style="display:flex; gap:8px;">
+                    <button id="mode-n" class="mode-btn active" onclick="setQuizMode('new')">Nouveaux</button>
+                    <button id="mode-r" class="mode-btn" onclick="setQuizMode('rev')">Révision</button>
+                </div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                <p>Définition de <strong id="q-word" style="color:var(--p)">?</strong></p>
+                <div id="q-mastery" class="mastery-indicator"></div>
+            </div>
+            <div id="q-options" class="options-grid"></div>
+            <p id="q-feedback" style="margin-top: 15px; font-weight: bold; text-align: center; font-size: 1.2em; min-height: 1.2em;"></p>
+        </div>
+
+        <div class="card" style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
+            <div><h3 style="font-size:0.9em;color:var(--p)">✅ Appris</h3><div id="list-new"></div></div>
+            <div><h3 style="font-size:0.9em;color:var(--rv)">⏳ Mission</h3><div id="list-due"></div></div>
+        </div>
+    </div>
+
+    <div id="sync-status">Initialisation...</div>
+
+    <div id="nbModal" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('nbModal')">&times;</span><h2>📓 Mon Carnet</h2><div id="nb-list"></div></div></div>
+    <div id="detailModal" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('detailModal')">&times;</span><div id="detail-card"></div></div></div>
+    <div id="rewardModal" class="modal"><div class="modal-content" style="text-align:center;"><h2>🎁 BRAVO !</h2><p id="rew-val"></p><button class="action-btn" onclick="closeModal('rewardModal')">Merci Papa !</button></div></div>
+
+    <script>
+        const MAC_IP = "192.168.32.70";
+        const PORT = "8888";
+        // API address - detect if running on Mac mini or remote
+        const API = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" || window.location.hostname === MAC_IP || window.location.hostname === "TONGdeMac-mini.local") 
+                    ? `http://${window.location.hostname}:${PORT}` 
+                    : `http://${MAC_IP}:${PORT}`;
+        
+        let gData = { stars: 100, notebook: [], daily_stats: { date: "", completed: false, words: [] }, last_milestone: 0 };
+        let sessionMastery = {}; 
+        let gTodayWords = [], gGameMode = 'new', gMistakes = {}, gCombo = 0, gIsLocked = false;
+        const INTERVALS = [1, 2, 4, 7, 15, 30, 60];
+        const MASTERY_GOAL = 2;
+
+        const DB = [
+            { word: "Persévérance", def: "Action de continuer malgré les difficultés.", ex: "Jingyi montre une grande persévérance." },
+            { word: "Bienveillance", def: "Disposition à vouloir le bien d'autrui.", ex: "La maîtresse agit with bienveillance." },
+            { word: "Curiosité", def: "Désir de savoir ou d'apprendre.", ex: "La curiosité est une quality." },
+            { word: "Fraternité", def: "Lien de solidarité entre les humains.", ex: "La fraternité est une valeur." },
+            { word: "Imagination", def: "Faculté de créer des idées nouvelles.", ex: "Jingyi a une imagination débordante." },
+            { word: "Sincérité", def: "Qualité de celui qui dit the vérité.", ex: "L'amitié demande de the sincérité." },
+            { word: "Générosité", def: "Aimer donner et partager.", ex: "Elle fait preuve de générosité." },
+            { word: "Honnêteté", def: "Ne pas mentir ni voler.", ex: "L'honnêteté est essentielle." },
+            { word: "Écosystème", def: "Êtres vivants et leur milieu.", ex: "La forêt est un écosystème." },
+            { word: "Biodiversité", def: "Diversité des espèces vivantes.", ex: "Protégeons la biodiversité." },
+            { word: "Atmosphère", def: "La couche d'air qui entoure la Terre.", ex: "L'atmosphère nous protège." },
+            { word: "Photosynthèse", def: "Processus par lequel les plantes créent leur nourriture.", ex: "La photosynthèse rejette de l'oxygène." },
+            { word: "Mammifère", def: "Animal dont the femelle allaite ses petits.", ex: "Le chien est un mammifère." },
+            { word: "Pollinisation", def: "Transport du pollen pour the fleurs.", ex: "L'abeille aide à the pollinisation." },
+            { word: "Précipitations", def: "Formes d'eau qui tombent du ciel.", ex: "Le field attend the précipitations." },
+            { word: "Érosion", def: "Usure de the Terre par the vent ou l'eau.", ex: "L'erosion sculpte the falaises." },
+            { word: "Astronomie", def: "Science qui étudie the astres.", ex: "L'astronomie étudie the planètes." },
+            { word: "Microscope", def: "Instrument pour voir des objets minuscules.", ex: "On voit des cellules au microscope." },
+            { word: "Électricité", def: "Énergie produite par des particules.", ex: "L'électricité éclaire the maison." },
+            { word: "Technologie", def: "Outils et machines inventés par l'homme.", ex: "L'ordi est une technologie." },
+            { word: "Expérience", def: "Test pour vérifier une idée.", ex: "On fait une expérience." },
+            { word: "Hypothèse", def: "Idée proposée avant d'être vérifiée.", ex: "Le scientifique émet une hypothèse." },
+            { word: "Évaporisation", def: "Passage d'un liquide à l'état de vapeur.", ex: "Le soleil évapore l'eau." },
+            { word: "Condensation", def: "Passage d'une vapeur à l'état liquide.", ex: "La buée est de the condensation." },
+            { word: "Antiquité", def: "Période commençant with l'écriture.", ex: "Les pyramides datent de l'Antiquité." },
+            { word: "Moyen Âge", def: "Période entre l'Antiquité et the Moderne.", ex: "On vivait dans des châteaux." },
+            { word: "Renaissance", def: "Période de renouveau des arts.", ex: "Vinci est un artiste de the Renaissance." },
+            { word: "Continent", def: "Une des grandes étendues de terre du globe.", ex: "L'Europe est un continent." },
+            { word: "Archipel", def: "Groupe d'îles proches sur the mer.", ex: "Le Japon est un archipel." },
+            { word: "Démocratie", def: "Système où the peuple exerce the pouvoir.", ex: "On vote en démocratie." },
+            { word: "Monarchie", def: "Pouvoir détenu par un roi.", ex: "Le roi dirige the monarchie." },
+            { word: "Frontière", def: "Ligne qui sépare deux pays.", ex: "On traverse the frontière." },
+            { word: "Littérature", def: "Ensemble des œuvres écrites.", ex: "On lit de the littérature." },
+            { word: "Métaphore", def: "Image utilisant un mot pour un autre.", ex: "'Cœur de pierre' est une métaphore." },
+            { word: "Portrait", def: "Description d'une personne.", ex: "L'auteur fait un portrait." },
+            { word: "Symphonie", def: "Grande œuvre pour orchestre.", ex: "Une symphonie de Mozart." },
+            { word: "Perspective", def: "Profondeur dans un dessin.", ex: "Il dessine en perspective." },
+            { word: "Protagoniste", def: "Personnage principal d'histoire.", ex: "Le protagoniste gagne." },
+            { word: "Manuscrit", def: "Texte écrit à the main.", ex: "Un vieux manuscrit." },
+            { word: "Allégorie", def: "Représentation concrète d'une idée.", ex: "La colombe de the paix." }
+        ];
+
+        async function init() {
+            document.getElementById('ui-date').innerText = new Date().toLocaleDateString('fr-FR', { weekday:'long', day:'numeric', month:'long' });
+            const today = new Date().toISOString().split('T')[0];
+            
+            try {
+                const response = await fetch(`${API}/french_data.json?t=${Date.now()}`);
+                if (response.ok) {
+                    const serverData = await response.json();
+                    if (serverData && Array.isArray(serverData.notebook)) {
+                        gData = serverData;
+                        localStorage.setItem('french_learning_data', JSON.stringify(gData));
+                        document.getElementById('sync-status').innerText = "☁️ Synchronisé";
+                        document.getElementById('sync-status').style.background = "#3498db";
+                    }
+                } else {
+                    const savedData = localStorage.getItem('french_learning_data');
+                    if (savedData) gData = JSON.parse(savedData);
+                }
+
+                if (!gData.notebook) gData.notebook = [];
+                
+                if (!gData.daily_stats || gData.daily_stats.date !== today) {
+                    const seedVal = today.split('-').reduce((a, b) => a + b.charCodeAt(0), 0);
+                    let pool = DB.filter(v => !gData.notebook.some(n => n.word === v.word));
+                    if (pool.length < 5) pool = [...DB];
+                    
+                    let newDaily = []; let tPool = [...pool];
+                    let s = seedVal;
+                    for (let i=0; i<5; i++) { 
+                        let idx = s % tPool.length;
+                        newDaily.push(tPool.splice(idx, 1)[0].word); 
+                        s = s * 31 + 7; 
+                    }
+                    
+                    gData.daily_stats = { date: today, completed: false, words: newDaily };
+                    sessionStorage.removeItem('french_session_mastery');
+                }
+                
+                gTodayWords = gData.daily_stats.words.map(wName => DB.find(d => d.word === wName));
+                
+                const savedSession = sessionStorage.getItem('french_session_mastery');
+                if (savedSession) {
+                    const parsedSession = JSON.parse(savedSession);
+                    if (parsedSession.date === today) sessionMastery = parsedSession.data;
+                    else sessionMastery = {};
+                } else {
+                    sessionMastery = {};
+                }
+                
+                document.getElementById('sync-status').innerText = "✅ Prêt";
+                document.getElementById('sync-status').style.background = "#2ecc71";
+            } catch (e) { document.getElementById('sync-status').innerText = "⚠️ Offline"; }
+            
+            refreshUI();
+        }
+
+        function calculateProgress() {
+            const today = new Date().toISOString().split('T')[0];
+            const newTotal = 5 * MASTERY_GOAL;
+            let newCorrect = 0;
+            gTodayWords.forEach(w => { 
+                if (gData.notebook.some(n => n.word === w.word)) {
+                    newCorrect += Math.min(MASTERY_GOAL, sessionMastery[w.word] || 0); 
+                }
+            });
+            const newPercent = (newCorrect / newTotal) * 100;
+            
+            const reviewWords = DB.filter(v => { 
+                const n = gData.notebook.find(e => e.word === v.word); 
+                return n && n.next <= today && !gTodayWords.some(tw => tw.word === v.word); 
+            });
+            const revTotal = reviewWords.length * MASTERY_GOAL;
+            let revCorrect = 0;
+            reviewWords.forEach(w => { revCorrect += Math.min(MASTERY_GOAL, sessionMastery[w.word] || 0); });
+            const revPercent = (reviewWords.length === 0) ? 100 : (revCorrect / revTotal) * 100;
+            
+            return { newCorrect, newTotal, newPercent, revCorrect, revTotal, revPercent, revCount: reviewWords.length };
+        }
+
+        function refreshUI() {
+            document.getElementById('ui-stars').innerText = gData.stars || 0;
+            document.getElementById('ui-combo').innerText = gCombo;
+            document.getElementById('ui-count').innerText = gData.notebook.length;
+            const today = new Date().toISOString().split('T')[0];
+
+            document.getElementById('ui-words-list').innerHTML = gTodayWords.map(w => `
+                <div class="daily-item"><div class="mot">${w.word}</div><div class="definition">${w.def}</div><div class="exemple">"${w.ex}"</div>
+                <div style="margin-top:10px"><button class="action-btn" onclick="speak('${w.word}')">🔊 Écouter</button>
+                <button class="action-btn" style="background:${gData.notebook.some(n=>n.word===w.word)?'#ccc':'var(--p)'}" onclick="addWord('${w.word}')">${gData.notebook.some(n=>n.word===w.word)?'✅ Ajouté':'📓 Ajouter'}</button></div>
+                </div>`).join('');
+
+            const info = calculateProgress();
+            document.getElementById('bar-n').style.width = info.newPercent + "%";
+            document.getElementById('bar-r').style.width = info.revPercent + "%";
+            
+            const hasReview = info.revCount > 0;
+            const totalPercent = hasReview ? Math.round((info.newPercent + info.revPercent) / 2) : Math.round(info.newPercent);
+            document.getElementById('ui-progress').innerHTML = totalPercent + "%";
+            
+            const completionStatus = document.getElementById('ui-completion-status');
+            if (gData.daily_stats.completed) { 
+                completionStatus.innerText = "🌟 MISSION ACCOMPLIE !"; completionStatus.style.color = "#2ecc71"; 
+            } else if (totalPercent >= 100) { 
+                completionStatus.innerText = "✨ PRÊT À VALIDER !"; completionStatus.style.color = "#f1c40f"; 
+            } else { completionStatus.innerText = ""; }
+
+            document.getElementById('mode-n').classList.toggle('done', info.newPercent >= 100);
+            document.getElementById('mode-r').classList.toggle('done', info.revPercent >= 100);
+
+            document.getElementById('list-new').innerHTML = gData.notebook.filter(n => gTodayWords.some(tw => tw.word === n.word)).map(n => `<div onclick="showDetail('${n.word}')" style="cursor:pointer; margin-bottom:5px;">• ${n.word}</div>`).join('') || "Rien encore";
+            document.getElementById('list-due').innerHTML = gData.notebook.filter(n => n.next <= today && !gTodayWords.some(tw => tw.word === n.word)).map(n => `<div onclick="showDetail('${n.word}')" style="cursor:pointer; margin-bottom:5px;">• ${n.word} <span class="lvl-badge">Lvl ${n.lvl}</span></div>`).join('') || (hasReview ? "Fini ! 🎉" : "Rien aujourd'hui");
+            
+            saveData(); saveSession(); updateQuiz();
+        }
+
+        function openNotebook() {
+            const nbListEl = document.getElementById('nb-list');
+            if (gData.notebook && gData.notebook.length > 0) {
+                nbListEl.innerHTML = gData.notebook.map(n => `
+                    <div class="notebook-item" onclick="showDetail('${n.word}')">
+                        <span style="font-size:1.1em;"><strong>${n.word}</strong> <span class="lvl-badge">Lvl ${n.lvl}</span></span>
+                        <button onclick="event.stopPropagation(); speak('${n.word}')" style="background:var(--s); border:none; width:35px; height:35px; border-radius:50%; color:white; font-size:1.2em; cursor:pointer; display:flex; align-items:center; justify-content:center;">🔊</button>
+                    </div>`).join('');
+            } else { nbListEl.innerHTML = "<p style='padding:20px; color:#999; text-align:center;'>Ton carnet est vide.</p>"; }
+            openModal('nbModal');
+        }
+
+        async function saveData() { 
+            localStorage.setItem('french_learning_data', JSON.stringify(gData));
+            try { await fetch(`${API}/save_data`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(gData) }); } catch(e) {}
+        }
+        function saveSession() { sessionStorage.setItem('french_session_mastery', JSON.stringify({ date: new Date().toISOString().split('T')[0], data: sessionMastery })); }
+        function addWord(w) { 
+            if (!gData.notebook.some(n => n.word === w)) { 
+                gData.notebook.push({ word: w, lvl: 0, next: new Date().toISOString().split('T')[0], err_days: 0 }); 
+                speak("Ajouté"); refreshUI(); 
+            } else { speak("Déjà là"); }
+        }
+        function setQuizMode(m) { gGameMode = m; document.getElementById('mode-n').classList.toggle('active', m==='new'); document.getElementById('mode-r').classList.toggle('active', m==='rev'); updateQuiz(); }
+        
+        function updateQuiz() {
+            const today = new Date().toISOString().split('T')[0];
+            let pool = [];
+            if (gGameMode === 'new') {
+                pool = gTodayWords.filter(w => gData.notebook.some(n => n.word === w.word) && (sessionMastery[w.word] || 0) < MASTERY_GOAL);
+            } else {
+                pool = DB.filter(v => { 
+                    const n = gData.notebook.find(e => e.word === v.word); 
+                    return n && n.next <= today && !gTodayWords.some(tw => tw.word === v.word) && (sessionMastery[v.word] || 0) < MASTERY_GOAL; 
+                });
+            }
+            
+            document.getElementById('q-feedback').innerText = "";
+            gIsLocked = false;
+
+            if (pool.length < 1) { 
+                const isNew = gGameMode === 'new';
+                let msg = "";
+                if (isNew) {
+                    msg = gData.notebook.filter(n => gTodayWords.some(tw => tw.word === n.word)).length < 5 
+                          ? "Ajoute les 5 mots du jour pour commencer !" 
+                          : "🌟 Nouveaux mots maîtrisés !";
+                } else { msg = "🎉 Révisions terminées !"; }
+                document.getElementById('q-options').innerHTML = `<p style='padding:20px; color:var(--p); font-weight:bold; text-align:center;'>${msg}</p>`; 
+                document.getElementById('q-word').innerText = "Salut !"; 
+                document.getElementById('q-mastery').innerHTML = "";
+                return; 
+            }
+            
+            const target = pool[Math.floor(Math.random() * pool.length)]; 
+            document.getElementById('q-word').innerText = target.word;
+            const mCount = sessionMastery[target.word] || 0;
+            document.getElementById('q-mastery').innerHTML = Array(MASTERY_GOAL).fill(0).map((_, i) => `<div class="dot ${i < mCount ? 'full' : ''}"></div>`).join('');
+            
+            let opts = [target.def]; let all = DB.map(v => v.def);
+            while(opts.length < 3) { let r = all[Math.floor(Math.random()*all.length)]; if(!opts.includes(r)) opts.push(r); }
+            opts.sort(() => Math.random() - 0.5);
+            document.getElementById('q-options').innerHTML = opts.map(o => `<button class="opt-btn" onclick="checkQuiz(this, '${o.replace(/'/g, "\\'")}', '${target.word}')">${o}</button>`).join('');
+            
+            // Remove focus/outline
+            if (document.activeElement) document.activeElement.blur();
+        }
+
+        function checkQuiz(btn, sel, w) {
+            if (gIsLocked) return;
+            gIsLocked = true;
+            const target = DB.find(v => v.word === w), n = gData.notebook.find(e => e.word === w);
+            const feedbackEl = document.getElementById('q-feedback');
+            const allBtns = document.querySelectorAll('.opt-btn');
+            allBtns.forEach(b => b.disabled = true);
+
+            if (sel === target.def) {
+                btn.classList.add('correct');
+                feedbackEl.innerHTML = "✅ Très bien !"; feedbackEl.style.color = "var(--s)";
+                sessionMastery[w] = (sessionMastery[w] || 0) + 1;
+                if (sessionMastery[w] >= MASTERY_GOAL && n) {
+                    n.lvl = Math.min(6, n.lvl + 1); n.err_days = 0; 
+                    let d = new Date(); d.setDate(d.getDate() + INTERVALS[n.lvl]); n.next = d.toISOString().split('T')[0]; 
+                }
+                gCombo++; delete gMistakes[w]; speak("Très bien"); 
+                setTimeout(() => { checkDailyCompletion(); refreshProgressOnly(); updateQuiz(); }, 1000);
+            } else {
+                btn.classList.add('wrong');
+                feedbackEl.innerHTML = "❌ Dommage !"; feedbackEl.style.color = "var(--e)";
+                sessionMastery[w] = 0;
+                allBtns.forEach(b => { if(b.innerText === target.def) b.classList.add('correct'); });
+                if (!gMistakes[w]) gMistakes[w] = 1; 
+                else {
+                    gCombo = 0; 
+                    if (n) { 
+                        n.lvl = 0; let d = new Date(); d.setDate(d.getDate() + 1); n.next = d.toISOString().split('T')[0]; 
+                        n.err_days = (n.err_days || 0) + 1; if (n.err_days >= 2) gData.notebook = gData.notebook.filter(e => e.word !== w);
+                    }
+                    delete gMistakes[w];
+                }
+                speak("Dommage");
+                setTimeout(() => { refreshProgressOnly(); updateQuiz(); }, 1800);
+            }
+        }
+
+        function refreshProgressOnly() {
+            const info = calculateProgress();
+            document.getElementById('bar-n').style.width = info.newPercent + "%";
+            document.getElementById('bar-r').style.width = info.revPercent + "%";
+            const hasReview = info.revCount > 0;
+            const totalPercent = hasReview ? Math.round((info.newPercent + info.revPercent) / 2) : Math.round(info.newPercent);
+            document.getElementById('ui-progress').innerHTML = totalPercent + "%";
+            document.getElementById('ui-stars').innerText = gData.stars || 0;
+            document.getElementById('ui-combo').innerText = gCombo;
+            saveData(); saveSession();
+        }
+        
+        function checkDailyCompletion() {
+            const info = calculateProgress();
+            const hasReview = info.revCount > 0;
+            const total = hasReview ? (info.newPercent + info.revPercent) / 200 : info.newPercent / 100;
+            if (total >= 1.0 && !gData.daily_stats.completed) {
+                gData.stars = (gData.stars || 0) + 100; gData.daily_stats.completed = true;
+                setTimeout(() => { document.getElementById('rew-val').innerText = "🎉 Magnifique !\nTu as maîtrisé tous les mots !\n+100 étoiles !"; openModal('rewardModal'); speak("Félicitations"); }, 500);
+            }
+        }
+
+        function showDetail(w) { const d = DB.find(v => v.word === w); document.getElementById('detail-card').innerHTML = `<h2>${d.word}</h2><p><strong>📝 Définition:</strong><br>${d.def}</p><p><strong>💬 Exemple:</strong><br><i>"${d.ex}"</i></p><button class="action-btn" style="width:100%;margin-top:20px" onclick="speak('${d.word}')">🔊 Écouter</button>`; openModal('detailModal'); speak(w); }
+        function openModal(id) { document.getElementById(id).style.display = "block"; }
+        function closeModal(id) { document.getElementById(id).style.display = "none"; }
+        function speak(t) { const m = new SpeechSynthesisUtterance(t); m.lang = 'fr-FR'; window.speechSynthesis.speak(m); }
+        window.onclick = e => { if (e.target.className === 'modal') e.target.style.display = "none"; };
+        window.onload = init;
+    </script>
+</body>
+</html>
