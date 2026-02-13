@@ -103,9 +103,10 @@
         const MAC_IP = "192.168.32.70";
         const PORT = "8888";
         // API address - detect if running on Mac mini or remote
-        const API = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" || window.location.hostname === MAC_IP || window.location.hostname === "TONGdeMac-mini.local") 
-                    ? `http://${window.location.hostname}:${PORT}` 
-                    : `http://${MAC_IP}:${PORT}`;
+        const isLocal = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" || window.location.hostname === MAC_IP || window.location.hostname === "TONGdeMac-mini.local");
+        const API = isLocal ? `http://${window.location.hostname}:${PORT}` : `http://${MAC_IP}:${PORT}`;
+        // For GitHub Pages, we use relative paths for data
+        const DATA_PATH = (window.location.hostname.includes("github.io") || window.location.hostname.includes("tongtong2016.com")) ? "./french_data.json" : `${API}/french_data.json`;
         
         let gData = { stars: 100, notebook: [], daily_stats: { date: "", completed: false, words: [] }, last_milestone: 0 };
         let sessionMastery = {}; 
@@ -161,7 +162,7 @@
             const today = new Date().toISOString().split('T')[0];
             
             try {
-                const response = await fetch(`${API}/french_data.json?t=${Date.now()}`);
+                const response = await fetch(`${DATA_PATH}?t=${Date.now()}`);
                 if (response.ok) {
                     const serverData = await response.json();
                     if (serverData && Array.isArray(serverData.notebook)) {
