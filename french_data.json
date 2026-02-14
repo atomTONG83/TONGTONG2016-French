@@ -1,31 +1,160 @@
 {
-  "stars": 400,
+  "stars": 600,
   "notebook": [
-    { "word": "cartable", "lvl": 1, "next": "2026-02-14", "err_days": 0 },
-    { "word": "cahier", "lvl": 1, "next": "2026-02-14", "err_days": 0 },
-    { "word": "stylo", "lvl": 1, "next": "2026-02-14", "err_days": 0 },
-    { "word": "émerveillement", "lvl": 1, "next": "2026-02-14", "err_days": 0 },
-    { "word": "persévérance", "lvl": 1, "next": "2026-02-14", "err_days": 0 },
-    { "word": "curiosité", "lvl": 1, "next": "2026-02-14", "err_days": 0 },
-    { "word": "imprévisible", "lvl": 1, "next": "2026-02-14", "err_days": 0 },
-    { "word": "s'épanouir", "lvl": 1, "next": "2026-02-14", "err_days": 0 },
-    { "word": "vigoureux", "lvl": 1, "next": "2026-02-14", "err_days": 0 },
-    { "word": "Bienveillance", "lvl": 1, "next": "2026-02-14", "err_days": 0 },
-    { "word": "Fraternité", "lvl": 1, "next": "2026-02-14", "err_days": 0 },
-    { "word": "Imagination", "lvl": 1, "next": "2026-02-14", "err_days": 0 },
-    { "word": "Sincérité", "lvl": 1, "next": "2026-02-14", "err_days": 0 },
-    { "word": "Générosité", "lvl": 1, "next": "2026-02-14", "err_days": 0 },
-    { "word": "Honnêteté", "lvl": 1, "next": "2026-02-14", "err_days": 0 }
+    {
+      "word": "cartable",
+      "lvl": 1,
+      "next": "2026-02-14",
+      "err_days": 0
+    },
+    {
+      "word": "cahier",
+      "lvl": 1,
+      "next": "2026-02-14",
+      "err_days": 0
+    },
+    {
+      "word": "stylo",
+      "lvl": 1,
+      "next": "2026-02-14",
+      "err_days": 0
+    },
+    {
+      "word": "\u00e9merveillement",
+      "lvl": 1,
+      "next": "2026-02-14",
+      "err_days": 0
+    },
+    {
+      "word": "pers\u00e9v\u00e9rance",
+      "lvl": 1,
+      "next": "2026-02-14",
+      "err_days": 0
+    },
+    {
+      "word": "curiosit\u00e9",
+      "lvl": 1,
+      "next": "2026-02-14",
+      "err_days": 0
+    },
+    {
+      "word": "impr\u00e9visible",
+      "lvl": 1,
+      "next": "2026-02-14",
+      "err_days": 0
+    },
+    {
+      "word": "s'\u00e9panouir",
+      "lvl": 1,
+      "next": "2026-02-14",
+      "err_days": 0
+    },
+    {
+      "word": "vigoureux",
+      "lvl": 1,
+      "next": "2026-02-14",
+      "err_days": 0
+    },
+    {
+      "word": "Bienveillance",
+      "lvl": 2,
+      "next": "2026-02-17",
+      "err_days": 0
+    },
+    {
+      "word": "Fraternit\u00e9",
+      "lvl": 2,
+      "next": "2026-02-18",
+      "err_days": 0
+    },
+    {
+      "word": "Imagination",
+      "lvl": 2,
+      "next": "2026-02-18",
+      "err_days": 0
+    },
+    {
+      "word": "Sinc\u00e9rit\u00e9",
+      "lvl": 2,
+      "next": "2026-02-18",
+      "err_days": 0
+    },
+    {
+      "word": "G\u00e9n\u00e9rosit\u00e9",
+      "lvl": 2,
+      "next": "2026-02-18",
+      "err_days": 0
+    },
+    {
+      "word": "Honn\u00eatet\u00e9",
+      "lvl": 2,
+      "next": "2026-02-18",
+      "err_days": 0
+    },
+    {
+      "word": "Continent",
+      "lvl": 1,
+      "next": "2026-02-15",
+      "err_days": 0
+    },
+    {
+      "word": "\u00c9lectricit\u00e9",
+      "lvl": 1,
+      "next": "2026-02-15",
+      "err_days": 0
+    },
+    {
+      "word": "D\u00e9mocratie",
+      "lvl": 1,
+      "next": "2026-02-15",
+      "err_days": 0
+    },
+    {
+      "word": "Symphonie",
+      "lvl": 1,
+      "next": "2026-02-15",
+      "err_days": 0
+    },
+    {
+      "word": "Protagoniste",
+      "lvl": 1,
+      "next": "2026-02-16",
+      "err_days": 0
+    },
+    {
+      "word": "Microscope",
+      "lvl": 1,
+      "next": "2026-02-16",
+      "err_days": 0
+    },
+    {
+      "word": "Pollinisation",
+      "lvl": 1,
+      "next": "2026-02-16",
+      "err_days": 0
+    },
+    {
+      "word": "Perspective",
+      "lvl": 1,
+      "next": "2026-02-16",
+      "err_days": 0
+    },
+    {
+      "word": "Renaissance",
+      "lvl": 1,
+      "next": "2026-02-16",
+      "err_days": 0
+    }
   ],
   "daily_stats": {
-    "date": "2026-02-13",
-    "completed": false,
+    "date": "2026-02-14",
+    "completed": true,
     "words": [
-      "Continent",
-      "Bienveillance",
-      "Électricité",
-      "Démocratie",
-      "Symphonie"
+      "Protagoniste",
+      "Microscope",
+      "Pollinisation",
+      "Perspective",
+      "Renaissance"
     ]
   },
   "last_milestone": 0
