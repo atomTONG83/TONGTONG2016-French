@@ -178,7 +178,7 @@
   ],
   "daily_stats": {
     "date": "2026-02-15",
-    "completed": false,
+    "completed": true,
     "words": [
       "Portrait",
       "Atmosph\u00e8re",
@@ -187,5 +187,6 @@
       "Astronomie"
     ]
   },
-  "last_milestone": 0
+  "last_milestone": 0,
+  "stars": 700
 }

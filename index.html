@@ -41,6 +41,41 @@
         .mastery-indicator { display: flex; gap: 5px; margin-top: 5px; }
         .dot { width: 8px; height: 8px; border-radius: 50%; background: #ddd; border: 1px solid #ccc; }
         .dot.full { background: var(--s); border-color: var(--s); }
+        /* Notebook grouping styles */
+        .nb-group { margin-bottom: 15px; border-radius: 12px; overflow: hidden; }
+        .nb-group-header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 12px 15px; cursor: pointer; font-weight: bold;
+            transition: all 0.2s;
+        }
+        .nb-group-header:hover { opacity: 0.9; }
+        .nb-group-count { 
+            background: rgba(255,255,255,0.3); 
+            padding: 2px 10px; border-radius: 20px; 
+            font-size: 0.85em;
+        }
+        .nb-group-content { max-height: 300px; overflow-y: auto; }
+        .nb-group-content.collapsed { display: none; }
+        .nb-beginner { background: linear-gradient(135deg, #ff9a56 0%, #ff6b35 100%); color: white; }
+        .nb-consolidating { background: linear-gradient(135deg, #f1c40f 0%, #f39c12 100%); color: white; }
+        .nb-advanced { background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%); color: white; }
+        .nb-mastered { background: linear-gradient(135deg, #3498db 0%, #2980b9 100%); color: white; }
+        .nb-search { 
+            width: 100%; padding: 12px 15px; border: 2px solid #ddd; 
+            border-radius: 25px; font-size: 1em; margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+        .nb-search:focus { outline: none; border-color: var(--p); }
+        .nb-stats { 
+            display: flex; justify-content: space-around; 
+            padding: 10px; background: #f8f9fa; border-radius: 10px; 
+            margin-bottom: 15px; font-size: 0.9em;
+        }
+        .nb-stat { text-align: center; }
+        .nb-stat-value { font-weight: bold; color: var(--p); font-size: 1.2em; }
+        .nb-empty { text-align: center; padding: 30px; color: #999; }
+        .nb-word-due { background: #fff3cd !important; border-left: 4px solid #ffc107 !important; }
+        .nb-word-error { background: #f8d7da !important; border-left: 4px solid #dc3545 !important; }
     </style>
 </head>
 <body>
@@ -79,6 +114,7 @@
                     <button id="mode-r" class="mode-btn" onclick="setQuizMode('rev')">Révision</button>
                 </div>
             </div>
+            <p style="font-size:0.85em;color:#666;margin:0 0 10px 0;font-style:italic;">💡 Règle : Réponds correctement 2 fois de suite pour maîtriser un mot et gagner +100⭐ !</p>
             <div style="display: flex; justify-content: space-between; align-items: baseline;">
                 <p>Définition de <strong id="q-word" style="color:var(--p)">?</strong></p>
                 <div id="q-mastery" class="mastery-indicator"></div>
@@ -95,7 +131,15 @@
 
     <div id="sync-status">Initialisation...</div>
 
-    <div id="nbModal" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('nbModal')">&times;</span><h2>📓 Mon Carnet</h2><div id="nb-list"></div></div></div>
+    <div id="nbModal" class="modal">
+        <div class="modal-content" style="max-width: 600px;">
+            <span class="close" onclick="closeModal('nbModal')">&times;</span>
+            <h2>📓 Mon Carnet <span id="nb-total" style="font-size:0.6em;color:#999;font-weight:normal;"></span></h2>
+            <div class="nb-stats" id="nb-stats"></div>
+            <input type="text" class="nb-search" id="nb-search" placeholder="🔍 Rechercher un mot..." oninput="filterNotebook()">
+            <div id="nb-list"></div>
+        </div>
+    </div>
     <div id="detailModal" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('detailModal')">&times;</span><div id="detail-card"></div></div></div>
     <div id="rewardModal" class="modal"><div class="modal-content" style="text-align:center;"><h2>🎁 BRAVO !</h2><p id="rew-val"></p><button class="action-btn" onclick="closeModal('rewardModal')">Merci Papa !</button></div></div>
 
@@ -115,46 +159,222 @@
         const MASTERY_GOAL = 2;
 
         const DB = [
+            // === NIVEAU CE2 (Révision) - 20 mots ===
+            { word: "Maison", def: "Bâtiment où l'on habite.", ex: "Ma maison est grande." },
+            { word: "École", def: "Lieu où l'on apprend.", ex: "Je vais à l'école." },
+            { word: "Famille", def: "Groupe de personnes parents et enfants.", ex: "Ma famille est nombreuse." },
+            { word: "Jardin", def: "Terrain où l'on cultive des plantes.", ex: "Il y a des fleurs dans le jardin." },
+            { word: "Table", def: "Meuble sur lequel on mange ou travaille.", ex: "Mets le livre sur la table." },
+            { word: "Chaise", def: "Siège avec un dossier.", ex: "Assieds-toi sur la chaise." },
+            { word: "Livre", def: "Objet avec des pages écrites.", ex: "Je lis un livre intéressant." },
+            { word: "Crayon", def: "Instrument pour écrire en bois.", ex: "J'écris avec un crayon." },
+            { word: "Fenêtre", def: "Ouverture dans un mur pour voir dehors.", ex: "Regarde par la fenêtre." },
+            { word: "Porte", def: "Ouverture pour entrer ou sortir.", ex: "Ferme la porte s'il te plaît." },
+            { word: "Chien", def: "Animal domestique fidèle.", ex: "Mon chien s'appelle Max." },
+            { word: "Chat", def: "Animal domestique qui miaule.", ex: "Le chat dort sur le canapé." },
+            { word: "Soleil", def: "Étoile qui éclaire la Terre.", ex: "Le soleil brille aujourd'hui." },
+            { word: "Lune", def: "Satellite naturel de la Terre.", ex: "La lune est ronde ce soir." },
+            { word: "Étoile", def: "Corps céleste qui brille la nuit.", ex: "Les étoiles sont belles." },
+            { word: "Arbre", def: "Plante avec un tronc et des branches.", ex: "L'oiseau est dans l'arbre." },
+            { word: "Fleur", def: "Partie colorée d'une plante.", ex: "Cette fleur sent bon." },
+            { word: "Rivière", def: "Cours d'eau naturel.", ex: "On se baigne dans la rivière." },
+            { word: "Montagne", def: "Grande élévation de terrain.", ex: "On grimpe la montagne." },
+            { word: "Mer", def: "Grande étendue d'eau salée.", ex: "La mer est bleue." },
+            
+            // === NIVEAU CM1 (Principal) - 140 mots ===
+            // Qualités et sentiments (20)
             { word: "Persévérance", def: "Action de continuer malgré les difficultés.", ex: "Jingyi montre une grande persévérance." },
-            { word: "Bienveillance", def: "Disposition à vouloir le bien d'autrui.", ex: "La maîtresse agit with bienveillance." },
-            { word: "Curiosité", def: "Désir de savoir ou d'apprendre.", ex: "La curiosité est une quality." },
-            { word: "Fraternité", def: "Lien de solidarité entre les humains.", ex: "La fraternité est une valeur." },
+            { word: "Bienveillance", def: "Disposition à vouloir le bien d'autrui.", ex: "La maîtresse agit avec bienveillance." },
+            { word: "Curiosité", def: "Désir de savoir ou d'apprendre.", ex: "La curiosité est une qualité précieuse." },
+            { word: "Fraternité", def: "Lien de solidarité entre les humains.", ex: "La fraternité est une valeur importante." },
             { word: "Imagination", def: "Faculté de créer des idées nouvelles.", ex: "Jingyi a une imagination débordante." },
-            { word: "Sincérité", def: "Qualité de celui qui dit the vérité.", ex: "L'amitié demande de the sincérité." },
+            { word: "Sincérité", def: "Qualité de celui qui dit la vérité.", ex: "L'amitié demande de la sincérité." },
             { word: "Générosité", def: "Aimer donner et partager.", ex: "Elle fait preuve de générosité." },
             { word: "Honnêteté", def: "Ne pas mentir ni voler.", ex: "L'honnêteté est essentielle." },
+            { word: "Courage", def: "Force morale pour affronter le danger.", ex: "Il faut du courage pour parler." },
+            { word: "Patience", def: "Capacité d'attendre sans s'énerver.", ex: "La patience est une vertu." },
+            { word: "Respect", def: "Considération pour les autres.", ex: "Il faut respecter les autres." },
+            { word: "Tolérance", def: "Acceptation des différences.", ex: "La tolérance permet de vivre ensemble." },
+            { word: "Empathie", def: "Compréhension des sentiments d'autrui.", ex: "L'empathie nous rapproche." },
+            { word: "Gratitude", def: "Reconnaissance pour un bienfait.", ex: "Je te exprime ma gratitude." },
+            { word: "Humilité", def: "Modestie dans le comportement.", ex: "L'humilité est une belle qualité." },
+            { word: "Optimisme", def: "Tendance à voir le bon côté.", ex: "Son optimisme est contagieux." },
+            { word: "Détermination", def: "Volonté ferme d'agir.", ex: "Sa détermination paie." },
+            { word: "Responsabilité", def: "Obligation de répondre de ses actes.", ex: "Prends tes responsabilités." },
+            { word: "Solidarité", def: "Entraide entre les membres d'un groupe.", ex: "La solidarité nous rend plus forts." },
+            { word: "Émerveillement", def: "État de grande admiration.", ex: "L'émerveillement des enfants est touchant." },
+            
+            // Sciences naturelles (25)
             { word: "Écosystème", def: "Êtres vivants et leur milieu.", ex: "La forêt est un écosystème." },
             { word: "Biodiversité", def: "Diversité des espèces vivantes.", ex: "Protégeons la biodiversité." },
             { word: "Atmosphère", def: "La couche d'air qui entoure la Terre.", ex: "L'atmosphère nous protège." },
             { word: "Photosynthèse", def: "Processus par lequel les plantes créent leur nourriture.", ex: "La photosynthèse rejette de l'oxygène." },
-            { word: "Mammifère", def: "Animal dont the femelle allaite ses petits.", ex: "Le chien est un mammifère." },
-            { word: "Pollinisation", def: "Transport du pollen pour the fleurs.", ex: "L'abeille aide à the pollinisation." },
-            { word: "Précipitations", def: "Formes d'eau qui tombent du ciel.", ex: "Le field attend the précipitations." },
-            { word: "Érosion", def: "Usure de the Terre par the vent ou l'eau.", ex: "L'erosion sculpte the falaises." },
-            { word: "Astronomie", def: "Science qui étudie the astres.", ex: "L'astronomie étudie the planètes." },
+            { word: "Mammifère", def: "Animal dont la femelle allaite ses petits.", ex: "Le chien est un mammifère." },
+            { word: "Pollinisation", def: "Transport du pollen pour les fleurs.", ex: "L'abeille aide à la pollinisation." },
+            { word: "Précipitations", def: "Formes d'eau qui tombent du ciel.", ex: "Le champ attend les précipitations." },
+            { word: "Érosion", def: "Usure de la Terre par le vent ou l'eau.", ex: "L'érosion sculpte les falaises." },
+            { word: "Astronomie", def: "Science qui étudie les astres.", ex: "L'astronomie étudie les planètes." },
             { word: "Microscope", def: "Instrument pour voir des objets minuscules.", ex: "On voit des cellules au microscope." },
-            { word: "Électricité", def: "Énergie produite par des particules.", ex: "L'électricité éclaire the maison." },
-            { word: "Technologie", def: "Outils et machines inventés par l'homme.", ex: "L'ordi est une technologie." },
-            { word: "Expérience", def: "Test pour vérifier une idée.", ex: "On fait une expérience." },
-            { word: "Hypothèse", def: "Idée proposée avant d'être vérifiée.", ex: "Le scientifique émet une hypothèse." },
+            { word: "Électricité", def: "Énergie produite par des particules.", ex: "L'électricité éclaire la maison." },
             { word: "Évaporisation", def: "Passage d'un liquide à l'état de vapeur.", ex: "Le soleil évapore l'eau." },
-            { word: "Condensation", def: "Passage d'une vapeur à l'état liquide.", ex: "La buée est de the condensation." },
-            { word: "Antiquité", def: "Période commençant with l'écriture.", ex: "Les pyramides datent de l'Antiquité." },
-            { word: "Moyen Âge", def: "Période entre l'Antiquité et the Moderne.", ex: "On vivait dans des châteaux." },
-            { word: "Renaissance", def: "Période de renouveau des arts.", ex: "Vinci est un artiste de the Renaissance." },
+            { word: "Condensation", def: "Passage d'une vapeur à l'état liquide.", ex: "La buée est de la condensation." },
+            { word: "Reptile", def: "Animal à sang froid avec des écailles.", ex: "Le lézard est un reptile." },
+            { word: "Amphibien", def: "Animal vivant dans l'eau et sur terre.", ex: "La grenouille est un amphibien." },
+            { word: "Vertèbre", def: "Animal avec une colonne vertébrale.", ex: "L'homme est un vertèbre." },
+            { word: "Insecte", def: "Petit animal à six pattes.", ex: "La fourmi est un insecte." },
+            { word: "Sédiment", def: "Dépôt de matière transportée par l'eau.", ex: "Les sédiments forment des roches." },
+            { word: "Volcan", def: "Montagne qui projette de la lave.", ex: "Le volcan entre en éruption." },
+            { word: "Séisme", def: "Tremblement de terre.", ex: "Le séisme a secoué la ville." },
+            { word: "Orbit", def: "Trajectoire d'un astre autour d'un autre.", ex: "La Terre est en orbite autour du Soleil." },
+            { word: "Galaxie", def: "Ensemble d'étoiles, de gaz et de poussière.", ex: "Nous vivons dans la galaxie Voie lactée." },
+            { word: "Météorite", def: "Fragment de roche venant de l'espace.", ex: "Une météorite est tombée sur Terre." },
+            { word: "Fossile", def: "Trace d'un animal ou d'une plante ancienne.", ex: "On a trouvé un fossile de dinosaure." },
+            { word: "Chromatographie", def: "Technique pour séparer des mélanges.", ex: "La chromatographie sépare les couleurs." },
+            
+            // Histoire et géographie (25)
+            { word: "Antiquité", def: "Période commençant avec l'écriture.", ex: "Les pyramides datent de l'Antiquité." },
+            { word: "Moyen Âge", def: "Période entre l'Antiquité et la Moderne.", ex: "On vivait dans des châteaux au Moyen Âge." },
+            { word: "Renaissance", def: "Période de renouveau des arts.", ex: "Vinci est un artiste de la Renaissance." },
             { word: "Continent", def: "Une des grandes étendues de terre du globe.", ex: "L'Europe est un continent." },
-            { word: "Archipel", def: "Groupe d'îles proches sur the mer.", ex: "Le Japon est un archipel." },
-            { word: "Démocratie", def: "Système où the peuple exerce the pouvoir.", ex: "On vote en démocratie." },
-            { word: "Monarchie", def: "Pouvoir détenu par un roi.", ex: "Le roi dirige the monarchie." },
-            { word: "Frontière", def: "Ligne qui sépare deux pays.", ex: "On traverse the frontière." },
-            { word: "Littérature", def: "Ensemble des œuvres écrites.", ex: "On lit de the littérature." },
+            { word: "Archipel", def: "Groupe d'îles proches sur la mer.", ex: "Le Japon est un archipel." },
+            { word: "Démocratie", def: "Système où le peuple exerce le pouvoir.", ex: "On vote en démocratie." },
+            { word: "Monarchie", def: "Pouvoir détenu par un roi.", ex: "Le roi dirige la monarchie." },
+            { word: "Frontière", def: "Ligne qui sépare deux pays.", ex: "On traverse la frontière." },
+            { word: "Civilisation", def: "État de développement d'une société.", ex: "La civilisation égyptienne est ancienne." },
+            { word: "Révolution", def: "Changement brusque dans l'organisation politique.", ex: "La Révolution française a changé la France." },
+            { word: "Empire", def: "État dirigé par un empereur.", ex: "Napoléon a fondé un empire." },
+            { word: "Colonie", def: "Territoire dominé par un pays étranger.", ex: "L'Algérie était une colonie française." },
+            { word: "Indépendance", def: "État d'un pays qui se gouverne seul.", ex: "L'indépendance a été proclamée en 1962." },
+            { word: "Trait", def: "Accord signé entre plusieurs pays.", ex: "Un trait de paix a été signé." },
+            { word: "Alliance", def: "Union entre plusieurs pays ou groupes.", ex: "Les deux pays ont formé une alliance." },
+            { word: "Invasion", def: "Entrée militaire dans un pays.", ex: "L'invasion a commencé au printemps." },
+            { word: "Patrimoine", def: "Biens hérités des générations passées.", ex: "Notre patrimoine doit être préservé." },
+            { word: "Archéologie", def: "Étude des civilisations anciennes.", ex: "L'archéologie révèle notre passé." },
+            { word: "Préhistoire", def: "Période avant l'écriture.", ex: "Les hommes préhistoriques vivaient dans des grottes." },
+            { word: "Désert", def: "Région très sèche avec peu de végétation.", ex: "Le Sahara est un grand désert." },
+            { word: "Péninsule", def: "Terre entourée d'eau presque partout.", ex: "L'Italie est une péninsule." },
+            { word: "Cap", def: "Pointe de terre avançant dans la mer.", ex: "Le Cap Horn est célèbre." },
+            { word: "Détroit", def: "Passage étroit entre deux mers.", ex: "Le détroit de Gibraltar relie deux mers." },
+            { word: "Vallée", def: "Étendue de terre entre des montagnes.", ex: "La vallée est fertile." },
+            { word: "Glacier", def: "Masse de glace qui descend d'une montagne.", ex: "Le glacier fond à cause du réchauffement." },
+            
+            // Littérature et arts (20)
+            { word: "Littérature", def: "Ensemble des œuvres écrites.", ex: "On lit de la littérature." },
             { word: "Métaphore", def: "Image utilisant un mot pour un autre.", ex: "'Cœur de pierre' est une métaphore." },
-            { word: "Portrait", def: "Description d'une personne.", ex: "L'auteur fait un portrait." },
+            { word: "Portrait", def: "Description d'une personne.", ex: "L'auteur fait un portrait détaillé." },
             { word: "Symphonie", def: "Grande œuvre pour orchestre.", ex: "Une symphonie de Mozart." },
             { word: "Perspective", def: "Profondeur dans un dessin.", ex: "Il dessine en perspective." },
-            { word: "Protagoniste", def: "Personnage principal d'histoire.", ex: "Le protagoniste gagne." },
-            { word: "Manuscrit", def: "Texte écrit à the main.", ex: "Un vieux manuscrit." },
-            { word: "Allégorie", def: "Représentation concrète d'une idée.", ex: "La colombe de the paix." }
+            { word: "Protagoniste", def: "Personnage principal d'histoire.", ex: "Le protagoniste gagne à la fin." },
+            { word: "Manuscrit", def: "Texte écrit à la main.", ex: "Un vieux manuscrit a été découvert." },
+            { word: "Allégorie", def: "Représentation concrète d'une idée.", ex: "La colombe est l'allégorie de la paix." },
+            { word: "Récit", def: "Histoire racontée.", ex: "Le récit est passionnant." },
+            { word: "Narrateur", def: "Celui qui raconte l'histoire.", ex: "Le narrateur parle à la première personne." },
+            { word: "Intrigue", def: "Enchaînement des événements d'une histoire.", ex: "L'intrigue est complexe." },
+            { word: "Climax", def: "Moment le plus intense d'une histoire.", ex: "Le climax arrive au chapitre 10." },
+            { word: "Dénouement", def: "Fin d'une histoire.", ex: "Le dénouement est surprenant." },
+            { word: "Strophe", def: "Groupe de vers dans un poème.", ex: "Ce poème a quatre strophes." },
+            { word: "Rime", def: "Ressemblance de sons à la fin des vers.", ex: "'Chat' et 'mat' font rime." },
+            { word: "Palette", def: "Planche pour mélanger les couleurs.", ex: "L'artiste tient sa palette." },
+            { word: "Sculpture", def: "Œuvre d'art en trois dimensions.", ex: "La sculpture est en marbre." },
+            { word: "Architecture", def: "Art de construire les bâtiments.", ex: "L'architecture gothique est élégante." },
+            { word: "Chorégraphie", def: "Suite de mouvements de danse.", ex: "La chorégraphie est difficile." },
+            { word: "Opéra", def: "Spectacle chanté avec orchestre.", ex: "On va voir un opéra ce soir." },
+            
+            // Sciences et technologie (25)
+            { word: "Technologie", def: "Outils et machines inventés par l'homme.", ex: "L'ordinateur est une technologie moderne." },
+            { word: "Expérience", def: "Test pour vérifier une idée.", ex: "On fait une expérience en classe." },
+            { word: "Hypothèse", def: "Idée proposée avant d'être vérifiée.", ex: "Le scientifique émet une hypothèse." },
+            { word: "Robot", def: "Machine programmable pour faire des tâches.", ex: "Le robot assemble les pièces." },
+            { word: "Satellite", def: "Objet artificiel en orbite.", ex: "Le satellite transmet des images." },
+            { word: "Énergie", def: "Capacité à produire un travail.", ex: "Le soleil fournit de l'énergie." },
+            { word: "Réseau", def: "Ensemble de connexions.", ex: "Internet est un réseau mondial." },
+            { word: "Programme", def: "Suite d'instructions pour un ordinateur.", ex: "Le programme calcule rapidement." },
+            { word: "Données", def: "Informations traitées par un ordinateur.", ex: "Les données sont stockées dans le cloud." },
+            { word: "Interface", def: "Surface de contact entre deux systèmes.", ex: "L'interface est facile à utiliser." },
+            { word: "Capteur", def: "Dispositif détectant des phénomènes physiques.", ex: "Le capteur mesure la température." },
+            { word: "Moteur", def: "Machine transformant l'énergie en mouvement.", ex: "Le moteur de la voiture tourne." },
+            { word: "Turbine", def: "Machine mise en rotation par un fluide.", ex: "La turbine produit de l'électricité." },
+            { word: "Réaction", def: "Transformation chimique entre substances.", ex: "La réaction produit de la chaleur." },
+            { word: "Molécule", def: "Plus petite partie d'un corps simple.", ex: "Une molécule d'eau a deux atomes d'hydrogène." },
+            { word: "Atome", def: "Plus petite partie d'un corps simple.", ex: "Un atome est très petit." },
+            { word: "Gravité", def: "Force d'attraction terrestre.", ex: "La gravité nous maintient au sol." },
+            { word: "Vitesse", def: "Rapidité d'un mouvement.", ex: "La vitesse est de 100 km/h." },
+            { word: "Accélération", def: "Augmentation de la vitesse.", ex: "L'accélération est rapide." },
+            { word: "Friction", def: "Résistance au mouvement entre deux surfaces.", ex: "La friction ralentit le glissement." },
+            { word: "Équilibre", def: "État d'un corps qui ne tombe pas.", ex: "L'équilibre est difficile à maintenir." },
+            { word: "Circuit", def: "Chemin suivi par un courant électrique.", ex: "Le circuit est fermé." },
+            { word: "Résistance", def: "Opposition au passage du courant.", ex: "La résistance limite le courant." },
+            { word: "Conducteur", def: "Matière laissant passer le courant.", ex: "Le cuivre est un bon conducteur." },
+            { word: "Isolant", def: "Matière ne laissant pas passer le courant.", ex: "Le caoutchouc est un isolant." },
+            
+            // Animaux (25)
+            { word: "Girafe", def: "Animal au long cou et aux taches.", ex: "La girafe mange les feuilles hautes." },
+            { word: "Éléphant", def: "Grand animal avec une trompe.", ex: "L'éléphant est le plus grand animal terrestre." },
+            { word: "Méduses", def: "Animal marin transparent avec des tentacules.", ex: "Attention aux méduses dans l'eau." },
+            { word: "Chauve-souris", def: "Petit mammifère volant la nuit.", ex: "La chauve-souris chasse les moustiques." },
+            { word: "Dauphin", def: "Mammifère marin très intelligent.", ex: "Le dauphin nage gracieusement." },
+            { word: "Hippopotame", def: "Grand animal semi-aquatique.", ex: "L'hippopotame vit près de l'eau." },
+            { word: "Rhinocéros", def: "Animal avec une corne sur le nez.", ex: "Le rhinocéros est menacé d'extinction." },
+            { word: "Kangourou", def: "Animal australien qui saute.", ex: "Le kangourou porte son bébé dans une poche." },
+            { word: "Panda", def: "Ours noir et blanc mangeant du bambou.", ex: "Le panda vit en Chine." },
+            { word: "Tigre", def: "Grand félin rayé.", ex: "Le tigre est un chasseur redoutable." },
+            { word: "Lion", def: "Grand félin avec une crinière.", ex: "Le lion est le roi des animaux." },
+            { word: "Zèbre", def: "Animal avec des rayures noires et blanches.", ex: "Le zèbre vit dans la savane." },
+            { word: "Pingouin", def: "Oiseau marin ne volant pas.", ex: "Le pingouin vit dans l'Antarctique." },
+            { word: "Aigle", def: "Grand oiseau de proie.", ex: "L'aigle vole haut dans le ciel." },
+            { word: "Hibou", def: "Oiseau nocturne avec de grands yeux.", ex: "Le hibou chasse la nuit." },
+            { word: "Cygne", def: "Grand oiseau blanc à long cou.", ex: "Le cygne glisse sur l'eau." },
+            { word: "Paon", def: "Oiseau avec une queue colorée.", ex: "Le paon déploie ses plumes." },
+            { word: "Tortue", def: "Reptile avec une carapace dure.", ex: "La tortue vit longtemps." },
+            { word: "Crocodile", def: "Grand reptile avec de grandes dents.", ex: "Le crocodile vit dans les rivières." },
+            { word: "Caméléon", def: "Animal qui change de couleur.", ex: "Le caméléon s'adapte à son environnement." },
+            { word: "Papillon", def: "Insecte avec des ailes colorées.", ex: "Le papillon vole de fleur en fleur." },
+            { word: "Abeille", def: "Insecte qui fait du miel.", ex: "L'abeille butine les fleurs." },
+            { word: "Coccinelle", def: "Petit insecte rouge à points noirs.", ex: "La coccinelle mange les pucerons." },
+            { word: "Araignée", def: "Animal à huit pattes tissant des toiles.", ex: "L'araignée tisse sa toile." },
+            { word: "Escargot", def: "Animal lent avec une coquille.", ex: "L'escargot laisse une trace de bave." },
+            
+            // === NIVEAU CM2 (Avancé) - 40 mots ===
+            { word: "Philosophie", def: "Réflexion sur les grandes questions.", ex: "La philosophie nous aide à réfléchir." },
+            { word: "Démographie", def: "Étude des populations.", ex: "La démographie étudie la croissance." },
+            { word: "Globalisation", def: "Intégration économique mondiale.", ex: "La globalisation connecte les pays." },
+            { word: "Sustainabilité", def: "Capacité à durer sans s'épuiser.", ex: "La durabilité est essentielle pour la planète." },
+            { word: "Biotechnologie", def: "Utilisation des êtres vivants pour la technologie.", ex: "La biotechnologie crée des médicaments." },
+            { word: "Nanotechnologie", def: "Technologie à l'échelle des atomes.", ex: "La nanotechnologie révolutionne la médecine." },
+            { word: "Intelligence", def: "Capacité à comprendre et apprendre.", ex: "L'intelligence artificielle simule l'esprit." },
+            { word: "Conscience", def: "Connaissance de soi et de son environnement.", ex: "La conscience nous distingue des animaux." },
+            { word: "Mémoire", def: "Capacité à conserver des informations.", ex: "La mémoire décline avec l'âge." },
+            { word: "Perception", def: "Manière de voir ou comprendre les choses.", ex: "La perception varie selon les gens." },
+            { word: "Cognition", def: "Processus de connaissance et de pensée.", ex: "La cognition inclut l'attention et la mémoire." },
+            { word: "Neuroscience", def: "Étude du système nerveux.", ex: "Les neurosciences expliquent le cerveau." },
+            { word: "Génétique", def: "Étude de l'hérédité.", ex: "La génétique étudie les gènes." },
+            { word: "Mutation", def: "Changement dans l'ADN.", ex: "La mutation peut être bénéfique ou nuisible." },
+            { word: "Évolution", def: "Transformation progressive des espèces.", ex: "L'évolution a créé la biodiversité." },
+            { word: "Sélection", def: "Choix des meilleurs individus.", ex: "La sélection naturelle favorise l'adaptation." },
+            { word: "Extinction", def: "Disparition d'une espèce.", ex: "L'extinction des dinosaures est mystérieuse." },
+            { word: "Conservation", def: "Protection de la nature.", ex: "La conservation des espèces est urgente." },
+            { word: "Restauration", def: "Action de réparer.", ex: "La restauration des œuvres d'art est délicate." },
+            { word: "Préservation", def: "Maintien dans un bon état.", ex: "La préservation de l'environnement est cruciale." },
+            { word: "Restauration", def: "Action de réparer.", ex: "La restauration des monuments prend du temps." },
+            { word: "Héritage", def: "Ce que l'on transmet aux générations futures.", ex: "Notre héritage culturel est précieux." },
+            { word: "Tradition", def: "Coutume transmise de génération en génération.", ex: "La tradition se perpétue." },
+            { word: "Innovation", def: "Introduction de quelque chose de nouveau.", ex: "L'innovation pousse la société en avant." },
+            { word: "Créativité", def: "Capacité à créer de nouvelles choses.", ex: "La créativité est essentielle en art." },
+            { word: "Esthétique", def: "Étude de la beauté.", ex: "L'esthétique de ce tableau est remarquable." },
+            { word: "Harmonie", def: "Accord parfait des sons ou des couleurs.", ex: "L'harmonie des couleurs est apaisante." },
+            { word: "Symétrie", def: "Correspondance exacte des deux côtés.", ex: "La symétrie est belle en architecture." },
+            { word: "Proportion", def: "Rapport entre les dimensions.", ex: "Les proportions du visage sont idéales." },
+            { word: "Perspective", def: "Manière de voir les choses.", ex: "Chaque personne a sa perspective." },
+            { word: "Contexte", def: "Ensemble des circonstances.", ex: "Il faut comprendre le contexte historique." },
+            { word: "Interprétation", def: "Explication ou traduction d'un texte.", ex: "L'interprétation du poème varie." },
+            { word: "Analyse", def: "Examen détaillé.", ex: "L'analyse du texte révèle des symboles." },
+            { word: "Synthèse", def: "Combinaison en un tout cohérent.", ex: "La synthèse des idées est claire." },
+            { word: "Argumentation", def: "Ensemble des arguments.", ex: "L'argumentation est convaincante." },
+            { word: "Rhétorique", def: "Art de persuader par la parole.", ex: "La rhétorique ancienne est sophistiquée." },
+            { word: "Dialectique", def: "Méthode de discussion par questions.", ex: "La dialectique socratique questionne tout." },
+            { word: "Paradoxe", def: "Idée contraire à l'opinion commune.", ex: "C'est un paradoxe intéressant." },
+            { word: "Analogie", def: "Comparaison entre deux choses.", ex: "L'analogie éclaire le concept." },
+            { word: "Dichotomie", def: "Division en deux parties opposées.", ex: "La dichotomie bien/mal est simpliste." }
         ];
 
         async function init() {
@@ -192,19 +412,45 @@
                     }
                     
                     gData.daily_stats = { date: today, completed: false, words: newDaily };
+                    // Clear mastery progress for new day
+                    localStorage.removeItem('french_session_mastery');
                     sessionStorage.removeItem('french_session_mastery');
                 }
                 
                 gTodayWords = gData.daily_stats.words.map(wName => DB.find(d => d.word === wName));
                 
-                const savedSession = sessionStorage.getItem('french_session_mastery');
+                // Load session mastery from localStorage (persistent across refreshes)
+                const savedSession = localStorage.getItem('french_session_mastery');
                 if (savedSession) {
                     const parsedSession = JSON.parse(savedSession);
                     if (parsedSession.date === today) sessionMastery = parsedSession.data;
-                    else sessionMastery = {};
+                    else {
+                        sessionMastery = {};
+                        localStorage.removeItem('french_session_mastery');
+                    }
                 } else {
-                    sessionMastery = {};
+                    // Fallback to sessionStorage for backward compatibility
+                    const legacySession = sessionStorage.getItem('french_session_mastery');
+                    if (legacySession) {
+                        const parsedLegacy = JSON.parse(legacySession);
+                        if (parsedLegacy.date === today) {
+                            sessionMastery = parsedLegacy.data;
+                            // Migrate to localStorage
+                            localStorage.setItem('french_session_mastery', JSON.stringify(parsedLegacy));
+                        } else sessionMastery = {};
+                    } else sessionMastery = {};
                 }
+                
+                // Warn user before refresh if quiz is in progress
+                window.addEventListener('beforeunload', (e) => {
+                    if (!gData.daily_stats.completed) {
+                        const info = calculateProgress();
+                        if (info.newPercent < 100) {
+                            e.preventDefault();
+                            e.returnValue = '⚠️ Quiz en cours ! Ta progression sera perdue si tu quittes maintenant.';
+                        }
+                    }
+                });
                 
                 document.getElementById('sync-status').innerText = "✅ Prêt";
                 document.getElementById('sync-status').style.background = "#2ecc71";
@@ -273,22 +519,140 @@
         }
 
         function openNotebook() {
-            const nbListEl = document.getElementById('nb-list');
-            if (gData.notebook && gData.notebook.length > 0) {
-                nbListEl.innerHTML = gData.notebook.map(n => `
-                    <div class="notebook-item" onclick="showDetail('${n.word}')">
-                        <span style="font-size:1.1em;"><strong>${n.word}</strong> <span class="lvl-badge">Lvl ${n.lvl}</span></span>
-                        <button onclick="event.stopPropagation(); speak('${n.word}')" style="background:var(--s); border:none; width:35px; height:35px; border-radius:50%; color:white; font-size:1.2em; cursor:pointer; display:flex; align-items:center; justify-content:center;">🔊</button>
-                    </div>`).join('');
-            } else { nbListEl.innerHTML = "<p style='padding:20px; color:#999; text-align:center;'>Ton carnet est vide.</p>"; }
+            renderNotebook();
             openModal('nbModal');
+        }
+
+        function renderNotebook(filterText = '') {
+            const nbListEl = document.getElementById('nb-list');
+            const today = new Date().toISOString().split('T')[0];
+            
+            if (!gData.notebook || gData.notebook.length === 0) {
+                nbListEl.innerHTML = "<div class='nb-empty'>📭 Ton carnet est vide.<br>Commence par ajouter des mots du jour !</div>";
+                document.getElementById('nb-total').innerText = '';
+                document.getElementById('nb-stats').innerHTML = '';
+                return;
+            }
+
+            // Filter words if search text provided
+            let words = gData.notebook;
+            if (filterText) {
+                words = words.filter(n => n.word.toLowerCase().includes(filterText.toLowerCase()));
+            }
+
+            // Group by level
+            const groups = {
+                beginner: { title: '🟠 Débutant', words: [], class: 'nb-beginner', expanded: true },
+                consolidating: { title: '🟡 Consolidation', words: [], class: 'nb-consolidating', expanded: false },
+                advanced: { title: '🟢 Avancé', words: [], class: 'nb-advanced', expanded: false },
+                mastered: { title: '🔵 Maîtrisé', words: [], class: 'nb-mastered', expanded: false }
+            };
+
+            words.forEach(n => {
+                const wordData = DB.find(d => d.word === n.word);
+                if (!wordData) return;
+                
+                if (n.lvl <= 1) groups.beginner.words.push({...n, data: wordData});
+                else if (n.lvl <= 3) groups.consolidating.words.push({...n, data: wordData});
+                else if (n.lvl <= 5) groups.advanced.words.push({...n, data: wordData});
+                else groups.mastered.words.push({...n, data: wordData});
+            });
+
+            // Update stats
+            const total = gData.notebook.length;
+            const dueToday = gData.notebook.filter(n => n.next <= today).length;
+            const withErrors = gData.notebook.filter(n => n.err_days > 0).length;
+            document.getElementById('nb-total').innerText = `(${total} mots)`;
+            document.getElementById('nb-stats').innerHTML = `
+                <div class="nb-stat"><div class="nb-stat-value">${total}</div><div>Total</div></div>
+                <div class="nb-stat"><div class="nb-stat-value" style="color:#f39c12">${dueToday}</div><div>À réviser</div></div>
+                <div class="nb-stat"><div class="nb-stat-value" style="color:#e74c3c">${withErrors}</div><div>Difficultés</div></div>
+            `;
+
+            // Render groups
+            let html = '';
+            let hasContent = false;
+            
+            for (const [key, group] of Object.entries(groups)) {
+                if (group.words.length === 0) continue;
+                hasContent = true;
+                
+                const isExpanded = filterText ? true : group.expanded;
+                const arrow = isExpanded ? '▼' : '▶';
+                
+                html += `
+                    <div class="nb-group">
+                        <div class="nb-group-header ${group.class}" onclick="toggleGroup('${key}')">
+                            <span>${arrow} ${group.title}</span>
+                            <span class="nb-group-count">${group.words.length}</span>
+                        </div>
+                        <div class="nb-group-content ${isExpanded ? '' : 'collapsed'}" id="nb-group-${key}">
+                            ${group.words.map(n => {
+                                const isDue = n.next <= today && !gTodayWords.some(tw => tw.word === n.word);
+                                const hasError = n.err_days > 0;
+                                const dueClass = hasError ? 'nb-word-error' : (isDue ? 'nb-word-due' : '');
+                                const dueBadge = isDue ? ' <span style="color:#f39c12;font-size:0.8em;">⏰</span>' : '';
+                                const errorBadge = hasError ? ` <span style="color:#e74c3c;font-size:0.8em;">⚠️${n.err_days}</span>` : '';
+                                
+                                return `
+                                <div class="notebook-item ${dueClass}" onclick="showDetail('${n.word}')">
+                                    <div style="display:flex;flex-direction:column;flex:1;">
+                                        <span style="font-size:1.1em;"><strong>${n.word}</strong>${dueBadge}${errorBadge}</span>
+                                        <span style="font-size:0.85em;color:#666;margin-top:3px;">${n.data.def.substring(0, 50)}...</span>
+                                        <span style="font-size:0.75em;color:#999;margin-top:2px;">Prochaine révision: ${formatDate(n.next)}</span>
+                                    </div>
+                                    <div style="display:flex;align-items:center;gap:8px;">
+                                        <span class="lvl-badge">Lvl ${n.lvl}</span>
+                                        <button onclick="event.stopPropagation(); speak('${n.word}')" style="background:var(--s);border:none;width:35px;height:35px;border-radius:50%;color:white;font-size:1.2em;cursor:pointer;display:flex;align-items:center;justify-content:center;">🔊</button>
+                                    </div>
+                                </div>`;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (!hasContent && filterText) {
+                html = "<div class='nb-empty'>🔍 Aucun mot ne correspond à ta recherche.</div>";
+            }
+
+            nbListEl.innerHTML = html;
+        }
+
+        function toggleGroup(groupKey) {
+            const content = document.getElementById(`nb-group-${groupKey}`);
+            const header = content.previousElementSibling;
+            const isCollapsed = content.classList.contains('collapsed');
+            
+            content.classList.toggle('collapsed');
+            header.innerHTML = header.innerHTML.replace(isCollapsed ? '▶' : '▼', isCollapsed ? '▼' : '▶');
+        }
+
+        function filterNotebook() {
+            const searchText = document.getElementById('nb-search').value.trim();
+            renderNotebook(searchText);
+        }
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            const today = new Date();
+            today.setHours(0,0,0,0);
+            date.setHours(0,0,0,0);
+            
+            const diff = Math.round((date - today) / (1000 * 60 * 60 * 24));
+            
+            if (diff === 0) return "Aujourd'hui";
+            if (diff === 1) return "Demain";
+            if (diff < 0) return `En retard (${Math.abs(diff)}j)`;
+            if (diff < 7) return `Dans ${diff} jours`;
+            return date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
         }
 
         async function saveData() { 
             localStorage.setItem('french_learning_data', JSON.stringify(gData));
             try { await fetch(`${API}/save_data`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(gData) }); } catch(e) {}
         }
-        function saveSession() { sessionStorage.setItem('french_session_mastery', JSON.stringify({ date: new Date().toISOString().split('T')[0], data: sessionMastery })); }
+        function saveSession() { localStorage.setItem('french_session_mastery', JSON.stringify({ date: new Date().toISOString().split('T')[0], data: sessionMastery })); }
         function addWord(w) { 
             if (!gData.notebook.some(n => n.word === w)) { 
                 gData.notebook.push({ word: w, lvl: 0, next: new Date().toISOString().split('T')[0], err_days: 0 }); 
