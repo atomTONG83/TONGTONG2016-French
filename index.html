@@ -3,332 +3,244 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TONGTONG's SPACE v2.2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TONGTONG's SPACE · V3.0</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap');
+        
         :root {
-            --bg: #020617;
-            --glass: rgba(15, 23, 42, 0.8);
-            --border: rgba(56, 189, 248, 0.2);
+            --bg: #030712;
             --primary: #0ea5e9;
-            --secondary: #6366f1;
-            --accent: #f59e0b;
-            --text: #f8fafc;
-            --grid: rgba(56, 189, 248, 0.05);
-        }
-        
-        * { box-sizing: border-box; }
-        
-        body { 
-            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif; 
-            background-color: var(--bg);
-            background-image: 
-                linear-gradient(var(--grid) 1px, transparent 1px),
-                linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-            background-size: 30px 30px;
-            color: var(--text); 
-            margin: 0; 
-            padding: 20px;
-            min-height: 100vh;
-            overflow-x: hidden;
+            --secondary: #818cf8;
+            --accent: #fbbf24;
+            --danger: #ef4444;
+            --glass: rgba(15, 23, 42, 0.6);
+            --border: rgba(56, 189, 248, 0.2);
         }
 
-        .container { max-width: 650px; margin: 0 auto; position: relative; z-index: 10; }
-        
-        header { 
-            text-align: center; 
-            margin-bottom: 30px; 
-            padding-top: 20px;
-            position: relative;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background: var(--bg);
+            color: #f8fafc;
+            font-family: 'Rajdhani', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
         }
+
+        /* Dynamic Grid Background */
+        .bg-grid {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(14, 165, 233, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(14, 165, 233, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            perspective: 1000px;
+            transform: rotateX(45deg);
+            transform-origin: center bottom;
+            animation: moveGrid 20s linear infinite;
+        }
+        @keyframes moveGrid { from { background-position: 0 0; } to { background-position: 0 500px; } }
+
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+
+        header { text-align: center; margin-bottom: 30px; position: relative; }
         
         .date-badge {
-            display: inline-block;
-            background: rgba(14, 165, 233, 0.1);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.65rem; color: var(--primary);
             border: 1px solid var(--primary);
-            color: var(--primary);
-            padding: 5px 15px;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 800;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+            padding: 4px 15px; border-radius: 2px;
+            display: inline-block; margin-bottom: 10px;
+            box-shadow: 0 0 10px rgba(14, 165, 233, 0.3);
         }
 
         h1 { 
-            font-size: 2.2rem; 
-            margin: 10px 0; 
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: -1px;
-            background: linear-gradient(to bottom, #fff 40%, var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: flicker 3s linear infinite;
-        }
-        
-        @keyframes flicker {
-            0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% { opacity: 1; }
-            20%, 21.999%, 63%, 63.999%, 65%, 69.999% { opacity: 0.8; }
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900; font-size: 1.8rem;
+            letter-spacing: 2px; color: #fff;
+            text-shadow: 0 0 20px rgba(14, 165, 233, 0.5);
+            margin: 10px 0;
         }
 
-        .hero-card { 
+        /* Pulsing Reward Card */
+        .reward-card {
             background: var(--glass);
-            backdrop-filter: blur(15px);
             border: 1px solid var(--border);
-            padding: 40px; 
-            border-radius: 24px; 
+            border-radius: 20px;
+            padding: 40px 20px;
             text-align: center;
-            margin-bottom: 30px;
-            box-shadow: 0 0 40px rgba(14, 165, 233, 0.1);
             position: relative;
             overflow: hidden;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
         }
-        
-        /* Rotational Glowing Effect */
-        .hero-card::before {
-            content: '';
-            position: absolute;
+        .reward-card::before {
+            content: ''; position: absolute;
             top: -50%; left: -50%; width: 200%; height: 200%;
-            background: conic-gradient(transparent, var(--primary), transparent 30%);
+            background: conic-gradient(transparent, var(--primary), transparent 40%);
             animation: rotate 4s linear infinite;
             opacity: 0.2;
-            pointer-events: none;
         }
         @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-        .hero-card-inner {
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Sci-fi corner markers */
-        .corner {
-            position: absolute; width: 15px; height: 15px; border: 2px solid var(--primary);
-        }
-        .top-l { top: -2px; left: -2px; border-right: 0; border-bottom: 0; }
-        .bot-r { bottom: -2px; right: -2px; border-left: 0; border-top: 0; }
-
-        .reward-label { font-size: 0.75rem; color: var(--primary); font-weight: 800; text-transform: uppercase; letter-spacing: 3px; }
+        
+        .reward-inner { position: relative; z-index: 2; }
+        .reward-label { font-size: 0.7rem; letter-spacing: 4px; color: var(--primary); font-weight: 700; }
         .reward-value { 
-            font-size: 5rem; 
-            font-weight: 900; 
-            margin: 10px 0; 
-            color: var(--accent);
-            line-height: 1;
-            filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.5));
+            font-family: 'Orbitron', sans-serif;
+            font-size: 5rem; font-weight: 900; color: var(--accent);
+            text-shadow: 0 0 30px rgba(251, 191, 36, 0.4);
+            margin: 5px 0;
         }
 
-        .section-title { 
-            font-size: 0.85rem; 
-            font-weight: 900; 
-            margin: 50px 0 20px; 
-            display: flex; 
-            align-items: center; 
-            gap: 15px;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 4px;
+        .section-title {
+            font-size: 0.9rem; font-weight: 700; letter-spacing: 5px;
+            color: var(--primary); border-left: 3px solid var(--primary);
+            padding-left: 15px; margin: 40px 0 20px; text-transform: uppercase;
         }
-        .section-title::after {
-            content: ""; height: 1px; flex: 1; background: linear-gradient(90deg, var(--primary), transparent);
-        }
-        
-        .task-card { 
-            background: rgba(15, 23, 42, 0.4);
+
+        /* Advanced Task Cards */
+        .task-card {
+            background: rgba(255,255,255,0.03);
             border: 1px solid rgba(255,255,255,0.05);
-            padding: 20px; 
-            border-radius: 12px; 
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            position: relative;
-            overflow: hidden;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: slideIn 0.5s ease-out forwards;
+            margin-bottom: 12px; border-radius: 12px;
+            display: flex; align-items: center; padding: 20px;
+            position: relative; overflow: hidden;
+            animation: slideIn 0.5s ease-out forwards; opacity: 0;
         }
-        @keyframes slideIn { to { opacity: 1; transform: translateY(0); } }
-
-        .task-card:hover { background: rgba(56, 189, 248, 0.05); border-color: var(--primary); transform: translateX(5px); }
+        @keyframes slideIn { from { transform: translateX(-30px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         
-        .task-status-icon {
-            width: 45px; height: 45px;
-            background: #000;
-            border: 1px solid var(--border);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            color: var(--primary); font-size: 1.1rem;
-            position: relative;
-        }
-        .glow-dot {
-            position: absolute; top: 0; right: 0; width: 8px; height: 8px; background: var(--primary); border-radius: 50%;
-            box-shadow: 0 0 10px var(--primary);
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0.5; } 100% { transform: scale(1); opacity: 1; } }
-
-        .task-cn { font-weight: 800; font-size: 1rem; color: #fff; margin-bottom: 4px; }
-        .task-fr { color: #64748b; font-style: italic; font-size: 0.85rem; font-family: 'Georgia', serif; }
-
-        .learning-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .task-card:hover { border-color: var(--primary); background: rgba(14, 165, 233, 0.05); }
         
-        .box { 
+        .task-icon {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem; font-weight: 900; color: var(--primary);
+            opacity: 0.3; margin-right: 20px;
+        }
+        .task-cn { font-size: 1rem; font-weight: 700; color: #fff; }
+        .task-fr { font-size: 0.8rem; color: #64748b; font-style: italic; }
+
+        /* Hexagonal Buttons */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        
+        .action-box {
             background: var(--glass);
             border: 1px solid var(--border);
-            padding: 25px; 
-            border-radius: 15px; 
-            text-decoration: none; 
-            color: inherit; 
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
+            padding: 25px; border-radius: 15px;
+            text-decoration: none; color: inherit;
+            transition: 0.3s;
         }
-        .box:hover { 
+        .action-box:hover { 
             border-color: var(--primary); 
-            background: rgba(14, 165, 233, 0.1);
-            transform: scale(1.02);
+            transform: translateY(-5px);
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        .box h3 { margin: 0 0 12px; color: var(--primary); font-size: 0.9rem; font-weight: 900; letter-spacing: 1px; }
-        .box p { margin: 0; font-size: 0.8rem; color: #94a3b8; line-height: 1.6; }
+        .action-box h3 { color: var(--primary); font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 10px; }
+        .action-box p { font-size: 0.75rem; color: #94a3b8; line-height: 1.4; }
 
-        .btn-full { 
-            grid-column: span 2; 
-            background: var(--primary);
-            color: #000;
-            padding: 30px; 
-            border-radius: 15px; 
-            font-weight: 900; 
-            font-size: 1.4rem; 
-            text-align: center;
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: 0.3s;
-            box-shadow: 0 10px 0 #075985;
+        .btn-launch {
+            grid-column: span 2;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            padding: 30px; border-radius: 15px;
+            text-align: center; color: #000; font-weight: 900;
+            font-family: 'Orbitron', sans-serif; font-size: 1.5rem;
+            text-decoration: none; box-shadow: 0 10px 0 #0369a1;
+            transition: 0.1s;
         }
-        .btn-full:active { transform: translateY(5px); box-shadow: 0 5px 0 #075985; }
-        
-        .sync-btn { 
-            position: absolute; top: 20px; right: 0;
-            background: transparent; border: 1px solid var(--border); 
-            color: #64748b; padding: 10px 20px; border-radius: 5px; 
-            font-size: 0.65rem; font-weight: 900; cursor: pointer; 
-            transition: 0.2s; letter-spacing: 1px;
-        }
-        .sync-btn:hover { border-color: var(--primary); color: var(--primary); }
-        
-        .subtitle { 
-            color: #64748b; 
-            font-size: 0.75rem; 
-            font-weight: 800; 
-            text-transform: uppercase; 
-            letter-spacing: 3px; 
-            margin-top: 5px;
+        .btn-launch:active { transform: translateY(5px); box-shadow: 0 5px 0 #0369a1; }
+
+        .sync-trigger {
+            position: absolute; top: 0; right: 0;
+            background: transparent; border: 1px solid var(--border);
+            color: #475569; padding: 8px 15px; border-radius: 4px;
+            font-size: 0.6rem; font-weight: 700; cursor: pointer;
         }
 
-        footer { text-align: center; margin-top: 80px; padding-bottom: 40px; color: #334155; font-size: 0.6rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; }
+        footer { 
+            text-align: center; margin-top: 100px; padding-bottom: 50px;
+            color: #334155; font-size: 0.6rem; letter-spacing: 3px; font-weight: 700;
+        }
     </style>
 </head>
 <body>
+    <div class="bg-grid"></div>
     <div class="container">
         <header>
-            <div class="date-badge">2026年02月15日 · 15 February 2026</div>
-            <button class="sync-btn" id="sync-btn" onclick="triggerSync()">[ SYNC_DATA ]</button>
-            <h1>TONGTONG's SPACE · 童童空间</h1>
-            <div class="subtitle">Mission Command Cockpit</div>
+            <div class="date-badge">2026年02月15日 // 15 February 2026</div>
+            <button class="sync-trigger" id="sync-btn" onclick="triggerSync()">[ SYSTEM_SYNC ]</button>
+            <h1>TONGTONG's SPACE<br><span style="opacity: 0.5; font-size: 1.2rem;">童童空间</span></h1>
         </header>
 
-        <div class="hero-card">
-            <div class="corner top-l"></div>
-            <div class="corner bot-r"></div>
-            <div class="hero-card-inner">
-                <div class="reward-label">Credit Balance</div>
-                <div class="reward-value">90.0 <span style="font-size: 1rem; color: var(--primary); vertical-align: middle;">EUR</span></div>
-                <div style="font-size: 0.65rem; color: var(--primary); margin-top: 15px; letter-spacing: 2px; font-weight: 800;">STATUS: OPERATIONAL // LVL: MAXIMUM</div>
+        <div class="reward-card">
+            <div class="reward-inner">
+                <div class="reward-label">CREDIT BALANCE AVAILABLE</div>
+                <div class="reward-value">90.0 <span style="font-size: 1.2rem; vertical-align: middle;">EUR</span></div>
+                <div style="font-size: 0.6rem; letter-spacing: 2px; color: var(--primary);">SYSTEM STATUS: ONLINE // AUTHORIZED</div>
             </div>
         </div>
 
-        <div class="section-title">Active Missions</div>
-        <div class="grid">
+        <div class="section-title">Active Mission List</div>
+        <div style="margin-bottom: 40px;">
             
-        <div class="task-card" style="animation-delay: 0.1s">
-            <div class="task-status-icon">
-                <div class="glow-dot"></div>
-                ⚡
-            </div>
-            <div class="task-content">
+        <div class="task-card" style="animation-delay: 0.0s">
+            <div class="card-glow"></div>
+            <div class="task-icon">01</div>
+            <div class="task-info">
                 <div class="task-cn">🎻 小提琴练习: 1. 听赏音频；2.《施拉迪克》第一页拉完（不反复）。</div>
-                <div class="task-fr">Violon : 1. Écouter l'audio ; 2. Schradieck page 1</div>
+                <div class="task-fr">Violon : Audio & Schradieck</div>
             </div>
         </div>
         
-        <div class="task-card" style="animation-delay: 0.2s">
-            <div class="task-status-icon">
-                <div class="glow-dot"></div>
-                ⚡
-            </div>
-            <div class="task-content">
+        <div class="task-card" style="animation-delay: 0.1s">
+            <div class="card-glow"></div>
+            <div class="task-icon">02</div>
+            <div class="task-info">
                 <div class="task-cn">🇬🇧 英语作业: Write a summary paragraph about Anatole Latuile, Un Max de Surprises.</div>
-                <div class="task-fr">Anglais : Rédiger un paragraphe de résumé</div>
+                <div class="task-fr">Anglais : Résumé de texte</div>
             </div>
         </div>
         
         </div>
 
-        <div class="section-title">Knowledge Base</div>
-        <div class="learning-grid">
-            <a href="french_mot.html" class="btn-full">
+        <div class="section-title">Knowledge Interface</div>
+        <div class="grid-2">
+            <a href="french_mot.html" class="btn-launch">
                 Le Trésor des Mots
             </a>
             
-            <a href="english_learning_hub.html" class="box">
-                <h3>ENGLISH CLASS</h3>
+            <a href="english_learning_hub.html" class="action-box">
+                <h3>ENGLISH MODULE</h3>
                 <p>Write a summary paragraph about Anatole Latuile, Un Max de Surprises.</p>
             </a>
             
-            <a href="violin_learning_hub.html" class="box">
+            <a href="violin_learning_hub.html" class="action-box">
                 <h3>VIOLIN LAB</h3>
                 <p>1. 听赏音频；2.《施拉迪克》第一页拉完（不反复）。</p>
             </a>
         </div>
 
         <footer>
-            V2.2-STABLE | © ATOM TONG 2026 | ACCESS_GRANTED
+            V3.0-CORE-STABLE | © ATOM TONG 2026 | MISSION_COMMAND
         </footer>
     </div>
 
     <script>
         const API = "http://192.168.32.70:8888";
-        
-        // Security: Hide sync button if not on local network
         const isLocal = window.location.hostname.includes('192.168.') || 
                         window.location.hostname.includes('localhost') || 
                         window.location.hostname.includes('127.0.0.1');
-        if (!isLocal) {
-            document.getElementById('sync-btn').style.display = 'none';
-        }
+        if (!isLocal) document.getElementById('sync-btn').style.display = 'none';
 
         async function triggerSync() {
             const btn = document.getElementById('sync-btn');
             btn.innerText = "[ SYNCING... ]";
-            btn.disabled = true;
             try {
-                const resp = await fetch(`${API}/trigger_sync`, { method: 'POST' });
-                if (resp.ok) {
-                    btn.innerText = "[ COMPLETE ]";
-                    setTimeout(() => { location.reload(); }, 800);
-                } else {
-                    btn.innerText = "[ ERROR ]";
-                    setTimeout(() => { btn.innerText = "[ SYNC_DATA ]"; btn.disabled = false; }, 2000);
-                }
-            } catch (e) {
-                btn.innerText = "[ OFFLINE ]";
-                setTimeout(() => { btn.innerText = "[ SYNC_DATA ]"; btn.disabled = false; }, 2000);
-            }
+                const r = await fetch(`${API}/trigger_sync`, { method: 'POST' });
+                if (r.ok) {
+                    btn.innerText = "[ RELOADING ]";
+                    setTimeout(() => location.reload(), 800);
+                } else btn.innerText = "[ FAILED ]";
+            } catch (e) { btn.innerText = "[ OFFLINE ]"; }
         }
     </script>
 </body>
