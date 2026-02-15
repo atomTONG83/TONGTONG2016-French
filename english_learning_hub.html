@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>童童英语课学习空间</title>
+    <style>
+        :root {
+            --bg: #020617; --card-bg: #0f172a; --border: #1e293b; --text: #f8fafc;
+            --accent: #38bdf8; --homework: #f59e0b; --success: #10b981;
+        }
+        body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 40px; line-height: 1.6; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        header { margin-bottom: 40px; border-bottom: 1px solid var(--border); padding-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+        h1 { color: var(--accent); margin: 0; }
+        .back-btn { text-decoration: none; color: #94a3b8; border: 1px solid var(--border); padding: 8px 16px; border-radius: 8px; font-size: 0.9em; transition: 0.2s; }
+        .back-btn:hover { background: var(--border); color: #fff; }
+        
+        .lesson-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 30px; margin-bottom: 30px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .lesson-header { display: flex; justify-content: space-between; margin-bottom: 25px; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 15px; }
+        .lesson-date { font-weight: bold; font-size: 1.2em; }
+        .teacher-tag { background: rgba(56, 189, 248, 0.1); color: var(--accent); padding: 4px 12px; border-radius: 20px; font-size: 0.9em; font-weight: bold; }
+        
+        h3 { color: var(--accent); font-size: 1em; text-transform: uppercase; letter-spacing: 1px; margin-top: 0; }
+        .section { margin-bottom: 25px; }
+        .section-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px; background: rgba(255,255,255,0.02); padding: 20px; border-radius: 12px; }
+        ul { margin: 10px 0; padding-left: 20px; }
+        li { margin-bottom: 5px; color: #e2e8f0; }
+        
+        .homework-box { background: rgba(245, 158, 11, 0.1); border-left: 5px solid var(--homework); padding: 20px; border-radius: 8px; }
+        .homework-box h3 { color: var(--homework); }
+        .homework-box p { font-weight: 600; font-size: 1.1em; margin: 10px 0 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>👩‍🏫 Teacher Meredith 英语课中心</h1>
+            <a href="tongtong_hub.html" class="back-btn">← 返回成长空间</a>
+        </header>
+
+        
+            <div class="lesson-card">
+                <div class="lesson-header">
+                    <span class="lesson-date">📅 课程日期: 2026-02-13</span>
+                    <span class="teacher-tag">👩‍🏫 Teacher Meredith</span>
+                </div>
+                
+                <div class="section">
+                    <h3>📢 课程评价与进展</h3>
+                    <p>Jingyi did great in class on Monday! We talked about what it's like to go to the aquarium and what animals we like to see there. Then we reviewed our map vocab (hemispheres, equator, tropics, etc.). We also finished his writing assignment about tsunamis.</p>
+                </div>
+
+                <div class="section-grid">
+                    <div class="sub-section">
+                        <h3>📚 重点词汇/知识点</h3>
+                        <ul><li>northern/southern/eastern/western hemispheres</li><li>equator</li><li>tropics</li><li>tropical</li><li>arctic</li><li>temperate</li><li>tropic of capricorn</li><li>tropic of cancer</li></ul>
+                    </div>
+                    <div class="sub-section" style="border-left: 1px solid #1e293b; padding-left: 20px;">
+                        <h3>💡 需要注意的点</h3>
+                        <ul><li>Anatole's personality</li><li>Interactions with friends</li><li>Conflict with teacher and principle</li><li>Description of parents</li></ul>
+                    </div>
+                </div>
+
+                <div class="homework-box">
+                    <h3>✍️ 课后作业</h3>
+                    <p>Write a summary paragraph about Anatole Latuile, Un Max de Surprises.</p>
+                </div>
+            </div>
+            
+
+        <footer style="text-align:center; color:#475569; margin-top:50px; font-size:0.85em; border-top:1px solid #1e293b; padding-top:20px;">
+            学习空间 · 由 Atom AI 智能驱动
+        </footer>
+    </div>
+</body>
+</html>
+    

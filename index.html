@@ -1,777 +1,327 @@
+
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>💎 Le Trésor des Mots de Jingyi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TONGTONG's SPACE v2.1</title>
     <style>
-        :root { --p: #3498db; --s: #2ecc71; --e: #e74c3c; --w: #f1c40f; --d: #2c3e50; --rv: #9b59b6; }
-        body { font-family: -apple-system, sans-serif; background: #f0f4f8; padding: 20px; color: #333; }
-        .container { max-width: 800px; margin: 0 auto; }
-        .header { text-align: center; margin-bottom: 20px; }
-        .stats-bar { display: flex; justify-content: space-around; background: white; padding: 15px; border-radius: 50px; margin-bottom: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .stat-item { font-weight: bold; font-size: 1.1em; }
-        .daily-goal-box { background: white; padding: 15px; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .progress-container { width: 100%; background: #eee; height: 18px; border-radius: 10px; margin-top: 10px; overflow: hidden; display: flex; border: 1px solid #ddd; }
-        .bar { height: 100%; transition: width 0.5s; }
-        .bar-new { background: var(--p); border-right: 2px solid white; } .bar-rev { background: var(--rv); }
-        .card { background: white; border-radius: 15px; padding: 25px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); position: relative; }
-        .mot { font-size: 2.2em; color: var(--p); font-weight: bold; margin: 5px 0; }
-        .definition { margin: 10px 0; font-size: 1.05em; line-height: 1.5; color: #444; }
-        .exemple { background: #f9f9f9; padding: 12px; border-left: 5px solid var(--p); border-radius: 0 10px 10px 0; font-size: 1em; margin: 10px 0; font-style: italic; color: #666; }
-        .daily-item { border-bottom: 1px solid #eee; padding-bottom: 20px; margin-bottom: 20px; }
-        .daily-item:last-child { border-bottom: none; }
-        .game-zone { background: #fffbe6; border: 2px dashed var(--w); }
-        .options-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 20px; }
-        .opt-btn { background: white; border: 2px solid #ddd; padding: 18px; border-radius: 12px; cursor: pointer; text-align: left; font-size: 1.05em; width: 100%; transition: all 0.2s; outline: none; -webkit-tap-highlight-color: transparent; }
-        .opt-btn:hover:not(:disabled) { border-color: #ddd; background: white; }
-        .opt-btn:focus { outline: none; }
-        .correct { background: var(--s) !important; color: white !important; border-color: var(--s) !important; }
-        .wrong { background: var(--e) !important; color: white !important; border-color: var(--e) !important; }
-        button.action-btn { background: var(--s); color: white; border: none; padding: 10px 20px; border-radius: 50px; cursor: pointer; font-size: 0.95em; }
-        .lvl-badge { font-size: 0.7em; background: #eee; padding: 2px 8px; border-radius: 5px; color: #666; margin-left: 5px; }
-        .mode-btn { border: none; padding: 8px 16px; border-radius: 10px; cursor: pointer; font-weight: bold; background: #eee; color: #666; position: relative; }
-        .mode-btn.active { background: var(--p); color: white; }
-        .mode-btn.done::after { content: "✅"; position: absolute; top: -5px; right: -5px; font-size: 0.8em; }
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); }
-        .modal-content { background: white; margin: 15% auto; padding: 30px; border-radius: 20px; width: 85%; max-width: 550px; position: relative; max-height: 80vh; overflow-y: auto; }
-        .close { position: absolute; right: 20px; top: 15px; font-size: 32px; cursor: pointer; color: #bbb; }
-        #sync-status { position: fixed; bottom: 10px; right: 10px; font-size: 0.75em; color: white; background: #999; padding: 6px 12px; border-radius: 8px; z-index: 2000; }
-        .notebook-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; border-bottom: 1px solid #eee; background: white; margin-bottom: 5px; border-radius: 10px; }
-        .mastery-indicator { display: flex; gap: 5px; margin-top: 5px; }
-        .dot { width: 8px; height: 8px; border-radius: 50%; background: #ddd; border: 1px solid #ccc; }
-        .dot.full { background: var(--s); border-color: var(--s); }
-        /* Notebook grouping styles */
-        .nb-group { margin-bottom: 15px; border-radius: 12px; overflow: hidden; }
-        .nb-group-header { 
-            display: flex; justify-content: space-between; align-items: center; 
-            padding: 12px 15px; cursor: pointer; font-weight: bold;
-            transition: all 0.2s;
+        :root {
+            --bg: #020617;
+            --glass: rgba(15, 23, 42, 0.8);
+            --border: rgba(56, 189, 248, 0.2);
+            --primary: #0ea5e9;
+            --secondary: #6366f1;
+            --accent: #f59e0b;
+            --text: #f8fafc;
+            --grid: rgba(56, 189, 248, 0.05);
         }
-        .nb-group-header:hover { opacity: 0.9; }
-        .nb-group-count { 
-            background: rgba(255,255,255,0.3); 
-            padding: 2px 10px; border-radius: 20px; 
-            font-size: 0.85em;
+        
+        * { box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif; 
+            background-color: var(--bg);
+            background-image: 
+                linear-gradient(var(--grid) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+            background-size: 30px 30px;
+            color: var(--text); 
+            margin: 0; 
+            padding: 20px;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
-        .nb-group-content { max-height: 300px; overflow-y: auto; }
-        .nb-group-content.collapsed { display: none; }
-        .nb-beginner { background: linear-gradient(135deg, #ff9a56 0%, #ff6b35 100%); color: white; }
-        .nb-consolidating { background: linear-gradient(135deg, #f1c40f 0%, #f39c12 100%); color: white; }
-        .nb-advanced { background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%); color: white; }
-        .nb-mastered { background: linear-gradient(135deg, #3498db 0%, #2980b9 100%); color: white; }
-        .nb-search { 
-            width: 100%; padding: 12px 15px; border: 2px solid #ddd; 
-            border-radius: 25px; font-size: 1em; margin-bottom: 15px;
-            box-sizing: border-box;
+
+        .container { max-width: 650px; margin: 0 auto; position: relative; z-index: 10; }
+        
+        header { 
+            text-align: center; 
+            margin-bottom: 30px; 
+            padding-top: 20px;
+            position: relative;
         }
-        .nb-search:focus { outline: none; border-color: var(--p); }
-        .nb-stats { 
-            display: flex; justify-content: space-around; 
-            padding: 10px; background: #f8f9fa; border-radius: 10px; 
-            margin-bottom: 15px; font-size: 0.9em;
+        
+        .date-badge {
+            display: inline-block;
+            background: rgba(14, 165, 233, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 5px 15px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
         }
-        .nb-stat { text-align: center; }
-        .nb-stat-value { font-weight: bold; color: var(--p); font-size: 1.2em; }
-        .nb-empty { text-align: center; padding: 30px; color: #999; }
-        .nb-word-due { background: #fff3cd !important; border-left: 4px solid #ffc107 !important; }
-        .nb-word-error { background: #f8d7da !important; border-left: 4px solid #dc3545 !important; }
+
+        h1 { 
+            font-size: 2.2rem; 
+            margin: 10px 0; 
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            background: linear-gradient(to bottom, #fff 40%, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: flicker 3s linear infinite;
+        }
+        
+        @keyframes flicker {
+            0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% { opacity: 1; }
+            20%, 21.999%, 63%, 63.999%, 65%, 69.999% { opacity: 0.8; }
+        }
+
+        .hero-card { 
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border);
+            padding: 40px; 
+            border-radius: 24px; 
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 0 40px rgba(14, 165, 233, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Rotational Glowing Effect */
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: conic-gradient(transparent, var(--primary), transparent 30%);
+            animation: rotate 4s linear infinite;
+            opacity: 0.2;
+            pointer-events: none;
+        }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        .hero-card-inner {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Sci-fi corner markers */
+        .corner {
+            position: absolute; width: 15px; height: 15px; border: 2px solid var(--primary);
+        }
+        .top-l { top: -2px; left: -2px; border-right: 0; border-bottom: 0; }
+        .bot-r { bottom: -2px; right: -2px; border-left: 0; border-top: 0; }
+
+        .reward-label { font-size: 0.75rem; color: var(--primary); font-weight: 800; text-transform: uppercase; letter-spacing: 3px; }
+        .reward-value { 
+            font-size: 5rem; 
+            font-weight: 900; 
+            margin: 10px 0; 
+            color: var(--accent);
+            line-height: 1;
+            filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.5));
+        }
+
+        .section-title { 
+            font-size: 0.85rem; 
+            font-weight: 900; 
+            margin: 50px 0 20px; 
+            display: flex; 
+            align-items: center; 
+            gap: 15px;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+        .section-title::after {
+            content: ""; height: 1px; flex: 1; background: linear-gradient(90deg, var(--primary), transparent);
+        }
+        
+        .task-card { 
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 20px; 
+            border-radius: 12px; 
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideIn 0.5s ease-out forwards;
+        }
+        @keyframes slideIn { to { opacity: 1; transform: translateY(0); } }
+
+        .task-card:hover { background: rgba(56, 189, 248, 0.05); border-color: var(--primary); }
+        
+        .task-status-icon {
+            width: 45px; height: 45px;
+            background: #000;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--primary); font-size: 1.1rem;
+            position: relative;
+        }
+        .glow-dot {
+            position: absolute; top: 0; right: 0; width: 8px; height: 8px; background: var(--primary); border-radius: 50%;
+            box-shadow: 0 0 10px var(--primary);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0.5; } 100% { transform: scale(1); opacity: 1; } }
+
+        .task-cn { font-weight: 800; font-size: 1rem; color: #fff; margin-bottom: 4px; }
+        .task-fr { color: #64748b; font-style: italic; font-size: 0.85rem; font-family: 'Georgia', serif; }
+
+        .learning-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        
+        .box { 
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 25px; 
+            border-radius: 15px; 
+            text-decoration: none; 
+            color: inherit; 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        .box:hover { 
+            border-color: var(--primary); 
+            background: rgba(14, 165, 233, 0.1);
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .box h3 { margin: 0 0 12px; color: var(--primary); font-size: 0.9rem; font-weight: 900; letter-spacing: 1px; }
+        .box p { margin: 0; font-size: 0.8rem; color: #94a3b8; line-height: 1.6; }
+
+        .btn-full { 
+            grid-column: span 2; 
+            background: var(--primary);
+            color: #000;
+            padding: 30px; 
+            border-radius: 15px; 
+            font-weight: 900; 
+            font-size: 1.4rem; 
+            text-align: center;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: 0.3s;
+            box-shadow: 0 10px 0 #075985;
+        }
+        .btn-full:active { transform: translateY(5px); box-shadow: 0 5px 0 #075985; }
+        
+        .sync-btn { 
+            position: absolute; top: 20px; right: 0;
+            background: transparent; border: 1px solid var(--border); 
+            color: #64748b; padding: 10px 20px; border-radius: 5px; 
+            font-size: 0.65rem; font-weight: 900; cursor: pointer; 
+            transition: 0.2s; letter-spacing: 1px;
+        }
+        .sync-btn:hover { border-color: var(--primary); color: var(--primary); }
+        
+        .subtitle { 
+            color: #64748b; 
+            font-size: 0.75rem; 
+            font-weight: 800; 
+            text-transform: uppercase; 
+            letter-spacing: 3px; 
+            margin-top: 5px;
+        }
+
+        footer { text-align: center; margin-top: 80px; padding-bottom: 40px; color: #334155; font-size: 0.6rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <div style="text-align: left; margin-bottom: 10px;">
-                <a href="tongtong_hub.html" style="text-decoration: none; color: var(--p); font-weight: bold; font-size: 0.9em;">← Retour</a>
+        <header>
+            <div class="date-badge">2026年02月15日 · 15 February 2026</div>
+            <button class="sync-btn" id="sync-btn" onclick="triggerSync()">[ SYNC_DATA ]</button>
+            <h1>TONGTONG's SPACE · 童童空间</h1>
+            <div class="subtitle">Mission Command Cockpit</div>
+        </header>
+
+        <div class="hero-card">
+            <div class="corner top-l"></div>
+            <div class="corner bot-r"></div>
+            <div class="hero-card-inner">
+                <div class="reward-label">Credit Balance</div>
+                <div class="reward-value">90.0 <span style="font-size: 1rem; color: var(--primary); vertical-align: middle;">EUR</span></div>
+                <div style="font-size: 0.65rem; color: var(--primary); margin-top: 15px; letter-spacing: 2px; font-weight: 800;">STATUS: OPERATIONAL // LVL: MAXIMUM</div>
             </div>
-            <h1>💎 Le Trésor des Mots de Jingyi <span class="lvl-badge" style="background:var(--w); color:black; padding:6px 12px; font-size:0.5em;">CM1</span></h1>
-            <p id="ui-date" style="font-weight: bold; color: var(--p); font-size: 1.1em; margin: 10px 0;"></p>
-            <p style="color: #666; font-size: 0.9em;">Mission : Maîtrise tous les mots !</p>
         </div>
 
-        <div class="stats-bar">
-            <div class="stat-item">⭐ <span id="ui-stars">0</span> Total</div>
-            <div class="stat-item">🔥 Combo: <span id="ui-combo">0</span></div>
-            <div class="stat-item" onclick="openNotebook()" style="cursor: pointer; color: var(--p); text-decoration: underline;">📓 <span id="ui-count">0</span> Mots</div>
-        </div>
-
-        <div class="daily-goal-box">
-            <div style="display: flex; justify-content: space-between; font-size: 0.9em;">
-                <strong>🎯 Progrès : <span style="color:var(--p)">Nouveaux</span> + <span style="color:var(--rv)">Révision</span></strong>
-                <span id="ui-progress">0%</span>
+        <div class="section-title">Active Missions</div>
+        <div class="grid">
+            
+        <div class="task-card" style="animation-delay: 0.1s">
+            <div class="task-status-icon">
+                <div class="glow-dot"></div>
+                ⚡
             </div>
-            <div class="progress-container"><div class="bar bar-new" id="bar-n"></div><div class="bar bar-rev" id="bar-r"></div></div>
-            <div id="ui-completion-status" style="text-align:center; margin-top:5px; font-weight:bold; font-size:0.9em;"></div>
-        </div>
-
-        <div class="card">
-            <h2>🌟 Mots du Jour</h2>
-            <div id="ui-words-list"></div>
-        </div>
-
-        <div class="card game-zone">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                <h2 style="margin: 0;">🎮 Défi</h2>
-                <div style="display:flex; gap:8px;">
-                    <button id="mode-n" class="mode-btn active" onclick="setQuizMode('new')">Nouveaux</button>
-                    <button id="mode-r" class="mode-btn" onclick="setQuizMode('rev')">Révision</button>
-                </div>
+            <div class="task-content">
+                <div class="task-cn">🎻 小提琴练习: 1. 听赏音频；2.《施拉迪克》第一页拉完（不反复）。</div>
+                <div class="task-fr">Violon : 1. Écouter l'audio ; 2. Schradieck page 1</div>
             </div>
-            <p style="font-size:0.85em;color:#666;margin:0 0 10px 0;font-style:italic;">💡 Règle : Réponds correctement 2 fois de suite pour maîtriser un mot et gagner +100⭐ !</p>
-            <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                <p>Définition de <strong id="q-word" style="color:var(--p)">?</strong></p>
-                <div id="q-mastery" class="mastery-indicator"></div>
+        </div>
+        
+        <div class="task-card" style="animation-delay: 0.2s">
+            <div class="task-status-icon">
+                <div class="glow-dot"></div>
+                ⚡
             </div>
-            <div id="q-options" class="options-grid"></div>
-            <p id="q-feedback" style="margin-top: 15px; font-weight: bold; text-align: center; font-size: 1.2em; min-height: 1.2em;"></p>
+            <div class="task-content">
+                <div class="task-cn">🇬🇧 英语作业: Write a summary paragraph about Anatole Latuile, Un Max de Surprises.</div>
+                <div class="task-fr">Anglais : Rédiger un paragraphe de résumé</div>
+            </div>
+        </div>
+        
         </div>
 
-        <div class="card" style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
-            <div><h3 style="font-size:0.9em;color:var(--p)">✅ Appris</h3><div id="list-new"></div></div>
-            <div><h3 style="font-size:0.9em;color:var(--rv)">⏳ Mission</h3><div id="list-due"></div></div>
+        <div class="section-title">Knowledge Base</div>
+        <div class="learning-grid">
+            <a href="french_mot.html" class="btn-full">
+                Le Trésor des Mots
+            </a>
+            
+            <a href="english_learning_hub.html" class="box">
+                <h3>ENGLISH CLASS</h3>
+                <p>Write a summary paragraph about Anatole Latuile, Un Max de Surprises.</p>
+            </a>
+            
+            <a href="violin_learning_hub.html" class="box">
+                <h3>VIOLIN LAB</h3>
+                <p>1. 听赏音频；2.《施拉迪克》第一页拉完（不反复）。</p>
+            </a>
         </div>
+
+        <footer>
+            V2.1-STABLE | © ATOM TONG 2026 | ACCESS_GRANTED
+        </footer>
     </div>
-
-    <div id="sync-status">Initialisation...</div>
-
-    <div id="nbModal" class="modal">
-        <div class="modal-content" style="max-width: 600px;">
-            <span class="close" onclick="closeModal('nbModal')">&times;</span>
-            <h2>📓 Mon Carnet <span id="nb-total" style="font-size:0.6em;color:#999;font-weight:normal;"></span></h2>
-            <div class="nb-stats" id="nb-stats"></div>
-            <input type="text" class="nb-search" id="nb-search" placeholder="🔍 Rechercher un mot..." oninput="filterNotebook()">
-            <div id="nb-list"></div>
-        </div>
-    </div>
-    <div id="detailModal" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('detailModal')">&times;</span><div id="detail-card"></div></div></div>
-    <div id="rewardModal" class="modal"><div class="modal-content" style="text-align:center;"><h2>🎁 BRAVO !</h2><p id="rew-val"></p><button class="action-btn" onclick="closeModal('rewardModal')">Merci Papa !</button></div></div>
 
     <script>
-        const MAC_IP = "192.168.32.70";
-        const PORT = "8888";
-        // API address - detect if running on Mac mini or remote
-        const isLocal = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" || window.location.hostname === MAC_IP || window.location.hostname === "TONGdeMac-mini.local");
-        const API = isLocal ? `http://${window.location.hostname}:${PORT}` : `http://${MAC_IP}:${PORT}`;
-        // For GitHub Pages, we use relative paths for data
-        const DATA_PATH = (window.location.hostname.includes("github.io") || window.location.hostname.includes("tongtong2016.com")) ? "./french_data.json" : `${API}/french_data.json`;
-        
-        let gData = { stars: 100, notebook: [], daily_stats: { date: "", completed: false, words: [] }, last_milestone: 0 };
-        let sessionMastery = {}; 
-        let gTodayWords = [], gGameMode = 'new', gMistakes = {}, gCombo = 0, gIsLocked = false;
-        const INTERVALS = [1, 2, 4, 7, 15, 30, 60];
-        const MASTERY_GOAL = 2;
-
-        const DB = [
-            // === NIVEAU CE2 (Révision) - 20 mots ===
-            { word: "Maison", def: "Bâtiment où l'on habite.", ex: "Ma maison est grande." },
-            { word: "École", def: "Lieu où l'on apprend.", ex: "Je vais à l'école." },
-            { word: "Famille", def: "Groupe de personnes parents et enfants.", ex: "Ma famille est nombreuse." },
-            { word: "Jardin", def: "Terrain où l'on cultive des plantes.", ex: "Il y a des fleurs dans le jardin." },
-            { word: "Table", def: "Meuble sur lequel on mange ou travaille.", ex: "Mets le livre sur la table." },
-            { word: "Chaise", def: "Siège avec un dossier.", ex: "Assieds-toi sur la chaise." },
-            { word: "Livre", def: "Objet avec des pages écrites.", ex: "Je lis un livre intéressant." },
-            { word: "Crayon", def: "Instrument pour écrire en bois.", ex: "J'écris avec un crayon." },
-            { word: "Fenêtre", def: "Ouverture dans un mur pour voir dehors.", ex: "Regarde par la fenêtre." },
-            { word: "Porte", def: "Ouverture pour entrer ou sortir.", ex: "Ferme la porte s'il te plaît." },
-            { word: "Chien", def: "Animal domestique fidèle.", ex: "Mon chien s'appelle Max." },
-            { word: "Chat", def: "Animal domestique qui miaule.", ex: "Le chat dort sur le canapé." },
-            { word: "Soleil", def: "Étoile qui éclaire la Terre.", ex: "Le soleil brille aujourd'hui." },
-            { word: "Lune", def: "Satellite naturel de la Terre.", ex: "La lune est ronde ce soir." },
-            { word: "Étoile", def: "Corps céleste qui brille la nuit.", ex: "Les étoiles sont belles." },
-            { word: "Arbre", def: "Plante avec un tronc et des branches.", ex: "L'oiseau est dans l'arbre." },
-            { word: "Fleur", def: "Partie colorée d'une plante.", ex: "Cette fleur sent bon." },
-            { word: "Rivière", def: "Cours d'eau naturel.", ex: "On se baigne dans la rivière." },
-            { word: "Montagne", def: "Grande élévation de terrain.", ex: "On grimpe la montagne." },
-            { word: "Mer", def: "Grande étendue d'eau salée.", ex: "La mer est bleue." },
-            
-            // === NIVEAU CM1 (Principal) - 140 mots ===
-            // Qualités et sentiments (20)
-            { word: "Persévérance", def: "Action de continuer malgré les difficultés.", ex: "Jingyi montre une grande persévérance." },
-            { word: "Bienveillance", def: "Disposition à vouloir le bien d'autrui.", ex: "La maîtresse agit avec bienveillance." },
-            { word: "Curiosité", def: "Désir de savoir ou d'apprendre.", ex: "La curiosité est une qualité précieuse." },
-            { word: "Fraternité", def: "Lien de solidarité entre les humains.", ex: "La fraternité est une valeur importante." },
-            { word: "Imagination", def: "Faculté de créer des idées nouvelles.", ex: "Jingyi a une imagination débordante." },
-            { word: "Sincérité", def: "Qualité de celui qui dit la vérité.", ex: "L'amitié demande de la sincérité." },
-            { word: "Générosité", def: "Aimer donner et partager.", ex: "Elle fait preuve de générosité." },
-            { word: "Honnêteté", def: "Ne pas mentir ni voler.", ex: "L'honnêteté est essentielle." },
-            { word: "Courage", def: "Force morale pour affronter le danger.", ex: "Il faut du courage pour parler." },
-            { word: "Patience", def: "Capacité d'attendre sans s'énerver.", ex: "La patience est une vertu." },
-            { word: "Respect", def: "Considération pour les autres.", ex: "Il faut respecter les autres." },
-            { word: "Tolérance", def: "Acceptation des différences.", ex: "La tolérance permet de vivre ensemble." },
-            { word: "Empathie", def: "Compréhension des sentiments d'autrui.", ex: "L'empathie nous rapproche." },
-            { word: "Gratitude", def: "Reconnaissance pour un bienfait.", ex: "Je te exprime ma gratitude." },
-            { word: "Humilité", def: "Modestie dans le comportement.", ex: "L'humilité est une belle qualité." },
-            { word: "Optimisme", def: "Tendance à voir le bon côté.", ex: "Son optimisme est contagieux." },
-            { word: "Détermination", def: "Volonté ferme d'agir.", ex: "Sa détermination paie." },
-            { word: "Responsabilité", def: "Obligation de répondre de ses actes.", ex: "Prends tes responsabilités." },
-            { word: "Solidarité", def: "Entraide entre les membres d'un groupe.", ex: "La solidarité nous rend plus forts." },
-            { word: "Émerveillement", def: "État de grande admiration.", ex: "L'émerveillement des enfants est touchant." },
-            
-            // Sciences naturelles (25)
-            { word: "Écosystème", def: "Êtres vivants et leur milieu.", ex: "La forêt est un écosystème." },
-            { word: "Biodiversité", def: "Diversité des espèces vivantes.", ex: "Protégeons la biodiversité." },
-            { word: "Atmosphère", def: "La couche d'air qui entoure la Terre.", ex: "L'atmosphère nous protège." },
-            { word: "Photosynthèse", def: "Processus par lequel les plantes créent leur nourriture.", ex: "La photosynthèse rejette de l'oxygène." },
-            { word: "Mammifère", def: "Animal dont la femelle allaite ses petits.", ex: "Le chien est un mammifère." },
-            { word: "Pollinisation", def: "Transport du pollen pour les fleurs.", ex: "L'abeille aide à la pollinisation." },
-            { word: "Précipitations", def: "Formes d'eau qui tombent du ciel.", ex: "Le champ attend les précipitations." },
-            { word: "Érosion", def: "Usure de la Terre par le vent ou l'eau.", ex: "L'érosion sculpte les falaises." },
-            { word: "Astronomie", def: "Science qui étudie les astres.", ex: "L'astronomie étudie les planètes." },
-            { word: "Microscope", def: "Instrument pour voir des objets minuscules.", ex: "On voit des cellules au microscope." },
-            { word: "Électricité", def: "Énergie produite par des particules.", ex: "L'électricité éclaire la maison." },
-            { word: "Évaporisation", def: "Passage d'un liquide à l'état de vapeur.", ex: "Le soleil évapore l'eau." },
-            { word: "Condensation", def: "Passage d'une vapeur à l'état liquide.", ex: "La buée est de la condensation." },
-            { word: "Reptile", def: "Animal à sang froid avec des écailles.", ex: "Le lézard est un reptile." },
-            { word: "Amphibien", def: "Animal vivant dans l'eau et sur terre.", ex: "La grenouille est un amphibien." },
-            { word: "Vertèbre", def: "Animal avec une colonne vertébrale.", ex: "L'homme est un vertèbre." },
-            { word: "Insecte", def: "Petit animal à six pattes.", ex: "La fourmi est un insecte." },
-            { word: "Sédiment", def: "Dépôt de matière transportée par l'eau.", ex: "Les sédiments forment des roches." },
-            { word: "Volcan", def: "Montagne qui projette de la lave.", ex: "Le volcan entre en éruption." },
-            { word: "Séisme", def: "Tremblement de terre.", ex: "Le séisme a secoué la ville." },
-            { word: "Orbit", def: "Trajectoire d'un astre autour d'un autre.", ex: "La Terre est en orbite autour du Soleil." },
-            { word: "Galaxie", def: "Ensemble d'étoiles, de gaz et de poussière.", ex: "Nous vivons dans la galaxie Voie lactée." },
-            { word: "Météorite", def: "Fragment de roche venant de l'espace.", ex: "Une météorite est tombée sur Terre." },
-            { word: "Fossile", def: "Trace d'un animal ou d'une plante ancienne.", ex: "On a trouvé un fossile de dinosaure." },
-            { word: "Chromatographie", def: "Technique pour séparer des mélanges.", ex: "La chromatographie sépare les couleurs." },
-            
-            // Histoire et géographie (25)
-            { word: "Antiquité", def: "Période commençant avec l'écriture.", ex: "Les pyramides datent de l'Antiquité." },
-            { word: "Moyen Âge", def: "Période entre l'Antiquité et la Moderne.", ex: "On vivait dans des châteaux au Moyen Âge." },
-            { word: "Renaissance", def: "Période de renouveau des arts.", ex: "Vinci est un artiste de la Renaissance." },
-            { word: "Continent", def: "Une des grandes étendues de terre du globe.", ex: "L'Europe est un continent." },
-            { word: "Archipel", def: "Groupe d'îles proches sur la mer.", ex: "Le Japon est un archipel." },
-            { word: "Démocratie", def: "Système où le peuple exerce le pouvoir.", ex: "On vote en démocratie." },
-            { word: "Monarchie", def: "Pouvoir détenu par un roi.", ex: "Le roi dirige la monarchie." },
-            { word: "Frontière", def: "Ligne qui sépare deux pays.", ex: "On traverse la frontière." },
-            { word: "Civilisation", def: "État de développement d'une société.", ex: "La civilisation égyptienne est ancienne." },
-            { word: "Révolution", def: "Changement brusque dans l'organisation politique.", ex: "La Révolution française a changé la France." },
-            { word: "Empire", def: "État dirigé par un empereur.", ex: "Napoléon a fondé un empire." },
-            { word: "Colonie", def: "Territoire dominé par un pays étranger.", ex: "L'Algérie était une colonie française." },
-            { word: "Indépendance", def: "État d'un pays qui se gouverne seul.", ex: "L'indépendance a été proclamée en 1962." },
-            { word: "Trait", def: "Accord signé entre plusieurs pays.", ex: "Un trait de paix a été signé." },
-            { word: "Alliance", def: "Union entre plusieurs pays ou groupes.", ex: "Les deux pays ont formé une alliance." },
-            { word: "Invasion", def: "Entrée militaire dans un pays.", ex: "L'invasion a commencé au printemps." },
-            { word: "Patrimoine", def: "Biens hérités des générations passées.", ex: "Notre patrimoine doit être préservé." },
-            { word: "Archéologie", def: "Étude des civilisations anciennes.", ex: "L'archéologie révèle notre passé." },
-            { word: "Préhistoire", def: "Période avant l'écriture.", ex: "Les hommes préhistoriques vivaient dans des grottes." },
-            { word: "Désert", def: "Région très sèche avec peu de végétation.", ex: "Le Sahara est un grand désert." },
-            { word: "Péninsule", def: "Terre entourée d'eau presque partout.", ex: "L'Italie est une péninsule." },
-            { word: "Cap", def: "Pointe de terre avançant dans la mer.", ex: "Le Cap Horn est célèbre." },
-            { word: "Détroit", def: "Passage étroit entre deux mers.", ex: "Le détroit de Gibraltar relie deux mers." },
-            { word: "Vallée", def: "Étendue de terre entre des montagnes.", ex: "La vallée est fertile." },
-            { word: "Glacier", def: "Masse de glace qui descend d'une montagne.", ex: "Le glacier fond à cause du réchauffement." },
-            
-            // Littérature et arts (20)
-            { word: "Littérature", def: "Ensemble des œuvres écrites.", ex: "On lit de la littérature." },
-            { word: "Métaphore", def: "Image utilisant un mot pour un autre.", ex: "'Cœur de pierre' est une métaphore." },
-            { word: "Portrait", def: "Description d'une personne.", ex: "L'auteur fait un portrait détaillé." },
-            { word: "Symphonie", def: "Grande œuvre pour orchestre.", ex: "Une symphonie de Mozart." },
-            { word: "Perspective", def: "Profondeur dans un dessin.", ex: "Il dessine en perspective." },
-            { word: "Protagoniste", def: "Personnage principal d'histoire.", ex: "Le protagoniste gagne à la fin." },
-            { word: "Manuscrit", def: "Texte écrit à la main.", ex: "Un vieux manuscrit a été découvert." },
-            { word: "Allégorie", def: "Représentation concrète d'une idée.", ex: "La colombe est l'allégorie de la paix." },
-            { word: "Récit", def: "Histoire racontée.", ex: "Le récit est passionnant." },
-            { word: "Narrateur", def: "Celui qui raconte l'histoire.", ex: "Le narrateur parle à la première personne." },
-            { word: "Intrigue", def: "Enchaînement des événements d'une histoire.", ex: "L'intrigue est complexe." },
-            { word: "Climax", def: "Moment le plus intense d'une histoire.", ex: "Le climax arrive au chapitre 10." },
-            { word: "Dénouement", def: "Fin d'une histoire.", ex: "Le dénouement est surprenant." },
-            { word: "Strophe", def: "Groupe de vers dans un poème.", ex: "Ce poème a quatre strophes." },
-            { word: "Rime", def: "Ressemblance de sons à la fin des vers.", ex: "'Chat' et 'mat' font rime." },
-            { word: "Palette", def: "Planche pour mélanger les couleurs.", ex: "L'artiste tient sa palette." },
-            { word: "Sculpture", def: "Œuvre d'art en trois dimensions.", ex: "La sculpture est en marbre." },
-            { word: "Architecture", def: "Art de construire les bâtiments.", ex: "L'architecture gothique est élégante." },
-            { word: "Chorégraphie", def: "Suite de mouvements de danse.", ex: "La chorégraphie est difficile." },
-            { word: "Opéra", def: "Spectacle chanté avec orchestre.", ex: "On va voir un opéra ce soir." },
-            
-            // Sciences et technologie (25)
-            { word: "Technologie", def: "Outils et machines inventés par l'homme.", ex: "L'ordinateur est une technologie moderne." },
-            { word: "Expérience", def: "Test pour vérifier une idée.", ex: "On fait une expérience en classe." },
-            { word: "Hypothèse", def: "Idée proposée avant d'être vérifiée.", ex: "Le scientifique émet une hypothèse." },
-            { word: "Robot", def: "Machine programmable pour faire des tâches.", ex: "Le robot assemble les pièces." },
-            { word: "Satellite", def: "Objet artificiel en orbite.", ex: "Le satellite transmet des images." },
-            { word: "Énergie", def: "Capacité à produire un travail.", ex: "Le soleil fournit de l'énergie." },
-            { word: "Réseau", def: "Ensemble de connexions.", ex: "Internet est un réseau mondial." },
-            { word: "Programme", def: "Suite d'instructions pour un ordinateur.", ex: "Le programme calcule rapidement." },
-            { word: "Données", def: "Informations traitées par un ordinateur.", ex: "Les données sont stockées dans le cloud." },
-            { word: "Interface", def: "Surface de contact entre deux systèmes.", ex: "L'interface est facile à utiliser." },
-            { word: "Capteur", def: "Dispositif détectant des phénomènes physiques.", ex: "Le capteur mesure la température." },
-            { word: "Moteur", def: "Machine transformant l'énergie en mouvement.", ex: "Le moteur de la voiture tourne." },
-            { word: "Turbine", def: "Machine mise en rotation par un fluide.", ex: "La turbine produit de l'électricité." },
-            { word: "Réaction", def: "Transformation chimique entre substances.", ex: "La réaction produit de la chaleur." },
-            { word: "Molécule", def: "Plus petite partie d'un corps simple.", ex: "Une molécule d'eau a deux atomes d'hydrogène." },
-            { word: "Atome", def: "Plus petite partie d'un corps simple.", ex: "Un atome est très petit." },
-            { word: "Gravité", def: "Force d'attraction terrestre.", ex: "La gravité nous maintient au sol." },
-            { word: "Vitesse", def: "Rapidité d'un mouvement.", ex: "La vitesse est de 100 km/h." },
-            { word: "Accélération", def: "Augmentation de la vitesse.", ex: "L'accélération est rapide." },
-            { word: "Friction", def: "Résistance au mouvement entre deux surfaces.", ex: "La friction ralentit le glissement." },
-            { word: "Équilibre", def: "État d'un corps qui ne tombe pas.", ex: "L'équilibre est difficile à maintenir." },
-            { word: "Circuit", def: "Chemin suivi par un courant électrique.", ex: "Le circuit est fermé." },
-            { word: "Résistance", def: "Opposition au passage du courant.", ex: "La résistance limite le courant." },
-            { word: "Conducteur", def: "Matière laissant passer le courant.", ex: "Le cuivre est un bon conducteur." },
-            { word: "Isolant", def: "Matière ne laissant pas passer le courant.", ex: "Le caoutchouc est un isolant." },
-            
-            // Animaux (25)
-            { word: "Girafe", def: "Animal au long cou et aux taches.", ex: "La girafe mange les feuilles hautes." },
-            { word: "Éléphant", def: "Grand animal avec une trompe.", ex: "L'éléphant est le plus grand animal terrestre." },
-            { word: "Méduses", def: "Animal marin transparent avec des tentacules.", ex: "Attention aux méduses dans l'eau." },
-            { word: "Chauve-souris", def: "Petit mammifère volant la nuit.", ex: "La chauve-souris chasse les moustiques." },
-            { word: "Dauphin", def: "Mammifère marin très intelligent.", ex: "Le dauphin nage gracieusement." },
-            { word: "Hippopotame", def: "Grand animal semi-aquatique.", ex: "L'hippopotame vit près de l'eau." },
-            { word: "Rhinocéros", def: "Animal avec une corne sur le nez.", ex: "Le rhinocéros est menacé d'extinction." },
-            { word: "Kangourou", def: "Animal australien qui saute.", ex: "Le kangourou porte son bébé dans une poche." },
-            { word: "Panda", def: "Ours noir et blanc mangeant du bambou.", ex: "Le panda vit en Chine." },
-            { word: "Tigre", def: "Grand félin rayé.", ex: "Le tigre est un chasseur redoutable." },
-            { word: "Lion", def: "Grand félin avec une crinière.", ex: "Le lion est le roi des animaux." },
-            { word: "Zèbre", def: "Animal avec des rayures noires et blanches.", ex: "Le zèbre vit dans la savane." },
-            { word: "Pingouin", def: "Oiseau marin ne volant pas.", ex: "Le pingouin vit dans l'Antarctique." },
-            { word: "Aigle", def: "Grand oiseau de proie.", ex: "L'aigle vole haut dans le ciel." },
-            { word: "Hibou", def: "Oiseau nocturne avec de grands yeux.", ex: "Le hibou chasse la nuit." },
-            { word: "Cygne", def: "Grand oiseau blanc à long cou.", ex: "Le cygne glisse sur l'eau." },
-            { word: "Paon", def: "Oiseau avec une queue colorée.", ex: "Le paon déploie ses plumes." },
-            { word: "Tortue", def: "Reptile avec une carapace dure.", ex: "La tortue vit longtemps." },
-            { word: "Crocodile", def: "Grand reptile avec de grandes dents.", ex: "Le crocodile vit dans les rivières." },
-            { word: "Caméléon", def: "Animal qui change de couleur.", ex: "Le caméléon s'adapte à son environnement." },
-            { word: "Papillon", def: "Insecte avec des ailes colorées.", ex: "Le papillon vole de fleur en fleur." },
-            { word: "Abeille", def: "Insecte qui fait du miel.", ex: "L'abeille butine les fleurs." },
-            { word: "Coccinelle", def: "Petit insecte rouge à points noirs.", ex: "La coccinelle mange les pucerons." },
-            { word: "Araignée", def: "Animal à huit pattes tissant des toiles.", ex: "L'araignée tisse sa toile." },
-            { word: "Escargot", def: "Animal lent avec une coquille.", ex: "L'escargot laisse une trace de bave." },
-            
-            // === NIVEAU CM2 (Avancé) - 40 mots ===
-            { word: "Philosophie", def: "Réflexion sur les grandes questions.", ex: "La philosophie nous aide à réfléchir." },
-            { word: "Démographie", def: "Étude des populations.", ex: "La démographie étudie la croissance." },
-            { word: "Globalisation", def: "Intégration économique mondiale.", ex: "La globalisation connecte les pays." },
-            { word: "Sustainabilité", def: "Capacité à durer sans s'épuiser.", ex: "La durabilité est essentielle pour la planète." },
-            { word: "Biotechnologie", def: "Utilisation des êtres vivants pour la technologie.", ex: "La biotechnologie crée des médicaments." },
-            { word: "Nanotechnologie", def: "Technologie à l'échelle des atomes.", ex: "La nanotechnologie révolutionne la médecine." },
-            { word: "Intelligence", def: "Capacité à comprendre et apprendre.", ex: "L'intelligence artificielle simule l'esprit." },
-            { word: "Conscience", def: "Connaissance de soi et de son environnement.", ex: "La conscience nous distingue des animaux." },
-            { word: "Mémoire", def: "Capacité à conserver des informations.", ex: "La mémoire décline avec l'âge." },
-            { word: "Perception", def: "Manière de voir ou comprendre les choses.", ex: "La perception varie selon les gens." },
-            { word: "Cognition", def: "Processus de connaissance et de pensée.", ex: "La cognition inclut l'attention et la mémoire." },
-            { word: "Neuroscience", def: "Étude du système nerveux.", ex: "Les neurosciences expliquent le cerveau." },
-            { word: "Génétique", def: "Étude de l'hérédité.", ex: "La génétique étudie les gènes." },
-            { word: "Mutation", def: "Changement dans l'ADN.", ex: "La mutation peut être bénéfique ou nuisible." },
-            { word: "Évolution", def: "Transformation progressive des espèces.", ex: "L'évolution a créé la biodiversité." },
-            { word: "Sélection", def: "Choix des meilleurs individus.", ex: "La sélection naturelle favorise l'adaptation." },
-            { word: "Extinction", def: "Disparition d'une espèce.", ex: "L'extinction des dinosaures est mystérieuse." },
-            { word: "Conservation", def: "Protection de la nature.", ex: "La conservation des espèces est urgente." },
-            { word: "Restauration", def: "Action de réparer.", ex: "La restauration des œuvres d'art est délicate." },
-            { word: "Préservation", def: "Maintien dans un bon état.", ex: "La préservation de l'environnement est cruciale." },
-            { word: "Restauration", def: "Action de réparer.", ex: "La restauration des monuments prend du temps." },
-            { word: "Héritage", def: "Ce que l'on transmet aux générations futures.", ex: "Notre héritage culturel est précieux." },
-            { word: "Tradition", def: "Coutume transmise de génération en génération.", ex: "La tradition se perpétue." },
-            { word: "Innovation", def: "Introduction de quelque chose de nouveau.", ex: "L'innovation pousse la société en avant." },
-            { word: "Créativité", def: "Capacité à créer de nouvelles choses.", ex: "La créativité est essentielle en art." },
-            { word: "Esthétique", def: "Étude de la beauté.", ex: "L'esthétique de ce tableau est remarquable." },
-            { word: "Harmonie", def: "Accord parfait des sons ou des couleurs.", ex: "L'harmonie des couleurs est apaisante." },
-            { word: "Symétrie", def: "Correspondance exacte des deux côtés.", ex: "La symétrie est belle en architecture." },
-            { word: "Proportion", def: "Rapport entre les dimensions.", ex: "Les proportions du visage sont idéales." },
-            { word: "Perspective", def: "Manière de voir les choses.", ex: "Chaque personne a sa perspective." },
-            { word: "Contexte", def: "Ensemble des circonstances.", ex: "Il faut comprendre le contexte historique." },
-            { word: "Interprétation", def: "Explication ou traduction d'un texte.", ex: "L'interprétation du poème varie." },
-            { word: "Analyse", def: "Examen détaillé.", ex: "L'analyse du texte révèle des symboles." },
-            { word: "Synthèse", def: "Combinaison en un tout cohérent.", ex: "La synthèse des idées est claire." },
-            { word: "Argumentation", def: "Ensemble des arguments.", ex: "L'argumentation est convaincante." },
-            { word: "Rhétorique", def: "Art de persuader par la parole.", ex: "La rhétorique ancienne est sophistiquée." },
-            { word: "Dialectique", def: "Méthode de discussion par questions.", ex: "La dialectique socratique questionne tout." },
-            { word: "Paradoxe", def: "Idée contraire à l'opinion commune.", ex: "C'est un paradoxe intéressant." },
-            { word: "Analogie", def: "Comparaison entre deux choses.", ex: "L'analogie éclaire le concept." },
-            { word: "Dichotomie", def: "Division en deux parties opposées.", ex: "La dichotomie bien/mal est simpliste." }
-        ];
-
-        async function init() {
-            document.getElementById('ui-date').innerText = new Date().toLocaleDateString('fr-FR', { weekday:'long', day:'numeric', month:'long' });
-            const today = new Date().toISOString().split('T')[0];
-            
+        const API = "http://192.168.32.70:8888";
+        async function triggerSync() {
+            const btn = document.getElementById('sync-btn');
+            btn.innerText = "[ SYNCING... ]";
+            btn.disabled = true;
             try {
-                const response = await fetch(`${DATA_PATH}?t=${Date.now()}`);
-                if (response.ok) {
-                    const serverData = await response.json();
-                    if (serverData && Array.isArray(serverData.notebook)) {
-                        gData = serverData;
-                        localStorage.setItem('french_learning_data', JSON.stringify(gData));
-                        document.getElementById('sync-status').innerText = "☁️ Synchronisé";
-                        document.getElementById('sync-status').style.background = "#3498db";
-                    }
+                const resp = await fetch(`${API}/trigger_sync`, { method: 'POST' });
+                if (resp.ok) {
+                    btn.innerText = "[ COMPLETE ]";
+                    setTimeout(() => { location.reload(); }, 800);
                 } else {
-                    const savedData = localStorage.getItem('french_learning_data');
-                    if (savedData) gData = JSON.parse(savedData);
+                    btn.innerText = "[ ERROR ]";
+                    setTimeout(() => { btn.innerText = "[ SYNC_DATA ]"; btn.disabled = false; }, 2000);
                 }
-
-                if (!gData.notebook) gData.notebook = [];
-                
-                if (!gData.daily_stats || gData.daily_stats.date !== today) {
-                    const seedVal = today.split('-').reduce((a, b) => a + b.charCodeAt(0), 0);
-                    let pool = DB.filter(v => !gData.notebook.some(n => n.word === v.word));
-                    if (pool.length < 5) pool = [...DB];
-                    
-                    let newDaily = []; let tPool = [...pool];
-                    let s = seedVal;
-                    for (let i=0; i<5; i++) { 
-                        let idx = s % tPool.length;
-                        newDaily.push(tPool.splice(idx, 1)[0].word); 
-                        s = s * 31 + 7; 
-                    }
-                    
-                    gData.daily_stats = { date: today, completed: false, words: newDaily };
-                    // Clear mastery progress for new day
-                    localStorage.removeItem('french_session_mastery');
-                    sessionStorage.removeItem('french_session_mastery');
-                }
-                
-                gTodayWords = gData.daily_stats.words.map(wName => DB.find(d => d.word === wName));
-                
-                // Load session mastery from localStorage (persistent across refreshes)
-                const savedSession = localStorage.getItem('french_session_mastery');
-                if (savedSession) {
-                    const parsedSession = JSON.parse(savedSession);
-                    if (parsedSession.date === today) sessionMastery = parsedSession.data;
-                    else {
-                        sessionMastery = {};
-                        localStorage.removeItem('french_session_mastery');
-                    }
-                } else {
-                    // Fallback to sessionStorage for backward compatibility
-                    const legacySession = sessionStorage.getItem('french_session_mastery');
-                    if (legacySession) {
-                        const parsedLegacy = JSON.parse(legacySession);
-                        if (parsedLegacy.date === today) {
-                            sessionMastery = parsedLegacy.data;
-                            // Migrate to localStorage
-                            localStorage.setItem('french_session_mastery', JSON.stringify(parsedLegacy));
-                        } else sessionMastery = {};
-                    } else sessionMastery = {};
-                }
-                
-                // Warn user before refresh if quiz is in progress
-                window.addEventListener('beforeunload', (e) => {
-                    if (!gData.daily_stats.completed) {
-                        const info = calculateProgress();
-                        if (info.newPercent < 100) {
-                            e.preventDefault();
-                            e.returnValue = '⚠️ Quiz en cours ! Ta progression sera perdue si tu quittes maintenant.';
-                        }
-                    }
-                });
-                
-                document.getElementById('sync-status').innerText = "✅ Prêt";
-                document.getElementById('sync-status').style.background = "#2ecc71";
-            } catch (e) { document.getElementById('sync-status').innerText = "⚠️ Offline"; }
-            
-            refreshUI();
-        }
-
-        function calculateProgress() {
-            const today = new Date().toISOString().split('T')[0];
-            const newTotal = 5 * MASTERY_GOAL;
-            let newCorrect = 0;
-            gTodayWords.forEach(w => { 
-                if (gData.notebook.some(n => n.word === w.word)) {
-                    newCorrect += Math.min(MASTERY_GOAL, sessionMastery[w.word] || 0); 
-                }
-            });
-            const newPercent = (newCorrect / newTotal) * 100;
-            
-            const reviewWords = DB.filter(v => { 
-                const n = gData.notebook.find(e => e.word === v.word); 
-                return n && n.next <= today && !gTodayWords.some(tw => tw.word === v.word); 
-            });
-            const revTotal = reviewWords.length * MASTERY_GOAL;
-            let revCorrect = 0;
-            reviewWords.forEach(w => { revCorrect += Math.min(MASTERY_GOAL, sessionMastery[w.word] || 0); });
-            const revPercent = (reviewWords.length === 0) ? 100 : (revCorrect / revTotal) * 100;
-            
-            return { newCorrect, newTotal, newPercent, revCorrect, revTotal, revPercent, revCount: reviewWords.length };
-        }
-
-        function refreshUI() {
-            document.getElementById('ui-stars').innerText = gData.stars || 0;
-            document.getElementById('ui-combo').innerText = gCombo;
-            document.getElementById('ui-count').innerText = gData.notebook.length;
-            const today = new Date().toISOString().split('T')[0];
-
-            document.getElementById('ui-words-list').innerHTML = gTodayWords.map(w => `
-                <div class="daily-item"><div class="mot">${w.word}</div><div class="definition">${w.def}</div><div class="exemple">"${w.ex}"</div>
-                <div style="margin-top:10px"><button class="action-btn" onclick="speak('${w.word}')">🔊 Écouter</button>
-                <button class="action-btn" style="background:${gData.notebook.some(n=>n.word===w.word)?'#ccc':'var(--p)'}" onclick="addWord('${w.word}')">${gData.notebook.some(n=>n.word===w.word)?'✅ Ajouté':'📓 Ajouter'}</button></div>
-                </div>`).join('');
-
-            const info = calculateProgress();
-            document.getElementById('bar-n').style.width = info.newPercent + "%";
-            document.getElementById('bar-r').style.width = info.revPercent + "%";
-            
-            const hasReview = info.revCount > 0;
-            const totalPercent = hasReview ? Math.round((info.newPercent + info.revPercent) / 2) : Math.round(info.newPercent);
-            document.getElementById('ui-progress').innerHTML = totalPercent + "%";
-            
-            const completionStatus = document.getElementById('ui-completion-status');
-            if (gData.daily_stats.completed) { 
-                completionStatus.innerText = "🌟 MISSION ACCOMPLIE !"; completionStatus.style.color = "#2ecc71"; 
-            } else if (totalPercent >= 100) { 
-                completionStatus.innerText = "✨ PRÊT À VALIDER !"; completionStatus.style.color = "#f1c40f"; 
-            } else { completionStatus.innerText = ""; }
-
-            document.getElementById('mode-n').classList.toggle('done', info.newPercent >= 100);
-            document.getElementById('mode-r').classList.toggle('done', info.revPercent >= 100);
-
-            document.getElementById('list-new').innerHTML = gData.notebook.filter(n => gTodayWords.some(tw => tw.word === n.word)).map(n => `<div onclick="showDetail('${n.word}')" style="cursor:pointer; margin-bottom:5px;">• ${n.word}</div>`).join('') || "Rien encore";
-            document.getElementById('list-due').innerHTML = gData.notebook.filter(n => n.next <= today && !gTodayWords.some(tw => tw.word === n.word)).map(n => `<div onclick="showDetail('${n.word}')" style="cursor:pointer; margin-bottom:5px;">• ${n.word} <span class="lvl-badge">Lvl ${n.lvl}</span></div>`).join('') || (hasReview ? "Fini ! 🎉" : "Rien aujourd'hui");
-            
-            saveData(); saveSession(); updateQuiz();
-        }
-
-        function openNotebook() {
-            renderNotebook();
-            openModal('nbModal');
-        }
-
-        function renderNotebook(filterText = '') {
-            const nbListEl = document.getElementById('nb-list');
-            const today = new Date().toISOString().split('T')[0];
-            
-            if (!gData.notebook || gData.notebook.length === 0) {
-                nbListEl.innerHTML = "<div class='nb-empty'>📭 Ton carnet est vide.<br>Commence par ajouter des mots du jour !</div>";
-                document.getElementById('nb-total').innerText = '';
-                document.getElementById('nb-stats').innerHTML = '';
-                return;
-            }
-
-            // Filter words if search text provided
-            let words = gData.notebook;
-            if (filterText) {
-                words = words.filter(n => n.word.toLowerCase().includes(filterText.toLowerCase()));
-            }
-
-            // Group by level
-            const groups = {
-                beginner: { title: '🟠 Débutant', words: [], class: 'nb-beginner', expanded: true },
-                consolidating: { title: '🟡 Consolidation', words: [], class: 'nb-consolidating', expanded: false },
-                advanced: { title: '🟢 Avancé', words: [], class: 'nb-advanced', expanded: false },
-                mastered: { title: '🔵 Maîtrisé', words: [], class: 'nb-mastered', expanded: false }
-            };
-
-            words.forEach(n => {
-                const wordData = DB.find(d => d.word === n.word);
-                if (!wordData) return;
-                
-                if (n.lvl <= 1) groups.beginner.words.push({...n, data: wordData});
-                else if (n.lvl <= 3) groups.consolidating.words.push({...n, data: wordData});
-                else if (n.lvl <= 5) groups.advanced.words.push({...n, data: wordData});
-                else groups.mastered.words.push({...n, data: wordData});
-            });
-
-            // Update stats
-            const total = gData.notebook.length;
-            const dueToday = gData.notebook.filter(n => n.next <= today).length;
-            const withErrors = gData.notebook.filter(n => n.err_days > 0).length;
-            document.getElementById('nb-total').innerText = `(${total} mots)`;
-            document.getElementById('nb-stats').innerHTML = `
-                <div class="nb-stat"><div class="nb-stat-value">${total}</div><div>Total</div></div>
-                <div class="nb-stat"><div class="nb-stat-value" style="color:#f39c12">${dueToday}</div><div>À réviser</div></div>
-                <div class="nb-stat"><div class="nb-stat-value" style="color:#e74c3c">${withErrors}</div><div>Difficultés</div></div>
-            `;
-
-            // Render groups
-            let html = '';
-            let hasContent = false;
-            
-            for (const [key, group] of Object.entries(groups)) {
-                if (group.words.length === 0) continue;
-                hasContent = true;
-                
-                const isExpanded = filterText ? true : group.expanded;
-                const arrow = isExpanded ? '▼' : '▶';
-                
-                html += `
-                    <div class="nb-group">
-                        <div class="nb-group-header ${group.class}" onclick="toggleGroup('${key}')">
-                            <span>${arrow} ${group.title}</span>
-                            <span class="nb-group-count">${group.words.length}</span>
-                        </div>
-                        <div class="nb-group-content ${isExpanded ? '' : 'collapsed'}" id="nb-group-${key}">
-                            ${group.words.map(n => {
-                                const isDue = n.next <= today && !gTodayWords.some(tw => tw.word === n.word);
-                                const hasError = n.err_days > 0;
-                                const dueClass = hasError ? 'nb-word-error' : (isDue ? 'nb-word-due' : '');
-                                const dueBadge = isDue ? ' <span style="color:#f39c12;font-size:0.8em;">⏰</span>' : '';
-                                const errorBadge = hasError ? ` <span style="color:#e74c3c;font-size:0.8em;">⚠️${n.err_days}</span>` : '';
-                                
-                                return `
-                                <div class="notebook-item ${dueClass}" onclick="showDetail('${n.word}')">
-                                    <div style="display:flex;flex-direction:column;flex:1;">
-                                        <span style="font-size:1.1em;"><strong>${n.word}</strong>${dueBadge}${errorBadge}</span>
-                                        <span style="font-size:0.85em;color:#666;margin-top:3px;">${n.data.def.substring(0, 50)}...</span>
-                                        <span style="font-size:0.75em;color:#999;margin-top:2px;">Prochaine révision: ${formatDate(n.next)}</span>
-                                    </div>
-                                    <div style="display:flex;align-items:center;gap:8px;">
-                                        <span class="lvl-badge">Lvl ${n.lvl}</span>
-                                        <button onclick="event.stopPropagation(); speak('${n.word}')" style="background:var(--s);border:none;width:35px;height:35px;border-radius:50%;color:white;font-size:1.2em;cursor:pointer;display:flex;align-items:center;justify-content:center;">🔊</button>
-                                    </div>
-                                </div>`;
-                            }).join('')}
-                        </div>
-                    </div>
-                `;
-            }
-
-            if (!hasContent && filterText) {
-                html = "<div class='nb-empty'>🔍 Aucun mot ne correspond à ta recherche.</div>";
-            }
-
-            nbListEl.innerHTML = html;
-        }
-
-        function toggleGroup(groupKey) {
-            const content = document.getElementById(`nb-group-${groupKey}`);
-            const header = content.previousElementSibling;
-            const isCollapsed = content.classList.contains('collapsed');
-            
-            content.classList.toggle('collapsed');
-            header.innerHTML = header.innerHTML.replace(isCollapsed ? '▶' : '▼', isCollapsed ? '▼' : '▶');
-        }
-
-        function filterNotebook() {
-            const searchText = document.getElementById('nb-search').value.trim();
-            renderNotebook(searchText);
-        }
-
-        function formatDate(dateStr) {
-            const date = new Date(dateStr);
-            const today = new Date();
-            today.setHours(0,0,0,0);
-            date.setHours(0,0,0,0);
-            
-            const diff = Math.round((date - today) / (1000 * 60 * 60 * 24));
-            
-            if (diff === 0) return "Aujourd'hui";
-            if (diff === 1) return "Demain";
-            if (diff < 0) return `En retard (${Math.abs(diff)}j)`;
-            if (diff < 7) return `Dans ${diff} jours`;
-            return date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
-        }
-
-        async function saveData() { 
-            localStorage.setItem('french_learning_data', JSON.stringify(gData));
-            try { await fetch(`${API}/save_data`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(gData) }); } catch(e) {}
-        }
-        function saveSession() { localStorage.setItem('french_session_mastery', JSON.stringify({ date: new Date().toISOString().split('T')[0], data: sessionMastery })); }
-        function addWord(w) { 
-            if (!gData.notebook.some(n => n.word === w)) { 
-                gData.notebook.push({ word: w, lvl: 0, next: new Date().toISOString().split('T')[0], err_days: 0 }); 
-                speak("Ajouté"); refreshUI(); 
-            } else { speak("Déjà là"); }
-        }
-        function setQuizMode(m) { gGameMode = m; document.getElementById('mode-n').classList.toggle('active', m==='new'); document.getElementById('mode-r').classList.toggle('active', m==='rev'); updateQuiz(); }
-        
-        function updateQuiz() {
-            const today = new Date().toISOString().split('T')[0];
-            let pool = [];
-            if (gGameMode === 'new') {
-                pool = gTodayWords.filter(w => gData.notebook.some(n => n.word === w.word) && (sessionMastery[w.word] || 0) < MASTERY_GOAL);
-            } else {
-                pool = DB.filter(v => { 
-                    const n = gData.notebook.find(e => e.word === v.word); 
-                    return n && n.next <= today && !gTodayWords.some(tw => tw.word === v.word) && (sessionMastery[v.word] || 0) < MASTERY_GOAL; 
-                });
-            }
-            
-            document.getElementById('q-feedback').innerText = "";
-            gIsLocked = false;
-
-            if (pool.length < 1) { 
-                const isNew = gGameMode === 'new';
-                let msg = "";
-                if (isNew) {
-                    msg = gData.notebook.filter(n => gTodayWords.some(tw => tw.word === n.word)).length < 5 
-                          ? "Ajoute les 5 mots du jour pour commencer !" 
-                          : "🌟 Nouveaux mots maîtrisés !";
-                } else { msg = "🎉 Révisions terminées !"; }
-                document.getElementById('q-options').innerHTML = `<p style='padding:20px; color:var(--p); font-weight:bold; text-align:center;'>${msg}</p>`; 
-                document.getElementById('q-word').innerText = "Salut !"; 
-                document.getElementById('q-mastery').innerHTML = "";
-                return; 
-            }
-            
-            const target = pool[Math.floor(Math.random() * pool.length)]; 
-            document.getElementById('q-word').innerText = target.word;
-            const mCount = sessionMastery[target.word] || 0;
-            document.getElementById('q-mastery').innerHTML = Array(MASTERY_GOAL).fill(0).map((_, i) => `<div class="dot ${i < mCount ? 'full' : ''}"></div>`).join('');
-            
-            let opts = [target.def]; let all = DB.map(v => v.def);
-            while(opts.length < 3) { let r = all[Math.floor(Math.random()*all.length)]; if(!opts.includes(r)) opts.push(r); }
-            opts.sort(() => Math.random() - 0.5);
-            document.getElementById('q-options').innerHTML = opts.map(o => `<button class="opt-btn" onclick="checkQuiz(this, '${o.replace(/'/g, "\\'")}', '${target.word}')">${o}</button>`).join('');
-            
-            // Remove focus/outline
-            if (document.activeElement) document.activeElement.blur();
-        }
-
-        function checkQuiz(btn, sel, w) {
-            if (gIsLocked) return;
-            gIsLocked = true;
-            const target = DB.find(v => v.word === w), n = gData.notebook.find(e => e.word === w);
-            const feedbackEl = document.getElementById('q-feedback');
-            const allBtns = document.querySelectorAll('.opt-btn');
-            allBtns.forEach(b => b.disabled = true);
-
-            if (sel === target.def) {
-                btn.classList.add('correct');
-                feedbackEl.innerHTML = "✅ Très bien !"; feedbackEl.style.color = "var(--s)";
-                sessionMastery[w] = (sessionMastery[w] || 0) + 1;
-                if (sessionMastery[w] >= MASTERY_GOAL && n) {
-                    n.lvl = Math.min(6, n.lvl + 1); n.err_days = 0; 
-                    let d = new Date(); d.setDate(d.getDate() + INTERVALS[n.lvl]); n.next = d.toISOString().split('T')[0]; 
-                }
-                gCombo++; delete gMistakes[w]; speak("Très bien"); 
-                setTimeout(() => { checkDailyCompletion(); refreshProgressOnly(); updateQuiz(); }, 1000);
-            } else {
-                btn.classList.add('wrong');
-                feedbackEl.innerHTML = "❌ Dommage !"; feedbackEl.style.color = "var(--e)";
-                sessionMastery[w] = 0;
-                allBtns.forEach(b => { if(b.innerText === target.def) b.classList.add('correct'); });
-                if (!gMistakes[w]) gMistakes[w] = 1; 
-                else {
-                    gCombo = 0; 
-                    if (n) { 
-                        n.lvl = 0; let d = new Date(); d.setDate(d.getDate() + 1); n.next = d.toISOString().split('T')[0]; 
-                        n.err_days = (n.err_days || 0) + 1; if (n.err_days >= 2) gData.notebook = gData.notebook.filter(e => e.word !== w);
-                    }
-                    delete gMistakes[w];
-                }
-                speak("Dommage");
-                setTimeout(() => { refreshProgressOnly(); updateQuiz(); }, 1800);
+            } catch (e) {
+                btn.innerText = "[ OFFLINE ]";
+                setTimeout(() => { btn.innerText = "[ SYNC_DATA ]"; btn.disabled = false; }, 2000);
             }
         }
-
-        function refreshProgressOnly() {
-            const info = calculateProgress();
-            document.getElementById('bar-n').style.width = info.newPercent + "%";
-            document.getElementById('bar-r').style.width = info.revPercent + "%";
-            const hasReview = info.revCount > 0;
-            const totalPercent = hasReview ? Math.round((info.newPercent + info.revPercent) / 2) : Math.round(info.newPercent);
-            document.getElementById('ui-progress').innerHTML = totalPercent + "%";
-            document.getElementById('ui-stars').innerText = gData.stars || 0;
-            document.getElementById('ui-combo').innerText = gCombo;
-            saveData(); saveSession();
-        }
-        
-        function checkDailyCompletion() {
-            const info = calculateProgress();
-            const hasReview = info.revCount > 0;
-            const total = hasReview ? (info.newPercent + info.revPercent) / 200 : info.newPercent / 100;
-            if (total >= 1.0 && !gData.daily_stats.completed) {
-                gData.stars = (gData.stars || 0) + 100; gData.daily_stats.completed = true;
-                setTimeout(() => { document.getElementById('rew-val').innerText = "🎉 Magnifique !\nTu as maîtrisé tous les mots !\n+100 étoiles !"; openModal('rewardModal'); speak("Félicitations"); }, 500);
-            }
-        }
-
-        function showDetail(w) { const d = DB.find(v => v.word === w); document.getElementById('detail-card').innerHTML = `<h2>${d.word}</h2><p><strong>📝 Définition:</strong><br>${d.def}</p><p><strong>💬 Exemple:</strong><br><i>"${d.ex}"</i></p><button class="action-btn" style="width:100%;margin-top:20px" onclick="speak('${d.word}')">🔊 Écouter</button>`; openModal('detailModal'); speak(w); }
-        function openModal(id) { document.getElementById(id).style.display = "block"; }
-        function closeModal(id) { document.getElementById(id).style.display = "none"; }
-        function speak(t) { const m = new SpeechSynthesisUtterance(t); m.lang = 'fr-FR'; window.speechSynthesis.speak(m); }
-        window.onclick = e => { if (e.target.className === 'modal') e.target.style.display = "none"; };
-        window.onload = init;
     </script>
 </body>
 </html>
+    

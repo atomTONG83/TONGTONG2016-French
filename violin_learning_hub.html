@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>童童小提琴学习空间</title>
+    <style>
+        :root {
+            --bg: #020617; --card-bg: #0f172a; --border: #1e293b; --text: #f8fafc;
+            --accent: #a78bfa; --homework: #f59e0b; --success: #10b981;
+        }
+        body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 40px; line-height: 1.6; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        header { margin-bottom: 40px; border-bottom: 1px solid var(--border); padding-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+        h1 { color: var(--accent); margin: 0; }
+        .back-btn { text-decoration: none; color: #94a3b8; border: 1px solid var(--border); padding: 8px 16px; border-radius: 8px; font-size: 0.9em; transition: 0.2s; }
+        .back-btn:hover { background: var(--border); color: #fff; }
+        
+        .lesson-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 30px; margin-bottom: 30px; }
+        .lesson-header { display: flex; justify-content: space-between; margin-bottom: 25px; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 15px; }
+        .lesson-date { font-weight: bold; font-size: 1.2em; color: var(--accent); }
+        .status-tag { padding: 4px 12px; border-radius: 20px; font-size: 0.8em; font-weight: 800; }
+        .status-pending { background: rgba(245, 158, 11, 0.1); color: var(--homework); border: 1px solid var(--homework); }
+        .status-done { background: rgba(16, 185, 129, 0.1); color: var(--success); border: 1px solid var(--success); }
+        
+        h3 { color: #94a3b8; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px; margin-top: 0; margin-bottom: 15px; }
+        ul { margin: 10px 0; padding-left: 20px; }
+        li { margin-bottom: 8px; color: #f8fafc; font-size: 1.05em; }
+        
+        .homework-box { background: rgba(245, 158, 11, 0.05); border-radius: 12px; padding: 20px; margin-top: 25px; }
+        .homework-box h3 { color: var(--homework); }
+        .homework-box p { font-weight: 500; font-size: 1.1em; margin: 0; color: #fff; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎻 童童小提琴学习空间</h1>
+            <a href="tongtong_hub.html" class="back-btn">← 返回成长空间</a>
+        </header>
+
+        
+            <div class="lesson-card">
+                <div class="lesson-header">
+                    <span class="lesson-date">🎻 课程/练习日期: 2026-02-14</span>
+                    <span class="status-tag status-pending">PENDING</span>
+                </div>
+                
+                <div class="section">
+                    <h3>💡 核心要点与纠偏</h3>
+                    <ul><li>反复听《茉莉花》与《赛马》，感受情绪变化</li><li>注意四指打指力度</li><li>注意原把位每个音的音准</li></ul>
+                </div>
+
+                <div class="homework-box">
+                    <h3>✍️ 本期作业内容</h3>
+                    <p>1. 听赏音频；2.《施拉迪克》第一页拉完（不反复）。</p>
+                </div>
+            </div>
+            
+            <div class="lesson-card">
+                <div class="lesson-header">
+                    <span class="lesson-date">🎻 课程/练习日期: 2026-02-08</span>
+                    <span class="status-tag status-done">COMPLETED</span>
+                </div>
+                
+                <div class="section">
+                    <h3>💡 核心要点与纠偏</h3>
+                    <ul><li>左手大拇指用指腹第一个关节处周围去握琴（不要用侧面）</li><li>二弦 #Re 偏低，二指紧挨三指</li><li>琴头抬高，胳膊肘朝内打</li><li>手腕立起来，掌心不要贴着琴脖子</li><li>打指要求手腕不动的情况下打</li><li>注意弓段分配，匀速练习</li></ul>
+                </div>
+
+                <div class="homework-box">
+                    <h3>✍️ 本期作业内容</h3>
+                    <p>1. 唱练习曲录视频；2. 一边唱一边拉录视频；3.《施拉迪克》第一课前两行录视频。</p>
+                </div>
+            </div>
+            
+
+        <footer style="text-align:center; color:#475569; margin-top:50px; font-size:0.85em; border-top:1px solid #1e293b; padding-top:20px;">
+            学习空间 · 由 Atom AI 智能驱动
+        </footer>
+    </div>
+</body>
+</html>
+    
