@@ -1,5 +1,5 @@
 {
-  "stars": 700,
+  "stars": 800,
   "notebook": [
     {
       "word": "cartable",
@@ -117,8 +117,8 @@
     },
     {
       "word": "Protagoniste",
-      "lvl": 1,
-      "next": "2026-02-16",
+      "lvl": 2,
+      "next": "2026-02-20",
       "err_days": 0
     },
     {
@@ -208,7 +208,7 @@
   ],
   "daily_stats": {
     "date": "2026-02-16",
-    "completed": false,
+    "completed": true,
     "words": [
       "Conscience",
       "Isolant",
