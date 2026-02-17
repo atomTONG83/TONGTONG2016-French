@@ -119,6 +119,21 @@
         }
         .task-cn { font-size: 1rem; font-weight: 700; color: #fff; }
         .task-fr { font-size: 0.8rem; color: #64748b; font-style: italic; }
+        .task-status { font-size: 0.7rem; color: #94a3b8; margin-top: 5px; }
+        
+        /* 已完成任务样式 */
+        .task-card.completed {
+            opacity: 0.7;
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+        .task-card.completed .task-cn {
+            text-decoration: line-through;
+            color: #94a3b8;
+        }
+        .task-card.completed .task-icon {
+            color: #10b981;
+            opacity: 0.8;
+        }
 
         /* Hexagonal Buttons */
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
@@ -182,67 +197,58 @@
         <div class="section-title">Active Mission List</div>
         <div style="margin-bottom: 40px;">
             
-        <div class="task-card" style="animation-delay: 0.0s">
+        <div class="task-card completed" style="animation-delay: 0.0s">
             <div class="card-glow"></div>
-            <div class="task-icon">01</div>
+            <div class="task-icon">✅</div>
             <div class="task-info">
                 <div class="task-cn">📚 学校作业 (Devoirs)</div>
                 <div class="task-fr">Devoirs scolaires</div>
+                <div class="task-status">2026-02-17 • 已完成</div>
             </div>
         </div>
         
-        <div class="task-card" style="animation-delay: 0.1s">
+        <div class="task-card completed" style="animation-delay: 0.1s">
             <div class="card-glow"></div>
-            <div class="task-icon">02</div>
+            <div class="task-icon">✅</div>
             <div class="task-info">
                 <div class="task-cn">🇫🇷 法语朗读 (10分钟：半页–1页)</div>
                 <div class="task-fr">Lecture en français (10 min)</div>
+                <div class="task-status">2026-02-17 • 已完成</div>
             </div>
         </div>
         
-        <div class="task-card" style="animation-delay: 0.2s">
+        <div class="task-card completed" style="animation-delay: 0.2s">
             <div class="card-glow"></div>
-            <div class="task-icon">03</div>
+            <div class="task-icon">✅</div>
             <div class="task-info">
                 <div class="task-cn">✍️ 词汇积累 (5分钟：记录3个新词 + 中文 + 原句)</div>
                 <div class="task-fr">Apprentissage du vocabulaire</div>
+                <div class="task-status">2026-02-17 • 已完成</div>
             </div>
         </div>
         
-        <div class="task-card" style="animation-delay: 0.30000000000000004s">
+        <div class="task-card completed" style="animation-delay: 0.30000000000000004s">
             <div class="card-glow"></div>
-            <div class="task-icon">04</div>
+            <div class="task-icon">✅</div>
             <div class="task-info">
                 <div class="task-cn">🔢 数学应用题 (10分钟：圈关键词 + 写出求什么)</div>
                 <div class="task-fr">Exercices de mathématiques</div>
+                <div class="task-status">2026-02-17 • 已完成</div>
             </div>
         </div>
         
-        <div class="task-card" style="animation-delay: 0.4s">
+        <div class="task-card completed" style="animation-delay: 0.4s">
             <div class="card-glow"></div>
-            <div class="task-icon">05</div>
+            <div class="task-icon">✅</div>
             <div class="task-info">
                 <div class="task-cn">🎻 小提琴练习 (20分钟)</div>
                 <div class="task-fr">Pratique du violon</div>
+                <div class="task-status">2026-02-17 • 已完成</div>
             </div>
         </div>
         
-        <div class="task-card" style="animation-delay: 0.5s">
-            <div class="card-glow"></div>
-            <div class="task-icon">06</div>
-            <div class="task-info">
-                <div class="task-cn">🎻 小提琴练习: 1. 听赏音频；2.《施拉迪克》第一页拉完（不反复）。</div>
-                <div class="task-fr">Violon : Audio & Schradieck</div>
-            </div>
-        </div>
-        
-        <div class="task-card" style="animation-delay: 0.6000000000000001s">
-            <div class="card-glow"></div>
-            <div class="task-icon">07</div>
-            <div class="task-info">
-                <div class="task-cn">🇬🇧 英语作业: Write a summary paragraph about Anatole Latuile, Un Max de Surprises.</div>
-                <div class="task-fr">Anglais : Résumé de texte</div>
-            </div>
+        <div style="text-align: center; margin-top: 20px; font-size: 0.8rem; color: var(--secondary);">
+            📊 今日进度: 5/5 完成 (100%)
         </div>
         
         </div>
