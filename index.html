@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TONGTONG's SPACE · V3.7</title>
+    <title>TONGTONG's SPACE · V3.8</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap');
         :root {
@@ -19,7 +19,29 @@
         header { text-align: center; margin-bottom: 30px; }
         .date-badge { font-family: 'Orbitron'; font-size: 0.65rem; color: var(--primary); border: 1px solid var(--primary); padding: 4px 15px; display: inline-block; margin-bottom: 10px; }
         h1 { font-family: 'Orbitron'; font-weight: 900; font-size: 1.8rem; letter-spacing: 2px; text-shadow: 0 0 20px rgba(14, 165, 233, 0.5); }
-        .reward-card { background: var(--glass); border: 1px solid var(--border); border-radius: 20px; padding: 40px 20px; text-align: center; position: relative; overflow: hidden; margin-bottom: 30px; backdrop-filter: blur(10px); }
+        
+        /* RESTORED COOL REWARD CARD EFFECTS */
+        .reward-card { 
+            background: var(--glass); 
+            border: 1px solid var(--border); 
+            border-radius: 20px; 
+            padding: 40px 20px; 
+            text-align: center; 
+            position: relative; 
+            overflow: hidden; 
+            margin-bottom: 30px; 
+            backdrop-filter: blur(10px); 
+        }
+        .reward-card::before {
+            content: ''; position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: conic-gradient(transparent, var(--primary), transparent 40%);
+            animation: rotate 4s linear infinite;
+            opacity: 0.2;
+        }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .reward-inner { position: relative; z-index: 2; }
+        
         .reward-value { font-family: 'Orbitron'; font-size: 5rem; font-weight: 900; color: var(--accent); text-shadow: 0 0 30px rgba(251, 191, 36, 0.4); }
         .section-title { font-size: 0.9rem; font-weight: 700; letter-spacing: 5px; color: var(--primary); border-left: 3px solid var(--primary); padding-left: 15px; margin: 40px 0 20px; text-transform: uppercase; }
         .task-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); margin-bottom: 12px; border-radius: 12px; display: flex; align-items: center; padding: 20px; animation: slideIn 0.5s ease-out forwards; }
@@ -41,22 +63,21 @@
     <div class="bg-grid"></div>
     <div class="container">
         <header>
-            <div class="date-badge">2026年02月18日 // 18 February 2026</div>
+            <div class="date-badge">2026年02月19日 // 19 February 2026</div>
             <h1>TONGTONG's SPACE<br><span style="opacity: 0.5; font-size: 1.2rem;">童童空间</span></h1>
         </header>
         <div class="reward-card">
-            <div class="reward-value">95.0 <span style="font-size: 1.2rem; vertical-align: middle;">EUR</span></div>
-            <div style="font-size: 0.6rem; letter-spacing: 2px; color: var(--primary);">CREDIT BALANCE AVAILABLE</div>
+            <div class="reward-inner">
+                <div class="reward-value">95.0 <span style="font-size: 1.2rem; vertical-align: middle;">EUR</span></div>
+                <div style="font-size: 0.6rem; letter-spacing: 2px; color: var(--primary);">CREDIT BALANCE AVAILABLE</div>
+            </div>
         </div>
         <div class="section-title">Active Mission List</div>
         <div style="margin-bottom: 40px;"><div class="empty-msg">MISSION COMPLETE. WELL DONE JINGYI. 🏆</div></div>
         <div class="section-title">Knowledge Interface</div>
         <div class="grid-2">
-            <!-- 恢复：Le Trésor des Mots 独占一行 -->
             <a href="french_mot.html" class="btn-launch">Le Trésor des Mots</a>
-            
-            <!-- 其他两列排列 -->
-            <a href="school_vocabulary.html" class="action-box" style="border-color: #8b5cf6;">
+            <a href="school_vocabulary.html" class="action-box" style="border-color: #818cf8;">
                 <h3>LEXIQUE</h3>
                 <p style="font-size: 0.75rem; color: #94a3b8;">学校法语生词本</p>
             </a>
@@ -73,7 +94,7 @@
                 <p style="font-size: 0.75rem; color: #94a3b8;">1. 听赏音频；2.《施拉迪克》第一页拉完（不反复）。</p>
             </a>
         </div>
-        <footer>V3.7-LAYOUT-RESTORED | © ATOM TONG 2026 | MISSION_COMMAND</footer>
+        <footer>V3.8-VIBE-RESTORED | © ATOM TONG 2026 | MISSION_COMMAND</footer>
     </div>
 </body>
 </html>
