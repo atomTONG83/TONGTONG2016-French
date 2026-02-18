@@ -90,8 +90,8 @@
         </div>
 
         <div class="stats-bar">
-            <div class="stat-item">⭐ <span id="ui-stars">0</span> Total</div>
-            <div class="stat-item">🔥 Combo: <span id="ui-combo">0</span></div>
+            <div class="stat-item">⭐ <span id="ui-stars">0</span> Stars</div>
+            <div class="stat-item">🏆 <span id="ui-trophies">0</span> Trophées</div>
             <div class="stat-item" onclick="openNotebook()" style="cursor: pointer; color: var(--p); text-decoration: underline;">📓 <span id="ui-count">0</span> Mots</div>
         </div>
 
@@ -487,7 +487,7 @@
 
         function refreshUI() {
             document.getElementById('ui-stars').innerText = gData.stars || 0;
-            document.getElementById('ui-combo').innerText = gCombo;
+            document.getElementById('ui-trophies').innerText = Math.floor((gData.stars || 0) / 1000);
             document.getElementById('ui-count').innerText = gData.notebook.length;
             const today = new Date().toISOString().split('T')[0];
 
