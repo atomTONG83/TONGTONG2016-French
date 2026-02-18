@@ -27,7 +27,6 @@
             min-height: 100vh;
         }
 
-        /* Dynamic Grid Background */
         .bg-grid {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: 
@@ -63,7 +62,6 @@
             margin: 10px 0;
         }
 
-        /* Pulsing Reward Card */
         .reward-card {
             background: var(--glass);
             border: 1px solid var(--border);
@@ -99,7 +97,6 @@
             padding-left: 15px; margin: 40px 0 20px; text-transform: uppercase;
         }
 
-        /* Advanced Task Cards */
         .task-card {
             background: rgba(255,255,255,0.03);
             border: 1px solid rgba(255,255,255,0.05);
@@ -121,21 +118,8 @@
         .task-fr { font-size: 0.8rem; color: #64748b; font-style: italic; }
         .task-status { font-size: 0.7rem; color: #94a3b8; margin-top: 5px; }
         
-        /* 已完成任务样式 */
-        .task-card.completed {
-            opacity: 0.7;
-            border-color: rgba(16, 185, 129, 0.3);
-        }
-        .task-card.completed .task-cn {
-            text-decoration: line-through;
-            color: #94a3b8;
-        }
-        .task-card.completed .task-icon {
-            color: #10b981;
-            opacity: 0.8;
-        }
+        .empty-msg { text-align: center; padding: 40px; color: var(--accent); font-family: 'Orbitron'; font-size: 0.8rem; letter-spacing: 2px; }
 
-        /* Hexagonal Buttons */
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         
         .action-box {
@@ -164,13 +148,6 @@
         }
         .btn-launch:active { transform: translateY(5px); box-shadow: 0 5px 0 #0369a1; }
 
-        .sync-trigger {
-            position: absolute; top: 0; right: 0;
-            background: transparent; border: 1px solid var(--border);
-            color: #475569; padding: 8px 15px; border-radius: 4px;
-            font-size: 0.6rem; font-weight: 700; cursor: pointer;
-        }
-
         footer { 
             text-align: center; margin-top: 100px; padding-bottom: 50px;
             color: #334155; font-size: 0.6rem; letter-spacing: 3px; font-weight: 700;
@@ -182,7 +159,6 @@
     <div class="container">
         <header>
             <div class="date-badge">2026年02月18日 // 18 February 2026</div>
-            <button class="sync-trigger" id="sync-btn" onclick="triggerSync()">[ SYSTEM_SYNC ]</button>
             <h1>TONGTONG's SPACE<br><span style="opacity: 0.5; font-size: 1.2rem;">童童空间</span></h1>
         </header>
 
@@ -214,32 +190,17 @@
                 <h3>VIOLIN LAB</h3>
                 <p>1. 听赏音频；2.《施拉迪克》第一页拉完（不反复）。</p>
             </a>
+            
+            <a href="exam_hub.html" class="action-box" style="grid-column: span 2; border-color: var(--accent);">
+                <h3 style="color: var(--accent);">REVISION HUB</h3>
+                <p>复习备考中心：数学、科学、地理练习题库</p>
+            </a>
         </div>
 
         <footer>
-            V3.0-CORE-STABLE | © ATOM TONG 2026 | MISSION_COMMAND
+            V3.4-CORE-STABLE | © ATOM TONG 2026 | MISSION_COMMAND
         </footer>
     </div>
-
-    <script>
-        const API = "http://192.168.32.70:8888";
-        const isLocal = window.location.hostname.includes('192.168.') || 
-                        window.location.hostname.includes('localhost') || 
-                        window.location.hostname.includes('127.0.0.1');
-        if (!isLocal) document.getElementById('sync-btn').style.display = 'none';
-
-        async function triggerSync() {
-            const btn = document.getElementById('sync-btn');
-            btn.innerText = "[ SYNCING... ]";
-            try {
-                const r = await fetch(`${API}/trigger_sync`, { method: 'POST' });
-                if (r.ok) {
-                    btn.innerText = "[ RELOADING ]";
-                    setTimeout(() => location.reload(), 800);
-                } else btn.innerText = "[ FAILED ]";
-            } catch (e) { btn.innerText = "[ OFFLINE ]"; }
-        }
-    </script>
 </body>
 </html>
     
