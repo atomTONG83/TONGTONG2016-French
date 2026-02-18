@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TONGTONG's SCHOOL VOCABULARY | 童童学校生词本</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0ea5e9;
+            --secondary: #8b5cf6;
+            --accent: #10b981;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+            --border: rgba(255,255,255,0.1);
+            --glass: rgba(255,255,255,0.05);
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--darker);
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        .bg-grid {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(14, 165, 233, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(14, 165, 233, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+        
+        .date-badge {
+            display: inline-block;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            margin-bottom: 30px;
+        }
+        
+        .back-btn {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            color: #94a3b8;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+        
+        .back-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .stats-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            letter-spacing: 2px;
+        }
+        
+        .search-box {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 40px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .search-input {
+            flex: 1;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 15px;
+            color: #fff;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .search-btn {
+            background: var(--primary);
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            padding: 15px 30px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        .search-btn:hover {
+            background: #0284c7;
+        }
+        
+        .alphabet-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 40px;
+            justify-content: center;
+        }
+        
+        .letter-btn {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            color: #94a3b8;
+            width: 45px;
+            height: 45px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        
+        .letter-btn:hover, .letter-btn.active {
+            background: var(--primary);
+            color: #000;
+            border-color: var(--primary);
+        }
+        
+        .letter-section {
+            margin-bottom: 40px;
+        }
+        
+        .letter-header {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border);
+        }
+        
+        .word-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 15px;
+            transition: 0.3s;
+        }
+        
+        .word-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        .word-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .word-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #fff;
+        }
+        
+        .word-category {
+            background: rgba(139, 92, 246, 0.2);
+            color: var(--secondary);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .word-definition {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #cbd5e1;
+            margin-bottom: 10px;
+        }
+        
+        .word-chinese {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            font-style: italic;
+            border-left: 3px solid var(--accent);
+            padding-left: 15px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 100px;
+            padding-bottom: 50px;
+            color: #334155;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            font-weight: 700;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .stats-card {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    <div class="container">
+        <header>
+            <a href="tongtong_hub.html" class="back-btn">← 返回空间</a>
+            <div class="date-badge">2026年02月18日 // 18 February 2026</div>
+            <h1>SCHOOL VOCABULARY</h1>
+            <div class="subtitle">童童学校生词本 | 按字母顺序排序</div>
+        </header>
+
+        <div class="stats-card">
+            <div class="stat-item">
+                <div class="stat-value" id="total-words">12</div>
+                <div class="stat-label">总词汇量</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="letters-count">8</div>
+                <div class="stat-label">字母覆盖</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">100%</div>
+                <div class="stat-label">掌握进度</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">今日</div>
+                <div class="stat-label">最后更新</div>
+            </div>
+        </div>
+
+        <div class="search-box">
+            <input type="text" class="search-input" id="search-input" placeholder="搜索单词 (法语或中文)...">
+            <button class="search-btn" id="search-btn">搜索</button>
+        </div>
+
+        <div class="alphabet-nav" id="alphabet-nav">
+            <!-- 字母导航将通过JavaScript生成 -->
+        </div>
+
+        <div id="vocabulary-content">
+            <!-- 词汇内容将通过JavaScript生成 -->
+        </div>
+
+        <footer>
+            V1.0-SCHOOL-VOCAB | © ATOM TONG 2026 | KNOWLEDGE_ARCHIVE
+        </footer>
+    </div>
+
+    <script>
+        // 词汇数据
+        const vocabularyData = [
+            {
+                "word": "commission",
+                "definition": "Réunion de personnes choisies pour porter une affaire.",
+                "chinese": "为处理某项事务而选定的一群人的会议/委员会",
+                "category": "学校生词",
+                "date_added": "2026-02-18"
+            },
+            {
+                "word": "combler",
+                "definition": "Remplir un vide.",
+                "chinese": "填补空白/填满",
+                "category": "学校生词",
+                "date_added": "2026-02-18"
+            },
+            {
+                "word": "combustible",
+                "definition": "Matière que l'on fait brûler pour produire de la chaleur.",
+                "chinese": "用来燃烧以产生热量的物质/燃料",
+                "category": "学校生词",
+                "date_added": "2026-02-18"
+            },
+            {
+                "word": "juxtaposition",
+                "definition": "Assemblage d'éléments placés côté à côté.",
+                "chinese": "并列/并置",
+                "category": "学校生词",
+                "date_added": "2026-02-18"
+            },
+            {
+                "word": "jupon",
+                "definition": "Sous-vêtement de tissu léger qui se porte sous une robe.",
+                "chinese": "衬裙/穿在连衣裙底下的轻薄织物内衣",
+                "category": "学校生词",
+                "date_added": "2026-02-18"
+            },
+            {
+                "word": "illogique",
+                "definition": "Qui n'est pas logique.",
+                "chinese": "不合逻辑的",
+                "category": "学校生词",
+                "date_added": "2026-02-18"
+            },
+            {
+                "word": "inattentif",
+                "definition": "Qui ne fait pas attention à ce qui se passe ou à ce qu'il fait.",
+                "chinese": "不专心的/粗心的",
+                "category": "学校生词",
+                "date_added": "2026-02-18"
+            },
+            {
+                "word": "Zénith",
+                "definition": "Point du ciel juste au-dessus de la personne qui regarde.",
+                "chinese": "天顶/观测者头顶正上方的点",
+                "category": "学校生词",
+                "date_added": "2026-02-18"
+            },
+            {
+                "word": "Zeste",
+                "definition": "Petit morceau d'écorce de citron ou d'orange.",
+                "chinese": "柠檬或橙子的皮屑/薄皮",
+                "category": "学校生词",
+                "date_added": "2026-02-18"
+            },
+            {
+                "word": "une mâchoire",
+                "definition": "Chacun des deux os de la bouche (en forme d'arc) dans lesquels sont implantées les dents.",
+                "chinese": "颌/颌骨",
+                "category": "学校生词",
+                "date_added": "2026-02-18"
+            },
+            {
+                "word": "mâchicoulis",
+                "definition": "Balcon percé d'ouvertures au sommet des murailles ou des tours des châteaux forts.",
+                "chinese": "垛口/城堡顶部带有开口的阳台状结构",
+                "category": "学校生词",
+                "date_added": "2026-02-18"
+            },
+            {
+                "word": "minimiser",
+                "definition": "Diminuer l'importance de quelque chose.",
+                "chinese": "缩小……的重要性/轻视",
+                "category": "学校生词",
+                "date_added": "2026-02-18"
+            }
+        ];
+
+        // 按字母顺序排序
+        vocabularyData.sort((a, b) => {
+            const wordA = a.word.toLowerCase();
+            const wordB = b.word.toLowerCase();
+            return wordA.localeCompare(wordB);
+        });
+
+        // 初始化页面
+        function initPage() {
+            // 更新统计
+            document.getElementById('total-words').textContent = vocabularyData.length;
+            
+            // 计算字母覆盖
+            const letters = new Set();
+            vocabularyData.forEach(item => {
+                const firstLetter = item.word.charAt(0).toUpperCase();
+                letters.add(firstLetter);
+            });
+            document.getElementById('letters-count').textContent = letters.size;
+
+            // 生成字母导航
+            generateAlphabetNav(letters);
+
+            // 生成词汇内容
+            generateVocabularyContent();
+        }
+
+        // 生成字母导航
+        function generateAlphabetNav(letters) {
+            const alphabetNav = document.getElementById('alphabet-nav');
+            const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+            
+            alphabet.forEach(letter => {
+                const btn = document.createElement('a');
+                btn.href = `#letter-${letter}`;
+                btn.className = 'letter-btn';
+                if (letters.has(letter)) {
+                    btn.classList.add('active');
+                }
+                btn.textContent = letter;
+                btn.onclick = (e) => {
+                    e.preventDefault();
+                    scrollToLetter(letter);
+                };
+                alphabetNav.appendChild(btn);
+            });
+        }
+
+        // 生成词汇内容
+        function generateVocabularyContent() {
+            const contentDiv = document.getElementById('vocabulary-content');
+            contentDiv.innerHTML = '';
+            
+            // 按首字母分组
+            const groupedByLetter = {};
+            vocabularyData.forEach(item => {
+                const firstLetter = item.word.charAt(0).toUpperCase();
+                if (!groupedByLetter[firstLetter]) {
+                    groupedByLetter[firstLetter] = [];
+                }
+                groupedByLetter[firstLetter].push(item);
+            });
+            
+            // 按字母顺序生成章节
+            Object.keys(groupedByLetter).sort().forEach(letter => {
+                const section = document.createElement('div');
+                section.className = 'letter-section';
+                section.id = `letter-${letter}`;
+                
+                const header = document.createElement('div');
+                header.className = 'letter-header';
+                header.textContent = letter;
+                section.appendChild(header);
+                
+                groupedByLetter[letter].forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'word-card';
+                    
+                    const wordHeader = document.createElement('div');
+                    wordHeader.className = 'word-header';
+                    
+                    const wordTitle = document.createElement('div');
+                    wordTitle.className = 'word-title';
+                    wordTitle.textContent = item.word;
+                    
+                    const wordCategory = document.createElement('div');
+                    wordCategory.className = 'word-category';
+                    wordCategory.textContent = item.category;
+                    
+                    wordHeader.appendChild(wordTitle);
+                    wordHeader.appendChild(wordCategory);
+                    
+                    const wordDefinition = document.createElement('div');
+                    wordDefinition.className = 'word-definition';
+                    wordDefinition.textContent = item.definition;
+                    
+                    const wordChinese = document.createElement('div');
+                    wordChinese.className = 'word-chinese';
+                    wordChinese.textContent = item.chinese;
+                    
+                    card.appendChild(wordHeader);
+                    card.appendChild(wordDefinition);
+                    card.appendChild(wordChinese);
+                    
+                    section.appendChild(card);
+                });
+                
+                contentDiv.appendChild(section);
+            });
+        }
+
+        // 滚动到指定字母
+        function scrollToLetter(letter) {
+            const element = document.getElementById(`letter-${letter}`);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // 搜索功能
+        function setupSearch() {
+            const searchInput = document.getElementById('search-input');
+            const searchBtn = document.getElementById('search-btn');
+            
+            function performSearch() {
+                const query = searchInput.value.toLowerCase().trim();
+                if (!query) {
+                    generateVocabularyContent();
+                    return;
+                }
+                
+                const filtered = vocabularyData.filter(item => 
+                    item.word.toLowerCase().includes(query) ||
+                    item.definition.toLowerCase().includes(query) ||
+                    item.chinese.toLowerCase().includes(query)
+                );
+                
+                const contentDiv = document.getElementById('vocabulary-content');
+                contentDiv.innerHTML = '';
+                
+                if (filtered.length === 0) {
+                    const noResults = document.createElement('div');
+                    noResults.className = 'letter-section';
+                    noResults.innerHTML = `
+                        <div class="letter-header">搜索结果</div>
+                        <div class="word-card">
+                            <div class="word-header">
+                                <div class="word-title">未找到结果</div>
+                            </div>
+                            <div class="word-definition">未找到与 "${query}" 匹配的单词。</div>
+                        </div>
+                    `;
+                    contentDiv.appendChild(noResults);
+                    return;
+                }
+                
+                const section = document.createElement('div');
+                section.className = 'letter-section';
+                section.id = 'search-results';
+                
+                const header = document.createElement('div');
+                header.className = 'letter-header';
+                header.textContent = `搜索结果 (${filtered.length} 个)`;
+                section.appendChild(header);
+                
+                filtered.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'word-card';
+                    
+                    const wordHeader = document.createElement('div');
+                    wordHeader.className = 'word-header';
+                    
+                    const wordTitle = document.createElement('div');
+                    wordTitle.className = 'word-title';
+                    wordTitle.textContent = item.word;
+                    
+                    const wordCategory = document.createElement('div');
+                    wordCategory.className = 'word-category';
+                    wordCategory.textContent = item.category;
+                    
+                    wordHeader.appendChild(wordTitle);
+                    wordHeader.appendChild(wordCategory);
+                    
+                    const wordDefinition = document.createElement('div');
+                    wordDefinition.className = 'word-definition';
+                    wordDefinition.textContent = item.definition;
+                    
+                    const wordChinese = document.createElement('div');
+                    wordChinese.className = 'word-chinese';
+                    wordChinese.textContent = item.chinese;
+                    
+                    card.appendChild(wordHeader);
+                    card.appendChild(wordDefinition);
+                    card.appendChild(wordChinese);
+                    
+                    section.appendChild(card);
+                });
+                
+                contentDiv.appendChild(section);
+            }
+            
+            searchBtn.addEventListener('click', performSearch);
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            initPage();
+            setupSearch();
+        });
+    </script>
+</body>
+</html>

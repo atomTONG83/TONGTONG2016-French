@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TONGTONG's SPACE · V3.2</title>
+    <title>TONGTONG's SPACE · V3.3</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap');
         
@@ -44,19 +44,19 @@
             flex-direction: column;
         }
 
-        header { text-align: center; margin-bottom: 25px; position: relative; width: 100%; }
+        header { text-align: center; margin-bottom: 30px; position: relative; width: 100%; }
         
         .date-badge {
             font-family: 'Orbitron', sans-serif;
-            font-size: 0.6rem; color: var(--primary);
+            font-size: 0.7rem; color: var(--primary);
             border: 1px solid var(--primary);
-            padding: 3px 12px; border-radius: 2px;
-            display: inline-block; margin-bottom: 8px;
+            padding: 5px 15px; border-radius: 2px;
+            display: inline-block; margin-bottom: 12px;
         }
 
         h1 { 
             font-family: 'Orbitron', sans-serif;
-            font-weight: 900; font-size: 1.6rem;
+            font-weight: 900; font-size: 2.2rem;
             letter-spacing: 2px; color: #fff;
             text-shadow: 0 0 20px rgba(14, 165, 233, 0.5);
         }
@@ -65,11 +65,11 @@
             background: var(--glass);
             border: 1px solid var(--border);
             border-radius: 20px;
-            padding: 25px 15px;
+            padding: 35px 20px;
             text-align: center;
             position: relative;
             overflow: hidden;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             backdrop-filter: blur(10px);
             width: 100%;
         }
@@ -83,28 +83,28 @@
         @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         
         .reward-inner { position: relative; z-index: 2; }
-        .reward-label { font-size: 0.6rem; letter-spacing: 3px; color: var(--primary); font-weight: 700; }
+        .reward-label { font-size: 0.75rem; letter-spacing: 4px; color: var(--primary); font-weight: 700; }
         .reward-value { 
             font-family: 'Orbitron', sans-serif;
-            font-size: 3.5rem; font-weight: 900; color: var(--accent);
+            font-size: 4.5rem; font-weight: 900; color: var(--accent);
             text-shadow: 0 0 30px rgba(251, 191, 36, 0.4);
-            margin: 2px 0;
+            margin: 5px 0;
         }
 
         .section-title {
-            font-size: 0.8rem; font-weight: 700; letter-spacing: 4px;
-            color: var(--primary); border-left: 3px solid var(--primary);
-            padding-left: 12px; margin: 30px 0 15px; text-transform: uppercase;
+            font-size: 1.1rem; font-weight: 700; letter-spacing: 4px;
+            color: var(--primary); border-left: 4px solid var(--primary);
+            padding-left: 15px; margin: 45px 0 20px; text-transform: uppercase;
         }
 
-        /* 任务卡片容器 */
-        .mission-list { width: 100%; margin-bottom: 30px; }
+        /* 任务卡片字体调大 */
+        .mission-list { width: 100%; margin-bottom: 35px; }
 
         .task-card {
             background: rgba(255,255,255,0.03);
             border: 1px solid rgba(255,255,255,0.05);
-            margin-bottom: 10px; border-radius: 12px;
-            display: flex; align-items: center; padding: 15px;
+            margin-bottom: 12px; border-radius: 12px;
+            display: flex; align-items: center; padding: 18px 20px;
             width: 100%;
             animation: slideIn 0.5s ease-out forwards; opacity: 0;
         }
@@ -113,40 +113,39 @@
         
         .task-icon {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1rem; font-weight: 900; color: var(--primary);
-            opacity: 0.3; margin-right: 15px;
+            font-size: 1.2rem; font-weight: 900; color: var(--primary);
+            opacity: 0.3; margin-right: 18px;
         }
-        .task-cn { font-size: 0.9rem; font-weight: 700; color: #fff; }
-        .task-fr { font-size: 0.75rem; color: #64748b; font-style: italic; }
-        .task-status { font-size: 0.65rem; color: #94a3b8; margin-top: 3px; }
+        .task-cn { font-size: 1.15rem; font-weight: 700; color: #fff; line-height: 1.4; }
+        .task-fr { font-size: 0.95rem; color: #94a3b8; font-style: italic; margin-top: 3px; }
+        .task-status { font-size: 0.8rem; color: #64748b; margin-top: 6px; font-weight: 500; }
 
-        /* 大启动按钮 - 独立于网格以保证宽度一致 */
+        /* 按钮文字调大 */
         .btn-launch {
             display: block;
             width: 100%;
             background: linear-gradient(90deg, var(--primary), var(--secondary));
-            padding: 20px; border-radius: 12px;
+            padding: 22px; border-radius: 12px;
             text-align: center; color: #000 !important; font-weight: 900;
-            font-family: 'Orbitron', sans-serif; font-size: 1.2rem;
+            font-family: 'Orbitron', sans-serif; font-size: 1.4rem;
             text-decoration: none; 
             box-shadow: 0 6px 0 #0369a1;
             transition: 0.1s; 
-            margin-bottom: 15px;
+            margin-bottom: 18px;
         }
         .btn-launch:active { transform: translateY(3px); box-shadow: 0 3px 0 #0369a1; }
 
-        /* 2列网格按钮 */
         .grid-2 { 
             display: grid; 
             grid-template-columns: 1fr 1fr; 
-            gap: 12px; 
+            gap: 15px; 
             width: 100%;
         }
         
         .action-box {
             background: var(--glass);
             border: 1px solid var(--border);
-            padding: 15px; border-radius: 12px;
+            padding: 18px; border-radius: 12px;
             text-decoration: none; color: inherit;
             transition: 0.3s;
             display: flex;
@@ -159,19 +158,12 @@
             transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(0,0,0,0.5);
         }
-        .action-box h3 { color: var(--primary); font-size: 0.75rem; letter-spacing: 1px; margin-bottom: 5px; }
-        .action-box p { font-size: 0.65rem; color: #94a3b8; line-height: 1.2; }
-
-        .sync-trigger {
-            position: absolute; top: 0; right: 0;
-            background: transparent; border: 1px solid var(--border);
-            color: #475569; padding: 8px 15px; border-radius: 4px;
-            font-size: 0.6rem; font-weight: 700; cursor: pointer;
-        }
+        .action-box h3 { color: var(--primary); font-size: 0.95rem; letter-spacing: 1px; margin-bottom: 8px; font-weight: 700; }
+        .action-box p { font-size: 0.8rem; color: #94a3b8; line-height: 1.3; }
 
         footer { 
-            text-align: center; margin-top: 60px; padding-bottom: 40px;
-            color: #334155; font-size: 0.6rem; letter-spacing: 3px; font-weight: 700;
+            text-align: center; margin-top: 70px; padding-bottom: 50px;
+            color: #334155; font-size: 0.7rem; letter-spacing: 3px; font-weight: 700;
         }
     </style>
 </head>
@@ -180,14 +172,14 @@
     <div class="container">
         <header>
             <div class="date-badge">2026年02月18日 // 18 February 2026</div>
-            <h1>TONGTONG's SPACE<br><span style="opacity: 0.5; font-size: 1.2rem;">童童空间</span></h1>
+            <h1>TONGTONG's SPACE<br><span style="opacity: 0.5; font-size: 1.4rem;">童童空间</span></h1>
         </header>
 
         <div class="reward-card">
             <div class="reward-inner">
                 <div class="reward-label">CREDIT BALANCE AVAILABLE</div>
-                <div class="reward-value">95.0 <span style="font-size: 1.2rem; vertical-align: middle;">EUR</span></div>
-                <div style="font-size: 0.6rem; letter-spacing: 2px; color: var(--primary);">SYSTEM STATUS: ONLINE // AUTHORIZED</div>
+                <div class="reward-value">95.0 <span style="font-size: 1.5rem; vertical-align: middle;">EUR</span></div>
+                <div style="font-size: 0.75rem; letter-spacing: 2px; color: var(--primary);">SYSTEM STATUS: ONLINE // AUTHORIZED</div>
             </div>
         </div>
 
@@ -266,12 +258,10 @@
         </div>
     <div class="section-title">Knowledge Interface</div>
         
-        <!-- Le Tresor 按钮独立出来，确保宽度与任务列表完美一致 -->
         <a href="french_mot.html" class="btn-launch">
             Le Trésor des Mots
         </a>
 
-        <!-- 下方按钮使用 Grid，自动撑满剩余空间并对齐 -->
         <div class="grid-2">
             <a href="exam_hub.html" class="action-box" style="border-color: var(--accent); background: rgba(251,191,36,0.1);">
                 <h3 style="color: var(--accent);">REVISION & EXAMS</h3>
@@ -295,44 +285,8 @@
         </div>
 
         <footer>
-            V3.2-STABLE | © ATOM TONG 2026 | MISSION_COMMAND
+            V3.3-STABLE | © ATOM TONG 2026 | MISSION_COMMAND
         </footer>
     </div>
-
-    <script>
-        const API = "http://192.168.32.70:8888";
-        
-        async function triggerSync() {
-            const btn = document.getElementById('sync-btn');
-            const originalText = btn.innerText;
-            btn.innerText = "[ SYNCING... ]";
-            btn.style.color = "#fbbf24";
-            
-            try {
-                // 强制触发后端同步脚本
-                const r = await fetch(`${API}/trigger_sync`, { 
-                    method: 'POST',
-                    mode: 'cors',
-                    cache: 'no-cache'
-                });
-                
-                if (r.ok) {
-                    btn.innerText = "[ SUCCESS ]";
-                    btn.style.color = "#10b981";
-                    // 延迟刷新页面，让用户看到成功状态
-                    setTimeout(() => location.reload(true), 1000);
-                } else {
-                    btn.innerText = "[ ERR: SERVER ]";
-                    btn.style.color = "#ef4444";
-                    setTimeout(() => btn.innerText = originalText, 2000);
-                }
-            } catch (e) {
-                console.error("Sync failed:", e);
-                btn.innerText = "[ ERR: OFFLINE ]";
-                btn.style.color = "#ef4444";
-                setTimeout(() => btn.innerText = originalText, 2000);
-            }
-        }
-    </script>
 </body>
 </html>
