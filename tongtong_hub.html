@@ -302,16 +302,37 @@
 
     <script>
         const API = "http://192.168.32.70:8888";
+        
         async function triggerSync() {
             const btn = document.getElementById('sync-btn');
+            const originalText = btn.innerText;
             btn.innerText = "[ SYNCING... ]";
+            btn.style.color = "#fbbf24";
+            
             try {
-                const r = await fetch(`${API}/trigger_sync`, { method: 'POST' });
+                // 强制触发后端同步脚本
+                const r = await fetch(`${API}/trigger_sync`, { 
+                    method: 'POST',
+                    mode: 'cors',
+                    cache: 'no-cache'
+                });
+                
                 if (r.ok) {
-                    btn.innerText = "[ RELOADING ]";
-                    setTimeout(() => location.reload(), 800);
-                } else btn.innerText = "[ FAILED ]";
-            } catch (e) { btn.innerText = "[ OFFLINE ]"; }
+                    btn.innerText = "[ SUCCESS ]";
+                    btn.style.color = "#10b981";
+                    // 延迟刷新页面，让用户看到成功状态
+                    setTimeout(() => location.reload(true), 1000);
+                } else {
+                    btn.innerText = "[ ERR: SERVER ]";
+                    btn.style.color = "#ef4444";
+                    setTimeout(() => btn.innerText = originalText, 2000);
+                }
+            } catch (e) {
+                console.error("Sync failed:", e);
+                btn.innerText = "[ ERR: OFFLINE ]";
+                btn.style.color = "#ef4444";
+                setTimeout(() => btn.innerText = originalText, 2000);
+            }
         }
     </script>
 </body>
