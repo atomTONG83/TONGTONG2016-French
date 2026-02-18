@@ -3,6 +3,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="30">
     <title>任务中心 - Unified To-Do Hub</title>
     <style>
         :root {
@@ -24,7 +25,7 @@
         .task-item { display: flex; align-items: flex-start; gap: 14px; padding: 16px; border-radius: 12px; margin-bottom: 10px; background: rgba(255,255,255,0.02); border: 1px solid transparent; transition: 0.2s; }
         .task-item:hover { background: rgba(255,255,255,0.05); border-color: rgba(56, 189, 248, 0.2); }
         .checkbox { width: 22px; height: 22px; border-radius: 7px; border: 2px solid #334155; flex-shrink: 0; margin-top: 2px; }
-        .task-text { font-size: 1em; color: #e2e8f0; }
+        .task-text { font-size: 1em; color: #e2e8e0; }
         .badge-high { background: var(--accent-red); color: white; font-size: 0.65em; padding: 2px 8px; border-radius: 5px; font-weight: 800; margin-left: 8px; vertical-align: middle; }
         .empty-msg { text-align: center; color: #475569; padding: 60px 20px; font-style: italic; font-size: 0.9em; }
         .count-badge { font-size: 0.6em; background: #1e293b; color: #94a3b8; padding: 2px 8px; border-radius: 10px; margin-left: auto; }
@@ -34,31 +35,31 @@
     <div class="container">
         <header>
             <div>
-                <h1>📋 任务中心 <span class="ts">LAST_SYNC: 2026-02-18 23:21:28</span></h1>
-                <p style="color: #64748b; margin: 5px 0 0; font-size: 0.9em;">实时聚合：排除已完成项 | 聚合长期与即时任务</p>
+                <h1>📋 任务中心 <span class="ts">LAST_SYNC: 2026-02-18 23:23:28</span></h1>
+                <p style="color: #64748b; margin: 5px 0 0; font-size: 0.9em;">实时聚合：仅显示未完成项 (Active Only)</p>
             </div>
             <a href="master_dashboard.html" class="back-btn">← 返回总指挥部</a>
         </header>
 
-        <div class="grid">
+            <div class="grid">
             <div class="column">
                 <div class="col-header">
                     <span style="font-size: 1.5em;">🔥</span>
                     <h2 style="color: var(--accent-amber);">今日焦点 (Atom)</h2>
-                    <span class="count-badge">1</span>
+                    <span class="count-badge">5</span>
                 </div>
                 <div class="task-list">
-                    <div class="task-item"><div class="checkbox"></div><div class="task-text">[🔥 HIGH] 梳理食品加工发明的技术交底书 (正在寻找文件位置)</div></div>
+                    <div class="task-item"><div class="checkbox"></div><div class="task-text">[🔥 HIGH] 梳理食品加工发明的技术交底书 (正在寻找文件位置)</div></div><div class="task-item"><div class="checkbox"></div><div class="task-text">[🔥 HIGH] FIDAL 香港专利 Stage 2 提醒及年费账单跟进 (已草拟邮件)</div></div><div class="task-item"><div class="checkbox"></div><div class="task-text">[🔥 HIGH] 协调三友、钲霖事务所 3 月巴黎会议安排</div></div><div class="task-item"><div class="checkbox"></div><div class="task-text">跟进儿子今日5个学习任务完成情况</div></div><div class="task-item"><div class="checkbox"></div><div class="task-text">学习区块链技术</div></div>
                 </div>
             </div>
             <div class="column">
                 <div class="col-header">
                     <span style="font-size: 1.5em;">📋</span>
                     <h2 style="color: var(--accent-blue);">待办主清单 (Atom)</h2>
-                    <span class="count-badge">0</span>
+                    <span class="count-badge">12</span>
                 </div>
                 <div class="task-list">
-                    <div class="empty-msg">主清单没有待办项</div>
+                    <div class="task-item"><div class="checkbox"></div><div class="task-text">贵州茅台瑞典商标 GI 冲突复审</div></div><div class="task-item"><div class="checkbox"></div><div class="task-text">意大利专利侵权诉讼跟进</div></div><div class="task-item"><div class="checkbox"></div><div class="task-text">风雅颂欧洲专利申请材料准备</div></div><div class="task-item"><div class="checkbox"></div><div class="task-text">阳光电源反馈（德国/荷兰许可、专家清单）</div></div><div class="task-item"><div class="checkbox"></div><div class="task-text">转刘力强专利OA1</div></div><div class="task-item"><div class="checkbox"></div><div class="task-text">整理工作邮箱</div></div><div class="task-item"><div class="checkbox"></div><div class="task-text">整理并同步近期 LinkedIn 动态给 Pi (协助 AI 背景学习)</div></div><div class="task-item"><div class="checkbox"></div><div class="task-text">启动 French Mot 2.0: 双模学习系统 (本地 LAN + Web 测试)</div></div><div class="task-item"><div class="checkbox"></div><div class="task-text">AI 拨号订餐能力探索 (Project: Autonoma-Dine)</div></div><div class="task-item"><div class="checkbox"></div><div class="task-text">监控投资机会，等待符合信息优势标准的目标</div></div><div class="task-item"><div class="checkbox"></div><div class="task-text">学习区块链技术</div></div><div class="task-item"><div class="checkbox"></div><div class="task-text">[🔥 HIGH] [2026-02-19] CSC Global 2026 Pre-Annual Meeting Reception (17:30-19:00)<span class="badge-high">HIGH</span></div></div>
                 </div>
             </div>
             <div class="column">
