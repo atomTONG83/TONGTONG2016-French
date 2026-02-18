@@ -4,158 +4,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TONGTONG's SPACE · V3.5</title>
+    <title>TONGTONG's SPACE · V3.6</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap');
-        
         :root {
-            --bg: #030712;
-            --primary: #0ea5e9;
-            --secondary: #818cf8;
-            --accent: #fbbf24;
-            --danger: #ef4444;
-            --glass: rgba(15, 23, 42, 0.6);
-            --border: rgba(56, 189, 248, 0.2);
+            --bg: #030712; --primary: #0ea5e9; --secondary: #818cf8; --accent: #fbbf24;
+            --danger: #ef4444; --glass: rgba(15, 23, 42, 0.6); --border: rgba(56, 189, 248, 0.2);
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            background: var(--bg);
-            color: #f8fafc;
-            font-family: 'Rajdhani', sans-serif;
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
-
-        .bg-grid {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: 
-                linear-gradient(rgba(14, 165, 233, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(14, 165, 233, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: -1;
-            perspective: 1000px;
-            transform: rotateX(45deg);
-            transform-origin: center bottom;
-            animation: moveGrid 20s linear infinite;
-        }
+        body { background: var(--bg); color: #f8fafc; font-family: 'Rajdhani', sans-serif; min-height: 100vh; overflow-x: hidden; }
+        .bg-grid { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: linear-gradient(rgba(14, 165, 233, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(14, 165, 233, 0.05) 1px, transparent 1px); background-size: 50px 50px; z-index: -1; transform: rotateX(45deg); animation: moveGrid 20s linear infinite; }
         @keyframes moveGrid { from { background-position: 0 0; } to { background-position: 0 500px; } }
-
         .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-
-        header { text-align: center; margin-bottom: 30px; position: relative; }
-        
-        .date-badge {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.65rem; color: var(--primary);
-            border: 1px solid var(--primary);
-            padding: 4px 15px; border-radius: 2px;
-            display: inline-block; margin-bottom: 10px;
-            box-shadow: 0 0 10px rgba(14, 165, 233, 0.3);
-        }
-
-        h1 { 
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900; font-size: 1.8rem;
-            letter-spacing: 2px; color: #fff;
-            text-shadow: 0 0 20px rgba(14, 165, 233, 0.5);
-            margin: 10px 0;
-        }
-
-        .reward-card {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 40px 20px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 30px;
-            backdrop-filter: blur(10px);
-        }
-        .reward-card::before {
-            content: ''; position: absolute;
-            top: -50%; left: -50%; width: 200%; height: 200%;
-            background: conic-gradient(transparent, var(--primary), transparent 40%);
-            animation: rotate 4s linear infinite;
-            opacity: 0.2;
-        }
-        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        
-        .reward-inner { position: relative; z-index: 2; }
-        .reward-label { font-size: 0.7rem; letter-spacing: 4px; color: var(--primary); font-weight: 700; }
-        .reward-value { 
-            font-family: 'Orbitron', sans-serif;
-            font-size: 5rem; font-weight: 900; color: var(--accent);
-            text-shadow: 0 0 30px rgba(251, 191, 36, 0.4);
-            margin: 5px 0;
-        }
-
-        .section-title {
-            font-size: 0.9rem; font-weight: 700; letter-spacing: 5px;
-            color: var(--primary); border-left: 3px solid var(--primary);
-            padding-left: 15px; margin: 40px 0 20px; text-transform: uppercase;
-        }
-
-        .task-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.05);
-            margin-bottom: 12px; border-radius: 12px;
-            display: flex; align-items: center; padding: 20px;
-            position: relative; overflow: hidden;
-            animation: slideIn 0.5s ease-out forwards; opacity: 0;
-        }
+        header { text-align: center; margin-bottom: 30px; }
+        .date-badge { font-family: 'Orbitron'; font-size: 0.65rem; color: var(--primary); border: 1px solid var(--primary); padding: 4px 15px; display: inline-block; margin-bottom: 10px; }
+        h1 { font-family: 'Orbitron'; font-weight: 900; font-size: 1.8rem; letter-spacing: 2px; text-shadow: 0 0 20px rgba(14, 165, 233, 0.5); }
+        .reward-card { background: var(--glass); border: 1px solid var(--border); border-radius: 20px; padding: 40px 20px; text-align: center; position: relative; overflow: hidden; margin-bottom: 30px; backdrop-filter: blur(10px); }
+        .reward-value { font-family: 'Orbitron'; font-size: 5rem; font-weight: 900; color: var(--accent); text-shadow: 0 0 30px rgba(251, 191, 36, 0.4); }
+        .section-title { font-size: 0.9rem; font-weight: 700; letter-spacing: 5px; color: var(--primary); border-left: 3px solid var(--primary); padding-left: 15px; margin: 40px 0 20px; text-transform: uppercase; }
+        .task-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); margin-bottom: 12px; border-radius: 12px; display: flex; align-items: center; padding: 20px; animation: slideIn 0.5s ease-out forwards; }
         @keyframes slideIn { from { transform: translateX(-30px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        
-        .task-card:hover { border-color: var(--primary); background: rgba(14, 165, 233, 0.05); }
-        
-        .task-icon {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.2rem; font-weight: 900; color: var(--primary);
-            opacity: 0.3; margin-right: 20px;
-        }
+        .task-icon { font-family: 'Orbitron'; font-size: 1.2rem; font-weight: 900; color: var(--primary); opacity: 0.3; margin-right: 20px; }
         .task-cn { font-size: 1rem; font-weight: 700; color: #fff; }
         .task-fr { font-size: 0.8rem; color: #64748b; font-style: italic; }
-        .task-status { font-size: 0.7rem; color: #94a3b8; margin-top: 5px; }
-        
         .empty-msg { text-align: center; padding: 40px; color: var(--accent); font-family: 'Orbitron'; font-size: 0.8rem; letter-spacing: 2px; }
-
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        
-        .action-box {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            padding: 25px; border-radius: 15px;
-            text-decoration: none; color: inherit;
-            transition: 0.3s;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        .action-box:hover { 
-            border-color: var(--primary); 
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        .action-box h3 { color: var(--primary); font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 10px; text-transform: uppercase; }
-        .action-box p { font-size: 0.75rem; color: #94a3b8; line-height: 1.4; }
-
-        .btn-launch {
-            background: linear-gradient(90deg, #10b981, #3b82f6);
-            padding: 25px; border-radius: 15px;
-            text-align: center; color: #fff; font-weight: 900;
-            font-family: 'Orbitron', sans-serif; font-size: 1.2rem;
-            text-decoration: none; box-shadow: 0 6px 0 #065f46;
-            transition: 0.1s;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-        }
-        .btn-launch:active { transform: translateY(3px); box-shadow: 0 3px 0 #065f46; }
-        .btn-launch span { font-size: 0.6rem; letter-spacing: 2px; opacity: 0.8; margin-top: 5px; font-weight: normal; }
-
-        footer { 
-            text-align: center; margin-top: 100px; padding-bottom: 50px;
-            color: #334155; font-size: 0.6rem; letter-spacing: 3px; font-weight: 700;
-        }
+        .action-box { background: var(--glass); border: 1px solid var(--border); padding: 25px; border-radius: 15px; text-decoration: none; color: inherit; transition: 0.3s; }
+        .action-box:hover { border-color: var(--primary); transform: translateY(-5px); }
+        .action-box h3 { color: var(--primary); font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 10px; }
+        .btn-launch { grid-column: span 2; background: linear-gradient(90deg, var(--primary), var(--secondary)); padding: 30px; border-radius: 15px; text-align: center; color: #000; font-weight: 900; font-family: 'Orbitron'; font-size: 1.5rem; text-decoration: none; box-shadow: 0 10px 0 #0369a1; transition: 0.1s; margin-bottom: 15px; }
+        .btn-launch:active { transform: translateY(5px); box-shadow: 0 5px 0 #0369a1; }
+        footer { text-align: center; margin-top: 100px; padding-bottom: 50px; color: #334155; font-size: 0.6rem; letter-spacing: 3px; font-weight: 700; }
     </style>
 </head>
 <body>
@@ -165,53 +44,33 @@
             <div class="date-badge">2026年02月18日 // 18 February 2026</div>
             <h1>TONGTONG's SPACE<br><span style="opacity: 0.5; font-size: 1.2rem;">童童空间</span></h1>
         </header>
-
         <div class="reward-card">
-            <div class="reward-inner">
-                <div class="reward-label">CREDIT BALANCE AVAILABLE</div>
-                <div class="reward-value">95.0 <span style="font-size: 1.2rem; vertical-align: middle;">EUR</span></div>
-                <div style="font-size: 0.6rem; letter-spacing: 2px; color: var(--primary);">SYSTEM STATUS: ONLINE // AUTHORIZED</div>
-            </div>
+            <div class="reward-value">95.0 <span style="font-size: 1.2rem; vertical-align: middle;">EUR</span></div>
+            <div style="font-size: 0.6rem; letter-spacing: 2px; color: var(--primary);">CREDIT BALANCE AVAILABLE</div>
         </div>
-
         <div class="section-title">Active Mission List</div>
-        <div style="margin-bottom: 40px;">
-            <div class="empty-msg">MISSION COMPLETE. WELL DONE JINGYI. 🏆</div>
-        </div>
-
+        <div style="margin-bottom: 40px;"><div class="empty-msg">MISSION COMPLETE. WELL DONE JINGYI. 🏆</div></div>
         <div class="section-title">Knowledge Interface</div>
         <div class="grid-2">
-            <!-- New French Vocabulary Button -->
-            <a href="school_vocabulary.html" class="btn-launch" style="background: linear-gradient(90deg, #8b5cf6, #d946ef); box-shadow: 0 6px 0 #5b21b6;">
-                LEXIQUE
-                <span>学校法语生词本</span>
+            <a href="french_mot.html" class="btn-launch">Le Trésor des Mots</a>
+            <a href="school_vocabulary.html" class="action-box" style="border-color: #818cf8;">
+                <h3>LEXIQUE</h3>
+                <p style="font-size: 0.75rem; color: #94a3b8;">学校法语生词本</p>
             </a>
-
-            <!-- Trésor des Mots Button -->
-            <a href="french_mot.html" class="btn-launch">
-                TREASURE
-                <span>法语单词宝库</span>
+            <a href="exam_hub.html" class="action-box" style="border-color: var(--accent);">
+                <h3>REVISION HUB</h3>
+                <p style="font-size: 0.75rem; color: #94a3b8;">复习备考中心</p>
             </a>
-            
             <a href="english_learning_hub.html" class="action-box">
                 <h3>ENGLISH MODULE</h3>
-                <p>Write a summary paragraph about Anatole Latuile, Un Max de Surprises.</p>
+                <p style="font-size: 0.75rem; color: #94a3b8;">Write a summary paragraph about Anatole Latuile, Un Max de Surprises.</p>
             </a>
-            
             <a href="violin_learning_hub.html" class="action-box">
                 <h3>VIOLIN LAB</h3>
-                <p>1. 听赏音频；2.《施拉迪克》第一页拉完（不反复）。</p>
-            </a>
-            
-            <a href="exam_hub.html" class="action-box" style="grid-column: span 2; border-color: var(--accent);">
-                <h3 style="color: var(--accent);">REVISION HUB</h3>
-                <p>复习备考中心：数学、科学、地理练习题库</p>
+                <p style="font-size: 0.75rem; color: #94a3b8;">1. 听赏音频；2.《施拉迪克》第一页拉完（不反复）。</p>
             </a>
         </div>
-
-        <footer>
-            V3.5-CORE-STABLE | © ATOM TONG 2026 | MISSION_COMMAND
-        </footer>
+        <footer>V3.6-CORE-STABLE | © ATOM TONG 2026 | MISSION_COMMAND</footer>
     </div>
 </body>
 </html>
