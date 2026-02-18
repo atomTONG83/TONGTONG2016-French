@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>复习备考中心 | Centre de Révision</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap');
+        :root { --bg: #030712; --primary: #fbbf24; --text: #f8fafc; --border: #334155; }
+        body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; padding: 20px; }
+        .container { max-width: 600px; margin: 0 auto; }
+        header { text-align: center; margin-bottom: 40px; border-bottom: 1px solid var(--border); padding-bottom: 20px; }
+        h1 { font-family: 'Orbitron', sans-serif; color: var(--primary); font-size: 1.5rem; }
+        .exam-card {
+            background: rgba(251, 191, 36, 0.05);
+            border: 1px solid var(--primary);
+            padding: 25px; border-radius: 15px;
+            text-decoration: none; color: inherit;
+            display: flex; justify-content: space-between; align-items: center;
+            transition: 0.3s;
+        }
+        .exam-card:hover { transform: scale(1.02); background: rgba(251, 191, 36, 0.1); }
+        .exam-card h2 { font-size: 1.2rem; margin-bottom: 5px; }
+        .exam-card p { font-size: 0.8rem; opacity: 0.7; }
+        .arrow { font-size: 1.5rem; color: var(--primary); }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #0ea5e9; text-decoration: none; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="tongtong_hub.html" class="back-link">← 返回主空间</a>
+            <h1>REVISION & EXAMS<br><span style="opacity:0.5; font-size: 0.8rem;">复习备考中心</span></h1>
+        </header>
+
+        <div class="section-title" style="margin-bottom:20px; color: var(--primary); font-weight: bold; letter-spacing: 2px;">PROCHAINS EXAMENS (下次考试)</div>
+        
+        <a href="math_length_exam.html" class="exam-card" style="margin-bottom: 15px; border-left: 5px solid #10b981;">
+            <div>
+                <div style="font-size: 0.6rem; background: #10b981; color: #000; display: inline-block; padding: 2px 8px; border-radius: 4px; margin-bottom: 5px; font-weight: bold;">[ RECO-TODAY : 今日重点复习 ]</div>
+                <h2>数学：长度单位换算</h2>
+                <p>Maths : Mesures de longueurs (km, hm, dam, m, dm, cm, mm)</p>
+                <p style="margin-top:10px; color: #fbbf24; font-weight: bold;">📅 考试日期: 2026-02-19 (明天)</p>
+            </div>
+            <div class="arrow">→</div>
+        </a>
+
+        <a href="science_volcan_exam.html" class="exam-card" style="margin-bottom: 15px; border-color: #ef4444; background: rgba(239, 68, 68, 0.05); border-left: 5px solid #ef4444;">
+            <div>
+                <div style="font-size: 0.6rem; background: #ef4444; color: #fff; display: inline-block; padding: 2px 8px; border-radius: 4px; margin-bottom: 5px; font-weight: bold;">[ RECO-TODAY : 今日重点复习 ]</div>
+                <h2 style="color: #ef4444;">自然科学：火山</h2>
+                <p>Sciences : Qu'est-ce qu'un volcan ? (Gris vs Rouges)</p>
+                <p style="margin-top:10px; color: #fbbf24; font-weight: bold;">📅 考试日期: 2026-02-20 (后天)</p>
+            </div>
+            <div class="arrow" style="color: #ef4444;">→</div>
+        </a>
+
+        <a href="geo_france_landscape_exam.html" class="exam-card" style="border-color: #0ea5e9; background: rgba(14, 165, 233, 0.05); border-left: 5px solid #0ea5e9;">
+            <div>
+                <div style="font-size: 0.6rem; background: #0ea5e9; color: #fff; display: inline-block; padding: 2px 8px; border-radius: 4px; margin-bottom: 5px; font-weight: bold;">[ RECO-TODAY : 今日重点复习 ]</div>
+                <h2 style="color: #0ea5e9;">地理：法国与景观</h2>
+                <p>Géographie : La France (Hexagone) et ses paysages</p>
+                <p style="margin-top:10px; color: #fbbf24; font-weight: bold;">📅 考试日期: 2026-02-19 (明天)</p>
+            </div>
+            <div class="arrow" style="color: #0ea5e9;">→</div>
+        </a>
+
+        <p style="text-align:center; margin-top:50px; opacity:0.3; font-size: 0.6rem;">V3.1-STABLE | © ATOM TONG</p>
+    </div>
+</body>
+</html>
