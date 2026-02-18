@@ -1,0 +1,32 @@
+[
+    {
+        "id": "math_length",
+        "title_cn": "数学：长度单位换算",
+        "title_fr": "Maths : Mesures de longueurs",
+        "link": "math_length_exam.html",
+        "exam_date": "2026-02-19",
+        "create_date": "2026-02-18",
+        "subject": "math",
+        "priority": "high"
+    },
+    {
+        "id": "science_volcan",
+        "title_cn": "自然科学：火山",
+        "title_fr": "Sciences : Qu'est-ce qu'un volcan ?",
+        "link": "science_volcan_exam.html",
+        "exam_date": "2026-02-20",
+        "create_date": "2026-02-18",
+        "subject": "science",
+        "priority": "high"
+    },
+    {
+        "id": "geo_france",
+        "title_cn": "地理：法国与景观",
+        "title_fr": "Géographie : La France et ses paysages",
+        "link": "geo_france_landscape_exam.html",
+        "exam_date": "2026-02-19",
+        "create_date": "2026-02-18",
+        "subject": "geo",
+        "priority": "high"
+    }
+]
