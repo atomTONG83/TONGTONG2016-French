@@ -174,6 +174,96 @@
       "lvl": 1,
       "next": "2026-02-17",
       "err_days": 0
+    },
+    {
+      "word": "Maison",
+      "lvl": 1,
+      "next": "2026-02-18",
+      "err_days": 0
+    },
+    {
+      "word": "École",
+      "lvl": 1,
+      "next": "2026-02-18",
+      "err_days": 0
+    },
+    {
+      "word": "Famille",
+      "lvl": 1,
+      "next": "2026-02-18",
+      "err_days": 0
+    },
+    {
+      "word": "Jardin",
+      "lvl": 1,
+      "next": "2026-02-18",
+      "err_days": 0
+    },
+    {
+      "word": "Table",
+      "lvl": 1,
+      "next": "2026-02-18",
+      "err_days": 0
+    },
+    {
+      "word": "Chaise",
+      "lvl": 1,
+      "next": "2026-02-18",
+      "err_days": 0
+    },
+    {
+      "word": "Livre",
+      "lvl": 1,
+      "next": "2026-02-18",
+      "err_days": 0
+    },
+    {
+      "word": "Crayon",
+      "lvl": 1,
+      "next": "2026-02-18",
+      "err_days": 0
+    },
+    {
+      "word": "Porte",
+      "lvl": 1,
+      "next": "2026-02-18",
+      "err_days": 0
+    },
+    {
+      "word": "Chien",
+      "lvl": 1,
+      "next": "2026-02-18",
+      "err_days": 0
+    },
+    {
+      "word": "Chat",
+      "lvl": 1,
+      "next": "2026-02-18",
+      "err_days": 0
+    },
+    {
+      "word": "Soleil",
+      "lvl": 1,
+      "next": "2026-02-18",
+      "err_days": 0
+    },
+    {
+      "word": "Lune",
+      "lvl": 1,
+      "next": "2026-02-18",
+      "err_days": 0
+    },
+    {
+      "word": "Étoile",
+      "lvl": 1,
+      "next": "2026-02-18",
+      "err_days": 0
+    },
+    {
+      "word": "Arbre",
+      "lvl": 1,
+      "next": "2026-02-18",
+      "err_days": 0
     }
   ],
   "daily_stats": {
