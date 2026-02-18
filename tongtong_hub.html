@@ -41,37 +41,37 @@
         }
         @keyframes moveGrid { from { background-position: 0 0; } to { background-position: 0 500px; } }
 
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .container { max-width: 480px; margin: 0 auto; padding: 20px; }
 
-        header { text-align: center; margin-bottom: 30px; position: relative; }
+        header { text-align: center; margin-bottom: 25px; position: relative; }
         
         .date-badge {
             font-family: 'Orbitron', sans-serif;
-            font-size: 0.65rem; color: var(--primary);
+            font-size: 0.6rem; color: var(--primary);
             border: 1px solid var(--primary);
-            padding: 4px 15px; border-radius: 2px;
-            display: inline-block; margin-bottom: 10px;
+            padding: 3px 12px; border-radius: 2px;
+            display: inline-block; margin-bottom: 8px;
             box-shadow: 0 0 10px rgba(14, 165, 233, 0.3);
         }
 
         h1 { 
             font-family: 'Orbitron', sans-serif;
-            font-weight: 900; font-size: 1.8rem;
+            font-weight: 900; font-size: 1.6rem;
             letter-spacing: 2px; color: #fff;
             text-shadow: 0 0 20px rgba(14, 165, 233, 0.5);
-            margin: 10px 0;
+            margin: 5px 0;
         }
 
-        /* 恢复：Pulsing Reward Card 特效 */
+        /* 优化：Reward Card 尺寸 */
         .reward-card {
             background: var(--glass);
             border: 1px solid var(--border);
             border-radius: 20px;
-            padding: 40px 20px;
+            padding: 25px 15px;
             text-align: center;
             position: relative;
             overflow: hidden;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             backdrop-filter: blur(10px);
         }
         .reward-card::before {
@@ -84,26 +84,26 @@
         @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         
         .reward-inner { position: relative; z-index: 2; }
-        .reward-label { font-size: 0.7rem; letter-spacing: 4px; color: var(--primary); font-weight: 700; }
+        .reward-label { font-size: 0.6rem; letter-spacing: 3px; color: var(--primary); font-weight: 700; }
         .reward-value { 
             font-family: 'Orbitron', sans-serif;
-            font-size: 5rem; font-weight: 900; color: var(--accent);
+            font-size: 3.5rem; font-weight: 900; color: var(--accent);
             text-shadow: 0 0 30px rgba(251, 191, 36, 0.4);
-            margin: 5px 0;
+            margin: 2px 0;
         }
 
         .section-title {
-            font-size: 0.9rem; font-weight: 700; letter-spacing: 5px;
+            font-size: 0.8rem; font-weight: 700; letter-spacing: 4px;
             color: var(--primary); border-left: 3px solid var(--primary);
-            padding-left: 15px; margin: 40px 0 20px; text-transform: uppercase;
+            padding-left: 12px; margin: 30px 0 15px; text-transform: uppercase;
         }
 
-        /* 恢复：Advanced Task Cards */
+        /* 优化：任务卡片更紧凑 */
         .task-card {
             background: rgba(255,255,255,0.03);
             border: 1px solid rgba(255,255,255,0.05);
-            margin-bottom: 12px; border-radius: 12px;
-            display: flex; align-items: center; padding: 20px;
+            margin-bottom: 10px; border-radius: 12px;
+            display: flex; align-items: center; padding: 15px;
             position: relative; overflow: hidden;
             animation: slideIn 0.5s ease-out forwards; opacity: 0;
         }
@@ -113,40 +113,45 @@
         
         .task-icon {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.2rem; font-weight: 900; color: var(--primary);
-            opacity: 0.3; margin-right: 20px;
+            font-size: 1rem; font-weight: 900; color: var(--primary);
+            opacity: 0.3; margin-right: 15px;
         }
-        .task-cn { font-size: 1rem; font-weight: 700; color: #fff; }
-        .task-fr { font-size: 0.8rem; color: #64748b; font-style: italic; }
-        .task-status { font-size: 0.7rem; color: #94a3b8; margin-top: 5px; }
+        .task-cn { font-size: 0.9rem; font-weight: 700; color: #fff; }
+        .task-fr { font-size: 0.75rem; color: #64748b; font-style: italic; }
+        .task-status { font-size: 0.65rem; color: #94a3b8; margin-top: 3px; }
         
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         
+        /* 优化：按钮宽度和高度比例 */
         .action-box {
             background: var(--glass);
             border: 1px solid var(--border);
-            padding: 25px; border-radius: 15px;
+            padding: 15px; border-radius: 12px;
             text-decoration: none; color: inherit;
             transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
         .action-box:hover { 
             border-color: var(--primary); 
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
         }
-        .action-box h3 { color: var(--primary); font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 10px; }
-        .action-box p { font-size: 0.75rem; color: #94a3b8; line-height: 1.4; }
+        .action-box h3 { color: var(--primary); font-size: 0.75rem; letter-spacing: 1px; margin-bottom: 5px; }
+        .action-box p { font-size: 0.65rem; color: #94a3b8; line-height: 1.2; }
 
+        /* 优化：Le Tresor 按钮高度调整 */
         .btn-launch {
             grid-column: span 2;
             background: linear-gradient(90deg, var(--primary), var(--secondary));
-            padding: 30px; border-radius: 15px;
+            padding: 20px; border-radius: 12px;
             text-align: center; color: #000; font-weight: 900;
-            font-family: 'Orbitron', sans-serif; font-size: 1.5rem;
-            text-decoration: none; box-shadow: 0 10px 0 #0369a1;
-            transition: 0.1s; margin-bottom: 20px;
+            font-family: 'Orbitron', sans-serif; font-size: 1.2rem;
+            text-decoration: none; box-shadow: 0 6px 0 #0369a1;
+            transition: 0.1s; margin-bottom: 10px;
         }
-        .btn-launch:active { transform: translateY(5px); box-shadow: 0 5px 0 #0369a1; }
+        .btn-launch:active { transform: translateY(3px); box-shadow: 0 3px 0 #0369a1; }
 
         .sync-trigger {
             position: absolute; top: 0; right: 0;
