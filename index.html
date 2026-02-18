@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TONGTONG's SPACE · V3.0</title>
+    <title>TONGTONG's SPACE · V3.5</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap');
         
@@ -128,25 +128,29 @@
             padding: 25px; border-radius: 15px;
             text-decoration: none; color: inherit;
             transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
         .action-box:hover { 
             border-color: var(--primary); 
             transform: translateY(-5px);
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        .action-box h3 { color: var(--primary); font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 10px; }
+        .action-box h3 { color: var(--primary); font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 10px; text-transform: uppercase; }
         .action-box p { font-size: 0.75rem; color: #94a3b8; line-height: 1.4; }
 
         .btn-launch {
-            grid-column: span 2;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            padding: 30px; border-radius: 15px;
-            text-align: center; color: #000; font-weight: 900;
-            font-family: 'Orbitron', sans-serif; font-size: 1.5rem;
-            text-decoration: none; box-shadow: 0 10px 0 #0369a1;
+            background: linear-gradient(90deg, #10b981, #3b82f6);
+            padding: 25px; border-radius: 15px;
+            text-align: center; color: #fff; font-weight: 900;
+            font-family: 'Orbitron', sans-serif; font-size: 1.2rem;
+            text-decoration: none; box-shadow: 0 6px 0 #065f46;
             transition: 0.1s;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
-        .btn-launch:active { transform: translateY(5px); box-shadow: 0 5px 0 #0369a1; }
+        .btn-launch:active { transform: translateY(3px); box-shadow: 0 3px 0 #065f46; }
+        .btn-launch span { font-size: 0.6rem; letter-spacing: 2px; opacity: 0.8; margin-top: 5px; font-weight: normal; }
 
         footer { 
             text-align: center; margin-top: 100px; padding-bottom: 50px;
@@ -177,8 +181,16 @@
 
         <div class="section-title">Knowledge Interface</div>
         <div class="grid-2">
+            <!-- New French Vocabulary Button -->
+            <a href="school_vocabulary.html" class="btn-launch" style="background: linear-gradient(90deg, #8b5cf6, #d946ef); box-shadow: 0 6px 0 #5b21b6;">
+                LEXIQUE
+                <span>学校法语生词本</span>
+            </a>
+
+            <!-- Trésor des Mots Button -->
             <a href="french_mot.html" class="btn-launch">
-                Le Trésor des Mots
+                TREASURE
+                <span>法语单词宝库</span>
             </a>
             
             <a href="english_learning_hub.html" class="action-box">
@@ -198,7 +210,7 @@
         </div>
 
         <footer>
-            V3.4-CORE-STABLE | © ATOM TONG 2026 | MISSION_COMMAND
+            V3.5-CORE-STABLE | © ATOM TONG 2026 | MISSION_COMMAND
         </footer>
     </div>
 </body>
