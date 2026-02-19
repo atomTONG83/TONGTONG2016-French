@@ -724,23 +724,35 @@
                     let d = new Date(); d.setDate(d.getDate() + INTERVALS[n.lvl]); n.next = d.toISOString().split('T')[0]; 
                 }
                 gCombo++; delete gMistakes[w]; speak("Très bien"); 
-                setTimeout(() => { checkDailyCompletion(); refreshProgressOnly(); updateQuiz(); }, 1000);
+                setTimeout(() => { 
+                    checkDailyCompletion(); 
+                    refreshProgressOnly(); 
+                    updateQuiz(); 
+                }, 1000);
             } else {
                 btn.classList.add('wrong');
                 feedbackEl.innerHTML = "❌ Dommage !"; feedbackEl.style.color = "var(--e)";
                 sessionMastery[w] = 0;
                 allBtns.forEach(b => { if(b.innerText === target.def) b.classList.add('correct'); });
-                if (!gMistakes[w]) gMistakes[w] = 1; 
-                else {
+                if (!gMistakes[w]) {
+                    gMistakes[w] = 1;
+                    setTimeout(() => { 
+                        refreshProgressOnly(); 
+                        updateQuiz(); 
+                    }, 1800);
+                } else {
                     gCombo = 0; 
                     if (n) { 
                         n.lvl = 0; let d = new Date(); d.setDate(d.getDate() + 1); n.next = d.toISOString().split('T')[0]; 
                         n.err_days = (n.err_days || 0) + 1; if (n.err_days >= 2) gData.notebook = gData.notebook.filter(e => e.word !== w);
                     }
                     delete gMistakes[w];
+                    setTimeout(() => { 
+                        refreshProgressOnly(); 
+                        updateQuiz(); 
+                    }, 1800);
                 }
                 speak("Dommage");
-                setTimeout(() => { refreshProgressOnly(); updateQuiz(); }, 1800);
             }
         }
 
@@ -752,7 +764,6 @@
             const totalPercent = hasReview ? Math.round((info.newPercent + info.revPercent) / 2) : Math.round(info.newPercent);
             document.getElementById('ui-progress').innerHTML = totalPercent + "%";
             document.getElementById('ui-stars').innerText = gData.stars || 0;
-            document.getElementById('ui-combo').innerText = gCombo;
             saveData(); saveSession();
         }
         
