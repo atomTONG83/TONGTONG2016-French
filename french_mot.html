@@ -818,6 +818,23 @@
         function closeModal(id) { document.getElementById(id).style.display = "none"; }
         function speak(t) { const m = new SpeechSynthesisUtterance(t); m.lang = 'fr-FR'; window.speechSynthesis.speak(m); }
         window.onclick = e => { if (e.target.className === 'modal') e.target.style.display = "none"; };
+        
+        // Auto-retry background sync if in error state
+        setInterval(async () => {
+            const el = document.getElementById('sync-status');
+            if (el && el.innerText.includes("Error")) {
+                console.log("Retrying background sync...");
+                try {
+                    const res = await fetch(`${API}/save_data`, { 
+                        method:'POST', 
+                        headers:{'Content-Type':'application/json'}, 
+                        body:JSON.stringify(gData) 
+                    });
+                    if (res.ok) updateSyncStatus("✅ Enregistré", "#2ecc71");
+                } catch(e) {}
+            }
+        }, 30000);
+
         window.onload = init;
     </script>
 </body>
