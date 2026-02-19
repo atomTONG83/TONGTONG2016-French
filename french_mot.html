@@ -386,17 +386,30 @@
             
             try {
                 const response = await fetch(`${DATA_PATH}?t=${Date.now()}`);
+                const localSaved = localStorage.getItem('french_learning_data');
+                const localData = localSaved ? JSON.parse(localSaved) : null;
+
                 if (response.ok) {
                     const serverData = await response.json();
-                    if (serverData && Array.isArray(serverData.notebook)) {
+                    
+                    // CRITICAL: Conflict Resolution Logic
+                    // If local data exists and has MORE stars or MORE notebook entries, it's ahead of server.
+                    if (localData && (
+                        (localData.stars > (serverData.stars || 0)) || 
+                        (localData.notebook && serverData.notebook && localData.notebook.length > serverData.notebook.length)
+                    )) {
+                        console.log("🚀 Local data is ahead. Syncing local to server...");
+                        gData = localData;
+                        await saveData(); // Push local state to server
+                    } else {
                         gData = serverData;
                         localStorage.setItem('french_learning_data', JSON.stringify(gData));
-                        document.getElementById('sync-status').innerText = "☁️ Synchronisé";
-                        document.getElementById('sync-status').style.background = "#3498db";
                     }
-                } else {
-                    const savedData = localStorage.getItem('french_learning_data');
-                    if (savedData) gData = JSON.parse(savedData);
+                    
+                    updateSyncStatus("☁️ Synchronisé", "#3498db");
+                } else if (localData) {
+                    gData = localData;
+                    updateSyncStatus("⚠️ Offline (Local Mode)", "#e67e22");
                 }
 
                 if (!gData.notebook) gData.notebook = [];
@@ -653,7 +666,30 @@
 
         async function saveData() { 
             localStorage.setItem('french_learning_data', JSON.stringify(gData));
-            try { await fetch(`${API}/save_data`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(gData) }); } catch(e) {}
+            updateSyncStatus("⏳ Sauvegarde...", "#f1c40f");
+            try { 
+                const res = await fetch(`${API}/save_data`, { 
+                    method:'POST', 
+                    headers:{'Content-Type':'application/json'}, 
+                    body:JSON.stringify(gData) 
+                }); 
+                if (res.ok) {
+                    updateSyncStatus("✅ Enregistré", "#2ecc71");
+                } else {
+                    throw new Error("Server error");
+                }
+            } catch(e) {
+                updateSyncStatus("❌ Error - Local Only", "#e74c3c");
+                console.error("Save failed:", e);
+            }
+        }
+
+        function updateSyncStatus(msg, bg) {
+            const el = document.getElementById('sync-status');
+            if (el) {
+                el.innerText = msg;
+                el.style.background = bg;
+            }
         }
         function saveSession() { localStorage.setItem('french_session_mastery', JSON.stringify({ date: new Date().toISOString().split('T')[0], data: sessionMastery })); }
         function addWord(w) { 
