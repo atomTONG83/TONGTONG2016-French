@@ -1,5 +1,5 @@
 {
-  "stars": 1000,
+  "stars": 1100,
   "notebook": [
     {
       "word": "Sincérité",
@@ -267,15 +267,15 @@
     }
   ],
   "daily_stats": {
-    "date": "2026-02-18",
+    "date": "2026-02-19",
     "completed": true,
     "words": [
+      "Persévérance",
+      "Bienveillance",
+      "Curiosité",
       "Fraternité",
-      "Imagination",
-      "Sincérité",
-      "Générosité",
-      "Honnêteté"
+      "Imagination"
     ]
   },
-  "last_milestone": 1000
+  "last_milestone": 1100
 }
