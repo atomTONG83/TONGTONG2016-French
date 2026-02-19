@@ -2,7 +2,37 @@
   "stars": 1100,
   "notebook": [
     {
-      "word": "Sinc\u00e9rit\u00e9",
+      "word": "Fenêtre",
+      "lvl": 1,
+      "next": "2026-02-20",
+      "err_days": 0
+    },
+    {
+      "word": "Synthèse",
+      "lvl": 1,
+      "next": "2026-02-20",
+      "err_days": 0
+    },
+    {
+      "word": "Analogie",
+      "lvl": 1,
+      "next": "2026-02-20",
+      "err_days": 0
+    },
+    {
+      "word": "Programme",
+      "lvl": 1,
+      "next": "2026-02-20",
+      "err_days": 0
+    },
+    {
+      "word": "Respect",
+      "lvl": 1,
+      "next": "2026-02-20",
+      "err_days": 0
+    },
+    {
+      "word": "Sincérité",
       "lvl": 0,
       "next": "2026-02-18",
       "err_days": 1
@@ -14,19 +44,19 @@
       "err_days": 0
     },
     {
-      "word": "G\u00e9n\u00e9tique",
+      "word": "Génétique",
       "lvl": 1,
       "next": "2026-02-18",
       "err_days": 0
     },
     {
-      "word": "Pr\u00e9histoire",
+      "word": "Préhistoire",
       "lvl": 1,
       "next": "2026-02-18",
       "err_days": 0
     },
     {
-      "word": "\u00c9quilibre",
+      "word": "Équilibre",
       "lvl": 1,
       "next": "2026-02-18",
       "err_days": 0
@@ -50,7 +80,7 @@
       "err_days": 0
     },
     {
-      "word": "D\u00e9termination",
+      "word": "Détermination",
       "lvl": 1,
       "next": "2026-02-20",
       "err_days": 0
@@ -68,7 +98,7 @@
       "err_days": 0
     },
     {
-      "word": "Vert\u00e8bre",
+      "word": "Vertèbre",
       "lvl": 1,
       "next": "2026-02-20",
       "err_days": 0
@@ -80,7 +110,7 @@
       "err_days": 0
     },
     {
-      "word": "Fraternit\u00e9",
+      "word": "Fraternité",
       "lvl": 3,
       "next": "2026-02-25",
       "err_days": 0
@@ -92,13 +122,13 @@
       "err_days": 0
     },
     {
-      "word": "G\u00e9n\u00e9rosit\u00e9",
+      "word": "Générosité",
       "lvl": 3,
       "next": "2026-02-25",
       "err_days": 0
     },
     {
-      "word": "Honn\u00eatet\u00e9",
+      "word": "Honnêteté",
       "lvl": 3,
       "next": "2026-02-25",
       "err_days": 0
@@ -110,13 +140,13 @@
       "err_days": 0
     },
     {
-      "word": "\u00c9lectricit\u00e9",
+      "word": "Électricité",
       "lvl": 2,
       "next": "2026-02-19",
       "err_days": 0
     },
     {
-      "word": "D\u00e9mocratie",
+      "word": "Démocratie",
       "lvl": 2,
       "next": "2026-02-22",
       "err_days": 0
@@ -158,19 +188,19 @@
       "err_days": 0
     },
     {
-      "word": "Atmosph\u00e8re",
+      "word": "Atmosphère",
       "lvl": 2,
       "next": "2026-02-21",
       "err_days": 0
     },
     {
-      "word": "Fronti\u00e8re",
+      "word": "Frontière",
       "lvl": 2,
       "next": "2026-02-21",
       "err_days": 0
     },
     {
-      "word": "Pers\u00e9v\u00e9rance",
+      "word": "Persévérance",
       "lvl": 2,
       "next": "2026-02-21",
       "err_days": 0
@@ -194,13 +224,13 @@
       "err_days": 0
     },
     {
-      "word": "D\u00e9sert",
+      "word": "Désert",
       "lvl": 2,
       "next": "2026-02-22",
       "err_days": 0
     },
     {
-      "word": "Cam\u00e9l\u00e9on",
+      "word": "Caméléon",
       "lvl": 2,
       "next": "2026-02-22",
       "err_days": 0
@@ -230,25 +260,25 @@
       "err_days": 0
     },
     {
-      "word": "\u00e9merveillement",
+      "word": "émerveillement",
       "lvl": 4,
       "next": "2026-02-28",
       "err_days": 0
     },
     {
-      "word": "curiosit\u00e9",
+      "word": "curiosité",
       "lvl": 4,
       "next": "2026-02-28",
       "err_days": 0
     },
     {
-      "word": "impr\u00e9visible",
+      "word": "imprévisible",
       "lvl": 4,
       "next": "2026-02-28",
       "err_days": 0
     },
     {
-      "word": "s'\u00e9panouir",
+      "word": "s'épanouir",
       "lvl": 4,
       "next": "2026-02-28",
       "err_days": 0
@@ -260,7 +290,7 @@
       "err_days": 0
     },
     {
-      "word": "\u00c9cosyst\u00e8me",
+      "word": "Écosystème",
       "lvl": 4,
       "next": "2026-03-05",
       "err_days": 0
@@ -270,11 +300,11 @@
     "date": "2026-02-19",
     "completed": true,
     "words": [
-      "Pers\u00e9v\u00e9rance",
-      "Bienveillance",
-      "Curiosit\u00e9",
-      "Fraternit\u00e9",
-      "Imagination"
+      "Fenêtre",
+      "Synthèse",
+      "Analogie",
+      "Programme",
+      "Respect"
     ]
   },
   "last_milestone": 1100
