@@ -294,6 +294,12 @@
       "lvl": 4,
       "next": "2026-03-05",
       "err_days": 0
+    },
+    {
+      "word": "Sym\u00e9trie",
+      "lvl": 0,
+      "next": "2026-02-20",
+      "err_days": 0
     }
   ],
   "daily_stats": {
