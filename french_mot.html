@@ -138,8 +138,21 @@
         <div class="modal-content" style="max-width: 600px;">
             <span class="close" onclick="closeModal('nbModal')">&times;</span>
             <h2>📓 Mon Carnet <span id="nb-total" style="font-size:0.6em;color:#999;font-weight:normal;"></span></h2>
+            
+            <!-- NEW: Manual Add Word UI -->
+            <div style="background: #f0f7ff; padding: 15px; border-radius: 12px; margin-bottom: 15px; border: 1px dashed var(--p);">
+                <p style="font-size: 0.8em; font-weight: bold; color: var(--p); margin-bottom: 8px;">➕ AJOUTER UN NOUVEAU MOT :</p>
+                <div style="display: flex; gap: 8px;">
+                    <input type="text" id="manual-word" placeholder="Mot en français..." style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #ddd;">
+                    <button class="action-btn" onclick="manualAddWord()">Ajouter</button>
+                </div>
+            </div>
+
             <div class="nb-stats" id="nb-stats"></div>
-            <input type="text" class="nb-search" id="nb-search" placeholder="🔍 Rechercher un mot..." oninput="filterNotebook()">
+            <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                <input type="text" class="nb-search" id="nb-search" placeholder="🔍 Rechercher..." oninput="filterNotebook()" style="margin-bottom: 0; flex: 1;">
+                <button onclick="saveData()" style="background: var(--p); color: white; border: none; padding: 0 15px; border-radius: 25px; font-size: 0.8em; cursor: pointer;">☁️ Sync Mac</button>
+            </div>
             <div id="nb-list"></div>
         </div>
     </div>
@@ -428,7 +441,14 @@
                     }
                     
                     gData.daily_stats = { date: today, completed: false, words: newDaily };
-                    // Clear mastery progress for new day
+                    
+                    // AUTO-ADD: Ensure daily words are in notebook
+                    newDaily.forEach(w => {
+                        if (!gData.notebook.some(n => n.word === w)) {
+                            gData.notebook.push({ word: w, lvl: 0, next: today, err_days: 0 });
+                        }
+                    });
+                    
                     localStorage.removeItem('french_session_mastery');
                     sessionStorage.removeItem('french_session_mastery');
                 }
@@ -697,6 +717,32 @@
                 gData.notebook.push({ word: w, lvl: 0, next: new Date().toISOString().split('T')[0], err_days: 0 }); 
                 speak("Ajouté"); refreshUI(); 
             } else { speak("Déjà là"); }
+        }
+
+        function manualAddWord() {
+            const input = document.getElementById('manual-word');
+            const word = input.value.trim();
+            if (!word) return;
+            
+            // Check if word exists in our DB (to get definition)
+            let wordData = DB.find(d => d.word.toLowerCase() === word.toLowerCase());
+            
+            if (!wordData) {
+                // If not in DB, we create a placeholder definition
+                wordData = { word: word, def: "(Mot ajouté manuellement)", ex: "" };
+                // Optional: Add to temporary DB so quiz works
+                DB.push(wordData);
+            }
+            
+            if (!gData.notebook.some(n => n.word.toLowerCase() === word.toLowerCase())) {
+                gData.notebook.push({ word: wordData.word, lvl: 0, next: new Date().toISOString().split('T')[0], err_days: 0 });
+                input.value = "";
+                speak("Mot ajouté au carnet");
+                renderNotebook();
+                refreshUI();
+            } else {
+                alert("Ce mot est déjà dans ton carnet !");
+            }
         }
         function setQuizMode(m) { gGameMode = m; document.getElementById('mode-n').classList.toggle('active', m==='new'); document.getElementById('mode-r').classList.toggle('active', m==='rev'); updateQuiz(); }
         
