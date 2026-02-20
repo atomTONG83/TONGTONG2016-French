@@ -1,5 +1,5 @@
 {
-  "stars": 1000,
+  "stars": 1010,
   "notebook": [
     {
       "word": "Sinc\u00e9rit\u00e9",
@@ -268,7 +268,7 @@
   ],
   "daily_stats": {
     "date": "2026-02-20",
-    "completed": false,
+    "completed": true,
     "words": [
       "Cr\u00e9ativit\u00e9",
       "Patrimoine",
