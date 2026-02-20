@@ -134,6 +134,11 @@
 
     <div id="sync-status">Initialisation...</div>
 
+    <!-- NEW: HTTPS/Local IP Warning -->
+    <div id="connection-warning" style="display:none; position:fixed; top:0; left:0; width:100%; background:#ef4444; color:white; padding:10px; text-align:center; font-size:0.8em; z-index:3000; font-weight:bold;">
+        ⚠️ Mode "Consultation" (GitHub). Pour enregistrer tes progrès, utilise l'adresse IP locale de Papa sur l'iPad.
+    </div>
+
     <div id="nbModal" class="modal">
         <div class="modal-content" style="max-width: 600px;">
             <span class="close" onclick="closeModal('nbModal')">&times;</span>
@@ -398,6 +403,11 @@
             const today = new Date().toISOString().split('T')[0];
             
             try {
+                // Check if running from GitHub (HTTPS) while API is HTTP
+                if (window.location.protocol === 'https:' && API.startsWith('http://')) {
+                    document.getElementById('connection-warning').style.display = 'block';
+                }
+
                 const response = await fetch(`${DATA_PATH}?t=${Date.now()}`);
                 const localSaved = localStorage.getItem('french_learning_data');
                 const localData = localSaved ? JSON.parse(localSaved) : null;
