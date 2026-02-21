@@ -1,10 +1,47 @@
 {
   "stars": 100,
-  "notebook": [],
+  "notebook": [
+    {
+      "word": "Aigle",
+      "lvl": 0,
+      "next": "2026-02-21",
+      "err_days": 0
+    },
+    {
+      "word": "Montagne",
+      "lvl": 0,
+      "next": "2026-02-21",
+      "err_days": 0
+    },
+    {
+      "word": "M\u00e9taphore",
+      "lvl": 0,
+      "next": "2026-02-21",
+      "err_days": 0
+    },
+    {
+      "word": "Continent",
+      "lvl": 0,
+      "next": "2026-02-21",
+      "err_days": 0
+    },
+    {
+      "word": "Table",
+      "lvl": 0,
+      "next": "2026-02-21",
+      "err_days": 0
+    }
+  ],
   "daily_stats": {
-    "date": "",
+    "date": "2026-02-21",
     "completed": false,
-    "words": []
+    "words": [
+      "Aigle",
+      "Montagne",
+      "M\u00e9taphore",
+      "Continent",
+      "Table"
+    ]
   },
   "last_milestone": 0
 }
