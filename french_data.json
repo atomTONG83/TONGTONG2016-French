@@ -1,5 +1,5 @@
 {
-  "stars": 1200,
+  "stars": 1300,
   "notebook": [
     {
       "word": "Sinc\u00e9rit\u00e9",
@@ -27,8 +27,8 @@
     },
     {
       "word": "\u00c9quilibre",
-      "lvl": 1,
-      "next": "2026-02-18",
+      "lvl": 2,
+      "next": "2026-02-25",
       "err_days": 0
     },
     {
@@ -310,7 +310,7 @@
   ],
   "daily_stats": {
     "date": "2026-02-21",
-    "completed": false,
+    "completed": true,
     "words": [
       "Harmonie",
       "Pingouin",
