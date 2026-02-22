@@ -312,17 +312,47 @@
       "lvl": 1,
       "next": "2026-02-23",
       "err_days": 0
+    },
+    {
+      "word": "Analyse",
+      "lvl": 0,
+      "next": "2026-02-22",
+      "err_days": 0
+    },
+    {
+      "word": "R\u00e9sistance",
+      "lvl": 0,
+      "next": "2026-02-22",
+      "err_days": 0
+    },
+    {
+      "word": "Jardin",
+      "lvl": 0,
+      "next": "2026-02-22",
+      "err_days": 0
+    },
+    {
+      "word": "Mutation",
+      "lvl": 0,
+      "next": "2026-02-22",
+      "err_days": 0
+    },
+    {
+      "word": "Architecture",
+      "lvl": 0,
+      "next": "2026-02-22",
+      "err_days": 0
     }
   ],
   "daily_stats": {
-    "date": "2026-02-21",
-    "completed": true,
+    "date": "2026-02-22",
+    "completed": false,
     "words": [
-      "Harmonie",
-      "Pingouin",
-      "Sym\u00e9trie",
-      "Sculpture",
-      "M\u00e9moire"
+      "Analyse",
+      "R\u00e9sistance",
+      "Jardin",
+      "Mutation",
+      "Architecture"
     ]
   },
   "last_milestone": 1000
