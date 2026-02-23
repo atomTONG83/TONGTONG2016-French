@@ -1,5 +1,5 @@
 {
-  "stars": 1400,
+  "stars": 1500,
   "notebook": [
     {
       "word": "Sinc\u00e9rit\u00e9",
@@ -273,8 +273,8 @@
     },
     {
       "word": "Pr\u00e9servation",
-      "lvl": 1,
-      "next": "2026-02-23",
+      "lvl": 2,
+      "next": "2026-02-27",
       "err_days": 0
     },
     {
@@ -376,7 +376,7 @@
   ],
   "daily_stats": {
     "date": "2026-02-23",
-    "completed": false,
+    "completed": true,
     "words": [
       "Paradoxe",
       "Vitesse",
