@@ -342,17 +342,47 @@
       "lvl": 1,
       "next": "2026-02-24",
       "err_days": 0
+    },
+    {
+      "word": "Paradoxe",
+      "lvl": 0,
+      "next": "2026-02-23",
+      "err_days": 0
+    },
+    {
+      "word": "Vitesse",
+      "lvl": 0,
+      "next": "2026-02-23",
+      "err_days": 0
+    },
+    {
+      "word": "Chien",
+      "lvl": 0,
+      "next": "2026-02-23",
+      "err_days": 0
+    },
+    {
+      "word": "Argumentation",
+      "lvl": 0,
+      "next": "2026-02-23",
+      "err_days": 0
+    },
+    {
+      "word": "Ind\u00e9pendance",
+      "lvl": 0,
+      "next": "2026-02-23",
+      "err_days": 0
     }
   ],
   "daily_stats": {
-    "date": "2026-02-22",
-    "completed": true,
+    "date": "2026-02-23",
+    "completed": false,
     "words": [
-      "Analyse",
-      "R\u00e9sistance",
-      "Jardin",
-      "Mutation",
-      "Architecture"
+      "Paradoxe",
+      "Vitesse",
+      "Chien",
+      "Argumentation",
+      "Ind\u00e9pendance"
     ]
   },
   "last_milestone": 1000
