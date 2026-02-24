@@ -1,5 +1,5 @@
 {
-  "stars": 1500,
+  "stars": 1600,
   "notebook": [
     {
       "word": "Sinc\u00e9rit\u00e9",
@@ -339,8 +339,8 @@
     },
     {
       "word": "Architecture",
-      "lvl": 1,
-      "next": "2026-02-24",
+      "lvl": 2,
+      "next": "2026-02-28",
       "err_days": 0
     },
     {
@@ -406,7 +406,7 @@
   ],
   "daily_stats": {
     "date": "2026-02-24",
-    "completed": false,
+    "completed": true,
     "words": [
       "Table",
       "Hippopotame",
