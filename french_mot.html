@@ -451,16 +451,18 @@
                     }
                     
                     gData.daily_stats = { date: today, completed: false, words: newDaily };
-                    
-                    // AUTO-ADD: Ensure daily words are in notebook
-                    newDaily.forEach(w => {
-                        if (!gData.notebook.some(n => n.word === w)) {
-                            gData.notebook.push({ word: w, lvl: 0, next: today, err_days: 0 });
-                        }
-                    });
-                    
-                    localStorage.removeItem('french_session_mastery');
-                    sessionStorage.removeItem('french_session_mastery');
+
+// REMOVED AUTO-ADD: Let user manually add words via "Ajouter" button
+// Clean up: Remove any of today's words that may have been auto-added previously
+newDaily.forEach(w => {
+const existingIndex = gData.notebook.findIndex(n => n.word === w && n.lvl === 0 && n.next === today);
+if (existingIndex !== -1) {
+gData.notebook.splice(existingIndex, 1);
+}
+});
+
+localStorage.removeItem('french_session_mastery');
+sessionStorage.removeItem('french_session_mastery');
                 }
                 
                 gTodayWords = gData.daily_stats.words.map(wName => DB.find(d => d.word === wName));
