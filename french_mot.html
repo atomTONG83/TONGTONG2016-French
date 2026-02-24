@@ -452,16 +452,8 @@
                     
                     gData.daily_stats = { date: today, completed: false, words: newDaily };
 
-// REMOVED AUTO-ADD: Let user manually add words via "Ajouter" button
-// Clean up: Remove any of today's words that may have been auto-added previously
-newDaily.forEach(w => {
-const existingIndex = gData.notebook.findIndex(n => n.word === w && n.lvl === 0 && n.next === today);
-if (existingIndex !== -1) {
-gData.notebook.splice(existingIndex, 1);
-}
-});
-
-localStorage.removeItem('french_session_mastery');
+                    // Logic for manual add remains: user clicks "Ajouter" button
+                    localStorage.removeItem('french_session_mastery');
 sessionStorage.removeItem('french_session_mastery');
                 }
                 
