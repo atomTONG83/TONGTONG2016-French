@@ -372,17 +372,47 @@
       "lvl": 1,
       "next": "2026-02-25",
       "err_days": 0
+    },
+    {
+      "word": "Table",
+      "lvl": 0,
+      "next": "2026-02-24",
+      "err_days": 0
+    },
+    {
+      "word": "Hippopotame",
+      "lvl": 0,
+      "next": "2026-02-24",
+      "err_days": 0
+    },
+    {
+      "word": "S\u00e9diment",
+      "lvl": 0,
+      "next": "2026-02-24",
+      "err_days": 0
+    },
+    {
+      "word": "Volcan",
+      "lvl": 0,
+      "next": "2026-02-24",
+      "err_days": 0
+    },
+    {
+      "word": "Robot",
+      "lvl": 0,
+      "next": "2026-02-24",
+      "err_days": 0
     }
   ],
   "daily_stats": {
-    "date": "2026-02-23",
-    "completed": true,
+    "date": "2026-02-24",
+    "completed": false,
     "words": [
-      "Paradoxe",
-      "Vitesse",
-      "Chien",
-      "Argumentation",
-      "Ind\u00e9pendance"
+      "Table",
+      "Hippopotame",
+      "S\u00e9diment",
+      "Volcan",
+      "Robot"
     ]
   },
   "last_milestone": 1000
