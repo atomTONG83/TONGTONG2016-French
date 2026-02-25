@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>💎 Le Trésor des Mots de Jingyi</title>
+    <style>
+        :root { --p: #3498db; --s: #2ecc71; --e: #e74c3c; --w: #f1c40f; --d: #2c3e50; --rv: #9b59b6; }
+        body { font-family: -apple-system, sans-serif; background: #f0f4f8; padding: 20px; color: #333; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 20px; }
+        .stats-bar { display: flex; justify-content: space-around; background: white; padding: 15px; border-radius: 50px; margin-bottom: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .stat-item { font-weight: bold; font-size: 1.1em; }
+        .daily-goal-box { background: white; padding: 15px; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .progress-container { width: 100%; background: #eee; height: 18px; border-radius: 10px; margin-top: 10px; overflow: hidden; display: flex; border: 1px solid #ddd; }
+        .bar { height: 100%; transition: width 0.5s; }
+        .bar-new { background: var(--p); border-right: 2px solid white; } .bar-rev { background: var(--rv); }
+        .card { background: white; border-radius: 15px; padding: 25px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); position: relative; }
+        .mot { font-size: 2.2em; color: var(--p); font-weight: bold; margin: 5px 0; }
+        .definition { margin: 10px 0; font-size: 1.05em; line-height: 1.5; color: #444; }
+        .exemple { background: #f9f9f9; padding: 12px; border-left: 5px solid var(--p); border-radius: 0 10px 10px 0; font-size: 1em; margin: 10px 0; font-style: italic; color: #666; }
+        .daily-item { border-bottom: 1px solid #eee; padding-bottom: 20px; margin-bottom: 20px; }
+        .daily-item:last-child { border-bottom: none; }
+        .game-zone { background: #fffbe6; border: 2px dashed var(--w); }
+        .options-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 20px; }
+        .opt-btn { background: white; border: 2px solid #ddd; padding: 18px; border-radius: 12px; cursor: pointer; text-align: left; font-size: 1.05em; width: 100%; transition: all 0.2s; outline: none; -webkit-tap-highlight-color: transparent; }
+        .opt-btn:hover:not(:disabled) { border-color: #ddd; background: white; }
+        .opt-btn:focus { outline: none; }
+        .correct { background: var(--s) !important; color: white !important; border-color: var(--s) !important; }
+        .wrong { background: var(--e) !important; color: white !important; border-color: var(--e) !important; }
+        button.action-btn { background: var(--s); color: white; border: none; padding: 10px 20px; border-radius: 50px; cursor: pointer; font-size: 0.95em; }
+        .lvl-badge { font-size: 0.7em; background: #eee; padding: 2px 8px; border-radius: 5px; color: #666; margin-left: 5px; }
+        .mode-btn { border: none; padding: 8px 16px; border-radius: 10px; cursor: pointer; font-weight: bold; background: #eee; color: #666; position: relative; }
+        .mode-btn.active { background: var(--p); color: white; }
+        .mode-btn.done::after { content: "✅"; position: absolute; top: -5px; right: -5px; font-size: 0.8em; }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); }
+        .modal-content { background: white; margin: 15% auto; padding: 30px; border-radius: 20px; width: 85%; max-width: 550px; position: relative; max-height: 80vh; overflow-y: auto; }
+        .close { position: absolute; right: 20px; top: 15px; font-size: 32px; cursor: pointer; color: #bbb; }
+        #sync-status { position: fixed; bottom: 10px; right: 10px; font-size: 0.75em; color: white; background: #999; padding: 6px 12px; border-radius: 8px; z-index: 2000; }
+        .notebook-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; border-bottom: 1px solid #eee; background: white; margin-bottom: 5px; border-radius: 10px; }
+        .mastery-indicator { display: flex; gap: 5px; margin-top: 5px; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; background: #ddd; border: 1px solid #ccc; }
+        .dot.full { background: var(--s); border-color: var(--s); }
+        /* Notebook grouping styles */
+        .nb-group { margin-bottom: 15px; border-radius: 12px; overflow: hidden; }
+        .nb-group-header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 12px 15px; cursor: pointer; font-weight: bold;
+            transition: all 0.2s;
+        }
+        .nb-group-header:hover { opacity: 0.9; }
+        .nb-group-count { 
+            background: rgba(255,255,255,0.3); 
+            padding: 2px 10px; border-radius: 20px; 
+            font-size: 0.85em;
+        }
+        .nb-group-content { max-height: 300px; overflow-y: auto; }
+        .nb-group-content.collapsed { display: none; }
+        .nb-beginner { background: linear-gradient(135deg, #ff9a56 0%, #ff6b35 100%); color: white; }
+        .nb-consolidating { background: linear-gradient(135deg, #f1c40f 0%, #f39c12 100%); color: white; }
+        .nb-advanced { background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%); color: white; }
+        .nb-mastered { background: linear-gradient(135deg, #3498db 0%, #2980b9 100%); color: white; }
+        .nb-search { 
+            width: 100%; padding: 12px 15px; border: 2px solid #ddd; 
+            border-radius: 25px; font-size: 1em; margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+        .nb-search:focus { outline: none; border-color: var(--p); }
+        .nb-stats { 
+            display: flex; justify-content: space-around; 
+            padding: 10px; background: #f8f9fa; border-radius: 10px; 
+            margin-bottom: 15px; font-size: 0.9em;
+        }
+        .nb-stat { text-align: center; }
+        .nb-stat-value { font-weight: bold; color: var(--p); font-size: 1.2em; }
+        .nb-empty { text-align: center; padding: 30px; color: #999; }
+        .nb-word-due { background: #fff3cd !important; border-left: 4px solid #ffc107 !important; }
+        .nb-word-error { background: #f8d7da !important; border-left: 4px solid #dc3545 !important; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div style="text-align: left; margin-bottom: 10px;">
+                <a href="index.html" style="text-decoration: none; color: var(--p); font-weight: bold; font-size: 0.9em;">← Retour</a>
+            </div>
+            <h1>💎 Le Trésor des Mots de Jingyi <span class="lvl-badge" style="background:var(--w); color:black; padding:6px 12px; font-size:0.5em;">CM1</span></h1>
+            <p id="ui-date" style="font-weight: bold; color: var(--p); font-size: 1.1em; margin: 10px 0;"></p>
+            <p style="color: #666; font-size: 0.9em;">Mission : Maîtrise tous les mots !</p>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stat-item">⭐ <span id="ui-stars">0</span> Stars</div>
+            <div class="stat-item">🏆 <span id="ui-trophies">0</span> Trophées</div>
+            <div class="stat-item" onclick="openNotebook()" style="cursor: pointer; color: var(--p); text-decoration: underline;">📓 <span id="ui-count">0</span> Mots</div>
+        </div>
+
+        <div class="daily-goal-box">
+            <div style="display: flex; justify-content: space-between; font-size: 0.9em;">
+                <strong>🎯 Progrès : <span style="color:var(--p)">Nouveaux</span> + <span style="color:var(--rv)">Révision</span></strong>
+                <span id="ui-progress">0%</span>
+            </div>
+            <div class="progress-container"><div class="bar bar-new" id="bar-n"></div><div class="bar bar-rev" id="bar-r"></div></div>
+            <div id="ui-completion-status" style="text-align:center; margin-top:5px; font-weight:bold; font-size:0.9em;"></div>
+        </div>
+
+        <div class="card">
+            <h2>🌟 Mots du Jour</h2>
+            <div id="ui-words-list"></div>
+        </div>
+
+        <div class="card game-zone">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h2 style="margin: 0;">🎮 Défi</h2>
+                <div style="display:flex; gap:8px;">
+                    <button id="mode-n" class="mode-btn active" onclick="setQuizMode('new')">Nouveaux</button>
+                    <button id="mode-r" class="mode-btn" onclick="setQuizMode('rev')">Révision</button>
+                </div>
+            </div>
+            <p style="font-size:0.85em;color:#666;margin:0 0 10px 0;font-style:italic;">💡 Règle : Réponds correctement 2 fois de suite pour maîtriser un mot et gagner +100⭐ !</p>
+            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                <p>Définition de <strong id="q-word" style="color:var(--p)">?</strong></p>
+                <div id="q-mastery" class="mastery-indicator"></div>
+            </div>
+            <div id="q-options" class="options-grid"></div>
+            <p id="q-feedback" style="margin-top: 15px; font-weight: bold; text-align: center; font-size: 1.2em; min-height: 1.2em;"></p>
+        </div>
+
+        <div class="card" style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
+            <div><h3 style="font-size:0.9em;color:var(--p)">✅ Appris</h3><div id="list-new"></div></div>
+            <div><h3 style="font-size:0.9em;color:var(--rv)">⏳ Mission</h3><div id="list-due"></div></div>
+        </div>
+    </div>
+
+    <div id="sync-status">Initialisation...</div>
+
+    <!-- NEW: HTTPS/Local IP Warning -->
+    <div id="connection-warning" style="display:none; position:fixed; top:0; left:0; width:100%; background:#ef4444; color:white; padding:10px; text-align:center; font-size:0.8em; z-index:3000; font-weight:bold;">
+        ⚠️ Mode "Consultation" (GitHub). Pour enregistrer tes progrès, utilise l'adresse IP locale de Papa sur l'iPad.
+    </div>
+
+    <div id="nbModal" class="modal">
+        <div class="modal-content" style="max-width: 600px;">
+            <span class="close" onclick="closeModal('nbModal')">&times;</span>
+            <h2>📓 Mon Carnet <span id="nb-total" style="font-size:0.6em;color:#999;font-weight:normal;"></span></h2>
+            
+            <div class="nb-stats" id="nb-stats"></div>
+            <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                <input type="text" class="nb-search" id="nb-search" placeholder="🔍 Rechercher..." oninput="filterNotebook()" style="margin-bottom: 0; flex: 1;">
+                <button onclick="saveData()" style="background: var(--p); color: white; border: none; padding: 0 15px; border-radius: 25px; font-size: 0.8em; cursor: pointer;">☁️ Sync Mac</button>
+            </div>
+            <div id="nb-list"></div>
+        </div>
+    </div>
+    <div id="detailModal" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('detailModal')">&times;</span><div id="detail-card"></div></div></div>
+    <div id="rewardModal" class="modal"><div class="modal-content" style="text-align:center;"><h2>🎁 BRAVO !</h2><p id="rew-val"></p><button class="action-btn" onclick="closeModal('rewardModal')">Merci Papa !</button></div></div>
+
+    <script>
+        // IMMEDIATE TEST: Confirm JS is running
+        document.getElementById('sync-status').innerText = "JS Running...";
+        document.getElementById('sync-status').style.background = "#9b59b6";
+        
+        const MAC_IP = "192.168.32.70";
+        const PORT = "8888";
+        // API address - detect if running on Mac mini or remote
+        const isLocal = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" || window.location.hostname === MAC_IP || window.location.hostname === "TONGdeMac-mini.local");
+        const API = isLocal ? `http://${window.location.hostname}:${PORT}` : `http://${MAC_IP}:${PORT}`;
+        // For GitHub Pages and Local, we use relative paths for data
+        const DATA_PATH = "./french_data.json";
+        
+        let gData = { stars: 100, notebook: [], daily_stats: { date: "", completed: false, words: [] }, last_milestone: 0 };
+        let sessionMastery = {}; 
+        let gTodayWords = [], gGameMode = 'new', gMistakes = {}, gCombo = 0, gIsLocked = false;
+        const INTERVALS = [1, 2, 4, 7, 15, 30, 60];
+        const MASTERY_GOAL = 2;
+
+        const DB = [
+            { word: "aigle", def: "鹰", ex: "L'aigle vole haut.", niveau: 1 },
+            { word: "année", def: "年", ex: "Cette année, je suis en CM1.", niveau: 1 },
+            { word: "apprendre", def: "学会", ex: "J'apprends vite.", niveau: 1 },
+            { word: "après-midi", def: "下午", ex: "L'après-midi, nous avons sport.", niveau: 1 },
+            { word: "arbre", def: "树", ex: "L'arbre donne de l'ombre.", niveau: 1 },
+            { word: "arc-en-ciel", def: "彩虹", ex: "L'arc-en-ciel a sept couleurs.", niveau: 1 },
+            { word: "au revoir", def: "再见", ex: "Au revoir, à demain !", niveau: 1 },
+            { word: "aujourd'hui", def: "今天", ex: "Aujourd'hui, il fait beau.", niveau: 1 },
+            { word: "automne", def: "秋天", ex: "En automne, les feuilles tombent.", niveau: 1 },
+            { word: "baguette", def: "法棍", ex: "La baguette est croustillante.", niveau: 1 },
+            { word: "baleine", def: "鲸鱼", ex: "La baleine est énorme.", niveau: 1 },
+            { word: "banane", def: "香蕉", ex: "La banane est jaune.", niveau: 1 },
+            { word: "basketball", def: "篮球", ex: "Le basketball est américain.", niveau: 1 },
+            { word: "bateau", def: "船", ex: "Le bateau navigue sur la mer.", niveau: 1 },
+            { word: "beau", def: "美丽的", ex: "C'est une belle journée.", niveau: 1 },
+            { word: "beau", def: "美丽的", ex: "C'est une belle journée.", niveau: 1 },
+            { word: "beau", def: "晴朗的", ex: "Il fait beau.", niveau: 1 },
+            { word: "blanc", def: "白色", ex: "La neige est blanche.", niveau: 1 },
+            { word: "bleu", def: "蓝色", ex: "Le ciel est bleu.", niveau: 1 },
+            { word: "boire", def: "喝", ex: "Je bois de l'eau.", niveau: 1 },
+            { word: "bon", def: "好的", ex: "C'est un bon élève.", niveau: 1 },
+            { word: "bon", def: "好的", ex: "C'est un bon élève.", niveau: 1 },
+            { word: "bonjour", def: "你好", ex: "Bonjour, comment ça va ?", niveau: 1 },
+            { word: "bouche", def: "嘴", ex: "Je mange avec ma bouche.", niveau: 1 },
+            { word: "bras", def: "手臂", ex: "Je lève les bras.", niveau: 1 },
+            { word: "bus", def: "公交车", ex: "Le bus est plein.", niveau: 1 },
+            { word: "bébé", def: "婴儿", ex: "Le bébé dort dans son lit.", niveau: 1 },
+            { word: "cahier", def: "练习本", ex: "J'écris dans mon cahier.", niveau: 1 },
+            { word: "calcul", def: "计算", ex: "Le calcul est amusant.", niveau: 1 },
+            { word: "camion", def: "卡车", ex: "Le camion transporte des marchandises.", niveau: 1 },
+            { word: "canard", def: "鸭子", ex: "Le canard nage dans l'étang.", niveau: 1 },
+            { word: "cantine", def: "食堂", ex: "Je mange à la cantine.", niveau: 1 },
+            { word: "carotte", def: "胡萝卜", ex: "La carotte est orange.", niveau: 1 },
+            { word: "cartable", def: "书包", ex: "Mon cartable est lourd !", niveau: 1 },
+            { word: "casquette", def: "鸭舌帽", ex: "La casquette est cool.", niveau: 1 },
+            { word: "chambre", def: "卧室", ex: "Ma chambre est bien rangée.", niveau: 1 },
+            { word: "chanson", def: "歌曲", ex: "La chanson est mélodieuse.", niveau: 1 },
+            { word: "chanter", def: "唱", ex: "Je chante une chanson.", niveau: 1 },
+            { word: "chapeau", def: "帽子", ex: "Le chapeau protège du soleil.", niveau: 1 },
+            { word: "chat", def: "猫", ex: "Le chat miaule.", niveau: 1 },
+            { word: "chaud", def: "热的", ex: "Le café est chaud.", niveau: 1 },
+            { word: "chaud", def: "热的", ex: "Il fait chaud.", niveau: 1 },
+            { word: "chaussure", def: "鞋子", ex: "Les chaussures sont neuves.", niveau: 1 },
+            { word: "chien", def: "狗", ex: "Le chien aboie.", niveau: 1 },
+            { word: "chocolat", def: "巧克力", ex: "J'aime le chocolat noir.", niveau: 1 },
+            { word: "ciel", def: "天空", ex: "Le ciel est bleu.", niveau: 1 },
+            { word: "cinq", def: "五", ex: "J'ai cinq doigts.", niveau: 1 },
+            { word: "cinéma", def: "电影", ex: "Le cinéma projette des films.", niveau: 1 },
+            { word: "classe", def: "教室，班级", ex: "Ma classe est au premier étage.", niveau: 1 },
+            { word: "clavier", def: "键盘", ex: "Le clavier tape.", niveau: 1 },
+            { word: "coccinelle", def: "瓢虫", ex: "La coccinelle est rouge.", niveau: 1 },
+            { word: "content", def: "满意的", ex: "Je suis content de te voir.", niveau: 1 },
+            { word: "content", def: "满意的", ex: "Je suis content.", niveau: 1 },
+            { word: "courir", def: "跑", ex: "Je cours vite.", niveau: 1 },
+            { word: "cours", def: "课程", ex: "J'aime tous mes cours.", niveau: 1 },
+            { word: "court", def: "短的", ex: "Les cheveux courts.", niveau: 1 },
+            { word: "crayon", def: "铅笔", ex: "J'ai un crayon rouge.", niveau: 1 },
+            { word: "croissant", def: "牛角包", ex: "Le croissant est français.", niveau: 1 },
+            { word: "crêpe", def: "可丽饼", ex: "La crêpe est bretonne.", niveau: 1 },
+            { word: "cuisine", def: "厨房", ex: "La cuisine sent bon.", niveau: 1 },
+            { word: "d'accord", def: "好的", ex: "D'accord, on y va !", niveau: 1 },
+            { word: "danse", def: "舞蹈", ex: "La danse est gracieuse.", niveau: 1 },
+            { word: "danser", def: "跳舞", ex: "Je danse avec mes amis.", niveau: 1 },
+            { word: "demain", def: "明天", ex: "Demain, c'est samedi.", niveau: 1 },
+            { word: "dent", def: "牙齿", ex: "Je me brosse les dents.", niveau: 1 },
+            { word: "dessin", def: "素描", ex: "Le dessin est au crayon.", niveau: 1 },
+            { word: "dessiner", def: "画", ex: "Je dessine un chat.", niveau: 1 },
+            { word: "deux", def: "二", ex: "J'ai deux frères.", niveau: 1 },
+            { word: "devoir", def: "作业", ex: "J'ai fini mes devoirs.", niveau: 1 },
+            { word: "difficile", def: "困难的", ex: "Cette question est difficile.", niveau: 1 },
+            { word: "difficile", def: "困难的", ex: "C'est difficile.", niveau: 1 },
+            { word: "dix", def: "十", ex: "Dix doigts au total.", niveau: 1 },
+            { word: "doigt", def: "手指", ex: "J'ai dix doigts.", niveau: 1 },
+            { word: "dormir", def: "睡觉", ex: "Je dors la nuit.", niveau: 1 },
+            { word: "déjeuner", def: "午餐", ex: "Le déjeuner est à midi.", niveau: 1 },
+            { word: "dîner", def: "晚餐", ex: "Le dîner est le soir.", niveau: 1 },
+            { word: "eau", def: "水", ex: "L'eau est essentielle pour la vie.", niveau: 1 },
+            { word: "escargot", def: "蜗牛", ex: "L'escargot est lent.", niveau: 1 },
+            { word: "excusez-moi", def: "对不起", ex: "Excusez-moi, où est...", niveau: 1 },
+            { word: "facile", def: "容易的", ex: "Ce devoir est facile.", niveau: 1 },
+            { word: "facile", def: "容易的", ex: "C'est facile !", niveau: 1 },
+            { word: "famille", def: "家庭", ex: "Ma famille est nombreuse.", niveau: 1 },
+            { word: "fatigué", def: "累的", ex: "Je suis fatigué.", niveau: 1 },
+            { word: "feuille", def: "叶子", ex: "La feuille tombe en automne.", niveau: 1 },
+            { word: "feuille", def: "叶子", ex: "La feuille tombe.", niveau: 1 },
+            { word: "film", def: "电影", ex: "Le film est intéressant.", niveau: 1 },
+            { word: "fleur", def: "花", ex: "La fleur sent bon.", niveau: 1 },
+            { word: "fleur", def: "花", ex: "La fleur sent bon.", niveau: 1 },
+            { word: "football", def: "足球", ex: "Le football est populaire.", niveau: 1 },
+            { word: "fort", def: "强壮的", ex: "Le lion est fort.", niveau: 1 },
+            { word: "forêt", def: "森林", ex: "La forêt est verte.", niveau: 1 },
+            { word: "fourmi", def: "蚂蚁", ex: "La fourmi travaille.", niveau: 1 },
+            { word: "froid", def: "冷的", ex: "L'eau est froide.", niveau: 1 },
+            { word: "froid", def: "冷的", ex: "Il fait froid.", niveau: 1 },
+            { word: "fromage", def: "奶酪", ex: "Le fromage français est délicieux.", niveau: 1 },
+            { word: "fruit", def: "水果", ex: "Les fruits sont bons pour la santé.", niveau: 1 },
+            { word: "frère", def: "兄弟", ex: "Mon frère est plus grand que moi.", niveau: 1 },
+            { word: "gentil", def: "善良的", ex: "Elle est très gentille.", niveau: 1 },
+            { word: "gentil", def: "善良的", ex: "Elle est gentille.", niveau: 1 },
+            { word: "glace", def: "冰淇淋", ex: "La glace est froide et sucrée.", niveau: 1 },
+            { word: "gomme", def: "橡皮", ex: "J'ai besoin d'une gomme.", niveau: 1 },
+            { word: "goûter", def: "下午茶", ex: "Le goûter est à quatre heures.", niveau: 1 },
+            { word: "grand", def: "大的", ex: "L'éléphant est grand.", niveau: 1 },
+            { word: "grand", def: "大的", ex: "L'éléphant est grand.", niveau: 1 },
+            { word: "gris", def: "灰色", ex: "Le nuage est gris.", niveau: 1 },
+            { word: "gros", def: "胖的", ex: "L'ours est gros.", niveau: 1 },
+            { word: "gros", def: "胖的", ex: "L'ours est gros.", niveau: 1 },
+            { word: "guitare", def: "吉他", ex: "La guitare a des cordes.", niveau: 1 },
+            { word: "gâteau", def: "蛋糕", ex: "Le gâteau d'anniversaire est beau.", niveau: 1 },
+            { word: "herbe", def: "草", ex: "L'herbe est verte.", niveau: 1 },
+            { word: "heure", def: "小时", ex: "Il est quelle heure ?", niveau: 1 },
+            { word: "heureux", def: "开心的", ex: "Je suis heureux aujourd'hui.", niveau: 1 },
+            { word: "heureux", def: "开心的", ex: "Je suis heureux.", niveau: 1 },
+            { word: "hibou", def: "猫头鹰", ex: "Le hibou chasse la nuit.", niveau: 1 },
+            { word: "hier", def: "昨天", ex: "Hier, j'ai joué au foot.", niveau: 1 },
+            { word: "hiver", def: "冬天", ex: "En hiver, il neige.", niveau: 1 },
+            { word: "huit", def: "八", ex: "Huit heures du soir.", niveau: 1 },
+            { word: "jambe", def: "腿", ex: "Je cours avec mes jambes.", niveau: 1 },
+            { word: "jardin", def: "花园", ex: "Le jardin est plein de fleurs.", niveau: 1 },
+            { word: "jaune", def: "黄色", ex: "Le soleil est jaune.", niveau: 1 },
+            { word: "jeune", def: "年轻的", ex: "Elle est jeune et belle.", niveau: 1 },
+            { word: "jeune", def: "年轻的", ex: "Elle est jeune.", niveau: 1 },
+            { word: "joli", def: "漂亮的", ex: "Une jolie fleur.", niveau: 1 },
+            { word: "joli", def: "漂亮的", ex: "Une jolie fleur.", niveau: 1 },
+            { word: "jouer", def: "玩", ex: "Je joue au foot.", niveau: 1 },
+            { word: "jour", def: "一天，白天", ex: "Un jour, je serai grand.", niveau: 1 },
+            { word: "jupe", def: "裙子", ex: "La jupe est courte.", niveau: 1 },
+            { word: "jus", def: "果汁", ex: "Je préfère le jus d'orange.", niveau: 1 },
+            { word: "lac", def: "湖", ex: "Le lac est calme.", niveau: 1 },
+            { word: "lait", def: "牛奶", ex: "Je bois du lait le matin.", niveau: 1 },
+            { word: "lampe", def: "灯", ex: "La lampe éclaire.", niveau: 1 },
+            { word: "lapin", def: "兔子", ex: "Le lapin a de longues oreilles.", niveau: 1 },
+            { word: "lire", def: "读", ex: "Je lis un livre.", niveau: 1 },
+            { word: "livre", def: "书", ex: "Ce livre est intéressant.", niveau: 1 },
+            { word: "long", def: "长的", ex: "Le serpent est long.", niveau: 1 },
+            { word: "lune", def: "月亮", ex: "La lune est ronde ce soir.", niveau: 1 },
+            { word: "lune", def: "月亮", ex: "La lune est ronde.", niveau: 1 },
+            { word: "légume", def: "蔬菜", ex: "Mange tes légumes !", niveau: 1 },
+            { word: "magasin", def: "商店", ex: "Je vais au magasin.", niveau: 1 },
+            { word: "main", def: "手", ex: "Je tape avec mes mains.", niveau: 1 },
+            { word: "maison", def: "房子", ex: "Ma maison est jaune.", niveau: 1 },
+            { word: "malade", def: "生病的", ex: "Il ne va pas à l'école, il est malade.", niveau: 1 },
+            { word: "malade", def: "生病的", ex: "Il est malade.", niveau: 1 },
+            { word: "manger", def: "吃", ex: "Je mange une pomme.", niveau: 1 },
+            { word: "marcher", def: "走", ex: "Je marche à l'école.", niveau: 1 },
+            { word: "marron", def: "棕色", ex: "Le chocolat est marron.", niveau: 1 },
+            { word: "matin", def: "早上", ex: "Le matin, je prends mon petit-déjeuner.", niveau: 1 },
+            { word: "mer", def: "海", ex: "La mer est calme aujourd'hui.", niveau: 1 },
+            { word: "mer", def: "海", ex: "La mer est salée.", niveau: 1 },
+            { word: "merci", def: "谢谢", ex: "Merci beaucoup !", niveau: 1 },
+            { word: "message", def: "信息", ex: "J'envoie un message.", niveau: 1 },
+            { word: "minute", def: "分钟", ex: "Attends une minute !", niveau: 1 },
+            { word: "miroir", def: "镜子", ex: "Je me regarde dans le miroir.", niveau: 1 },
+            { word: "moineau", def: "麻雀", ex: "Le moineau est petit.", niveau: 1 },
+            { word: "mois", def: "月", ex: "Il y a douze mois dans une année.", niveau: 1 },
+            { word: "montagne", def: "山", ex: "La montagne est haute.", niveau: 1 },
+            { word: "montagne", def: "山", ex: "La montagne est haute.", niveau: 1 },
+            { word: "musique", def: "音乐", ex: "J'écoute de la musique.", niveau: 1 },
+            { word: "musique", def: "音乐", ex: "La musique est belle.", niveau: 1 },
+            { word: "mère", def: "妈妈", ex: "Ma mère cuisine très bien.", niveau: 1 },
+            { word: "métro", def: "地铁", ex: "Le métro est rapide.", niveau: 1 },
+            { word: "nager", def: "游泳", ex: "Je nage dans la piscine.", niveau: 1 },
+            { word: "neige", def: "雪", ex: "La neige est blanche.", niveau: 1 },
+            { word: "neige", def: "雪", ex: "La neige est blanche.", niveau: 1 },
+            { word: "neuf", def: "九", ex: "Neuf mois de grossesse.", niveau: 1 },
+            { word: "nez", def: "鼻子", ex: "Mon nez est petit.", niveau: 1 },
+            { word: "noir", def: "黑色", ex: "Le chat est noir.", niveau: 1 },
+            { word: "non", def: "不", ex: "Non, pas maintenant.", niveau: 1 },
+            { word: "nouveau", def: "新的", ex: "J'ai un nouveau livre.", niveau: 1 },
+            { word: "nouveau", def: "新的", ex: "J'ai un nouveau livre.", niveau: 1 },
+            { word: "nuage", def: "云", ex: "Le nuage couvre le soleil.", niveau: 1 },
+            { word: "nuage", def: "云", ex: "Le nuage couvre le soleil.", niveau: 1 },
+            { word: "nuit", def: "夜晚", ex: "La nuit, les étoiles brillent.", niveau: 1 },
+            { word: "oiseau", def: "鸟", ex: "L'oiseau chante dans l'arbre.", niveau: 1 },
+            { word: "orange", def: "橙子", ex: "L'orange est acide mais bonne.", niveau: 1 },
+            { word: "orange", def: "橙色", ex: "L'orange est orange.", niveau: 1 },
+            { word: "ordinateur", def: "电脑", ex: "Je joue sur l'ordinateur.", niveau: 1 },
+            { word: "ordinateur", def: "电脑", ex: "L'ordinateur calcule.", niveau: 1 },
+            { word: "oreille", def: "耳朵", ex: "J'écoute avec mes oreilles.", niveau: 1 },
+            { word: "oui", def: "是", ex: "Oui, je comprends.", niveau: 1 },
+            { word: "pain", def: "面包", ex: "Je mange du pain avec du beurre.", niveau: 1 },
+            { word: "pantalon", def: "裤子", ex: "Le pantalon est noir.", niveau: 1 },
+            { word: "pardon", def: "抱歉", ex: "Pardon, je ne savais pas.", niveau: 1 },
+            { word: "parents", def: "父母", ex: "Mes parents m'aiment beaucoup.", niveau: 1 },
+            { word: "parler", def: "说话", ex: "Je parle français.", niveau: 1 },
+            { word: "peinture", def: "绘画", ex: "La peinture est colorée.", niveau: 1 },
+            { word: "petit", def: "小的", ex: "La souris est petite.", niveau: 1 },
+            { word: "petit", def: "小的", ex: "La souris est petite.", niveau: 1 },
+            { word: "petit déjeuner", def: "早餐", ex: "Le petit déjeuner est important.", niveau: 1 },
+            { word: "peut-être", def: "也许", ex: "Peut-être demain.", niveau: 1 },
+            { word: "photo", def: "照片", ex: "Je prends une photo.", niveau: 1 },
+            { word: "piano", def: "钢琴", ex: "Le piano a des touches.", niveau: 1 },
+            { word: "pied", def: "脚", ex: "Je marche avec mes pieds.", niveau: 1 },
+            { word: "pigeon", def: "鸽子", ex: "Le pigeon est gris.", niveau: 1 },
+            { word: "pingouin", def: "企鹅", ex: "Le pingouin marche drôlement.", niveau: 1 },
+            { word: "piscine", def: "游泳池", ex: "La piscine contient de l'eau.", niveau: 1 },
+            { word: "pizza", def: "披萨", ex: "La pizza est italienne.", niveau: 1 },
+            { word: "plante", def: "植物", ex: "La plante grandit.", niveau: 1 },
+            { word: "pluie", def: "雨", ex: "La pluie tombe.", niveau: 1 },
+            { word: "pluie", def: "雨", ex: "La pluie tombe.", niveau: 1 },
+            { word: "poisson", def: "鱼", ex: "Le poisson est bon pour le cerveau.", niveau: 1 },
+            { word: "poisson", def: "鱼", ex: "Le poisson nage dans l'eau.", niveau: 1 },
+            { word: "pomme", def: "苹果", ex: "La pomme est rouge et sucrée.", niveau: 1 },
+            { word: "poulet", def: "鸡肉", ex: "Le poulet est tendre.", niveau: 1 },
+            { word: "printemps", def: "春天", ex: "Le printemps est doux.", niveau: 1 },
+            { word: "professeur", def: "老师", ex: "Mon professeur est très gentil.", niveau: 1 },
+            { word: "professeur", def: "教师", ex: "Le professeur enseigne.", niveau: 1 },
+            { word: "propre", def: "干净的", ex: "Ma chambre est propre.", niveau: 1 },
+            { word: "pull", def: "毛衣", ex: "Le pull est chaud.", niveau: 1 },
+            { word: "père", def: "爸爸", ex: "Mon père travaille dans un bureau.", niveau: 1 },
+            { word: "quatre", def: "四", ex: "Quatre saisons dans l'année.", niveau: 1 },
+            { word: "radio", def: "收音机", ex: "J'écoute la radio.", niveau: 1 },
+            { word: "rapide", def: "快的", ex: "Le lapin est rapide.", niveau: 1 },
+            { word: "regarder", def: "看", ex: "Je regarde la télé.", niveau: 1 },
+            { word: "requin", def: "鲨鱼", ex: "Le requin nage vite.", niveau: 1 },
+            { word: "restaurant", def: "餐厅", ex: "Le restaurant sert à manger.", niveau: 1 },
+            { word: "rivière", def: "河", ex: "La rivière coule.", niveau: 1 },
+            { word: "robe", def: "连衣裙", ex: "La robe est rouge.", niveau: 1 },
+            { word: "rose", def: "粉色", ex: "La fleur est rose.", niveau: 1 },
+            { word: "rouge", def: "红色", ex: "La pomme est rouge.", niveau: 1 },
+            { word: "règle", def: "尺子", ex: "Dessine une ligne avec ta règle.", niveau: 1 },
+            { word: "récréation", def: "课间休息", ex: "À la récréation, je joue avec mes amis.", niveau: 1 },
+            { word: "s'il vous plaît", def: "请", ex: "Un café, s'il vous plaît.", niveau: 1 },
+            { word: "salade", def: "沙拉", ex: "La salade est fraîche.", niveau: 1 },
+            { word: "sale", def: "脏的", ex: "Les vêtements sont sales.", niveau: 1 },
+            { word: "sandwich", def: "三明治", ex: "Je mange un sandwich.", niveau: 1 },
+            { word: "sauter", def: "跳", ex: "Je saute haut.", niveau: 1 },
+            { word: "semaine", def: "星期", ex: "Une semaine a sept jours.", niveau: 1 },
+            { word: "sept", def: "七", ex: "Sept jours dans une semaine.", niveau: 1 },
+            { word: "six", def: "六", ex: "Six jours d'école.", niveau: 1 },
+            { word: "soir", def: "晚上", ex: "Le soir, je lis avant de dormir.", niveau: 1 },
+            { word: "soleil", def: "太阳", ex: "Le soleil brille.", niveau: 1 },
+            { word: "soleil", def: "太阳", ex: "Le soleil brille.", niveau: 1 },
+            { word: "soupe", def: "汤", ex: "La soupe est chaude.", niveau: 1 },
+            { word: "souris", def: "鼠标", ex: "La souris pointe.", niveau: 1 },
+            { word: "stylo", def: "钢笔", ex: "J'écris avec un stylo bleu.", niveau: 1 },
+            { word: "supermarché", def: "超市", ex: "Le supermarché est grand.", niveau: 1 },
+            { word: "sœur", def: "姐妹", ex: "Ma sœur joue du piano.", niveau: 1 },
+            { word: "t-shirt", def: "T恤", ex: "Le T-shirt est bleu.", niveau: 1 },
+            { word: "tablette", def: "平板", ex: "La tablette est tactile.", niveau: 1 },
+            { word: "temps", def: "时间，天气", ex: "Le temps passe vite.", niveau: 1 },
+            { word: "thé", def: "茶", ex: "Je bois du thé.", niveau: 1 },
+            { word: "tiroir", def: "抽屉", ex: "Le tiroir est fermé.", niveau: 1 },
+            { word: "tomate", def: "西红柿", ex: "La tomate est un fruit.", niveau: 1 },
+            { word: "travailler", def: "工作", ex: "Je travaille à l'école.", niveau: 1 },
+            { word: "triste", def: "伤心的", ex: "Elle est triste.", niveau: 1 },
+            { word: "triste", def: "伤心的", ex: "Elle est triste.", niveau: 1 },
+            { word: "trois", def: "三", ex: "Trois chats dorment.", niveau: 1 },
+            { word: "téléphone", def: "电话", ex: "Je téléphone à ma mère.", niveau: 1 },
+            { word: "téléphone portable", def: "手机", ex: "Le portable est mobile.", niveau: 1 },
+            { word: "télévision", def: "电视", ex: "Je regarde la télévision.", niveau: 1 },
+            { word: "tête", def: "头", ex: "Je me lave la tête.", niveau: 1 },
+            { word: "un", def: "一", ex: "J'ai un chat.", niveau: 1 },
+            { word: "vache", def: "牛", ex: "La vache donne du lait.", niveau: 1 },
+            { word: "vent", def: "风", ex: "Le vent souffle fort.", niveau: 1 },
+            { word: "vent", def: "风", ex: "Le vent souffle.", niveau: 1 },
+            { word: "vert", def: "绿色", ex: "L'herbe est verte.", niveau: 1 },
+            { word: "vidéo", def: "视频", ex: "Je regarde une vidéo.", niveau: 1 },
+            { word: "vieux", def: "老的", ex: "Mon grand-père est vieux.", niveau: 1 },
+            { word: "vieux", def: "老的", ex: "Mon grand-père est vieux.", niveau: 1 },
+            { word: "vingt", def: "二十", ex: "Vingt élèves dans ma classe.", niveau: 1 },
+            { word: "voisin", def: "邻居", ex: "Le voisin habite à côté.", niveau: 1 },
+            { word: "voiture", def: "汽车", ex: "La voiture est rouge.", niveau: 1 },
+            { word: "voler", def: "飞", ex: "L'oiseau vole.", niveau: 1 },
+            { word: "vélo", def: "自行车", ex: "Je vais à l'école à vélo.", niveau: 1 },
+            { word: "vêtement", def: "衣服", ex: "Les vêtements sont dans l'armoire.", niveau: 1 },
+            { word: "yaourt", def: "酸奶", ex: "Le yaourt est bon pour la santé.", niveau: 1 },
+            { word: "zéro", def: "零", ex: "Zéro plus un égale un.", niveau: 1 },
+            { word: "école", def: "学校", ex: "Mon école est grande et belle.", niveau: 1 },
+            { word: "écouter", def: "听", ex: "J'écoute la musique.", niveau: 1 },
+            { word: "écran", def: "屏幕", ex: "L'écran affiche.", niveau: 1 },
+            { word: "écrire", def: "写", ex: "J'écris une lettre.", niveau: 1 },
+            { word: "élève", def: "学生", ex: "Je suis un élève sérieux.", niveau: 1 },
+            { word: "étoile", def: "星星", ex: "Les étoiles brillent la nuit.", niveau: 1 },
+            { word: "étoile", def: "星星", ex: "Les étoiles brillent.", niveau: 1 },
+            { word: "étudier", def: "学习", ex: "J'étudie le français.", niveau: 1 },
+            { word: "été", def: "夏天", ex: "L'été est chaud.", niveau: 1 },
+            { word: "œil", def: "眼睛", ex: "J'ai les yeux marron.", niveau: 1 },
+            { word: "œuf", def: "鸡蛋", ex: "Je mange un œuf pour le petit-déjeuner.", niveau: 1 },
+            { word: " laid", def: "丑的", ex: "Ce tableau est laid.", niveau: 2 },
+            { word: "abeille", def: "蜜蜂", ex: "L'abeille fait du miel.", niveau: 2 },
+            { word: "acteur", def: "演员", ex: "L'acteur joue.", niveau: 2 },
+            { word: "amitié", def: "友谊", ex: "L'amitié est précieuse.", niveau: 2 },
+            { word: "amour", def: "爱", ex: "L'amour est important.", niveau: 2 },
+            { word: "ancien", def: "旧的", ex: "C'est un ancien château.", niveau: 2 },
+            { word: "appareil photo", def: "相机", ex: "L'appareil photo photographie.", niveau: 2 },
+            { word: "appartement", def: "公寓", ex: "Nous vivons dans un appartement.", niveau: 2 },
+            { word: "application", def: "应用", ex: "L'application est pratique.", niveau: 2 },
+            { word: "araignée", def: "蜘蛛", ex: "L'araignée tisse une toile.", niveau: 2 },
+            { word: "arc-en-ciel", def: "彩虹", ex: "L'arc-en-ciel a sept couleurs.", niveau: 2 },
+            { word: "armoire", def: "衣柜", ex: "L'armoire contient les vêtements.", niveau: 2 },
+            { word: "artiste", def: "艺术家", ex: "L'artiste crée.", niveau: 2 },
+            { word: "aéroport", def: "机场", ex: "L'avion décolle de l'aéroport.", niveau: 2 },
+            { word: "banque", def: "银行", ex: "La banque garde l'argent.", niveau: 2 },
+            { word: "batterie", def: "鼓", ex: "La batterie fait du bruit.", niveau: 2 },
+            { word: "bibliothèque", def: "图书馆", ex: "La bibliothèque a beaucoup de livres.", niveau: 2 },
+            { word: "bibliothèque", def: "图书馆", ex: "La bibliothèque a beaucoup de livres.", niveau: 2 },
+            { word: "botte", def: "靴子", ex: "Les bottes sont imperméables.", niveau: 2 },
+            { word: "boucherie", def: "肉铺", ex: "La boucherie vend de la viande.", niveau: 2 },
+            { word: "boulanger", def: "面包师", ex: "Le boulanger fait du pain.", niveau: 2 },
+            { word: "boulangerie", def: "面包店", ex: "La boulangerie vend du pain.", niveau: 2 },
+            { word: "café", def: "咖啡", ex: "Le café est noir.", niveau: 2 },
+            { word: "calme", def: "平静的", ex: "Soyez calme.", niveau: 2 },
+            { word: "cascade", def: "瀑布", ex: "La cascade tombe.", niveau: 2 },
+            { word: "ceinture", def: "腰带", ex: "La ceinture tient le pantalon.", niveau: 2 },
+            { word: "cent", def: "一百", ex: "Cent euros.", niveau: 2 },
+            { word: "chemise", def: "衬衫", ex: "La chemise est blanche.", niveau: 2 },
+            { word: "cheval", def: "马", ex: "Le cheval court vite.", niveau: 2 },
+            { word: "cheveu", def: "头发", ex: "Mes cheveux sont noirs.", niveau: 2 },
+            { word: "choix", def: "选择", ex: "Le choix est difficile.", niveau: 2 },
+            { word: "cochon", def: "猪", ex: "Le cochon aime la boue.", niveau: 2 },
+            { word: "coiffeur", def: "理发师", ex: "Le coiffier coupe les cheveux.", niveau: 2 },
+            { word: "collant", def: "紧身裤", ex: "Le collant est stretch.", niveau: 2 },
+            { word: "colline", def: "小山丘", ex: "La colline est douce.", niveau: 2 },
+            { word: "colère", def: "生气", ex: "La colère doit être contrôlée.", niveau: 2 },
+            { word: "commode", def: "抽屉柜", ex: "La commode est en bois.", niveau: 2 },
+            { word: "confiance", def: "信任", ex: "La confiance se mérite.", niveau: 2 },
+            { word: "corps", def: "身体", ex: "Le corps humain est complexe.", niveau: 2 },
+            { word: "court", def: "短的", ex: "Les cheveux courts.", niveau: 2 },
+            { word: "coussin", def: "靠垫", ex: "Le coussin est moelleux.", niveau: 2 },
+            { word: "cyclisme", def: "自行车运动", ex: "Le cyclisme est écologique.", niveau: 2 },
+            { word: "degré", def: "度", ex: "Il fait vingt degrés.", niveau: 2 },
+            { word: "dictée", def: "听写", ex: "Nous avons une dictée demain.", niveau: 2 },
+            { word: "diplôme", def: "文凭", ex: "Le diplôme est important.", niveau: 2 },
+            { word: "doux", def: "温和的", ex: "Le temps est doux.", niveau: 2 },
+            { word: "drôle", def: "有趣的", ex: "Cette histoire est drôle.", niveau: 2 },
+            { word: "décision", def: "决定", ex: "La décision engage.", niveau: 2 },
+            { word: "découverte", def: "发现", ex: "La découverte est nouvelle.", niveau: 2 },
+            { word: "désert", def: "沙漠", ex: "Le désert est sec.", niveau: 2 },
+            { word: "eau minérale", def: "矿泉水", ex: "Je bois de l'eau minérale.", niveau: 2 },
+            { word: "email", def: "邮件", ex: "J'envoie un email.", niveau: 2 },
+            { word: "en forme", def: "健康的", ex: "Je suis en forme.", niveau: 2 },
+            { word: "ensoleillé", def: "阳光明媚的", ex: "La journée est ensoleillée.", niveau: 2 },
+            { word: "espoir", def: "希望", ex: "L'espoir fait vivre.", niveau: 2 },
+            { word: "examen", def: "考试", ex: "L'examen n'est pas difficile.", niveau: 2 },
+            { word: "examen", def: "考试", ex: "L'examen est difficile.", niveau: 2 },
+            { word: "expérience", def: "实验", ex: "L'expérience prouve.", niveau: 2 },
+            { word: "faible", def: "虚弱的", ex: "Il est malade et faible.", niveau: 2 },
+            { word: "fatigué", def: "累的", ex: "Je suis fatigué après le sport.", niveau: 2 },
+            { word: "fille", def: "女儿，女孩", ex: "Ma fille aînée va au collège.", niveau: 2 },
+            { word: "fils", def: "儿子", ex: "C'est le fils de mon oncle.", niveau: 2 },
+            { word: "flûte", def: "长笛", ex: "La flûte est en bois.", niveau: 2 },
+            { word: "forêt", def: "森林", ex: "La forêt est verte.", niveau: 2 },
+            { word: "fraise", def: "草莓", ex: "Les fraises sont délicieuses.", niveau: 2 },
+            { word: "gant", def: "手套", ex: "Les gants protègent du froid.", niveau: 2 },
+            { word: "garage", def: "车库", ex: "La voiture est dans le garage.", niveau: 2 },
+            { word: "gare", def: "火车站", ex: "Le train arrive à la gare.", niveau: 2 },
+            { word: "goût", def: "品味", ex: "Le goût varie.", niveau: 2 },
+            { word: "grenouille", def: "青蛙", ex: "La grenouille saute.", niveau: 2 },
+            { word: "gymnase", def: "体育馆", ex: "On fait sport au gymnase.", niveau: 2 },
+            { word: "habitude", def: "习惯", ex: "L'habitude s'acquiert.", niveau: 2 },
+            { word: "herbe", def: "草", ex: "L'herbe est verte.", niveau: 2 },
+            { word: "histoire", def: "历史", ex: "L'histoire raconte le passé.", niveau: 2 },
+            { word: "humeur", def: "心情", ex: "L'humeur change.", niveau: 2 },
+            { word: "hôpital", def: "医院", ex: "L'hôpital soigne les malades.", niveau: 2 },
+            { word: "hôtel", def: "酒店", ex: "L'hôtel accueille les voyageurs.", niveau: 2 },
+            { word: "imprimante", def: "打印机", ex: "L'imprimante imprime.", niveau: 2 },
+            { word: "infirmier", def: "护士", ex: "L'infirmier aide.", niveau: 2 },
+            { word: "infirmière", def: "护士", ex: "L'infirmière donne des médicaments.", niveau: 2 },
+            { word: "instituteur", def: "小学教师", ex: "L'instituteur est patient.", niveau: 2 },
+            { word: "instrument", def: "乐器", ex: "Le piano est un instrument.", niveau: 2 },
+            { word: "intelligent", def: "聪明的", ex: "C'est un enfant intelligent.", niveau: 2 },
+            { word: "internet", def: "互联网", ex: "Internet est utile.", niveau: 2 },
+            { word: "internet", def: "互联网", ex: "Internet connecte.", niveau: 2 },
+            { word: "intéressant", def: "有趣的", ex: "Ce livre est intéressant.", niveau: 2 },
+            { word: "invention", def: "发明", ex: "L'invention change.", niveau: 2 },
+            { word: "joie", def: "快乐", ex: "La joie est contagieuse.", niveau: 2 },
+            { word: "jungle", def: "丛林", ex: "La jungle est dense.", niveau: 2 },
+            { word: "laboratoire", def: "实验室", ex: "On fait des expériences au laboratoire.", niveau: 2 },
+            { word: "lac", def: "湖", ex: "Le lac est tranquille.", niveau: 2 },
+            { word: "langue", def: "舌头", ex: "La langue aide à goûter.", niveau: 2 },
+            { word: "lent", def: "慢的", ex: "La tortue est lente.", niveau: 2 },
+            { word: "librairie", def: "书店", ex: "La librairie vend des livres.", niveau: 2 },
+            { word: "limonade", def: "汽水", ex: "La limonade est sucrée.", niveau: 2 },
+            { word: "lion", def: "狮子", ex: "Le lion est le roi des animaux.", niveau: 2 },
+            { word: "long", def: "长的", ex: "Le serpent est long.", niveau: 2 },
+            { word: "manteau", def: "外套", ex: "Le manteau est épais.", niveau: 2 },
+            { word: "match", def: "比赛", ex: "Le match est serré.", niveau: 2 },
+            { word: "mathématique", def: "数学", ex: "Les mathématiques sont logiques.", niveau: 2 },
+            { word: "mauvais", def: "坏的", ex: "C'est une mauvaise idée.", niveau: 2 },
+            { word: "mauvais", def: "坏的", ex: "C'est une mauvaise idée.", niveau: 2 },
+            { word: "mauvais", def: "糟糕的", ex: "Il fait mauvais.", niveau: 2 },
+            { word: "mille", def: "一千", ex: "Mille mercis !", niveau: 2 },
+            { word: "mince", def: "瘦的", ex: "Le mannequin est mince.", niveau: 2 },
+            { word: "mince", def: "瘦的", ex: "Le mannequin est mince.", niveau: 2 },
+            { word: "mode", def: "时尚", ex: "La mode évolue.", niveau: 2 },
+            { word: "moto", def: "摩托车", ex: "La moto est rapide.", niveau: 2 },
+            { word: "mouton", def: "羊", ex: "Le mouton a de la laine.", niveau: 2 },
+            { word: "musicien", def: "音乐家", ex: "Le musicien joue.", niveau: 2 },
+            { word: "musée", def: "博物馆", ex: "Le musée expose.", niveau: 2 },
+            { word: "méchant", def: "坏的", ex: "Le méchant loup.", niveau: 2 },
+            { word: "méchant", def: "坏的", ex: "Le méchant loup.", niveau: 2 },
+            { word: "médecin", def: "医生", ex: "Le médecin soigne les patients.", niveau: 2 },
+            { word: "médecin", def: "医生", ex: "Le médecin soigne.", niveau: 2 },
+            { word: "natation", def: "游泳", ex: "La natation est bonne pour la santé.", niveau: 2 },
+            { word: "note", def: "分数", ex: "J'ai une bonne note.", niveau: 2 },
+            { word: "nuageux", def: "多云的", ex: "Le ciel est nuageux.", niveau: 2 },
+            { word: "objectif", def: "目标", ex: "L'objectif est à atteindre.", niveau: 2 },
+            { word: "océan", def: "海洋", ex: "L'océan est immense.", niveau: 2 },
+            { word: "ours", def: "熊", ex: "L'ours aime le miel.", niveau: 2 },
+            { word: "papillon", def: "蝴蝶", ex: "Le papillon vole de fleur en fleur.", niveau: 2 },
+            { word: "patinoire", def: "溜冰场", ex: "La patinoire est froide.", niveau: 2 },
+            { word: "peur", def: "害怕", ex: "La peur est normale.", niveau: 2 },
+            { word: "pharmacie", def: "药店", ex: "La pharmacie vend des médicaments.", niveau: 2 },
+            { word: "pharmacie", def: "药店", ex: "La pharmacie vend des médicaments.", niveau: 2 },
+            { word: "photographie", def: "摄影", ex: "La photographie capture.", niveau: 2 },
+            { word: "plaine", def: "平原", ex: "La plaine est plate.", niveau: 2 },
+            { word: "plante", def: "植物", ex: "La plante grandit.", niveau: 2 },
+            { word: "poivre", def: "胡椒", ex: "Le poivre est épicé.", niveau: 2 },
+            { word: "policier", def: "警察", ex: "Le policier protège.", niveau: 2 },
+            { word: "pomme de terre", def: "土豆", ex: "Les pommes de terre sont bonnes.", niveau: 2 },
+            { word: "pompier", def: "消防员", ex: "Le pompier éteint les incendies.", niveau: 2 },
+            { word: "poste", def: "邮局", ex: "La poste envoie des lettres.", niveau: 2 },
+            { word: "poule", def: "母鸡", ex: "La poule pond des œufs.", niveau: 2 },
+            { word: "propre", def: "干净的", ex: "Ma chambre est propre.", niveau: 2 },
+            { word: "pâtes", def: "面条", ex: "Les pâtes italiennes sont bonnes.", niveau: 2 },
+            { word: "racine", def: "根", ex: "La racine est sous terre.", niveau: 2 },
+            { word: "raisin", def: "葡萄", ex: "Les raisins sont violets.", niveau: 2 },
+            { word: "respect", def: "尊重", ex: "Le respect est mutuel.", niveau: 2 },
+            { word: "rideau", def: "窗帘", ex: "Le rideau cache la fenêtre.", niveau: 2 },
+            { word: "rivière", def: "河", ex: "La rivière coule vers la mer.", niveau: 2 },
+            { word: "riz", def: "米饭", ex: "Le riz est la base de l'alimentation.", niveau: 2 },
+            { word: "robot", def: "机器人", ex: "Le robot est automatique.", niveau: 2 },
+            { word: "ruisseau", def: "小溪", ex: "Le ruisseau murmure.", niveau: 2 },
+            { word: "réseau", def: "网络", ex: "Le réseau relie.", niveau: 2 },
+            { word: "rêve", def: "梦想", ex: "Mon rêve est de voyager.", niveau: 2 },
+            { word: "saison", def: "季节", ex: "Il y a quatre saisons.", niveau: 2 },
+            { word: "sale", def: "脏的", ex: "Les vêtements sont sales.", niveau: 2 },
+            { word: "salle de bain", def: "浴室", ex: "La salle de bain est propre.", niveau: 2 },
+            { word: "salon", def: "客厅", ex: "Le salon est spacieux.", niveau: 2 },
+            { word: "sandale", def: "凉鞋", ex: "Les sandales sont pour l'été.", niveau: 2 },
+            { word: "science", def: "科学", ex: "La science explique.", niveau: 2 },
+            { word: "sec", def: "干燥的", ex: "Le temps est sec.", niveau: 2 },
+            { word: "sel", def: "盐", ex: "Le sel donne du goût.", niveau: 2 },
+            { word: "sentiment", def: "感情", ex: "Le sentiment est fort.", niveau: 2 },
+            { word: "singe", def: "猴子", ex: "Le singe est intelligent.", niveau: 2 },
+            { word: "site web", def: "网站", ex: "Le site web informe.", niveau: 2 },
+            { word: "ski", def: "滑雪", ex: "Le ski se pratique sur la neige.", niveau: 2 },
+            { word: "source", def: "泉水", ex: "La source jaillit.", niveau: 2 },
+            { word: "souris", def: "老鼠", ex: "La souris est petite.", niveau: 2 },
+            { word: "souvenir", def: "回忆", ex: "Le souvenir est doux.", niveau: 2 },
+            { word: "stade", def: "体育场", ex: "Le stade est immense.", niveau: 2 },
+            { word: "station", def: "车站", ex: "La station de métro est là.", niveau: 2 },
+            { word: "style", def: "风格", ex: "Le style est personnel.", niveau: 2 },
+            { word: "sucre", def: "糖", ex: "Ne mange pas trop de sucre.", niveau: 2 },
+            { word: "surprise", def: "惊讶", ex: "Quelle surprise !", niveau: 2 },
+            { word: "tapis", def: "地毯", ex: "Le tapis est doux.", niveau: 2 },
+            { word: "technologie", def: "技术", ex: "La technologie évolue vite.", niveau: 2 },
+            { word: "température", def: "温度", ex: "La température monte.", niveau: 2 },
+            { word: "tennis", def: "网球", ex: "Le tennis se joue avec une raquette.", niveau: 2 },
+            { word: "terrain", def: "场地", ex: "Le terrain de sport.", niveau: 2 },
+            { word: "terre", def: "地球，土地", ex: "La Terre tourne autour du Soleil.", niveau: 2 },
+            { word: "théâtre", def: "戏剧", ex: "Le théâtre joue des pièces.", niveau: 2 },
+            { word: "tigre", def: "老虎", ex: "Le tigre a des rayures.", niveau: 2 },
+            { word: "tradition", def: "传统", ex: "La tradition se transmet.", niveau: 2 },
+            { word: "trente", def: "三十", ex: "Trente jours en avril.", niveau: 2 },
+            { word: "tristesse", def: "悲伤", ex: "La tristesse passe.", niveau: 2 },
+            { word: "télécommande", def: "遥控器", ex: "La télécommande contrôle.", niveau: 2 },
+            { word: "université", def: "大学", ex: "L'université est pour les étudiants.", niveau: 2 },
+            { word: "vallée", def: "山谷", ex: "La vallée est fertile.", niveau: 2 },
+            { word: "venteux", def: "有风的", ex: "Il fait venteux.", niveau: 2 },
+            { word: "veste", def: "夹克", ex: "La veste est légère.", niveau: 2 },
+            { word: "viande", def: "肉", ex: "La viande donne de l'énergie.", niveau: 2 },
+            { word: "victoire", def: "胜利", ex: "La victoire est douce.", niveau: 2 },
+            { word: "vieux", def: "旧的", ex: "C'est un vieux château.", niveau: 2 },
+            { word: "violet", def: "紫色", ex: "Le raisin est violet.", niveau: 2 },
+            { word: "violon", def: "小提琴", ex: "Le violon est petit.", niveau: 2 },
+            { word: "visage", def: "脸", ex: "Mon visage est rond.", niveau: 2 },
+            { word: "volleyball", def: "排球", ex: "Le volleyball est en équipe.", niveau: 2 },
+            { word: "écharpe", def: "围巾", ex: "L'écharpe est chaude.", niveau: 2 },
+            { word: "éléphant", def: "大象", ex: "L'éléphant est très grand.", niveau: 2 },
+            { word: "énervé", def: "生气的", ex: "Il est énervé.", niveau: 2 },
+            { word: "équipe", def: "队伍", ex: "L'équipe gagne ensemble.", niveau: 2 },
+            { word: "étagère", def: "架子", ex: "L'étagère contient des livres.", niveau: 2 },
+            { word: "étang", def: "池塘", ex: "L'étang est petit.", niveau: 2 },
+            { word: "étranger", def: "外国人", ex: "L'étranger vient d'ailleurs.", niveau: 2 },
+            { word: "agriculture", def: "农业", ex: "L'agriculture cultive la terre.", niveau: 3 },
+            { word: "astronomie", def: "天文学", ex: "L'astronomie observe les étoiles.", niveau: 3 },
+            { word: "athlétisme", def: "田径", ex: "L'athlétisme comprend la course.", niveau: 3 },
+            { word: "attitude", def: "态度", ex: "L'attitude compte.", niveau: 3 },
+            { word: "avocat", def: "律师", ex: "L'avocat défend.", niveau: 3 },
+            { word: "ballet", def: "芭蕾舞", ex: "Le ballet est classique.", niveau: 3 },
+            { word: "biologie", def: "生物学", ex: "La biologie étudie les êtres vivants.", niveau: 3 },
+            { word: "bière", def: "啤酒", ex: "La bière est blonde.", niveau: 3 },
+            { word: "boucher", def: "屠夫", ex: "Le boucher vend de la viande.", niveau: 3 },
+            { word: "caractère", def: "性格", ex: "Le caractère est formé.", niveau: 3 },
+            { word: "champagne", def: "香槟", ex: "Le champagne est festif.", niveau: 3 },
+            { word: "chemisier", def: "女衬衫", ex: "Le chemisier est féminin.", niveau: 3 },
+            { word: "chimie", def: "化学", ex: "La chimie mélange des éléments.", niveau: 3 },
+            { word: "citoyen", def: "公民", ex: "Le citoyen a des droits.", niveau: 3 },
+            { word: "commerce", def: "商业", ex: "Le commerce vend des produits.", niveau: 3 },
+            { word: "communauté", def: "社区", ex: "La communauté s'entraide.", niveau: 3 },
+            { word: "comportement", def: "行为", ex: "Le comportement s'observe.", niveau: 3 },
+            { word: "compétition", def: "竞赛", ex: "La compétition est rude.", niveau: 3 },
+            { word: "constitution", def: "宪法", ex: "La constitution définit les lois.", niveau: 3 },
+            { word: "coutume", def: "习俗", ex: "La coutume est locale.", niveau: 3 },
+            { word: "cravate", def: "领带", ex: "La cravate est élégante.", niveau: 3 },
+            { word: "découverte", def: "发现", ex: "La découverte est excitante.", niveau: 3 },
+            { word: "défaite", def: "失败", ex: "La défaite apprend.", niveau: 3 },
+            { word: "démocratie", def: "民主", ex: "La démocratie permet de voter.", niveau: 3 },
+            { word: "député", def: "议员", ex: "Le député représente le peuple.", niveau: 3 },
+            { word: "ennuyeux", def: "无聊的", ex: "Ce film est ennuyeux.", niveau: 3 },
+            { word: "entraînement", def: "训练", ex: "L'entraînement est important.", niveau: 3 },
+            { word: "entreprise", def: "企业", ex: "L'entreprise emploie des gens.", niveau: 3 },
+            { word: "exposition", def: "展览", ex: "L'exposition est temporaire.", niveau: 3 },
+            { word: "fraternité", def: "博爱", ex: "La fraternité unit.", niveau: 3 },
+            { word: "glacier", def: "冰川", ex: "Le glacier fond.", niveau: 3 },
+            { word: "gouvernement", def: "政府", ex: "Le gouvernement dirige le pays.", niveau: 3 },
+            { word: "gymnastique", def: "体操", ex: "La gymnastique demande de la souplesse.", niveau: 3 },
+            { word: "générosité", def: "慷慨", ex: "La générosité donne.", niveau: 3 },
+            { word: "géographie", def: "地理", ex: "La géographie étudie la Terre.", niveau: 3 },
+            { word: "honnêteté", def: "诚实", ex: "L'honnêteté paie.", niveau: 3 },
+            { word: "humide", def: "潮湿的", ex: "L'air est humide.", niveau: 3 },
+            { word: "immigré", def: "移民", ex: "L'immigré s'installe.", niveau: 3 },
+            { word: "industrie", def: "工业", ex: "L'industrie fabrique des objets.", niveau: 3 },
+            { word: "innovation", def: "创新", ex: "L'innovation crée du nouveau.", niveau: 3 },
+            { word: "intelligence artificielle", def: "人工智能", ex: "L'IA apprend.", niveau: 3 },
+            { word: "invention", def: "发明", ex: "L'invention change la vie.", niveau: 3 },
+            { word: "journaliste", def: "记者", ex: "Le journaliste écrit.", niveau: 3 },
+            { word: "juge", def: "法官", ex: "Le juge décide.", niveau: 3 },
+            { word: "liberté", def: "自由", ex: "La liberté est précieuse.", niveau: 3 },
+            { word: "logiciel", def: "软件", ex: "Le logiciel fait fonctionner.", niveau: 3 },
+            { word: "loyauté", def: "忠诚", ex: "La loyauté dure.", niveau: 3 },
+            { word: "lustre", def: "吊灯", ex: "Le lustre est décoratif.", niveau: 3 },
+            { word: "maire", def: "市长", ex: "Le maire dirige la ville.", niveau: 3 },
+            { word: "majorité", def: "多数", ex: "La majorité décide.", niveau: 3 },
+            { word: "manière", def: "方式", ex: "La manière de faire.", niveau: 3 },
+            { word: "marais", def: "沼泽", ex: "Le marais est humide.", niveau: 3 },
+            { word: "ministre", def: "部长", ex: "Le ministre gère un domaine.", niveau: 3 },
+            { word: "minorité", def: "少数", ex: "La minorité est protégée.", niveau: 3 },
+            { word: "opéra", def: "歌剧", ex: "L'opéra chante.", niveau: 3 },
+            { word: "parlement", def: "议会", ex: "Le parlement vote les lois.", niveau: 3 },
+            { word: "personnalité", def: "个性", ex: "La personnalité est unique.", niveau: 3 },
+            { word: "pharmacien", def: "药剂师", ex: "Le pharmacien donne des médicaments.", niveau: 3 },
+            { word: "philosophie", def: "哲学", ex: "La philosophie réfléchit sur la vie.", niveau: 3 },
+            { word: "physique", def: "物理", ex: "La physique étudie la matière.", niveau: 3 },
+            { word: "plateau", def: "高原", ex: "Le plateau est élevé.", niveau: 3 },
+            { word: "population", def: "人口", ex: "La population augmente.", niveau: 3 },
+            { word: "préférence", def: "偏好", ex: "La préférence est subjective.", niveau: 3 },
+            { word: "président", def: "总统", ex: "Le président est élu.", niveau: 3 },
+            { word: "psychologie", def: "心理学", ex: "La psychologie étudie l'esprit.", niveau: 3 },
+            { word: "recherche", def: "研究", ex: "La recherche scientifique progresse.", niveau: 3 },
+            { word: "réfugié", def: "难民", ex: "Le réfugié fuit.", niveau: 3 },
+            { word: "république", def: "共和国", ex: "La France est une république.", niveau: 3 },
+            { word: "résolution", def: "决心", ex: "La résolution est ferme.", niveau: 3 },
+            { word: "sain", def: "健康的", ex: "Mange sain pour être en forme.", niveau: 3 },
+            { word: "savane", def: "热带草原", ex: "La savane est africaine.", niveau: 3 },
+            { word: "scientifique", def: "科学家", ex: "Le scientifique découvre.", niveau: 3 },
+            { word: "sculpture", def: "雕塑", ex: "La sculpture est en pierre.", niveau: 3 },
+            { word: "serpent", def: "蛇", ex: "Le serpent rampe.", niveau: 3 },
+            { word: "société", def: "社会", ex: "La société évolue.", niveau: 3 },
+            { word: "solidarité", def: "团结", ex: "La solidarité aide.", niveau: 3 },
+            { word: "sénateur", def: "参议员", ex: "Le sénateur vote les lois.", niveau: 3 },
+            { word: "tendance", def: "趋势", ex: "La tendance monte.", niveau: 3 },
+            { word: "tolérance", def: "宽容", ex: "La tolérance accepte.", niveau: 3 },
+            { word: "toundra", def: "苔原", ex: "La toundra est froide.", niveau: 3 },
+            { word: "vin", def: "葡萄酒", ex: "Le vin est rouge.", niveau: 3 },
+            { word: "vétérinaire", def: "兽医", ex: "Le vétérinaire soigne les animaux.", niveau: 3 },
+            { word: "écologie", def: "生态学", ex: "L'écologie protège la nature.", niveau: 3 },
+            { word: "économie", def: "经济", ex: "L'économie étudie l'argent.", niveau: 3 },
+            { word: "écrivain", def: "作家", ex: "L'écrivain écrit des livres.", niveau: 3 },
+            { word: "égalité", def: "平等", ex: "L'égalité est un droit.", niveau: 3 },
+            { word: "émotion", def: "情绪", ex: "L'émotion est vive.", niveau: 3 },
+            { word: "épicier", def: "杂货商", ex: "L'épicier vend de tout.", niveau: 3 },
+            { word: "équitation", def: "马术", ex: "L'équitation monte à cheval.", niveau: 3 },
+            { word: "zéro", def: "零", ex: "Zéro plus un égale un.", niveau: 1 },
+            { word: "vingt", def: "二十", ex: "J'ai vingt ans.", niveau: 1 },
+            { word: "trente", def: "三十", ex: "Trente jours.", niveau: 1 },
+            { word: "quarante", def: "四十", ex: "Quarante euros.", niveau: 1 },
+            { word: "cinquante", def: "五十", ex: "Cinquante minutes.", niveau: 1 },
+            { word: "soixante", def: "六十", ex: "Soixante secondes.", niveau: 1 },
+            { word: "cent", def: "一百", ex: "Cent pour cent.", niveau: 2 },
+            { word: "mille", def: "一千", ex: "Mille mercis.", niveau: 2 },
+            { word: "million", def: "百万", ex: "Un million d'euros.", niveau: 3 },
+            { word: "milliard", def: "十亿", ex: "Un milliard d'habitants.", niveau: 3 },
+            { word: "zéro", def: "零", ex: "Zéro plus un égale un.", niveau: 1 },
+            { word: "vingt", def: "二十", ex: "J'ai vingt ans.", niveau: 1 },
+            { word: "trente", def: "三十", ex: "Trente jours.", niveau: 1 },
+            { word: "quarante", def: "四十", ex: "Quarante euros.", niveau: 1 },
+            { word: "cinquante", def: "五十", ex: "Cinquante minutes.", niveau: 1 },
+            { word: "soixante", def: "六十", ex: "Soixante secondes.", niveau: 1 },
+            { word: "cent", def: "一百", ex: "Cent pour cent.", niveau: 2 },
+            { word: "mille", def: "一千", ex: "Mille mercis.", niveau: 2 },
+            { word: "million", def: "百万", ex: "Un million d'euros.", niveau: 3 },
+            { word: "milliard", def: "十亿", ex: "Un milliard d'habitants.", niveau: 3 },
+            { word: "zéro", def: "零", ex: "Zéro plus un égale un.", niveau: 1 },
+            { word: "vingt", def: "二十", ex: "J'ai vingt ans.", niveau: 1 },
+            { word: "trente", def: "三十", ex: "Trente jours.", niveau: 1 },
+            { word: "quarante", def: "四十", ex: "Quarante euros.", niveau: 1 },
+            { word: "cinquante", def: "五十", ex: "Cinquante minutes.", niveau: 1 },
+            { word: "soixante", def: "六十", ex: "Soixante secondes.", niveau: 1 },
+            { word: "cent", def: "一百", ex: "Cent pour cent.", niveau: 2 },
+            { word: "mille", def: "一千", ex: "Mille mercis.", niveau: 2 },
+            { word: "million", def: "百万", ex: "Un million d'euros.", niveau: 3 },
+            { word: "milliard", def: "十亿", ex: "Un milliard d'habitants.", niveau: 3 },
+            { word: "zéro", def: "零", ex: "Zéro plus un égale un.", niveau: 1 },
+            { word: "vingt", def: "二十", ex: "J'ai vingt ans.", niveau: 1 },
+            { word: "trente", def: "三十", ex: "Trente jours.", niveau: 1 },
+            { word: "quarante", def: "四十", ex: "Quarante euros.", niveau: 1 },
+            { word: "cinquante", def: "五十", ex: "Cinquante minutes.", niveau: 1 },
+            { word: "soixante", def: "六十", ex: "Soixante secondes.", niveau: 1 },
+            { word: "cent", def: "一百", ex: "Cent pour cent.", niveau: 2 },
+            { word: "mille", def: "一千", ex: "Mille mercis.", niveau: 2 },
+            { word: "million", def: "百万", ex: "Un million d'euros.", niveau: 3 },
+            { word: "milliard", def: "十亿", ex: "Un milliard d'habitants.", niveau: 3 },
+            { word: "zéro", def: "零", ex: "Zéro plus un égale un.", niveau: 1 },
+            { word: "vingt", def: "二十", ex: "J'ai vingt ans.", niveau: 1 },
+            { word: "trente", def: "三十", ex: "Trente jours.", niveau: 1 },
+            { word: "quarante", def: "四十", ex: "Quarante euros.", niveau: 1 },
+            { word: "cinquante", def: "五十", ex: "Cinquante minutes.", niveau: 1 },
+            { word: "soixante", def: "六十", ex: "Soixante secondes.", niveau: 1 },
+            { word: "cent", def: "一百", ex: "Cent pour cent.", niveau: 2 },
+            { word: "mille", def: "一千", ex: "Mille mercis.", niveau: 2 },
+            { word: "million", def: "百万", ex: "Un million d'euros.", niveau: 3 },
+            { word: "milliard", def: "十亿", ex: "Un milliard d'habitants.", niveau: 3 },
+            { word: "zéro", def: "零", ex: "Zéro plus un égale un.", niveau: 1 },
+            { word: "vingt", def: "二十", ex: "J'ai vingt ans.", niveau: 1 },
+            { word: "trente", def: "三十", ex: "Trente jours.", niveau: 1 },
+            { word: "quarante", def: "四十", ex: "Quarante euros.", niveau: 1 },
+            { word: "cinquante", def: "五十", ex: "Cinquante minutes.", niveau: 1 },
+            { word: "soixante", def: "六十", ex: "Soixante secondes.", niveau: 1 },
+            { word: "cent", def: "一百", ex: "Cent pour cent.", niveau: 2 },
+            { word: "mille", def: "一千", ex: "Mille mercis.", niveau: 2 },
+            { word: "million", def: "百万", ex: "Un million d'euros.", niveau: 3 },
+            { word: "milliard", def: "十亿", ex: "Un milliard d'habitants.", niveau: 3 },
+            { word: "zéro", def: "零", ex: "Zéro plus un égale un.", niveau: 1 },
+            { word: "vingt", def: "二十", ex: "J'ai vingt ans.", niveau: 1 },
+            { word: "trente", def: "三十", ex: "Trente jours.", niveau: 1 },
+            { word: "quarante", def: "四十", ex: "Quarante euros.", niveau: 1 },
+            { word: "cinquante", def: "五十", ex: "Cinquante minutes.", niveau: 1 },
+            { word: "soixante", def: "六十", ex: "Soixante secondes.", niveau: 1 },
+            { word: "cent", def: "一百", ex: "Cent pour cent.", niveau: 2 },
+            { word: "mille", def: "一千", ex: "Mille mercis.", niveau: 2 },
+            { word: "million", def: "百万", ex: "Un million d'euros.", niveau: 3 },
+            { word: "milliard", def: "十亿", ex: "Un milliard d'habitants.", niveau: 3 },
+            { word: "zéro", def: "零", ex: "Zéro plus un égale un.", niveau: 1 },
+            { word: "vingt", def: "二十", ex: "J'ai vingt ans.", niveau: 1 },
+            { word: "trente", def: "三十", ex: "Trente jours.", niveau: 1 },
+            { word: "quarante", def: "四十", ex: "Quarante euros.", niveau: 1 },
+            { word: "cinquante", def: "五十", ex: "Cinquante minutes.", niveau: 1 },
+            { word: "soixante", def: "六十", ex: "Soixante secondes.", niveau: 1 },
+            { word: "cent", def: "一百", ex: "Cent pour cent.", niveau: 2 },
+            { word: "mille", def: "一千", ex: "Mille mercis.", niveau: 2 },
+            { word: "million", def: "百万", ex: "Un million d'euros.", niveau: 3 },
+            { word: "milliard", def: "十亿", ex: "Un milliard d'habitants.", niveau: 3 },
+            { word: "zéro", def: "零", ex: "Zéro plus un égale un.", niveau: 1 },
+            { word: "vingt", def: "二十", ex: "J'ai vingt ans.", niveau: 1 },
+            { word: "trente", def: "三十", ex: "Trente jours.", niveau: 1 },
+            { word: "quarante", def: "四十", ex: "Quarante euros.", niveau: 1 },
+            { word: "cinquante", def: "五十", ex: "Cinquante minutes.", niveau: 1 },
+            { word: "soixante", def: "六十", ex: "Soixante secondes.", niveau: 1 },
+            { word: "cent", def: "一百", ex: "Cent pour cent.", niveau: 2 },
+            { word: "mille", def: "一千", ex: "Mille mercis.", niveau: 2 },
+            { word: "million", def: "百万", ex: "Un million d'euros.", niveau: 3 },
+            { word: "milliard", def: "十亿", ex: "Un milliard d'habitants.", niveau: 3 },
+            { word: "zéro", def: "零", ex: "Zéro plus un égale un.", niveau: 1 },
+            { word: "vingt", def: "二十", ex: "J'ai vingt ans.", niveau: 1 },
+            { word: "trente", def: "三十", ex: "Trente jours.", niveau: 1 },
+            { word: "quarante", def: "四十", ex: "Quarante euros.", niveau: 1 },
+            { word: "cinquante", def: "五十", ex: "Cinquante minutes.", niveau: 1 },
+            { word: "soixante", def: "六十", ex: "Soixante secondes.", niveau: 1 },
+            { word: "cent", def: "一百", ex: "Cent pour cent.", niveau: 2 },
+            { word: "mille", def: "一千", ex: "Mille mercis.", niveau: 2 },
+            { word: "million", def: "百万", ex: "Un million d'euros.", niveau: 3 },
+            { word: "milliard", def: "十亿", ex: "Un milliard d'habitants.", niveau: 3 },
+            { word: "zéro", def: "零", ex: "Zéro plus un égale un.", niveau: 1 },
+            { word: "vingt", def: "二十", ex: "J'ai vingt ans.", niveau: 1 },
+            { word: "trente", def: "三十", ex: "Trente jours.", niveau: 1 },
+            { word: "quarante", def: "四十", ex: "Quarante euros.", niveau: 1 },
+            { word: "cinquante", def: "五十", ex: "Cinquante minutes.", niveau: 1 },
+            { word: "soixante", def: "六十", ex: "Soixante secondes.", niveau: 1 },
+            { word: "cent", def: "一百", ex: "Cent pour cent.", niveau: 2 },
+            { word: "mille", def: "一千", ex: "Mille mercis.", niveau: 2 },
+            { word: "million", def: "百万", ex: "Un million d'euros.", niveau: 3 },
+            { word: "milliard", def: "十亿", ex: "Un milliard d'habitants.", niveau: 3 },
+            { word: "zéro", def: "零", ex: "Zéro plus un égale un.", niveau: 1 },
+            { word: "vingt", def: "二十", ex: "J'ai vingt ans.", niveau: 1 },
+            { word: "trente", def: "三十", ex: "Trente jours.", niveau: 1 },
+            { word: "quarante", def: "四十", ex: "Quarante euros.", niveau: 1 },
+            { word: "cinquante", def: "五十", ex: "Cinquante minutes.", niveau: 1 },
+            { word: "soixante", def: "六十", ex: "Soixante secondes.", niveau: 1 },
+            { word: "cent", def: "一百", ex: "Cent pour cent.", niveau: 2 },
+            { word: "mille", def: "一千", ex: "Mille mercis.", niveau: 2 },
+            { word: "million", def: "百万", ex: "Un million d'euros.", niveau: 3 },
+            { word: "milliard", def: "十亿", ex: "Un milliard d'habitants.", niveau: 3 },
+            { word: "zéro", def: "零", ex: "Zéro plus un égale un.", niveau: 1 },
+            { word: "vingt", def: "二十", ex: "J'ai vingt ans.", niveau: 1 },
+            { word: "trente", def: "三十", ex: "Trente jours.", niveau: 1 },
+            { word: "quarante", def: "四十", ex: "Quarante euros.", niveau: 1 },
+            { word: "cinquante", def: "五十", ex: "Cinquante minutes.", niveau: 1 },
+            { word: "soixante", def: "六十", ex: "Soixante secondes.", niveau: 1 },
+            { word: "cent", def: "一百", ex: "Cent pour cent.", niveau: 2 },
+            { word: "mille", def: "一千", ex: "Mille mercis.", niveau: 2 },
+            { word: "million", def: "百万", ex: "Un million d'euros.", niveau: 3 },
+            { word: "milliard", def: "十亿", ex: "Un milliard d'habitants.", niveau: 3 },
+            { word: "zéro", def: "零", ex: "Zéro plus un égale un.", niveau: 1 },
+            { word: "vingt", def: "二十", ex: "J'ai vingt ans.", niveau: 1 },
+            { word: "trente", def: "三十", ex: "Trente jours.", niveau: 1 },
+            { word: "quarante", def: "四十", ex: "Quarante euros.", niveau: 1 },
+            { word: "cinquante", def: "五十", ex: "Cinquante minutes.", niveau: 1 },
+            { word: "soixante", def: "六十", ex: "Soixante secondes.", niveau: 1 },
+            { word: "cent", def: "一百", ex: "Cent pour cent.", niveau: 2 },
+            { word: "mille", def: "一千", ex: "Mille mercis.", niveau: 2 },
+            { word: "million", def: "百万", ex: "Un million d'euros.", niveau: 3 },
+            { word: "milliard", def: "十亿", ex: "Un milliard d'habitants.", niveau: 3 },
+            { word: "zéro", def: "零", ex: "Zéro plus un égale un.", niveau: 1 },
+            { word: "vingt", def: "二十", ex: "J'ai vingt ans.", niveau: 1 },
+            { word: "trente", def: "三十", ex: "Trente jours.", niveau: 1 },
+            { word: "quarante", def: "四十", ex: "Quarante euros.", niveau: 1 },
+            { word: "cinquante", def: "五十", ex: "Cinquante minutes.", niveau: 1 },
+            { word: "soixante", def: "六十", ex: "Soixante secondes.", niveau: 1 },
+            { word: "cent", def: "一百", ex: "Cent pour cent.", niveau: 2 },
+            { word: "mille", def: "一千", ex: "Mille mercis.", niveau: 2 },
+            { word: "million", def: "百万", ex: "Un million d'euros.", niveau: 3 },
+            { word: "milliard", def: "十亿", ex: "Un milliard d'habitants.", niveau: 3 },
+            { word: "zéro", def: "零", ex: "Zéro plus un égale un.", niveau: 1 },
+            { word: "vingt", def: "二十", ex: "J'ai vingt ans.", niveau: 1 },
+            { word: "trente", def: "三十", ex: "Trente jours.", niveau: 1 },
+            { word: "quarante", def: "四十", ex: "Quarante euros.", niveau: 1 },
+            { word: "cinquante", def: "五十", ex: "Cinquante minutes.", niveau: 1 },
+            { word: "soixante", def: "六十", ex: "Soixante secondes.", niveau: 1 },
+            { word: "cent", def: "一百", ex: "Cent pour cent.", niveau: 2 },
+            { word: "mille", def: "一千", ex: "Mille mercis.", niveau: 2 },
+            { word: "million", def: "百万", ex: "Un million d'euros.", niveau: 3 },
+            { word: "milliard", def: "十亿", ex: "Un milliard d'habitants.", niveau: 3 },
+            { word: "zéro", def: "零", ex: "Zéro plus un égale un.", niveau: 1 },
+            { word: "vingt", def: "二十", ex: "J'ai vingt ans.", niveau: 1 },
+            { word: "trente", def: "三十", ex: "Trente jours.", niveau: 1 },
+            { word: "quarante", def: "四十", ex: "Quarante euros.", niveau: 1 },
+            { word: "cinquante", def: "五十", ex: "Cinquante minutes.", niveau: 1 },
+            { word: "soixante", def: "六十", ex: "Soixante secondes.", niveau: 1 },
+            { word: "cent", def: "一百", ex: "Cent pour cent.", niveau: 2 },
+            { word: "mille", def: "一千", ex: "Mille mercis.", niveau: 2 },
+            { word: "million", def: "百万", ex: "Un million d'euros.", niveau: 3 },
+            { word: "milliard", def: "十亿", ex: "Un milliard d'habitants.", niveau: 3 },
+            { word: "zéro", def: "零", ex: "Zéro plus un égale un.", niveau: 1 },
+            { word: "vingt", def: "二十", ex: "J'ai vingt ans.", niveau: 1 },
+            { word: "trente", def: "三十", ex: "Trente jours.", niveau: 1 },
+            { word: "quarante", def: "四十", ex: "Quarante euros.", niveau: 1 },
+            { word: "cinquante", def: "五十", ex: "Cinquante minutes.", niveau: 1 },
+            { word: "soixante", def: "六十", ex: "Soixante secondes.", niveau: 1 },
+            { word: "cent", def: "一百", ex: "Cent pour cent.", niveau: 2 },
+            { word: "mille", def: "一千", ex: "Mille mercis.", niveau: 2 },
+            { word: "million", def: "百万", ex: "Un million d'euros.", niveau: 3 },
+            { word: "milliard", def: "十亿", ex: "Un milliard d'habitants.", niveau: 3 },
+            { word: "zéro", def: "零", ex: "Zéro plus un égale un.", niveau: 1 },
+            { word: "vingt", def: "二十", ex: "J'ai vingt ans.", niveau: 1 },
+            { word: "trente", def: "三十", ex: "Trente jours.", niveau: 1 },
+            { word: "quarante", def: "四十", ex: "Quarante euros.", niveau: 1 },
+            { word: "cinquante", def: "五十", ex: "Cinquante minutes.", niveau: 1 },
+            { word: "soixante", def: "六十", ex: "Soixante secondes.", niveau: 1 },
+            { word: "cent", def: "一百", ex: "Cent pour cent.", niveau: 2 },
+            { word: "mille", def: "一千", ex: "Mille mercis.", niveau: 2 },
+            { word: "million", def: "百万", ex: "Un million d'euros.", niveau: 3 },
+            { word: "milliard", def: "十亿", ex: "Un milliard d'habitants.", niveau: 3 },
+            { word: "zéro", def: "零", ex: "Zéro plus un égale un.", niveau: 1 },
+            { word: "vingt", def: "二十", ex: "J'ai vingt ans.", niveau: 1 },
+            { word: "trente", def: "三十", ex: "Trente jours.", niveau: 1 },
+            { word: "quarante", def: "四十", ex: "Quarante euros.", niveau: 1 },
+            { word: "cinquante", def: "五十", ex: "Cinquante minutes.", niveau: 1 },
+            { word: "soixante", def: "六十", ex: "Soixante secondes.", niveau: 1 },
+            { word: "cent", def: "一百", ex: "Cent pour cent.", niveau: 2 },
+            { word: "mille", def: "一千", ex: "Mille mercis.", niveau: 2 },
+            { word: "million", def: "百万", ex: "Un million d'euros.", niveau: 3 },
+            { word: "milliard", def: "十亿", ex: "Un milliard d'habitants.", niveau: 3 },
+            { word: "zéro", def: "零", ex: "Zéro plus un égale un.", niveau: 1 },
+            { word: "vingt", def: "二十", ex: "J'ai vingt ans.", niveau: 1 },
+            { word: "trente", def: "三十", ex: "Trente jours.", niveau: 1 },
+            { word: "quarante", def: "四十", ex: "Quarante euros.", niveau: 1 },
+            { word: "cinquante", def: "五十", ex: "Cinquante minutes.", niveau: 1 },
+            { word: "soixante", def: "六十", ex: "Soixante secondes.", niveau: 1 },
+            { word: "cent", def: "一百", ex: "Cent pour cent.", niveau: 2 },
+            { word: "mille", def: "一千", ex: "Mille mercis.", niveau: 2 },
+            { word: "million", def: "百万", ex: "Un million d'euros.", niveau: 3 },
+            { word: "milliard", def: "十亿", ex: "Un milliard d'habitants.", niveau: 3 },
+            { word: "zéro", def: "零", ex: "Zéro plus un égale un.", niveau: 1 },
+            { word: "vingt", def: "二十", ex: "J'ai vingt ans.", niveau: 1 },
+            { word: "trente", def: "三十", ex: "Trente jours.", niveau: 1 },
+            { word: "quarante", def: "四十", ex: "Quarante euros.", niveau: 1 },
+            { word: "cinquante", def: "五十", ex: "Cinquante minutes.", niveau: 1 },
+            { word: "soixante", def: "六十", ex: "Soixante secondes.", niveau: 1 },
+            { word: "cent", def: "一百", ex: "Cent pour cent.", niveau: 2 },
+            { word: "mille", def: "一千", ex: "Mille mercis.", niveau: 2 },
+            { word: "million", def: "百万", ex: "Un million d'euros.", niveau: 3 },
+            { word: "milliard", def: "十亿", ex: "Un milliard d'habitants.", niveau: 3 },
+            { word: "zéro", def: "零", ex: "Zéro plus un égale un.", niveau: 1 },
+            { word: "vingt", def: "二十", ex: "J'ai vingt ans.", niveau: 1 },
+            { word: "trente", def: "三十", ex: "Trente jours.", niveau: 1 },
+            { word: "quarante", def: "四十", ex: "Quarante euros.", niveau: 1 },
+            { word: "cinquante", def: "五十", ex: "Cinquante minutes.", niveau: 1 },
+            { word: "soixante", def: "六十", ex: "Soixante secondes.", niveau: 1 },
+            { word: "cent", def: "一百", ex: "Cent pour cent.", niveau: 2 },
+            { word: "mille", def: "一千", ex: "Mille mercis.", niveau: 2 },
+            { word: "million", def: "百万", ex: "Un million d'euros.", niveau: 3 },
+            { word: "milliard", def: "十亿", ex: "Un milliard d'habitants.", niveau: 3 },
+            { word: "zéro", def: "零", ex: "Zéro plus un égale un.", niveau: 1 },
+            { word: "vingt", def: "二十", ex: "J'ai vingt ans.", niveau: 1 },
+            { word: "trente", def: "三十", ex: "Trente jours.", niveau: 1 },
+            { word: "quarante", def: "四十", ex: "Quarante euros.", niveau: 1 },
+            { word: "cinquante", def: "五十", ex: "Cinquante minutes.", niveau: 1 },
+            { word: "Sincérité", def: "(已学习词汇 - niveau 2)", ex: "单词 "Sincérité" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Perspective", def: "(已学习词汇 - niveau 3)", ex: "单词 "Perspective" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Génétique", def: "(已学习词汇 - niveau 0)", ex: "单词 "Génétique" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Préhistoire", def: "(已学习词汇 - niveau 3)", ex: "单词 "Préhistoire" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Équilibre", def: "(已学习词汇 - niveau 3)", ex: "单词 "Équilibre" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Climax", def: "(已学习词汇 - niveau 3)", ex: "单词 "Climax" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Friction", def: "(已学习词汇 - niveau 0)", ex: "单词 "Friction" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Conservation", def: "(已学习词汇 - niveau 3)", ex: "单词 "Conservation" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Détermination", def: "(已学习词汇 - niveau 3)", ex: "单词 "Détermination" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Insecte", def: "(已学习词汇 - niveau 3)", ex: "单词 "Insecte" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Vertèbre", def: "(已学习词汇 - niveau 3)", ex: "单词 "Vertèbre" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Bienveillance", def: "(已学习词汇 - niveau 4)", ex: "单词 "Bienveillance" 已在之前的课程中学习。", niveau: 3 },
+            { word: "Imagination", def: "(已学习词汇 - niveau 4)", ex: "单词 "Imagination" 已在之前的课程中学习。", niveau: 3 },
+            { word: "Continent", def: "(已学习词汇 - niveau 3)", ex: "单词 "Continent" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Électricité", def: "(已学习词汇 - niveau 3)", ex: "单词 "Électricité" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Symphonie", def: "(已学习词汇 - niveau 3)", ex: "单词 "Symphonie" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Protagoniste", def: "(已学习词汇 - niveau 3)", ex: "单词 "Protagoniste" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Microscope", def: "(已学习词汇 - niveau 3)", ex: "单词 "Microscope" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Pollinisation", def: "(已学习词汇 - niveau 3)", ex: "单词 "Pollinisation" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Renaissance", def: "(已学习词汇 - niveau 3)", ex: "单词 "Renaissance" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Portrait", def: "(已学习词汇 - niveau 3)", ex: "单词 "Portrait" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Atmosphère", def: "(已学习词汇 - niveau 3)", ex: "单词 "Atmosphère" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Frontière", def: "(已学习词汇 - niveau 3)", ex: "单词 "Frontière" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Persévérance", def: "(已学习词汇 - niveau 3)", ex: "单词 "Persévérance" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Conscience", def: "(已学习词汇 - niveau 3)", ex: "单词 "Conscience" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Isolant", def: "(已学习词汇 - niveau 3)", ex: "单词 "Isolant" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Caméléon", def: "(已学习词汇 - niveau 3)", ex: "单词 "Caméléon" 已在之前的课程中学习。", niveau: 2 },
+            { word: "émerveillement", def: "(已学习词汇 - niveau 4)", ex: "单词 "émerveillement" 已在之前的课程中学习。", niveau: 3 },
+            { word: "curiosité", def: "(已学习词汇 - niveau 4)", ex: "单词 "curiosité" 已在之前的课程中学习。", niveau: 3 },
+            { word: "imprévisible", def: "(已学习词汇 - niveau 4)", ex: "单词 "imprévisible" 已在之前的课程中学习。", niveau: 3 },
+            { word: "s'épanouir", def: "(已学习词汇 - niveau 4)", ex: "单词 "s'épanouir" 已在之前的课程中学习。", niveau: 3 },
+            { word: "vigoureux", def: "(已学习词汇 - niveau 4)", ex: "单词 "vigoureux" 已在之前的课程中学习。", niveau: 3 },
+            { word: "Écosystème", def: "(已学习词汇 - niveau 4)", ex: "单词 "Écosystème" 已在之前的课程中学习。", niveau: 3 },
+            { word: "Créativité", def: "(已学习词汇 - niveau 2)", ex: "单词 "Créativité" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Préservation", def: "(已学习词汇 - niveau 2)", ex: "单词 "Préservation" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Harmonie", def: "(已学习词汇 - niveau 2)", ex: "单词 "Harmonie" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Symétrie", def: "(已学习词汇 - niveau 2)", ex: "单词 "Symétrie" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Mémoire", def: "(已学习词汇 - niveau 2)", ex: "单词 "Mémoire" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Prénom", def: "(已学习词汇 - niveau 1)", ex: "单词 "Prénom" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Analyse", def: "(已学习词汇 - niveau 2)", ex: "单词 "Analyse" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Résistance", def: "(已学习词汇 - niveau 2)", ex: "单词 "Résistance" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Mutation", def: "(已学习词汇 - niveau 2)", ex: "单词 "Mutation" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Architecture", def: "(已学习词汇 - niveau 2)", ex: "单词 "Architecture" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Paradoxe", def: "(已学习词汇 - niveau 2)", ex: "单词 "Paradoxe" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Vitesse", def: "(已学习词汇 - niveau 2)", ex: "单词 "Vitesse" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Argumentation", def: "(已学习词汇 - niveau 0)", ex: "单词 "Argumentation" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Indépendance", def: "(已学习词汇 - niveau 0)", ex: "单词 "Indépendance" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Table", def: "(已学习词汇 - niveau 1)", ex: "单词 "Table" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Hippopotame", def: "(已学习词汇 - niveau 1)", ex: "单词 "Hippopotame" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Sédiment", def: "(已学习词汇 - niveau 1)", ex: "单词 "Sédiment" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Volcan", def: "(已学习词汇 - niveau 1)", ex: "单词 "Volcan" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Globalisation", def: "(已学习词汇 - niveau 1)", ex: "单词 "Globalisation" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Biotechnologie", def: "(已学习词汇 - niveau 1)", ex: "单词 "Biotechnologie" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Empathie", def: "(已学习词汇 - niveau 1)", ex: "单词 "Empathie" 已在之前的课程中学习。", niveau: 2 },
+            { word: "Condensation", def: "(已学习词汇 - niveau 1)", ex: "单词 "Condensation" 已在之前的课程中学习。", niveau: 2 },
+        ];
+
+        async function init() {
+            console.log("🚀 init() started");
+            document.getElementById('sync-status').innerText = "Chargement...";
+            document.getElementById('sync-status').style.background = "#f1c40f";
+            
+            document.getElementById('ui-date').innerText = new Date().toLocaleDateString('fr-FR', { weekday:'long', day:'numeric', month:'long' });
+            const today = new Date().toISOString().split('T')[0];
+            
+            try {
+                // Check if running from GitHub (HTTPS) while API is HTTP
+                if (window.location.protocol === 'https:' && API.startsWith('http://')) {
+                    document.getElementById('connection-warning').style.display = 'block';
+                }
+
+                console.log("🔍 Fetching data from:", DATA_PATH);
+                const response = await fetch(`${DATA_PATH}?t=${Date.now()}`);
+                console.log("📡 Response status:", response.status, response.ok);
+                
+                let localData = null;
+                try {
+                    const localSaved = localStorage.getItem('french_learning_data');
+                    if (localSaved) localData = JSON.parse(localSaved);
+                } catch (e) {
+                    console.warn("⚠️ LocalStorage read failed:", e);
+                    localStorage.removeItem('french_learning_data');
+                }
+
+                if (response.ok) {
+                    const serverData = await response.json();
+                    console.log("✅ Server data loaded:", serverData.stars, "stars,", serverData.notebook?.length, "words");
+                    
+                    // CRITICAL: Conflict Resolution Logic
+                    // If local data exists and has MORE stars or MORE notebook entries, it's ahead of server.
+                    if (localData && (
+                        (localData.stars > (serverData.stars || 0)) || 
+                        (localData.notebook && serverData.notebook && localData.notebook.length > serverData.notebook.length)
+                    )) {
+                        console.log("🚀 Local data is ahead. Syncing local to server...");
+                        gData = localData;
+                        await saveData(); // Push local state to server
+                    } else {
+                        gData = serverData;
+                        localStorage.setItem('french_learning_data', JSON.stringify(gData));
+                    }
+                    
+                    updateSyncStatus("☁️ Synchronisé", "#3498db");
+                } else if (localData) {
+                    console.log("⚠️ Server fetch failed, using local data");
+                    gData = localData;
+                    updateSyncStatus("⚠️ Offline (Local Mode)", "#e67e22");
+                } else {
+                    console.error("❌ Server fetch failed and no local data available");
+                    updateSyncStatus("❌ Erreur de chargement", "#e74c3c");
+                }
+
+                if (!gData.notebook) gData.notebook = [];
+                
+                if (!gData.daily_stats || gData.daily_stats.date !== today) {
+                    const seedVal = today.split('-').reduce((a, b) => a + b.charCodeAt(0), 0);
+                    let pool = DB.filter(v => !gData.notebook.some(n => n.word === v.word));
+                    if (pool.length < 5) pool = [...DB];
+                    
+                    let newDaily = []; let tPool = [...pool];
+                    let s = seedVal;
+                    for (let i=0; i<5; i++) { 
+                        let idx = s % tPool.length;
+                        newDaily.push(tPool.splice(idx, 1)[0].word); 
+                        s = s * 31 + 7; 
+                    }
+                    
+                    gData.daily_stats = { date: today, completed: false, words: newDaily };
+
+                    // Logic for manual add remains: user clicks "Ajouter" button
+                    localStorage.removeItem('french_session_mastery');
+sessionStorage.removeItem('french_session_mastery');
+                }
+                
+                gTodayWords = gData.daily_stats.words.map(wName => DB.find(d => d.word === wName));
+                
+                // Load session mastery from localStorage (persistent across refreshes)
+                const savedSession = localStorage.getItem('french_session_mastery');
+                if (savedSession) {
+                    const parsedSession = JSON.parse(savedSession);
+                    if (parsedSession.date === today) sessionMastery = parsedSession.data;
+                    else {
+                        sessionMastery = {};
+                        localStorage.removeItem('french_session_mastery');
+                    }
+                } else {
+                    // Fallback to sessionStorage for backward compatibility
+                    const legacySession = sessionStorage.getItem('french_session_mastery');
+                    if (legacySession) {
+                        const parsedLegacy = JSON.parse(legacySession);
+                        if (parsedLegacy.date === today) {
+                            sessionMastery = parsedLegacy.data;
+                            // Migrate to localStorage
+                            localStorage.setItem('french_session_mastery', JSON.stringify(parsedLegacy));
+                        } else sessionMastery = {};
+                    } else sessionMastery = {};
+                }
+                
+                // Warn user before refresh if quiz is in progress
+                window.addEventListener('beforeunload', (e) => {
+                    if (!gData.daily_stats.completed) {
+                        const info = calculateProgress();
+                        if (info.newPercent < 100) {
+                            e.preventDefault();
+                            e.returnValue = '⚠️ Quiz en cours ! Ta progression sera perdue si tu quittes maintenant.';
+                        }
+                    }
+                });
+                
+                document.getElementById('sync-status').innerText = "✅ Prêt";
+                document.getElementById('sync-status').style.background = "#2ecc71";
+            } catch (e) { 
+                console.error("❌ Init error:", e);
+                document.getElementById('sync-status').innerText = "⚠️ Offline: " + e.message;
+                // Ensure gData has valid structure even on error
+                if (!gData.notebook) gData.notebook = [];
+                if (!gData.daily_stats) gData.daily_stats = { date: today, completed: false, words: [] };
+            }
+            
+            // Final safety check - ensure valid data structure
+            if (!gData.notebook) gData.notebook = [];
+            if (!gData.daily_stats || gData.daily_stats.date !== today) {
+                // Generate default daily words if missing
+                const seedVal = today.split('-').reduce((a, b) => a + b.charCodeAt(0), 0);
+                let pool = DB.filter(v => !gData.notebook.some(n => n.word === v.word));
+                if (pool.length < 5) pool = [...DB];
+                let newDaily = [], tPool = [...pool], s = seedVal;
+                for (let i = 0; i < 5; i++) {
+                    let idx = s % tPool.length;
+                    if (tPool.length === 0) break;
+                    newDaily.push(tPool.splice(idx, 1)[0].word);
+                    s = s * 31 + 7;
+                }
+                gData.daily_stats = { date: today, completed: false, words: newDaily };
+            }
+            // Ensure gTodayWords is set
+            gTodayWords = gData.daily_stats.words.map(wName => DB.find(d => d.word === wName)).filter(Boolean);
+            
+            refreshUI();
+        }
+
+        function calculateProgress() {
+            const today = new Date().toISOString().split('T')[0];
+            const newTotal = 5 * MASTERY_GOAL;
+            let newCorrect = 0;
+            gTodayWords.forEach(w => { 
+                if (gData.notebook.some(n => n.word === w.word)) {
+                    newCorrect += Math.min(MASTERY_GOAL, sessionMastery[w.word] || 0); 
+                }
+            });
+            const newPercent = (newCorrect / newTotal) * 100;
+            
+            const reviewWords = DB.filter(v => { 
+                const n = gData.notebook.find(e => e.word === v.word); 
+                return n && n.next <= today && !gTodayWords.some(tw => tw.word === v.word); 
+            });
+            const revTotal = reviewWords.length * MASTERY_GOAL;
+            let revCorrect = 0;
+            reviewWords.forEach(w => { revCorrect += Math.min(MASTERY_GOAL, sessionMastery[w.word] || 0); });
+            const revPercent = (reviewWords.length === 0) ? 100 : (revCorrect / revTotal) * 100;
+            
+            return { newCorrect, newTotal, newPercent, revCorrect, revTotal, revPercent, revCount: reviewWords.length };
+        }
+
+        function refreshUI() {
+            document.getElementById('ui-stars').innerText = gData.stars || 0;
+            document.getElementById('ui-trophies').innerText = Math.floor((gData.stars || 0) / 1000);
+            document.getElementById('ui-count').innerText = gData.notebook.length;
+            const today = new Date().toISOString().split('T')[0];
+
+            document.getElementById('ui-words-list').innerHTML = gTodayWords.map(w => `
+                <div class="daily-item"><div class="mot">${w.word}</div><div class="definition">${w.def}</div><div class="exemple">"${w.ex}"</div>
+                <div style="margin-top:10px"><button class="action-btn" onclick="speak('${w.word}')">🔊 Écouter</button>
+                <button class="action-btn" style="background:${gData.notebook.some(n=>n.word===w.word)?'#ccc':'var(--p)'}" onclick="addWord('${w.word}')">${gData.notebook.some(n=>n.word===w.word)?'✅ Ajouté':'📓 Ajouter'}</button></div>
+                </div>`).join('');
+
+            const info = calculateProgress();
+            document.getElementById('bar-n').style.width = info.newPercent + "%";
+            document.getElementById('bar-r').style.width = info.revPercent + "%";
+            
+            const hasReview = info.revCount > 0;
+            const totalPercent = hasReview ? Math.round((info.newPercent + info.revPercent) / 2) : Math.round(info.newPercent);
+            document.getElementById('ui-progress').innerHTML = totalPercent + "%";
+            
+            const completionStatus = document.getElementById('ui-completion-status');
+            if (gData.daily_stats.completed) { 
+                completionStatus.innerText = "🌟 MISSION ACCOMPLIE !"; completionStatus.style.color = "#2ecc71"; 
+            } else if (totalPercent >= 100) { 
+                completionStatus.innerText = "✨ PRÊT À VALIDER !"; completionStatus.style.color = "#f1c40f"; 
+            } else { completionStatus.innerText = ""; }
+
+            document.getElementById('mode-n').classList.toggle('done', info.newPercent >= 100);
+            document.getElementById('mode-r').classList.toggle('done', info.revPercent >= 100);
+
+            document.getElementById('list-new').innerHTML = gData.notebook.filter(n => gTodayWords.some(tw => tw.word === n.word)).map(n => `<div onclick="showDetail('${n.word}')" style="cursor:pointer; margin-bottom:5px;">• ${n.word}</div>`).join('') || "Rien encore";
+            document.getElementById('list-due').innerHTML = gData.notebook.filter(n => n.next <= today && !gTodayWords.some(tw => tw.word === n.word)).map(n => `<div onclick="showDetail('${n.word}')" style="cursor:pointer; margin-bottom:5px;">• ${n.word} <span class="lvl-badge">Lvl ${n.lvl}</span></div>`).join('') || (hasReview ? "Fini ! 🎉" : "Rien aujourd'hui");
+            
+            saveData(); saveSession(); updateQuiz();
+        }
+
+        function openNotebook() {
+            renderNotebook();
+            openModal('nbModal');
+        }
+
+        function renderNotebook(filterText = '') {
+            const nbListEl = document.getElementById('nb-list');
+            const today = new Date().toISOString().split('T')[0];
+            
+            if (!gData.notebook || gData.notebook.length === 0) {
+                nbListEl.innerHTML = "<div class='nb-empty'>📭 Ton carnet est vide.<br>Commence par ajouter des mots du jour !</div>";
+                document.getElementById('nb-total').innerText = '';
+                document.getElementById('nb-stats').innerHTML = '';
+                return;
+            }
+
+            // Filter words if search text provided
+            let words = gData.notebook;
+            if (filterText) {
+                words = words.filter(n => n.word.toLowerCase().includes(filterText.toLowerCase()));
+            }
+
+            // Group by level
+            const groups = {
+                beginner: { title: '🟠 Débutant', words: [], class: 'nb-beginner', expanded: true },
+                consolidating: { title: '🟡 Consolidation', words: [], class: 'nb-consolidating', expanded: false },
+                advanced: { title: '🟢 Avancé', words: [], class: 'nb-advanced', expanded: false },
+                mastered: { title: '🔵 Maîtrisé', words: [], class: 'nb-mastered', expanded: false }
+            };
+
+            words.forEach(n => {
+                const wordData = DB.find(d => d.word === n.word);
+                if (!wordData) return;
+                
+                if (n.lvl <= 1) groups.beginner.words.push({...n, data: wordData});
+                else if (n.lvl <= 3) groups.consolidating.words.push({...n, data: wordData});
+                else if (n.lvl <= 5) groups.advanced.words.push({...n, data: wordData});
+                else groups.mastered.words.push({...n, data: wordData});
+            });
+
+            // Update stats
+            const total = gData.notebook.length;
+            const dueToday = gData.notebook.filter(n => n.next <= today).length;
+            const withErrors = gData.notebook.filter(n => n.err_days > 0).length;
+            document.getElementById('nb-total').innerText = `(${total} mots)`;
+            document.getElementById('nb-stats').innerHTML = `
+                <div class="nb-stat"><div class="nb-stat-value">${total}</div><div>Total</div></div>
+                <div class="nb-stat"><div class="nb-stat-value" style="color:#f39c12">${dueToday}</div><div>À réviser</div></div>
+                <div class="nb-stat"><div class="nb-stat-value" style="color:#e74c3c">${withErrors}</div><div>Difficultés</div></div>
+            `;
+
+            // Render groups
+            let html = '';
+            let hasContent = false;
+            
+            for (const [key, group] of Object.entries(groups)) {
+                if (group.words.length === 0) continue;
+                hasContent = true;
+                
+                const isExpanded = filterText ? true : group.expanded;
+                const arrow = isExpanded ? '▼' : '▶';
+                
+                html += `
+                    <div class="nb-group">
+                        <div class="nb-group-header ${group.class}" onclick="toggleGroup('${key}')">
+                            <span>${arrow} ${group.title}</span>
+                            <span class="nb-group-count">${group.words.length}</span>
+                        </div>
+                        <div class="nb-group-content ${isExpanded ? '' : 'collapsed'}" id="nb-group-${key}">
+                            ${group.words.map(n => {
+                                const isDue = n.next <= today && !gTodayWords.some(tw => tw.word === n.word);
+                                const hasError = n.err_days > 0;
+                                const dueClass = hasError ? 'nb-word-error' : (isDue ? 'nb-word-due' : '');
+                                const dueBadge = isDue ? ' <span style="color:#f39c12;font-size:0.8em;">⏰</span>' : '';
+                                const errorBadge = hasError ? ` <span style="color:#e74c3c;font-size:0.8em;">⚠️${n.err_days}</span>` : '';
+                                
+                                return `
+                                <div class="notebook-item ${dueClass}" onclick="showDetail('${n.word}')">
+                                    <div style="display:flex;flex-direction:column;flex:1;">
+                                        <span style="font-size:1.1em;"><strong>${n.word}</strong>${dueBadge}${errorBadge}</span>
+                                        <span style="font-size:0.85em;color:#666;margin-top:3px;">${n.data.def.substring(0, 50)}...</span>
+                                        <span style="font-size:0.75em;color:#999;margin-top:2px;">Prochaine révision: ${formatDate(n.next)}</span>
+                                    </div>
+                                    <div style="display:flex;align-items:center;gap:8px;">
+                                        <span class="lvl-badge">Lvl ${n.lvl}</span>
+                                        <button onclick="event.stopPropagation(); speak('${n.word}')" style="background:var(--s);border:none;width:35px;height:35px;border-radius:50%;color:white;font-size:1.2em;cursor:pointer;display:flex;align-items:center;justify-content:center;">🔊</button>
+                                    </div>
+                                </div>`;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (!hasContent && filterText) {
+                html = "<div class='nb-empty'>🔍 Aucun mot ne correspond à ta recherche.</div>";
+            }
+
+            nbListEl.innerHTML = html;
+        }
+
+        function toggleGroup(groupKey) {
+            const content = document.getElementById(`nb-group-${groupKey}`);
+            const header = content.previousElementSibling;
+            const isCollapsed = content.classList.contains('collapsed');
+            
+            content.classList.toggle('collapsed');
+            header.innerHTML = header.innerHTML.replace(isCollapsed ? '▶' : '▼', isCollapsed ? '▼' : '▶');
+        }
+
+        function filterNotebook() {
+            const searchText = document.getElementById('nb-search').value.trim();
+            renderNotebook(searchText);
+        }
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            const today = new Date();
+            today.setHours(0,0,0,0);
+            date.setHours(0,0,0,0);
+            
+            const diff = Math.round((date - today) / (1000 * 60 * 60 * 24));
+            
+            if (diff === 0) return "Aujourd'hui";
+            if (diff === 1) return "Demain";
+            if (diff < 0) return `En retard (${Math.abs(diff)}j)`;
+            if (diff < 7) return `Dans ${diff} jours`;
+            return date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
+        }
+
+        async function saveData() { 
+            localStorage.setItem('french_learning_data', JSON.stringify(gData));
+            updateSyncStatus("⏳ Sauvegarde...", "#f1c40f");
+            try { 
+                const res = await fetch(`${API}/save_data`, { 
+                    method:'POST', 
+                    headers:{'Content-Type':'application/json'}, 
+                    body:JSON.stringify(gData) 
+                }); 
+                if (res.ok) {
+                    updateSyncStatus("✅ Enregistré", "#2ecc71");
+                } else {
+                    throw new Error("Server error");
+                }
+            } catch(e) {
+                updateSyncStatus("❌ Error - Local Only", "#e74c3c");
+                console.error("Save failed:", e);
+            }
+        }
+
+        function updateSyncStatus(msg, bg) {
+            const el = document.getElementById('sync-status');
+            if (el) {
+                el.innerText = msg;
+                el.style.background = bg;
+            }
+        }
+        function saveSession() { localStorage.setItem('french_session_mastery', JSON.stringify({ date: new Date().toISOString().split('T')[0], data: sessionMastery })); }
+        function addWord(w) { 
+            if (!gData.notebook.some(n => n.word === w)) { 
+                gData.notebook.push({ word: w, lvl: 0, next: new Date().toISOString().split('T')[0], err_days: 0 }); 
+                speak("Ajouté"); refreshUI(); 
+            } else { speak("Déjà là"); }
+        }
+
+        function setQuizMode(m) { gGameMode = m; document.getElementById('mode-n').classList.toggle('active', m==='new'); document.getElementById('mode-r').classList.toggle('active', m==='rev'); updateQuiz(); }
+        
+        function updateQuiz() {
+            const today = new Date().toISOString().split('T')[0];
+            let pool = [];
+            if (gGameMode === 'new') {
+                pool = gTodayWords.filter(w => gData.notebook.some(n => n.word === w.word) && (sessionMastery[w.word] || 0) < MASTERY_GOAL);
+            } else {
+                pool = DB.filter(v => { 
+                    const n = gData.notebook.find(e => e.word === v.word); 
+                    return n && n.next <= today && !gTodayWords.some(tw => tw.word === v.word) && (sessionMastery[v.word] || 0) < MASTERY_GOAL; 
+                });
+            }
+            
+            document.getElementById('q-feedback').innerText = "";
+            gIsLocked = false;
+
+            if (pool.length < 1) { 
+                const isNew = gGameMode === 'new';
+                let msg = "";
+                if (isNew) {
+                    msg = gData.notebook.filter(n => gTodayWords.some(tw => tw.word === n.word)).length < 5 
+                          ? "Ajoute les 5 mots du jour pour commencer !" 
+                          : "🌟 Nouveaux mots maîtrisés !";
+                } else { msg = "🎉 Révisions terminées !"; }
+                document.getElementById('q-options').innerHTML = `<p style='padding:20px; color:var(--p); font-weight:bold; text-align:center;'>${msg}</p>`; 
+                document.getElementById('q-word').innerText = "Salut !"; 
+                document.getElementById('q-mastery').innerHTML = "";
+                return; 
+            }
+            
+            const target = pool[Math.floor(Math.random() * pool.length)]; 
+            document.getElementById('q-word').innerText = target.word;
+            const mCount = sessionMastery[target.word] || 0;
+            document.getElementById('q-mastery').innerHTML = Array(MASTERY_GOAL).fill(0).map((_, i) => `<div class="dot ${i < mCount ? 'full' : ''}"></div>`).join('');
+            
+            let opts = [target.def]; let all = DB.map(v => v.def);
+            while(opts.length < 3) { let r = all[Math.floor(Math.random()*all.length)]; if(!opts.includes(r)) opts.push(r); }
+            opts.sort(() => Math.random() - 0.5);
+            document.getElementById('q-options').innerHTML = opts.map(o => `<button class="opt-btn" onclick="checkQuiz(this, '${o.replace(/'/g, "\\'")}', '${target.word}')">${o}</button>`).join('');
+            
+            // Remove focus/outline
+            if (document.activeElement) document.activeElement.blur();
+        }
+
+        function checkQuiz(btn, sel, w) {
+            if (gIsLocked) return;
+            gIsLocked = true;
+            const target = DB.find(v => v.word === w), n = gData.notebook.find(e => e.word === w);
+            const feedbackEl = document.getElementById('q-feedback');
+            const allBtns = document.querySelectorAll('.opt-btn');
+            allBtns.forEach(b => b.disabled = true);
+
+            if (sel === target.def) {
+                btn.classList.add('correct');
+                feedbackEl.innerHTML = "✅ Très bien !"; feedbackEl.style.color = "var(--s)";
+                sessionMastery[w] = (sessionMastery[w] || 0) + 1;
+                if (sessionMastery[w] >= MASTERY_GOAL && n) {
+                    n.lvl = Math.min(6, n.lvl + 1); n.err_days = 0; 
+                    let d = new Date(); d.setDate(d.getDate() + INTERVALS[n.lvl]); n.next = d.toISOString().split('T')[0]; 
+                }
+                gCombo++; delete gMistakes[w]; speak("Très bien"); 
+                setTimeout(() => { 
+                    checkDailyCompletion(); 
+                    refreshProgressOnly(); 
+                    updateQuiz(); 
+                }, 1000);
+            } else {
+                btn.classList.add('wrong');
+                feedbackEl.innerHTML = "❌ Dommage !"; feedbackEl.style.color = "var(--e)";
+                sessionMastery[w] = 0;
+                allBtns.forEach(b => { if(b.innerText === target.def) b.classList.add('correct'); });
+                if (!gMistakes[w]) {
+                    gMistakes[w] = 1;
+                    setTimeout(() => { 
+                        refreshProgressOnly(); 
+                        updateQuiz(); 
+                    }, 1800);
+                } else {
+                    gCombo = 0; 
+                    if (n) { 
+                        n.lvl = 0; let d = new Date(); d.setDate(d.getDate() + 1); n.next = d.toISOString().split('T')[0]; 
+                        n.err_days = (n.err_days || 0) + 1; if (n.err_days >= 2) gData.notebook = gData.notebook.filter(e => e.word !== w);
+                    }
+                    delete gMistakes[w];
+                    setTimeout(() => { 
+                        refreshProgressOnly(); 
+                        updateQuiz(); 
+                    }, 1800);
+                }
+                speak("Dommage");
+            }
+        }
+
+        function refreshProgressOnly() {
+            const info = calculateProgress();
+            document.getElementById('bar-n').style.width = info.newPercent + "%";
+            document.getElementById('bar-r').style.width = info.revPercent + "%";
+            const hasReview = info.revCount > 0;
+            const totalPercent = hasReview ? Math.round((info.newPercent + info.revPercent) / 2) : Math.round(info.newPercent);
+            document.getElementById('ui-progress').innerHTML = totalPercent + "%";
+            document.getElementById('ui-stars').innerText = gData.stars || 0;
+            saveData(); saveSession();
+        }
+        
+        function checkDailyCompletion() {
+            const info = calculateProgress();
+            const hasReview = info.revCount > 0;
+            const total = hasReview ? (info.newPercent + info.revPercent) / 200 : info.newPercent / 100;
+            if (total >= 1.0 && !gData.daily_stats.completed) {
+                gData.stars = (gData.stars || 0) + 100; gData.daily_stats.completed = true;
+                setTimeout(() => { document.getElementById('rew-val').innerText = "🎉 Magnifique !\nTu as maîtrisé tous les mots !\n+100 étoiles !"; openModal('rewardModal'); speak("Félicitations"); }, 500);
+            }
+        }
+
+        function showDetail(w) { const d = DB.find(v => v.word === w); document.getElementById('detail-card').innerHTML = `<h2>${d.word}</h2><p><strong>📝 Définition:</strong><br>${d.def}</p><p><strong>💬 Exemple:</strong><br><i>"${d.ex}"</i></p><button class="action-btn" style="width:100%;margin-top:20px" onclick="speak('${d.word}')">🔊 Écouter</button>`; openModal('detailModal'); speak(w); }
+        function openModal(id) { document.getElementById(id).style.display = "block"; }
+        function closeModal(id) { document.getElementById(id).style.display = "none"; }
+        function speak(t) { const m = new SpeechSynthesisUtterance(t); m.lang = 'fr-FR'; window.speechSynthesis.speak(m); }
+        window.onclick = e => { if (e.target.className === 'modal') e.target.style.display = "none"; };
+        
+        // Auto-retry background sync if in error state
+        setInterval(async () => {
+            const el = document.getElementById('sync-status');
+            if (el && el.innerText.includes("Error")) {
+                console.log("Retrying background sync...");
+                try {
+                    const res = await fetch(`${API}/save_data`, { 
+                        method:'POST', 
+                        headers:{'Content-Type':'application/json'}, 
+                        body:JSON.stringify(gData) 
+                    });
+                    if (res.ok) updateSyncStatus("✅ Enregistré", "#2ecc71");
+                } catch(e) {}
+            }
+        }, 30000);
+
+        window.onload = init;
+    </script>
+</body>
+</html>
