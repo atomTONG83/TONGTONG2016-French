@@ -405,14 +405,14 @@
     }
   ],
   "daily_stats": {
-    "date": "2026-02-24",
-    "completed": true,
+    "date": "2026-02-25",
+    "completed": false,
     "words": [
-      "Table",
-      "Hippopotame",
-      "S\u00e9diment",
-      "Volcan",
-      "Robot"
+      "Soleil",
+      "Globalisation",
+      "Biotechnologie",
+      "Empathie",
+      "Condensation"
     ]
   },
   "last_milestone": 1000
