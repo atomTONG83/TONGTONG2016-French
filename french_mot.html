@@ -166,35 +166,35 @@
         let API = "";
         
         // ===== DATABASE =====
-        // 基础数据库（后备，27个单词）
+        // 基础数据库（后备，27个单词）- 法语解释
         const BASE_DB = [
-            { word: "Soleil", def: "太阳", ex: "Le soleil brille.", niveau: 1 },
-            { word: "Lune", def: "月亮", ex: "La lune est ronde.", niveau: 1 },
-            { word: "Chat", def: "猫", ex: "Le chat miaule.", niveau: 1 },
-            { word: "Chien", def: "狗", ex: "Le chien aboie.", niveau: 1 },
-            { word: "Maison", def: "房子", ex: "Ma maison est jaune.", niveau: 1 },
-            { word: "École", def: "学校", ex: "Je vais à l'école.", niveau: 1 },
-            { word: "Famille", def: "家庭", ex: "Ma famille est grande.", niveau: 1 },
-            { word: "Ami", def: "朋友", ex: "Mon ami s'appelle Pierre.", niveau: 1 },
-            { word: "Fleur", def: "花", ex: "La fleur est belle.", niveau: 1 },
-            { word: "Arbre", def: "树", ex: "L'arbre est grand.", niveau: 1 },
-            { word: "Courage", def: "勇气", ex: "Il a du courage.", niveau: 2 },
-            { word: "Patience", def: "耐心", ex: "La patience est une vertu.", niveau: 2 },
-            { word: "Curiosité", def: "好奇心", ex: "La curiosité est naturelle.", niveau: 2 },
-            { word: "Imagination", def: "想象力", ex: "L'imagination est créative.", niveau: 2 },
-            { word: "Aventure", def: "冒险", ex: "C'est une grande aventure.", niveau: 2 },
-            { word: "Sincérité", def: "真诚", ex: "La sincérité est importante.", niveau: 3 },
-            { word: "Perspective", def: "视角", ex: "Chacun a sa perspective.", niveau: 3 },
-            { word: "Génétique", def: "遗传学", ex: "La génétique étudie l'hérédité.", niveau: 3 },
-            { word: "Préhistoire", def: "史前史", ex: "La préhistoire est fascinante.", niveau: 3 },
-            { word: "Équilibre", def: "平衡", ex: "L'équilibre est essentiel.", niveau: 3 },
-            { word: "Climax", def: "高潮", ex: "Le film atteint son climax.", niveau: 3 },
-            { word: "Friction", def: "摩擦", ex: "La friction produit de la chaleur.", niveau: 3 },
-            { word: "Conservation", def: "保护", ex: "La conservation de la nature.", niveau: 3 },
-            { word: "Globalisation", def: "全球化", ex: "La globalisation économique.", niveau: 3 },
-            { word: "Biotechnologie", def: "生物技术", ex: "La biotechnologie moderne.", niveau: 3 },
-            { word: "Empathie", def: "共情", ex: "L'empathie aide à comprendre.", niveau: 3 },
-            { word: "Condensation", def: "凝结", ex: "La condensation sur la vitre.", niveau: 3 }
+            { word: "Soleil", definition: "L'astre qui éclaire la Terre le jour.", example: "Le soleil brille.", niveau: 1 },
+            { word: "Lune", definition: "Le satellite naturel de la Terre.", example: "La lune est ronde.", niveau: 1 },
+            { word: "Chat", definition: "Animal domestique qui miaule.", example: "Le chat miaule.", niveau: 1 },
+            { word: "Chien", definition: "Animal domestique fidèle à l'homme.", example: "Le chien aboie.", niveau: 1 },
+            { word: "Maison", definition: "Bâtiment où l'on habite.", example: "Ma maison est jaune.", niveau: 1 },
+            { word: "École", definition: "Lieu où l'on apprend.", example: "Je vais à l'école.", niveau: 1 },
+            { word: "Famille", definition: "Groupe de personnes liées par le sang.", example: "Ma famille est grande.", niveau: 1 },
+            { word: "Ami", definition: "Personne avec qui on a des liens d'affection.", example: "Mon ami s'appelle Pierre.", niveau: 1 },
+            { word: "Fleur", definition: "Partie colorée d'une plante.", example: "La fleur est belle.", niveau: 1 },
+            { word: "Arbre", definition: "Plante avec un tronc et des branches.", example: "L'arbre est grand.", niveau: 1 },
+            { word: "Courage", definition: "Force morale face au danger.", example: "Il a du courage.", niveau: 2 },
+            { word: "Patience", definition: "Capacité à attendre sans s'énerver.", example: "La patience est une vertu.", niveau: 2 },
+            { word: "Curiosité", definition: "Désir de connaître, d'apprendre.", example: "La curiosité est naturelle.", niveau: 2 },
+            { word: "Imagination", definition: "Faculté de créer des images mentales.", example: "L'imagination est créative.", niveau: 2 },
+            { word: "Aventure", definition: "Expérience excitante et inhabituelle.", example: "C'est une grande aventure.", niveau: 2 },
+            { word: "Sincérité", definition: "Qualité de celui qui dit la vérité.", example: "La sincérité est importante.", niveau: 3 },
+            { word: "Perspective", definition: "Manière de voir les choses.", example: "Chacun a sa perspective.", niveau: 3 },
+            { word: "Génétique", definition: "Science qui étudie l'hérédité.", example: "La génétique étudie l'hérédité.", niveau: 3 },
+            { word: "Préhistoire", definition: "Période avant l'invention de l'écriture.", example: "La préhistoire est fascinante.", niveau: 3 },
+            { word: "Équilibre", definition: "État stable, harmonie entre les éléments.", example: "L'équilibre est essentiel.", niveau: 3 },
+            { word: "Climax", definition: "Point le plus intense d'une histoire.", example: "Le film atteint son climax.", niveau: 3 },
+            { word: "Friction", definition: "Force qui s'oppose au mouvement.", example: "La friction produit de la chaleur.", niveau: 3 },
+            { word: "Conservation", definition: "Action de protéger, de préserver.", example: "La conservation de la nature.", niveau: 3 },
+            { word: "Globalisation", definition: "Extension des échanges à l'échelle mondiale.", example: "La globalisation économique.", niveau: 3 },
+            { word: "Biotechnologie", definition: "Utilisation des organismes vivants pour créer des produits.", example: "La biotechnologie moderne.", niveau: 3 },
+            { word: "Empathie", definition: "Capacité à comprendre les sentiments des autres.", example: "L'empathie aide à comprendre.", niveau: 3 },
+            { word: "Condensation", definition: "Passage de l'état gazeux à l'état liquide.", example: "La condensation sur la vitre.", niveau: 3 }
         ];
         
         // 完整数据库（从外部文件加载）
@@ -371,7 +371,7 @@
             if (wordsListEl) {
                 wordsListEl.innerHTML = gTodayWords.map(function(w) {
                     var isAdded = gData.notebook.some(function(n) { return n.word === w.word; });
-                    return '<div class="daily-item"><div class="mot">' + w.word + '</div><div class="definition">' + w.def + '</div><div class="exemple">"' + w.ex + '"</div><div style="margin-top:10px"><button class="action-btn" onclick="speak(\'' + w.word + '\')">Ecouter</button> <button class="action-btn" style="background:' + (isAdded ? '#ccc' : 'var(--p)') + '" onclick="addWord(\'' + w.word + '\')">' + (isAdded ? 'Ajoute' : 'Ajouter') + '</button></div></div>';
+                    return '<div class="daily-item"><div class="mot">' + w.word + '</div><div class="definition">' + (w.definition || w.def || '') + '</div><div class="exemple">"' + (w.example || w.ex || '') + '"</div><div style="margin-top:10px"><button class="action-btn" onclick="speak(\'' + w.word + '\')">Ecouter</button> <button class="action-btn" style="background:' + (isAdded ? '#ccc' : 'var(--p)') + '" onclick="addWord(\'' + w.word + '\')">' + (isAdded ? 'Ajoute' : 'Ajouter') + '</button></div></div>';
                 }).join('');
             }
             
@@ -472,9 +472,9 @@
                 masteryEl.innerHTML = dots;
             }
             
-            let opts = [target.def];
+            let opts = [target.definition || target.def || ''];
             const currentDB = getCurrentDB();
-            let all = currentDB.map(function(v) { return v.def; });
+            let all = currentDB.map(function(v) { return v.definition || v.def || ''; });
             while(opts.length < 3) {
                 let r = all[Math.floor(Math.random() * all.length)];
                 if(!opts.includes(r)) opts.push(r);
@@ -499,7 +499,7 @@
             var allBtns = document.querySelectorAll('.opt-btn');
             allBtns.forEach(function(b) { b.disabled = true; });
             
-            if (sel === target.def) {
+            if (sel === (target.definition || target.def || '')) {
                 btn.classList.add('correct');
                 if (feedbackEl) {
                     feedbackEl.innerHTML = "Tres bien !";
@@ -524,7 +524,7 @@
                     feedbackEl.style.color = "var(--e)";
                 }
                 sessionMastery[w] = 0;
-                allBtns.forEach(function(b) { if(b.innerText === target.def) b.classList.add('correct'); });
+                allBtns.forEach(function(b) { if(b.innerText === (target.definition || target.def || '')) b.classList.add('correct'); });
                 gCombo = 0;
                 if (n) {
                     n.lvl = 0;
@@ -581,7 +581,7 @@
                     return '<div class="notebook-item ' + dueClass + '" onclick="showDetail(\'' + n.word + '\')">' +
                         '<div style="display:flex;flex-direction:column;flex:1;">' +
                         '<span style="font-size:1.1em;"><strong>' + n.word + '</strong>' + dueBadge + errorBadge + '</span>' +
-                        '<span style="font-size:0.85em;color:#666;margin-top:3px;">' + w.def.substring(0, 50) + '...</span>' +
+                        '<span style="font-size:0.85em;color:#666;margin-top:3px;">' + (w.definition || w.def || '').substring(0, 50) + '...</span>' +
                         '<span style="font-size:0.75em;color:#999;margin-top:2px;">Prochaine: ' + n.next + '</span>' +
                         '</div>' +
                         '<div style="display:flex;align-items:center;gap:8px;">' +
@@ -604,7 +604,7 @@
             if (!d) return;
             var detailCard = document.getElementById('detail-card');
             if (detailCard) {
-                detailCard.innerHTML = '<h2>' + d.word + '</h2><p><strong>Definition:</strong><br>' + d.def + '</p><p><strong>Exemple:</strong><br><i>"' + d.ex + '"</i></p><button class="action-btn" style="width:100%;margin-top:20px" onclick="speak(\'' + d.word + '\')">Ecouter</button>';
+                detailCard.innerHTML = '<h2>' + d.word + '</h2><p><strong>Definition:</strong><br>' + (d.definition || d.def || '') + '</p><p><strong>Exemple:</strong><br><i>"' + (d.example || d.ex || '') + '"</i></p><button class="action-btn" style="width:100%;margin-top:20px" onclick="speak(\'' + d.word + '\')">Ecouter</button>';
             }
             openModal('detailModal');
             speak(w);

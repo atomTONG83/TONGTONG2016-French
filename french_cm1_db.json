@@ -2,679 +2,566 @@
   {
     "word": "abondant",
     "definition": "Qui existe en grande quantité.",
-    "niveau": 2,
-    "example": "La récolte est abondante cette année."
+    "niveau": 2
   },
   {
     "word": "accueillir",
     "definition": "Recevoir quelqu'un avec bienveillance.",
-    "niveau": 2,
-    "example": "Nous allons accueillir nos amis à la maison."
+    "niveau": 2
   },
   {
     "word": "admirer",
     "definition": "Regarder avec plaisir et estime.",
-    "niveau": 2,
-    "example": "J'admire les couleurs du coucher de soleil."
+    "niveau": 2
   },
   {
     "word": "affection",
     "definition": "Sentiment d'amitié ou d'amour.",
-    "niveau": 2,
-    "example": "Il a beaucoup d'affection pour son chien."
+    "niveau": 2
   },
   {
     "word": "agréable",
     "definition": "Qui plaît, qui est sympathique.",
-    "niveau": 2,
-    "example": "C'est une journée agréable pour une promenade."
+    "niveau": 2
   },
   {
     "word": "ambition",
     "definition": "Désir de réussir, de parvenir à quelque chose.",
-    "niveau": 3,
-    "example": "Son ambition est de devenir médecin."
+    "niveau": 3
   },
   {
     "word": "amitié",
     "definition": "Sentiment d'affection entre des personnes.",
-    "niveau": 2,
-    "example": "L'amitié est importante dans la vie."
+    "niveau": 2
   },
   {
     "word": "analyser",
     "definition": "Examiner en détail pour comprendre.",
-    "niveau": 3,
-    "example": "Nous devons analyser les résultats du test."
+    "niveau": 3
   },
   {
     "word": "ancien",
     "definition": "Qui existe depuis longtemps.",
-    "niveau": 2,
-    "example": "C'est un ancien château du Moyen Âge."
+    "niveau": 2
   },
   {
     "word": "apprécier",
     "definition": "Reconnaître la valeur de quelque chose.",
-    "niveau": 3,
-    "example": "J'apprécie ton aide pour ce projet."
+    "niveau": 3
   },
   {
     "word": "arbre",
     "definition": "Plante avec un tronc et des branches.",
-    "niveau": 1,
-    "example": "L'arbre donne de l'ombre en été."
+    "niveau": 1
   },
   {
     "word": "artiste",
     "definition": "Personne qui crée des œuvres d'art.",
-    "niveau": 2,
-    "example": "L'artiste peint un beau tableau."
+    "niveau": 2
   },
   {
     "word": "attentif",
     "definition": "Qui fait attention, qui écoute bien.",
-    "niveau": 2,
-    "example": "Sois attentif pendant la leçon."
+    "niveau": 2
   },
   {
     "word": "aventure",
     "definition": "Expérience excitante et inhabituelle.",
-    "niveau": 2,
-    "example": "Partir en voyage est une grande aventure."
+    "niveau": 2
   },
   {
     "word": "bénéfice",
     "definition": "Avantage ou profit que l'on retire.",
-    "niveau": 3,
-    "example": "Le bénéfice de l'exercice est la santé."
+    "niveau": 3
   },
   {
     "word": "brave",
     "definition": "Qui a du courage, qui est courageux.",
-    "niveau": 2,
-    "example": "Le pompier est brave face au danger."
+    "niveau": 2
   },
   {
     "word": "célébrer",
     "definition": "Fêter un événement important.",
-    "niveau": 2,
-    "example": "Nous allons célébrer son anniversaire."
+    "niveau": 2
   },
   {
     "word": "chaleureux",
     "definition": "Qui montre de la sympathie et de l'affection.",
-    "niveau": 3,
-    "example": "Son accueil était très chaleureux."
+    "niveau": 3
   },
   {
     "word": "changement",
     "definition": "Passage d'un état à un autre.",
-    "niveau": 2,
-    "example": "Le changement de saison est agréable."
+    "niveau": 2
   },
   {
     "word": "chef-d'œuvre",
     "definition": "Œuvre d'art exceptionnelle.",
-    "niveau": 3,
-    "example": "Ce tableau est un vrai chef-d'œuvre."
+    "niveau": 3
   },
   {
     "word": "choisir",
     "definition": "Prendre une décision entre plusieurs possibilités.",
-    "niveau": 2,
-    "example": "Tu dois choisir une couleur préférée."
+    "niveau": 2
   },
   {
     "word": "collaborer",
     "definition": "Travailler ensemble à une même tâche.",
-    "niveau": 3,
-    "example": "Nous devons collaborer pour réussir."
+    "niveau": 3
   },
   {
     "word": "comprendre",
     "definition": "Saisir le sens de quelque chose.",
-    "niveau": 2,
-    "example": "Je comprends maintenant la leçon."
+    "niveau": 2
   },
   {
     "word": "confiance",
     "definition": "Sentiment de sécurité et de foi en quelqu'un.",
-    "niveau": 3,
-    "example": "J'ai confiance en mes capacités."
+    "niveau": 3
   },
   {
     "word": "conseil",
     "definition": "Avis donné pour aider à décider.",
-    "niveau": 2,
-    "example": "Merci pour ton bon conseil."
+    "niveau": 2
   },
   {
     "word": "courage",
     "definition": "Force morale face au danger ou à la difficulté.",
-    "niveau": 2,
-    "example": "Il faut du courage pour parler en public."
+    "niveau": 2
   },
   {
     "word": "créatif",
     "definition": "Qui a de l'imagination, qui invente.",
-    "niveau": 3,
-    "example": "Elle est très créative en dessin."
+    "niveau": 3
   },
   {
     "word": "curiosité",
     "definition": "Désir de connaître, d'apprendre.",
-    "niveau": 2,
-    "example": "La curiosité est naturelle chez les enfants."
+    "niveau": 2
   },
   {
     "word": "découvrir",
     "definition": "Trouver quelque chose de nouveau.",
-    "niveau": 2,
-    "example": "J'ai découvert un nouveau livre intéressant."
+    "niveau": 2
   },
   {
     "word": "défendre",
     "definition": "Protéger contre une attaque.",
-    "niveau": 2,
-    "example": "Il faut défendre ses amis."
+    "niveau": 2
   },
   {
     "word": "délicat",
     "definition": "Qui demande de la prudence et du soin.",
-    "niveau": 3,
-    "example": "Cette porcelaine est très délicate."
+    "niveau": 3
   },
   {
     "word": "développer",
     "definition": "Faire grandir, faire progresser.",
-    "niveau": 3,
-    "example": "Nous devons développer nos compétences."
+    "niveau": 3
   },
   {
     "word": "difficile",
     "definition": "Qui demande beaucoup d'effort.",
-    "niveau": 2,
-    "example": "Ce problème de maths est difficile."
+    "niveau": 2
   },
   {
     "word": "diligent",
     "definition": "Qui travaille avec application et soin.",
-    "niveau": 3,
-    "example": "Il est diligent dans son travail scolaire."
+    "niveau": 3
   },
   {
     "word": "discuter",
     "definition": "Échanger des idées, parler de quelque chose.",
-    "niveau": 2,
-    "example": "Nous allons discuter de ce projet."
+    "niveau": 2
   },
   {
     "word": "doute",
     "definition": "Incertitude, manque de conviction.",
-    "niveau": 3,
-    "example": "J'ai un doute sur cette réponse."
+    "niveau": 3
   },
   {
     "word": "échange",
     "definition": "Action de donner et recevoir en retour.",
-    "niveau": 2,
-    "example": "L'échange de cadeaux est une tradition."
+    "niveau": 2
   },
   {
     "word": "effort",
     "definition": "Application de forces physiques ou mentales.",
-    "niveau": 2,
-    "example": "Fais un effort pour réussir."
+    "niveau": 2
   },
   {
     "word": "élégant",
     "definition": "Qui a de la grâce, du style.",
-    "niveau": 3,
-    "example": "Elle porte une robe élégante."
+    "niveau": 3
   },
   {
     "word": "émotion",
     "definition": "Réaction affective intense.",
-    "niveau": 3,
-    "example": "Le film provoque de fortes émotions."
+    "niveau": 3
   },
   {
     "word": "encourager",
     "definition": "Donner du courage, soutenir.",
-    "niveau": 2,
-    "example": "Je vais t'encourager pendant la course."
+    "niveau": 2
   },
   {
     "word": "énergie",
     "definition": "Force, capacité à agir.",
-    "niveau": 2,
-    "example": "J'ai beaucoup d'énergie ce matin."
+    "niveau": 2
   },
   {
     "word": "enthousiasme",
     "definition": "Grande joie, passion pour quelque chose.",
-    "niveau": 3,
-    "example": "Il montre un grand enthousiasme pour le sport."
+    "niveau": 3
   },
   {
     "word": "équilibre",
     "definition": "État stable, harmonie entre les éléments.",
-    "niveau": 3,
-    "example": "L'équilibre est important pour marcher."
+    "niveau": 3
   },
   {
     "word": "espoir",
     "definition": "Sentiment qui fait attendre quelque chose de bon.",
-    "niveau": 2,
-    "example": "J'ai l'espoir que tout ira bien."
+    "niveau": 2
   },
   {
     "word": "estimer",
     "definition": "Avoir une bonne opinion de quelqu'un.",
-    "niveau": 3,
-    "example": "J'estime beaucoup mon professeur."
+    "niveau": 3
   },
   {
     "word": "étonnant",
     "definition": "Qui surprend, qui est remarquable.",
-    "niveau": 2,
-    "example": "C'est un résultat étonnant!"
+    "niveau": 2
   },
   {
     "word": "examiner",
     "definition": "Regarder avec attention pour étudier.",
-    "niveau": 3,
-    "example": "Le médecin va examiner le patient."
+    "niveau": 3
   },
   {
     "word": "expérience",
     "definition": "Connaissance acquise par la pratique.",
-    "niveau": 3,
-    "example": "Cette expérience scientifique est intéressante."
+    "niveau": 3
   },
   {
     "word": "expliquer",
     "definition": "Rendre clair, faire comprendre.",
-    "niveau": 2,
-    "example": "Peux-tu m'expliquer cette règle?"
+    "niveau": 2
   },
   {
     "word": "explorer",
     "definition": "Découvrir un lieu inconnu.",
-    "niveau": 2,
-    "example": "Nous allons explorer la forêt."
+    "niveau": 2
   },
   {
     "word": "fidèle",
     "definition": "Qui reste loyal, qui ne trahit pas.",
-    "niveau": 3,
-    "example": "Mon chien est fidèle et loyal."
+    "niveau": 3
   },
   {
     "word": "fier",
     "definition": "Qui a de l'amour-propre, de la dignité.",
-    "niveau": 2,
-    "example": "Je suis fier de mon travail."
+    "niveau": 2
   },
   {
     "word": "fragile",
     "definition": "Qui se casse facilement, délicat.",
-    "niveau": 2,
-    "example": "Les œufs sont fragiles."
+    "niveau": 2
   },
   {
     "word": "généreux",
     "definition": "Qui donne volontiers, sans compter.",
-    "niveau": 3,
-    "example": "Il est généreux avec ses amis."
+    "niveau": 3
   },
   {
     "word": "génial",
     "definition": "Exceptionnel, remarquable.",
-    "niveau": 2,
-    "example": "C'est une idée géniale!"
+    "niveau": 2
   },
   {
     "word": "gentillesse",
     "definition": "Qualité d'une personne aimable et attentionnée.",
-    "niveau": 2,
-    "example": "Merci pour ta gentillesse."
+    "niveau": 2
   },
   {
     "word": "habileté",
     "definition": "Adresse, compétence dans un domaine.",
-    "niveau": 3,
-    "example": "Il a de l'habileté pour le bricolage."
+    "niveau": 3
   },
   {
     "word": "harmonie",
     "definition": "Accord, équilibre entre les éléments.",
-    "niveau": 3,
-    "example": "Les couleurs sont en harmonie."
+    "niveau": 3
   },
   {
     "word": "honnête",
     "definition": "Qui dit la vérité, qui est juste.",
-    "niveau": 2,
-    "example": "Sois honnête et dis la vérité."
+    "niveau": 2
   },
   {
     "word": "imagination",
     "definition": "Faculté de créer des images mentales.",
-    "niveau": 2,
-    "example": "Utilise ton imagination pour inventer."
+    "niveau": 2
   },
   {
     "word": "important",
     "definition": "Qui a de la valeur, qui compte beaucoup.",
-    "niveau": 2,
-    "example": "C'est un événement important."
+    "niveau": 2
   },
   {
     "word": "ingénieux",
     "definition": "Qui a de l'inventivité, de l'intelligence pratique.",
-    "niveau": 3,
-    "example": "Cette solution est ingénieuse."
+    "niveau": 3
   },
   {
     "word": "intelligent",
     "definition": "Qui comprend vite, qui a de l'esprit.",
-    "niveau": 2,
-    "example": "Elle est très intelligente à l'école."
+    "niveau": 2
   },
   {
     "word": "intéressant",
     "definition": "Qui attire l'attention, qui est captivant.",
-    "niveau": 2,
-    "example": "Ce livre est très intéressant."
+    "niveau": 2
   },
   {
     "word": "joli",
     "definition": "Agréable à regarder, charmant.",
-    "niveau": 1,
-    "example": "C'est un joli tableau."
+    "niveau": 1
   },
   {
     "word": "joyeux",
     "definition": "Qui exprime de la joie, gai.",
-    "niveau": 2,
-    "example": "Nous sommes joyeux aujourd'hui."
+    "niveau": 2
   },
   {
     "word": "juste",
     "definition": "Qui respecte l'équité, la justice.",
-    "niveau": 2,
-    "example": "La décision du juge est juste."
+    "niveau": 2
   },
   {
     "word": "liberté",
     "definition": "Possibilité d'agir sans contrainte.",
-    "niveau": 3,
-    "example": "La liberté est un droit important."
+    "niveau": 3
   },
   {
     "word": "logique",
     "definition": "Qui suit un raisonnement cohérent.",
-    "niveau": 3,
-    "example": "Ton raisonnement est logique."
+    "niveau": 3
   },
   {
     "word": "loyal",
     "definition": "Fidèle, qui respecte ses engagements.",
-    "niveau": 3,
-    "example": "Il est loyal envers ses amis."
+    "niveau": 3
   },
   {
     "word": "magnifique",
     "definition": "Très beau, splendide.",
-    "niveau": 2,
-    "example": "La vue est magnifique d'ici."
+    "niveau": 2
   },
   {
     "word": "mémoire",
     "definition": "Faculté de se souvenir.",
-    "niveau": 2,
-    "example": "J'ai une bonne mémoire pour les dates."
+    "niveau": 2
   },
   {
     "word": "modeste",
     "definition": "Qui ne se vante pas, simple.",
-    "niveau": 3,
-    "example": "Il est modeste malgré ses succès."
+    "niveau": 3
   },
   {
     "word": "mystère",
     "definition": "Chose cachée, difficile à comprendre.",
-    "niveau": 2,
-    "example": "C'est un mystère à résoudre."
+    "niveau": 2
   },
   {
     "word": "naturel",
     "definition": "Qui existe sans intervention humaine.",
-    "niveau": 2,
-    "example": "Ce parc est un espace naturel."
+    "niveau": 2
   },
   {
     "word": "nécessaire",
     "definition": "Dont on a besoin, indispensable.",
-    "niveau": 2,
-    "example": "Le sommeil est nécessaire pour la santé."
+    "niveau": 2
   },
   {
     "word": "obéissant",
     "definition": "Qui suit les ordres, les règles.",
-    "niveau": 2,
-    "example": "Le chien est obéissant à son maître."
+    "niveau": 2
   },
   {
     "word": "observateur",
     "definition": "Qui regarde avec attention.",
-    "niveau": 3,
-    "example": "Sois observateur et regarde bien."
+    "niveau": 3
   },
   {
     "word": "obstacle",
     "definition": "Difficulté qui empêche d'avancer.",
-    "niveau": 2,
-    "example": "Nous devons surmonter cet obstacle."
+    "niveau": 2
   },
   {
     "word": "organiser",
     "definition": "Mettre en ordre, préparer.",
-    "niveau": 2,
-    "example": "Je vais organiser ma chambre."
+    "niveau": 2
   },
   {
     "word": "original",
     "definition": "Qui est nouveau, différent.",
-    "niveau": 3,
-    "example": "Ton dessin est très original."
+    "niveau": 3
   },
   {
     "word": "pacifique",
     "definition": "Qui aime la paix, non violent.",
-    "niveau": 3,
-    "example": "Il a un caractère pacifique."
+    "niveau": 3
   },
   {
     "word": "patience",
     "definition": "Capacité à attendre sans s'énerver.",
-    "niveau": 2,
-    "example": "Il faut de la patience pour apprendre."
+    "niveau": 2
   },
   {
     "word": "pensée",
     "definition": "Activité de l'esprit, réflexion.",
-    "niveau": 2,
-    "example": "J'ai une pensée pour toi."
+    "niveau": 2
   },
   {
     "word": "persévérant",
     "definition": "Qui continue malgré les difficultés.",
-    "niveau": 3,
-    "example": "Sois persévérant dans tes efforts."
+    "niveau": 3
   },
   {
     "word": "perspicace",
     "definition": "Qui comprend vite et profondément.",
-    "niveau": 3,
-    "example": "Ton observation est perspicace."
+    "niveau": 3
   },
   {
     "word": "précis",
     "definition": "Exact, clair et détaillé.",
-    "niveau": 2,
-    "example": "Sois précis dans tes explications."
+    "niveau": 2
   },
   {
     "word": "préparer",
     "definition": "Mettre en état, faire les préparatifs.",
-    "niveau": 2,
-    "example": "Je vais préparer le dîner."
+    "niveau": 2
   },
   {
     "word": "prudence",
     "definition": "Attention pour éviter les dangers.",
-    "niveau": 2,
-    "example": "Fais preuve de prudence sur la route."
+    "niveau": 2
   },
   {
     "word": "qualité",
     "definition": "Caractéristique positive d'une personne ou chose.",
-    "niveau": 2,
-    "example": "La qualité du travail est importante."
+    "niveau": 2
   },
   {
     "word": "raison",
     "definition": "Faculté de penser, de comprendre.",
-    "niveau": 3,
-    "example": "Tu as raison, c'est la bonne réponse."
+    "niveau": 3
   },
   {
     "word": "réfléchir",
     "definition": "Penser profondément à quelque chose.",
-    "niveau": 2,
-    "example": "Je dois réfléchir à cette question."
+    "niveau": 2
   },
   {
     "word": "respect",
     "definition": "Considération envers quelqu'un ou quelque chose.",
-    "niveau": 2,
-    "example": "Montre du respect envers les autres."
+    "niveau": 2
   },
   {
     "word": "responsable",
     "definition": "Qui doit répondre de ses actes.",
-    "niveau": 3,
-    "example": "Sois responsable de tes affaires."
+    "niveau": 3
   },
   {
     "word": "sagesse",
     "definition": "Connaissance et jugement acquis par l'expérience.",
-    "niveau": 3,
-    "example": "La sagesse vient avec l'expérience."
+    "niveau": 3
   },
   {
     "word": "sérieux",
     "definition": "Qui fait les choses avec application.",
-    "niveau": 2,
-    "example": "Sois sérieux pendant les cours."
+    "niveau": 2
   },
   {
     "word": "sincère",
     "definition": "Qui dit ce qu'il pense vraiment.",
-    "niveau": 2,
-    "example": "Je suis sincère dans mes compliments."
+    "niveau": 2
   },
   {
     "word": "solide",
     "definition": "Qui résiste, qui est fort.",
-    "niveau": 2,
-    "example": "Cette table est très solide."
+    "niveau": 2
   },
   {
     "word": "souvenir",
     "definition": "Chose dont on se rappelle.",
-    "niveau": 2,
-    "example": "J'ai un bon souvenir de ce voyage."
+    "niveau": 2
   },
   {
     "word": "talent",
     "definition": "Aptitude naturelle pour quelque chose.",
-    "niveau": 3,
-    "example": "Il a du talent pour la musique."
+    "niveau": 3
   },
   {
     "word": "tolérant",
     "definition": "Qui accepte les différences des autres.",
-    "niveau": 3,
-    "example": "Sois tolérant envers les différences."
+    "niveau": 3
   },
   {
     "word": "travail",
     "definition": "Activité qui demande des efforts.",
-    "niveau": 2,
-    "example": "Le travail est nécessaire pour réussir."
+    "niveau": 2
   },
   {
     "word": "unique",
     "definition": "Qui est seul de son espèce.",
-    "niveau": 2,
-    "example": "Chaque personne est unique."
+    "niveau": 2
   },
   {
     "word": "utile",
     "definition": "Qui sert à quelque chose, pratique.",
-    "niveau": 2,
-    "example": "Ce dictionnaire est très utile."
+    "niveau": 2
   },
   {
     "word": "valoir",
     "definition": "Avoir une certaine valeur.",
-    "niveau": 2,
-    "example": "Cela vaut la peine d'essayer."
+    "niveau": 2
   },
   {
     "word": "variété",
     "definition": "Diversité, plusieurs sortes différentes.",
-    "niveau": 2,
-    "example": "Il y a une grande variété de fruits."
+    "niveau": 2
   },
   {
     "word": "vérité",
     "definition": "Ce qui est vrai, réel.",
-    "niveau": 2,
-    "example": "Dis toujours la vérité."
+    "niveau": 2
   },
   {
     "word": "vif",
     "definition": "Rapide, énergique.",
-    "niveau": 2,
-    "example": "Il a l'esprit vif et réactif."
+    "niveau": 2
   },
   {
     "word": "vivant",
     "definition": "Qui a la vie, qui est en vie.",
-    "niveau": 1,
-    "example": "La plante est vivante et pousse."
+    "niveau": 1
   },
   {
     "word": "volontaire",
     "definition": "Qui agit par sa propre volonté.",
-    "niveau": 3,
-    "example": "Il est volontaire pour aider."
+    "niveau": 3
   },
   {
     "word": "vouloir",
     "definition": "Avoir l'intention, le désir de faire.",
-    "niveau": 2,
-    "example": "Je veux réussir mes examens."
+    "niveau": 2
   },
   {
     "word": "zèle",
     "definition": "Ardeur, enthousiasme dans le travail.",
-    "niveau": 3,
-    "example": "Il travaille avec zèle et enthousiasme."
+    "niveau": 3
   }
 ]
