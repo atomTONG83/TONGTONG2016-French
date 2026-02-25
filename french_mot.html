@@ -422,18 +422,61 @@
         
         async function saveData() {
             try {
+                // 1. 先保存到本地存储（快速反馈）
                 localStorage.setItem('french_learning_data', JSON.stringify(gData));
-            } catch(e) {}
-            
-            if (!API) return;
-            
-            try {
-                await fetch(API + "/save_data", { 
-                    method: 'POST', 
-                    headers: { 'Content-Type': 'application/json' }, 
-                    body: JSON.stringify(gData) 
-                });
-            } catch(e) {}
+                
+                // 2. 显示保存状态
+                var statusEl = document.getElementById('sync-status');
+                if (statusEl) {
+                    statusEl.innerText = "Saving...";
+                    statusEl.style.background = "#f39c12";
+                }
+                
+                // 3. 如果有API，保存到服务器
+                if (API) {
+                    try {
+                        var response = await fetch(API + "/save_data", { 
+                            method: 'POST', 
+                            headers: { 'Content-Type': 'application/json' }, 
+                            body: JSON.stringify(gData) 
+                        });
+                        
+                        if (response.ok) {
+                            if (statusEl) {
+                                statusEl.innerText = "Saved ✓";
+                                statusEl.style.background = "#2ecc71";
+                                // 3秒后恢复
+                                setTimeout(function() {
+                                    statusEl.innerText = "Live";
+                                    statusEl.style.background = "#3498db";
+                                }, 3000);
+                            }
+                            console.log('Data saved successfully');
+                        } else {
+                            throw new Error('Server error');
+                        }
+                    } catch(e) {
+                        console.error('Server save failed:', e);
+                        if (statusEl) {
+                            statusEl.innerText = "Local Only";
+                            statusEl.style.background = "#e74c3c";
+                        }
+                    }
+                } else {
+                    // 没有API，只保存到本地存储
+                    if (statusEl) {
+                        statusEl.innerText = "Local Saved";
+                        statusEl.style.background = "#9b59b6";
+                    }
+                }
+            } catch(e) {
+                console.error('Save error:', e);
+                var statusEl = document.getElementById('sync-status');
+                if (statusEl) {
+                    statusEl.innerText = "Save Error";
+                    statusEl.style.background = "#e74c3c";
+                }
+            }
         }
         
         function addWord(w) {
@@ -535,25 +578,40 @@
             if (sel === (target.definition || target.def || '')) {
                 btn.classList.add('correct');
                 if (feedbackEl) {
-                    feedbackEl.innerHTML = "Tres bien !";
+                    feedbackEl.innerHTML = "✅ Très bien !";
                     feedbackEl.style.color = "var(--s)";
                 }
                 sessionMastery[w] = (sessionMastery[w] || 0) + 1;
+                
+                // 增加星星（每次回答正确）
+                if (!gData.stars) gData.stars = 0;
+                gData.stars += 10; // 每次正确回答增加10星星
+                
                 if (sessionMastery[w] >= MASTERY_GOAL && n) {
                     n.lvl = Math.min(6, n.lvl + 1);
                     n.err_days = 0;
                     let d = new Date();
                     d.setDate(d.getDate() + INTERVALS[n.lvl]);
                     n.next = d.toISOString().split('T')[0];
+                    
+                    // 掌握一个单词额外奖励
+                    gData.stars += 20; // 掌握一个单词额外20星星
                 }
                 gCombo++;
                 delete gMistakes[w];
-                speak("Tres bien");
-                setTimeout(function() { refreshUI(); }, 1000);
+                speak("Très bien");
+                
+                // 检查是否完成每日目标
+                checkDailyCompletion();
+                
+                setTimeout(function() { 
+                    refreshUI(); 
+                    saveData(); // 自动保存
+                }, 1000);
             } else {
                 btn.classList.add('wrong');
                 if (feedbackEl) {
-                    feedbackEl.innerHTML = "Dommage !";
+                    feedbackEl.innerHTML = "❌ Dommage !";
                     feedbackEl.style.color = "var(--e)";
                 }
                 sessionMastery[w] = 0;
@@ -567,7 +625,35 @@
                     n.err_days = (n.err_days || 0) + 1;
                 }
                 speak("Dommage");
-                setTimeout(function() { refreshUI(); }, 1800);
+                setTimeout(function() { 
+                    refreshUI(); 
+                    saveData(); // 自动保存
+                }, 1800);
+            }
+        }
+        
+        function checkDailyCompletion() {
+            // 计算今日进度
+            var todayWords = gTodayWords || [];
+            var masteredToday = 0;
+            
+            todayWords.forEach(function(tw) {
+                if (sessionMastery[tw.word] >= MASTERY_GOAL) {
+                    masteredToday++;
+                }
+            });
+            
+            // 如果掌握了所有今日单词且尚未完成
+            if (masteredToday >= todayWords.length && !gData.daily_stats.completed) {
+                gData.daily_stats.completed = true;
+                if (!gData.stars) gData.stars = 0;
+                gData.stars += 100; // 完成每日目标奖励100星星
+                
+                setTimeout(function() { 
+                    document.getElementById('rew-val').innerText = "🎉 Magnifique !\\nTu as maîtrisé tous les mots !\\n+100 étoiles !"; 
+                    openModal('rewardModal'); 
+                    speak("Félicitations"); 
+                }, 500);
             }
         }
         
@@ -576,20 +662,44 @@
             openModal('nbModal');
         }
         
-        function renderNotebook(filterText) {
+        function renderNotebook(filterText = '') {
             var nbListEl = document.getElementById('nb-list');
             const today = new Date().toISOString().split('T')[0];
             
             if (!gData.notebook || gData.notebook.length === 0) {
-                if (nbListEl) nbListEl.innerHTML = "<div class='nb-empty'>Ton carnet est vide.<br>Commence par ajouter des mots du jour !</div>";
+                if (nbListEl) nbListEl.innerHTML = "<div class='nb-empty'>📭 Ton carnet est vide.<br>Commence par ajouter des mots du jour !</div>";
+                if (document.getElementById('nb-total')) document.getElementById('nb-total').innerText = '';
+                if (document.getElementById('nb-stats')) document.getElementById('nb-stats').innerHTML = '';
                 return;
             }
-            
+
+            // 过滤单词（如果有搜索词）
             let words = gData.notebook;
             if (filterText) {
-                words = words.filter(function(n) { return n.word.toLowerCase().includes(filterText.toLowerCase()); });
+                words = words.filter(function(n) { 
+                    return n.word.toLowerCase().includes(filterText.toLowerCase()); 
+                });
             }
-            
+
+            // 按掌握程度分组
+            var groups = {
+                beginner: { title: '🟠 Débutant', words: [], class: 'nb-beginner', expanded: true },
+                consolidating: { title: '🟡 Consolidation', words: [], class: 'nb-consolidating', expanded: false },
+                advanced: { title: '🟢 Avancé', words: [], class: 'nb-advanced', expanded: false },
+                mastered: { title: '🔵 Maîtrisé', words: [], class: 'nb-mastered', expanded: false }
+            };
+
+            words.forEach(function(n) {
+                var wordData = findWordInDB(n.word);
+                if (!wordData) return;
+                
+                if (n.lvl <= 1) groups.beginner.words.push({...n, data: wordData});
+                else if (n.lvl <= 3) groups.consolidating.words.push({...n, data: wordData});
+                else if (n.lvl <= 5) groups.advanced.words.push({...n, data: wordData});
+                else groups.mastered.words.push({...n, data: wordData});
+            });
+
+            // 更新统计信息
             var total = gData.notebook.length;
             var dueToday = gData.notebook.filter(function(n) { return n.next <= today; }).length;
             var withErrors = gData.notebook.filter(function(n) { return n.err_days > 0; }).length;
@@ -598,77 +708,74 @@
             var nbStatsEl = document.getElementById('nb-stats');
             if (nbTotalEl) nbTotalEl.innerText = '(' + total + ' mots)';
             if (nbStatsEl) {
-                nbStatsEl.innerHTML = '<div class="nb-stat"><div class="nb-stat-value">' + total + '</div><div>Total</div></div><div class="nb-stat"><div class="nb-stat-value" style="color:#f39c12">' + dueToday + '</div><div>A reviser</div></div><div class="nb-stat"><div class="nb-stat-value" style="color:#e74c3c">' + withErrors + '</div><div>Difficultes</div></div>';
+                nbStatsEl.innerHTML = '<div class="nb-stat"><div class="nb-stat-value">' + total + '</div><div>Total</div></div><div class="nb-stat"><div class="nb-stat-value" style="color:#f39c12">' + dueToday + '</div><div>À réviser</div></div><div class="nb-stat"><div class="nb-stat-value" style="color:#e74c3c">' + withErrors + '</div><div>Difficultés</div></div>';
+            }
+
+            // 渲染分组
+            var html = '';
+            var hasContent = false;
+            
+            for (var key in groups) {
+                var group = groups[key];
+                if (group.words.length === 0) continue;
+                hasContent = true;
+                
+                var isExpanded = filterText ? true : group.expanded;
+                var arrow = isExpanded ? '▼' : '▶';
+                
+                html += '<div class="nb-group">';
+                html += '<div class="nb-group-header ' + group.class + '" onclick="toggleGroup(\'' + key + '\')">';
+                html += '<span>' + arrow + ' ' + group.title + '</span>';
+                html += '<span class="nb-group-count">' + group.words.length + '</span>';
+                html += '</div>';
+                html += '<div class="nb-group-content ' + (isExpanded ? '' : 'collapsed') + '" id="nb-group-' + key + '">';
+                
+                group.words.forEach(function(n) {
+                    var isDue = n.next <= today && !gTodayWords.some(function(tw) { return tw.word === n.word; });
+                    var hasError = n.err_days > 0;
+                    var dueClass = hasError ? 'nb-word-error' : (isDue ? 'nb-word-due' : '');
+                    var dueBadge = isDue ? ' <span style="color:#f39c12;font-size:0.8em;">⏰</span>' : '';
+                    var errorBadge = hasError ? ' <span style="color:#e74c3c;font-size:0.8em;">⚠️' + n.err_days + '</span>' : '';
+                    
+                    html += '<div class="notebook-item ' + dueClass + '" onclick="showDetail(\'' + n.word + '\')">';
+                    html += '<div style="display:flex;flex-direction:column;flex:1;">';
+                    html += '<span style="font-size:1.1em;"><strong>' + n.word + '</strong>' + dueBadge + errorBadge + '</span>';
+                    html += '<span style="font-size:0.85em;color:#666;margin-top:3px;">' + (n.data.definition || n.data.def || '').substring(0, 50) + '...</span>';
+                    html += '<span style="font-size:0.75em;color:#999;margin-top:2px;">Prochaine: ' + n.next + '</span>';
+                    html += '</div>';
+                    html += '<div style="display:flex;align-items:center;gap:8px;">';
+                    html += '<span class="lvl-badge">Lvl ' + n.lvl + '</span>';
+                    html += '<button onclick="event.stopPropagation(); speak(\'' + n.word + '\')" style="background:var(--s);border:none;width:35px;height:35px;border-radius:50%;color:white;font-size:1.2em;cursor:pointer;">&#128266;</button>';
+                    html += '</div></div>';
+                });
+                
+                html += '</div></div>';
             }
             
-            if (nbListEl) {
-                // 如果有搜索词，显示所有匹配结果
-                if (filterText) {
-                    nbListEl.innerHTML = words.map(function(n) {
-                        return renderNotebookItem(n, today);
-                    }).join('');
-                } else {
-                    // 否则按字母分组显示
-                    var grouped = {};
-                    words.forEach(function(n) {
-                        var firstLetter = n.word.charAt(0).toUpperCase();
-                        if (!grouped[firstLetter]) grouped[firstLetter] = [];
-                        grouped[firstLetter].push(n);
-                    });
-                    
-                    var html = '';
-                    var letters = Object.keys(grouped).sort();
-                    
-                    letters.forEach(function(letter) {
-                        html += '<div class="nb-group">';
-                        html += '<div class="nb-group-header nb-beginner" onclick="toggleGroup(\'' + letter + '\')">';
-                        html += '<span>' + letter + '</span>';
-                        html += '<span class="nb-group-count">' + grouped[letter].length + '</span>';
-                        html += '</div>';
-                        html += '<div id="group-' + letter + '" class="nb-group-content">';
-                        html += grouped[letter].map(function(n) {
-                            return renderNotebookItem(n, today);
-                        }).join('');
-                        html += '</div>';
-                        html += '</div>';
-                    });
-                    
-                    nbListEl.innerHTML = html;
-                    
-                    // 默认展开前3个组
-                    letters.slice(0, 3).forEach(function(letter) {
-                        var el = document.getElementById('group-' + letter);
-                        if (el) el.classList.remove('collapsed');
-                    });
-                }
+            if (!hasContent && filterText) {
+                html = "<div class='nb-empty'>Aucun mot ne correspond à \"" + filterText + "\".</div>";
             }
-        }
-        
-        function renderNotebookItem(n, today) {
-            var w = findWordInDB(n.word);
-            if (!w) return '';
-            var isDue = n.next <= today && !gTodayWords.some(function(tw) { return tw.word === n.word; });
-            var hasError = n.err_days > 0;
-            var dueClass = hasError ? 'nb-word-error' : (isDue ? 'nb-word-due' : '');
-            var dueBadge = isDue ? ' <span style="color:#f39c12;font-size:0.8em;">!</span>' : '';
-            var errorBadge = hasError ? ' <span style="color:#e74c3c;font-size:0.8em;">x' + n.err_days + '</span>' : '';
             
-            return '<div class="notebook-item ' + dueClass + '" onclick="showDetail(\'' + n.word + '\')">' +
-                '<div style="display:flex;flex-direction:column;flex:1;">' +
-                '<span style="font-size:1.1em;"><strong>' + n.word + '</strong>' + dueBadge + errorBadge + '</span>' +
-                '<span style="font-size:0.85em;color:#666;margin-top:3px;">' + (w.definition || w.def || '').substring(0, 50) + '...</span>' +
-                '<span style="font-size:0.75em;color:#999;margin-top:2px;">Prochaine: ' + n.next + '</span>' +
-                '</div>' +
-                '<div style="display:flex;align-items:center;gap:8px;">' +
-                '<span class="lvl-badge">Lvl ' + n.lvl + '</span>' +
-                '<button onclick="event.stopPropagation(); speak(\'' + n.word + '\')" style="background:var(--s);border:none;width:35px;height:35px;border-radius:50%;color:white;font-size:1.2em;cursor:pointer;">&#128266;</button>' +
-                '</div></div>';
+            if (nbListEl) nbListEl.innerHTML = html;
         }
         
-        function toggleGroup(letter) {
-            var el = document.getElementById('group-' + letter);
+        function toggleGroup(key) {
+            var el = document.getElementById('nb-group-' + key);
             if (el) {
                 el.classList.toggle('collapsed');
+                // 更新箭头图标
+                var header = el.previousElementSibling;
+                if (header && header.classList.contains('nb-group-header')) {
+                    var span = header.querySelector('span');
+                    if (span) {
+                        var currentText = span.textContent;
+                        if (el.classList.contains('collapsed')) {
+                            span.textContent = '▶ ' + currentText.substring(2);
+                        } else {
+                            span.textContent = '▼ ' + currentText.substring(2);
+                        }
+                    }
+                }
             }
         }
         
