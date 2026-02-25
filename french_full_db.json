@@ -2,1166 +2,1279 @@
   {
     "word": "abondant",
     "definition": "Qui existe en grande quantité.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "J'ai appris le mot \"abondant\" aujourd'hui."
   },
   {
     "word": "accueillir",
     "definition": "Recevoir quelqu'un avec bienveillance.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Le mot \"accueillir\" a une belle signification."
   },
   {
     "word": "admirer",
     "definition": "Regarder avec plaisir et estime.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Je peux utiliser le mot \"admirer\" dans une phrase."
   },
   {
     "word": "affection",
     "definition": "Sentiment d'amitié ou d'amour.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "\"affection\" est un mot intéressant."
   },
   {
     "word": "agréable",
     "definition": "Qui plaît, qui est sympathique.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Le mot \"agréable\" est utile dans la vie quotidienne."
   },
   {
     "word": "ambition",
     "definition": "Désir de réussir, de parvenir à quelque chose.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "Je peux utiliser le mot \"ambition\" dans une phrase."
   },
   {
     "word": "amitié",
     "definition": "Sentiment d'affection entre des personnes.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "\"amitié\" est un mot intéressant."
   },
   {
     "word": "analyser",
     "definition": "Examiner en détail pour comprendre.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "Je connais le mot \"analyser\"."
   },
   {
     "word": "ancien",
     "definition": "Qui existe depuis longtemps.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Je connais le mot \"ancien\"."
   },
   {
     "word": "apprécier",
     "definition": "Reconnaître la valeur de quelque chose.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "J'ai appris le mot \"apprécier\" aujourd'hui."
   },
   {
     "word": "arbre",
     "definition": "Plante avec un tronc et des branches.",
-    "niveau": 1
+    "niveau": 1,
+    "example": "L'arbre donne de l'ombre."
   },
   {
     "word": "artiste",
     "definition": "Personne qui crée des œuvres d'art.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Je me souviens du mot \"artiste\"."
   },
   {
     "word": "attentif",
     "definition": "Qui fait attention, qui écoute bien.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Le mot \"attentif\" est utile dans la vie quotidienne."
   },
   {
     "word": "aventure",
     "definition": "Expérience excitante et inhabituelle.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Je me souviens du mot \"aventure\"."
   },
   {
     "word": "bénéfice",
     "definition": "Avantage ou profit que l'on retire.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "\"bénéfice\" est un mot que j'aime bien."
   },
   {
     "word": "brave",
     "definition": "Qui a du courage, qui est courageux.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Je peux utiliser le mot \"brave\" dans une phrase."
   },
   {
     "word": "célébrer",
     "definition": "Fêter un événement important.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "J'ai appris le mot \"célébrer\" aujourd'hui."
   },
   {
     "word": "chaleureux",
     "definition": "Qui montre de la sympathie et de l'affection.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "Le mot \"chaleureux\" a une belle signification."
   },
   {
     "word": "changement",
     "definition": "Passage d'un état à un autre.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Je peux utiliser le mot \"changement\" dans une phrase."
   },
   {
     "word": "chef-d'œuvre",
     "definition": "Œuvre d'art exceptionnelle.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "\"chef-d'œuvre\" est un mot intéressant."
   },
   {
     "word": "choisir",
     "definition": "Prendre une décision entre plusieurs possibilités.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Le mot \"choisir\" est important à connaître."
   },
   {
     "word": "collaborer",
     "definition": "Travailler ensemble à une même tâche.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "J'utilise souvent le mot \"collaborer\"."
   },
   {
     "word": "comprendre",
     "definition": "Saisir le sens de quelque chose.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "\"comprendre\" est un mot intéressant."
   },
   {
     "word": "confiance",
     "definition": "Sentiment de sécurité et de foi en quelqu'un.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "\"confiance\" est un mot que j'aime bien."
   },
   {
     "word": "conseil",
     "definition": "Avis donné pour aider à décider.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Le mot \"conseil\" est important à connaître."
   },
   {
     "word": "courage",
     "definition": "Force morale face au danger ou à la difficulté.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "J'ai appris le mot \"courage\" aujourd'hui."
   },
   {
     "word": "créatif",
     "definition": "Qui a de l'imagination, qui invente.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "J'ai appris le mot \"créatif\" aujourd'hui."
   },
   {
     "word": "curiosité",
     "definition": "Désir de connaître, d'apprendre.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "J'ai appris le mot \"curiosité\" aujourd'hui."
   },
   {
     "word": "découvrir",
     "definition": "Trouver quelque chose de nouveau.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "J'ai appris le mot \"découvrir\" aujourd'hui."
   },
   {
     "word": "défendre",
     "definition": "Protéger contre une attaque.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "\"défendre\" est un mot intéressant."
   },
   {
     "word": "délicat",
     "definition": "Qui demande de la prudence et du soin.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "Le mot \"délicat\" a une belle signification."
   },
   {
     "word": "développer",
     "definition": "Faire grandir, faire progresser.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "Je connais le mot \"développer\"."
   },
   {
     "word": "difficile",
     "definition": "Qui demande beaucoup d'effort.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Je connais le mot \"difficile\"."
   },
   {
     "word": "diligent",
     "definition": "Qui travaille avec application et soin.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "Je me souviens du mot \"diligent\"."
   },
   {
     "word": "discuter",
     "definition": "Échanger des idées, parler de quelque chose.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Je connais le mot \"discuter\"."
   },
   {
     "word": "doute",
     "definition": "Incertitude, manque de conviction.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "Je peux utiliser le mot \"doute\" dans une phrase."
   },
   {
     "word": "échange",
     "definition": "Action de donner et recevoir en retour.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "\"échange\" est un mot que j'aime bien."
   },
   {
     "word": "effort",
     "definition": "Application de forces physiques ou mentales.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "\"effort\" est un mot intéressant."
   },
   {
     "word": "élégant",
     "definition": "Qui a de la grâce, du style.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "Je peux utiliser le mot \"élégant\" dans une phrase."
   },
   {
     "word": "émotion",
     "definition": "Réaction affective intense.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "J'utilise souvent le mot \"émotion\"."
   },
   {
     "word": "encourager",
     "definition": "Donner du courage, soutenir.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Le mot \"encourager\" est important à connaître."
   },
   {
     "word": "énergie",
     "definition": "Force, capacité à agir.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Le mot \"énergie\" est important à connaître."
   },
   {
     "word": "enthousiasme",
     "definition": "Grande joie, passion pour quelque chose.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "Le mot \"enthousiasme\" est utile dans la vie quotidienne."
   },
   {
     "word": "équilibre",
     "definition": "État stable, harmonie entre les éléments.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "J'utilise souvent le mot \"équilibre\"."
   },
   {
     "word": "espoir",
     "definition": "Sentiment qui fait attendre quelque chose de bon.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Je connais le mot \"espoir\"."
   },
   {
     "word": "estimer",
     "definition": "Avoir une bonne opinion de quelqu'un.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "Je me souviens du mot \"estimer\"."
   },
   {
     "word": "étonnant",
     "definition": "Qui surprend, qui est remarquable.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Je peux utiliser le mot \"étonnant\" dans une phrase."
   },
   {
     "word": "examiner",
     "definition": "Regarder avec attention pour étudier.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "Le mot \"examiner\" est utile dans la vie quotidienne."
   },
   {
     "word": "expérience",
     "definition": "Connaissance acquise par la pratique.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "J'ai appris le mot \"expérience\" aujourd'hui."
   },
   {
     "word": "expliquer",
     "definition": "Rendre clair, faire comprendre.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Le mot \"expliquer\" est utile dans la vie quotidienne."
   },
   {
     "word": "explorer",
     "definition": "Découvrir un lieu inconnu.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "J'ai appris le mot \"explorer\" aujourd'hui."
   },
   {
     "word": "fidèle",
     "definition": "Qui reste loyal, qui ne trahit pas.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "J'ai appris le mot \"fidèle\" aujourd'hui."
   },
   {
     "word": "fier",
     "definition": "Qui a de l'amour-propre, de la dignité.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Je peux utiliser le mot \"fier\" dans une phrase."
   },
   {
     "word": "fragile",
     "definition": "Qui se casse facilement, délicat.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Le mot \"fragile\" est utile dans la vie quotidienne."
   },
   {
     "word": "généreux",
     "definition": "Qui donne volontiers, sans compter.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "Je me souviens du mot \"généreux\"."
   },
   {
     "word": "génial",
     "definition": "Exceptionnel, remarquable.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "\"génial\" est un mot intéressant."
   },
   {
     "word": "gentillesse",
     "definition": "Qualité d'une personne aimable et attentionnée.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "\"gentillesse\" est un mot que j'aime bien."
   },
   {
     "word": "habileté",
     "definition": "Adresse, compétence dans un domaine.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "Le mot \"habileté\" est important à connaître."
   },
   {
     "word": "harmonie",
     "definition": "Accord, équilibre entre les éléments.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "Le mot \"harmonie\" est important à connaître."
   },
   {
     "word": "honnête",
     "definition": "Qui dit la vérité, qui est juste.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "J'utilise souvent le mot \"honnête\"."
   },
   {
     "word": "imagination",
     "definition": "Faculté de créer des images mentales.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "J'ai appris le mot \"imagination\" aujourd'hui."
   },
   {
     "word": "important",
     "definition": "Qui a de la valeur, qui compte beaucoup.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Je connais le mot \"important\"."
   },
   {
     "word": "ingénieux",
     "definition": "Qui a de l'inventivité, de l'intelligence pratique.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "Je me souviens du mot \"ingénieux\"."
   },
   {
     "word": "intelligent",
     "definition": "Qui comprend vite, qui a de l'esprit.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "J'utilise souvent le mot \"intelligent\"."
   },
   {
     "word": "intéressant",
     "definition": "Qui attire l'attention, qui est captivant.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "\"intéressant\" est un mot que j'aime bien."
   },
   {
     "word": "joli",
     "definition": "Agréable à regarder, charmant.",
-    "niveau": 1
+    "niveau": 1,
+    "example": "\"joli\" est un mot intéressant."
   },
   {
     "word": "joyeux",
     "definition": "Qui exprime de la joie, gai.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "J'utilise souvent le mot \"joyeux\"."
   },
   {
     "word": "juste",
     "definition": "Qui respecte l'équité, la justice.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Je me souviens du mot \"juste\"."
   },
   {
     "word": "liberté",
     "definition": "Possibilité d'agir sans contrainte.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "\"liberté\" est un mot intéressant."
   },
   {
     "word": "logique",
     "definition": "Qui suit un raisonnement cohérent.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "\"logique\" est un mot intéressant."
   },
   {
     "word": "loyal",
     "definition": "Fidèle, qui respecte ses engagements.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "\"loyal\" est un mot intéressant."
   },
   {
     "word": "magnifique",
     "definition": "Très beau, splendide.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Je connais le mot \"magnifique\"."
   },
   {
     "word": "mémoire",
     "definition": "Faculté de se souvenir.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "J'ai appris le mot \"mémoire\" aujourd'hui."
   },
   {
     "word": "modeste",
     "definition": "Qui ne se vante pas, simple.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "Je connais le mot \"modeste\"."
   },
   {
     "word": "mystère",
     "definition": "Chose cachée, difficile à comprendre.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "J'ai appris le mot \"mystère\" aujourd'hui."
   },
   {
     "word": "naturel",
     "definition": "Qui existe sans intervention humaine.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Je peux utiliser le mot \"naturel\" dans une phrase."
   },
   {
     "word": "nécessaire",
     "definition": "Dont on a besoin, indispensable.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Je peux utiliser le mot \"nécessaire\" dans une phrase."
   },
   {
     "word": "obéissant",
     "definition": "Qui suit les ordres, les règles.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Le mot \"obéissant\" a une belle signification."
   },
   {
     "word": "observateur",
     "definition": "Qui regarde avec attention.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "Je me souviens du mot \"observateur\"."
   },
   {
     "word": "obstacle",
     "definition": "Difficulté qui empêche d'avancer.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Je connais le mot \"obstacle\"."
   },
   {
     "word": "organiser",
     "definition": "Mettre en ordre, préparer.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Le mot \"organiser\" est important à connaître."
   },
   {
     "word": "original",
     "definition": "Qui est nouveau, différent.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "Le mot \"original\" est important à connaître."
   },
   {
     "word": "pacifique",
     "definition": "Qui aime la paix, non violent.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "Le mot \"pacifique\" est important à connaître."
   },
   {
     "word": "patience",
     "definition": "Capacité à attendre sans s'énerver.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Le mot \"patience\" est important à connaître."
   },
   {
     "word": "pensée",
     "definition": "Activité de l'esprit, réflexion.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "J'utilise souvent le mot \"pensée\"."
   },
   {
     "word": "persévérant",
     "definition": "Qui continue malgré les difficultés.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "\"persévérant\" est un mot intéressant."
   },
   {
     "word": "perspicace",
     "definition": "Qui comprend vite et profondément.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "\"perspicace\" est un mot que j'aime bien."
   },
   {
     "word": "précis",
     "definition": "Exact, clair et détaillé.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Je me souviens du mot \"précis\"."
   },
   {
     "word": "préparer",
     "definition": "Mettre en état, faire les préparatifs.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Le mot \"préparer\" a une belle signification."
   },
   {
     "word": "prudence",
     "definition": "Attention pour éviter les dangers.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Le mot \"prudence\" est utile dans la vie quotidienne."
   },
   {
     "word": "qualité",
     "definition": "Caractéristique positive d'une personne ou chose.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Je me souviens du mot \"qualité\"."
   },
   {
     "word": "raison",
     "definition": "Faculté de penser, de comprendre.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "J'utilise souvent le mot \"raison\"."
   },
   {
     "word": "réfléchir",
     "definition": "Penser profondément à quelque chose.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Le mot \"réfléchir\" est important à connaître."
   },
   {
     "word": "respect",
     "definition": "Considération envers quelqu'un ou quelque chose.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Je connais le mot \"respect\"."
   },
   {
     "word": "responsable",
     "definition": "Qui doit répondre de ses actes.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "Le mot \"responsable\" est utile dans la vie quotidienne."
   },
   {
     "word": "sagesse",
     "definition": "Connaissance et jugement acquis par l'expérience.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "Je connais le mot \"sagesse\"."
   },
   {
     "word": "sérieux",
     "definition": "Qui fait les choses avec application.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Le mot \"sérieux\" est important à connaître."
   },
   {
     "word": "sincère",
     "definition": "Qui dit ce qu'il pense vraiment.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "\"sincère\" est un mot que j'aime bien."
   },
   {
     "word": "solide",
     "definition": "Qui résiste, qui est fort.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Le mot \"solide\" est important à connaître."
   },
   {
     "word": "souvenir",
     "definition": "Chose dont on se rappelle.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Le mot \"souvenir\" est utile dans la vie quotidienne."
   },
   {
     "word": "talent",
     "definition": "Aptitude naturelle pour quelque chose.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "Le mot \"talent\" est important à connaître."
   },
   {
     "word": "tolérant",
     "definition": "Qui accepte les différences des autres.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "\"tolérant\" est un mot intéressant."
   },
   {
     "word": "travail",
     "definition": "Activité qui demande des efforts.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Le mot \"travail\" a une belle signification."
   },
   {
     "word": "unique",
     "definition": "Qui est seul de son espèce.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Je peux utiliser le mot \"unique\" dans une phrase."
   },
   {
     "word": "utile",
     "definition": "Qui sert à quelque chose, pratique.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Je connais le mot \"utile\"."
   },
   {
     "word": "valoir",
     "definition": "Avoir une certaine valeur.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Le mot \"valoir\" a une belle signification."
   },
   {
     "word": "variété",
     "definition": "Diversité, plusieurs sortes différentes.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "\"variété\" est un mot intéressant."
   },
   {
     "word": "vérité",
     "definition": "Ce qui est vrai, réel.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "J'ai appris le mot \"vérité\" aujourd'hui."
   },
   {
     "word": "vif",
     "definition": "Rapide, énergique.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Je connais le mot \"vif\"."
   },
   {
     "word": "vivant",
     "definition": "Qui a la vie, qui est en vie.",
-    "niveau": 1
+    "niveau": 1,
+    "example": "Le mot \"vivant\" est important à connaître."
   },
   {
     "word": "volontaire",
     "definition": "Qui agit par sa propre volonté.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "\"volontaire\" est un mot que j'aime bien."
   },
   {
     "word": "vouloir",
     "definition": "Avoir l'intention, le désir de faire.",
-    "niveau": 2
+    "niveau": 2,
+    "example": "Le mot \"vouloir\" a une belle signification."
   },
   {
     "word": "zèle",
     "definition": "Ardeur, enthousiasme dans le travail.",
-    "niveau": 3
+    "niveau": 3,
+    "example": "Le mot \"zèle\" est utile dans la vie quotidienne."
   },
   {
     "word": "mille",
     "definition": "Nombre égal à dix centaines (1 000).",
-    "example": "Exemple avec le mot \"mille\".",
+    "example": "Je peux utiliser le mot \"mille\" dans une phrase.",
     "niveau": 2
   },
   {
     "word": "forêt",
-    "definition": "Mot français: forêt",
-    "example": "Exemple avec le mot \"forêt\".",
+    "definition": "Grand espace couvert d'arbres.",
+    "example": "Nous avons fait une promenade dans la forêt.",
     "niveau": 2
   },
   {
     "word": "batterie",
-    "definition": "Mot français: batterie",
-    "example": "Exemple avec le mot \"batterie\".",
+    "definition": "Appareil qui produit de l'électricité.",
+    "example": "La batterie de mon téléphone est vide.",
     "niveau": 2
   },
   {
     "word": "Continent",
     "definition": "acquisition de connaissances",
-    "example": "Exemple avec le mot \"Continent\".",
+    "example": "Le mot \"Continent\" est important à connaître.",
     "niveau": 2
   },
   {
     "word": "salle de bain",
-    "definition": "Mot français: salle de bain",
-    "example": "Exemple avec le mot \"salle de bain\".",
+    "definition": "Pièce où on se lave.",
+    "example": "Je me lave dans la salle de bain.",
     "niveau": 2
   },
   {
     "word": "poste",
-    "definition": "Mot français: poste",
-    "example": "Exemple avec le mot \"poste\".",
+    "definition": "Emploi, travail ou bureau de poste.",
+    "example": "Mon père va à son poste de travail.",
     "niveau": 2
   },
   {
     "word": "patinoire",
-    "definition": "Mot français: patinoire",
-    "example": "Exemple avec le mot \"patinoire\".",
+    "definition": "Lieu où on peut patiner sur la glace.",
+    "example": "Nous allons à la patinoire en hiver.",
     "niveau": 2
   },
   {
     "word": "imprimante",
-    "definition": "Mot français: imprimante",
-    "example": "Exemple avec le mot \"imprimante\".",
+    "definition": "Machine qui imprime des documents.",
+    "example": "L'imprimante imprime mes documents.",
     "niveau": 2
   },
   {
     "word": "Bienveillance",
     "definition": "acquisition de connaissances",
-    "example": "Exemple avec le mot \"Bienveillance\".",
+    "example": "Je peux utiliser le mot \"Bienveillance\" dans une phrase.",
     "niveau": 3
   },
   {
     "word": "faible",
-    "definition": "Mot français: faible",
-    "example": "Exemple avec le mot \"faible\".",
+    "definition": "Qui n'a pas de force.",
+    "example": "Je me sens faible quand je suis malade.",
     "niveau": 2
   },
   {
     "word": "cent",
     "definition": "Nombre égal à dix dizaines (100).",
-    "example": "Exemple avec le mot \"cent\".",
+    "example": "\"cent\" est un mot que j'aime bien.",
     "niveau": 2
   },
   {
     "word": "Globalisation",
     "definition": "acquisition de connaissances",
-    "example": "Exemple avec le mot \"Globalisation\".",
+    "example": "Le mot \"Globalisation\" a une belle signification.",
     "niveau": 2
   },
   {
     "word": "mille",
     "definition": "Nombre égal à dix centaines (1 000).",
-    "example": "Exemple avec le mot \"mille\".",
+    "example": "Je peux utiliser le mot \"mille\" dans une phrase.",
     "niveau": 2
   },
   {
     "word": "découverte",
     "definition": "trouver quelque chose de nouveau",
-    "example": "Exemple avec le mot \"découverte\".",
+    "example": "Le mot \"découverte\" a une belle signification.",
     "niveau": 2
   },
   {
     "word": "cent",
     "definition": "Nombre égal à dix dizaines (100).",
-    "example": "Exemple avec le mot \"cent\".",
+    "example": "\"cent\" est un mot que j'aime bien.",
     "niveau": 2
   },
   {
     "word": "fraternité",
     "definition": "sentiment d'affection profond",
-    "example": "Exemple avec le mot \"fraternité\".",
+    "example": "J'ai appris le mot \"fraternité\" aujourd'hui.",
     "niveau": 3
   },
   {
     "word": "boucherie",
     "definition": "Magasin où l'on vend de la viande.",
-    "example": "Exemple avec le mot \"boucherie\".",
+    "example": "Le mot \"boucherie\" est important à connaître.",
     "niveau": 2
   },
   {
     "word": "botte",
-    "definition": "Mot français: botte",
-    "example": "Exemple avec le mot \"botte\".",
+    "definition": "Chaussure haute qui couvre la jambe.",
+    "example": "Je porte des bottes quand il pleut.",
     "niveau": 2
   },
   {
     "word": "email",
-    "definition": "Mot français: email",
-    "example": "Exemple avec le mot \"email\".",
+    "definition": "Message électronique envoyé par internet.",
+    "example": "J'envoie un email à mon ami.",
     "niveau": 2
   },
   {
     "word": "océan",
-    "definition": "Mot français: océan",
-    "example": "Exemple avec le mot \"océan\".",
+    "definition": "Vaste étendue d'eau salée.",
+    "example": "L'océan est très grand et profond.",
     "niveau": 2
   },
   {
     "word": "plaine",
-    "definition": "Mot français: plaine",
-    "example": "Exemple avec le mot \"plaine\".",
+    "definition": "Grande étendue de terrain plat.",
+    "example": "La plaine est plate et sans montagnes.",
     "niveau": 2
   },
   {
     "word": "sculpture",
-    "definition": "Mot français: sculpture",
-    "example": "Exemple avec le mot \"sculpture\".",
+    "definition": "Œuvre d'art en trois dimensions.",
+    "example": "Cette sculpture est très belle.",
     "niveau": 3
   },
   {
     "word": "million",
     "definition": "Nombre égal à mille milliers (1 000 000).",
-    "example": "Exemple avec le mot \"million\".",
+    "example": "Le mot \"million\" est important à connaître.",
     "niveau": 3
   },
   {
     "word": "bibliothèque",
     "definition": "ensemble de pages avec du texte",
-    "example": "Exemple avec le mot \"bibliothèque\".",
+    "example": "J'utilise souvent le mot \"bibliothèque\".",
     "niveau": 2
   },
   {
     "word": "mille",
     "definition": "Nombre égal à dix centaines (1 000).",
-    "example": "Exemple avec le mot \"mille\".",
+    "example": "Je peux utiliser le mot \"mille\" dans une phrase.",
     "niveau": 2
   },
   {
     "word": "musicien",
     "definition": "art des sons organisés",
-    "example": "Exemple avec le mot \"musicien\".",
+    "example": "\"musicien\" est un mot que j'aime bien.",
     "niveau": 2
   },
   {
     "word": "Sincérité",
     "definition": "acquisition de connaissances",
-    "example": "Exemple avec le mot \"Sincérité\".",
+    "example": "\"Sincérité\" est un mot intéressant.",
     "niveau": 2
   },
   {
     "word": "million",
     "definition": "Nombre égal à mille milliers (1 000 000).",
-    "example": "Exemple avec le mot \"million\".",
+    "example": "Le mot \"million\" est important à connaître.",
     "niveau": 3
   },
   {
     "word": "mille",
     "definition": "Nombre égal à dix centaines (1 000).",
-    "example": "Exemple avec le mot \"mille\".",
+    "example": "Je peux utiliser le mot \"mille\" dans une phrase.",
     "niveau": 2
   },
   {
     "word": "Architecture",
     "definition": "acquisition de connaissances",
-    "example": "Exemple avec le mot \"Architecture\".",
+    "example": "Le mot \"Architecture\" est utile dans la vie quotidienne.",
     "niveau": 2
   },
   {
     "word": "entreprise",
-    "definition": "Mot français: entreprise",
-    "example": "Exemple avec le mot \"entreprise\".",
+    "definition": "Organisation qui produit des biens ou services.",
+    "example": "Mon père travaille dans une entreprise.",
     "niveau": 3
   },
   {
     "word": "ours",
-    "definition": "Mot français: ours",
-    "example": "Exemple avec le mot \"ours\".",
+    "definition": "Grand animal sauvage à fourrure épaisse.",
+    "example": "L'ours est un grand animal sauvage.",
     "niveau": 2
   },
   {
     "word": "journaliste",
-    "definition": "Mot français: journaliste",
-    "example": "Exemple avec le mot \"journaliste\".",
+    "definition": "Personne qui écrit pour les journaux.",
+    "example": "Le journaliste écrit un article.",
     "niveau": 3
   },
   {
     "word": "milliard",
     "definition": "Un milliard est égal à mille millions (1 000 000 000).",
-    "example": "Exemple avec le mot \"milliard\".",
+    "example": "Je peux utiliser le mot \"milliard\" dans une phrase.",
     "niveau": 3
   },
   {
     "word": "sandale",
-    "definition": "Mot français: sandale",
-    "example": "Exemple avec le mot \"sandale\".",
+    "definition": "Chaussure ouverte pour l'été.",
+    "example": "Je porte des sandales en été.",
     "niveau": 2
   },
   {
     "word": "amour",
     "definition": "sentiment d'affection profond",
-    "example": "Exemple avec le mot \"amour\".",
+    "example": "\"amour\" est un mot intéressant.",
     "niveau": 2
   },
   {
     "word": "laboratoire",
     "definition": "tester une hypothèse",
-    "example": "Exemple avec le mot \"laboratoire\".",
+    "example": "\"laboratoire\" est un mot que j'aime bien.",
     "niveau": 2
   },
   {
     "word": "milliard",
     "definition": "Un milliard est égal à mille millions (1 000 000 000).",
-    "example": "Exemple avec le mot \"milliard\".",
+    "example": "Je peux utiliser le mot \"milliard\" dans une phrase.",
     "niveau": 3
   },
   {
     "word": "Analyse",
     "definition": "acquisition de connaissances",
-    "example": "Exemple avec le mot \"Analyse\".",
+    "example": "Je connais le mot \"Analyse\".",
     "niveau": 2
   },
   {
     "word": "victoire",
     "definition": "gagner",
-    "example": "Exemple avec le mot \"victoire\".",
+    "example": "Je connais le mot \"victoire\".",
     "niveau": 2
   },
   {
     "word": "Renaissance",
     "definition": "acquisition de connaissances",
-    "example": "Exemple avec le mot \"Renaissance\".",
+    "example": "J'ai appris le mot \"Renaissance\" aujourd'hui.",
     "niveau": 2
   },
   {
     "word": "joie",
     "definition": "sentiment de joie",
-    "example": "Exemple avec le mot \"joie\".",
+    "example": "Le mot \"joie\" est important à connaître.",
     "niveau": 2
   },
   {
     "word": "objectif",
-    "definition": "Mot français: objectif",
-    "example": "Exemple avec le mot \"objectif\".",
+    "definition": "But que l'on veut atteindre.",
+    "example": "Mon objectif est de réussir à l'école.",
     "niveau": 2
   },
   {
     "word": "veste",
-    "definition": "Mot français: veste",
-    "example": "Exemple avec le mot \"veste\".",
+    "definition": "Vêtement qui couvre le haut du corps.",
+    "example": "Je mets une veste quand il fait froid.",
     "niveau": 2
   },
   {
     "word": "Argumentation",
     "definition": "acquisition de connaissances",
-    "example": "Exemple avec le mot \"Argumentation\".",
+    "example": "Le mot \"Argumentation\" est important à connaître.",
     "niveau": 2
   },
   {
     "word": "Symétrie",
     "definition": "acquisition de connaissances",
-    "example": "Exemple avec le mot \"Symétrie\".",
+    "example": "Je peux utiliser le mot \"Symétrie\" dans une phrase.",
     "niveau": 2
   },
   {
     "word": "bière",
-    "definition": "Mot français: bière",
-    "example": "Exemple avec le mot \"bière\".",
+    "definition": "Boisson alcoolisée à base d'orge.",
+    "example": "Les adultes boivent parfois de la bière.",
     "niveau": 3
   },
   {
     "word": "ensoleillé",
-    "definition": "Mot français: ensoleillé",
-    "example": "Exemple avec le mot \"ensoleillé\".",
+    "definition": "Quand il y a beaucoup de soleil.",
+    "example": "Aujourd'hui, il fait ensoleillé.",
     "niveau": 2
   },
   {
     "word": "équipe",
-    "definition": "Mot français: équipe",
-    "example": "Exemple avec le mot \"équipe\".",
+    "definition": "Définition du mot \"équipe\".",
+    "example": "Le mot \"équipe\" a une belle signification.",
     "niveau": 2
   },
   {
     "word": "violet",
-    "definition": "Mot français: violet",
-    "example": "Exemple avec le mot \"violet\".",
+    "definition": "Couleur des violettes.",
+    "example": "Le mot \"violet\" est important à connaître.",
     "niveau": 2
   },
   {
     "word": "milliard",
     "definition": "Un milliard est égal à mille millions (1 000 000 000).",
-    "example": "Exemple avec le mot \"milliard\".",
+    "example": "Je peux utiliser le mot \"milliard\" dans une phrase.",
     "niveau": 3
   },
   {
     "word": "ruisseau",
-    "definition": "Mot français: ruisseau",
-    "example": "Exemple avec le mot \"ruisseau\".",
+    "definition": "Définition du mot \"ruisseau\".",
+    "example": "Je me souviens du mot \"ruisseau\".",
     "niveau": 2
   },
   {
     "word": "ceinture",
-    "definition": "Mot français: ceinture",
-    "example": "Exemple avec le mot \"ceinture\".",
+    "definition": "Définition du mot \"ceinture\".",
+    "example": "\"ceinture\" est un mot que j'aime bien.",
     "niveau": 2
   },
   {
     "word": "majorité",
-    "definition": "Mot français: majorité",
-    "example": "Exemple avec le mot \"majorité\".",
+    "definition": "Définition du mot \"majorité\".",
+    "example": "\"majorité\" est un mot intéressant.",
     "niveau": 3
   },
   {
     "word": "cent",
     "definition": "Nombre égal à dix dizaines (100).",
-    "example": "Exemple avec le mot \"cent\".",
+    "example": "\"cent\" est un mot que j'aime bien.",
     "niveau": 2
   },
   {
     "word": "grenouille",
-    "definition": "Mot français: grenouille",
-    "example": "Exemple avec le mot \"grenouille\".",
+    "definition": "Définition du mot \"grenouille\".",
+    "example": "Le mot \"grenouille\" est important à connaître.",
     "niveau": 2
   },
   {
     "word": "biologie",
-    "definition": "Mot français: biologie",
-    "example": "Exemple avec le mot \"biologie\".",
+    "definition": "Définition du mot \"biologie\".",
+    "example": "Le mot \"biologie\" est important à connaître.",
     "niveau": 3
   },
   {
     "word": "diplôme",
-    "definition": "Mot français: diplôme",
-    "example": "Exemple avec le mot \"diplôme\".",
+    "definition": "Définition du mot \"diplôme\".",
+    "example": "J'ai appris le mot \"diplôme\" aujourd'hui.",
     "niveau": 2
   },
   {
     "word": "cent",
     "definition": "Nombre égal à dix dizaines (100).",
-    "example": "Exemple avec le mot \"cent\".",
+    "example": "\"cent\" est un mot que j'aime bien.",
     "niveau": 2
   },
   {
     "word": "source",
     "definition": "liquide transparent essentiel à la vie",
-    "example": "Exemple avec le mot \"source\".",
+    "example": "Le mot \"source\" est important à connaître.",
     "niveau": 2
   },
   {
     "word": "milliard",
     "definition": "Un milliard est égal à mille millions (1 000 000 000).",
-    "example": "Exemple avec le mot \"milliard\".",
+    "example": "Je peux utiliser le mot \"milliard\" dans une phrase.",
     "niveau": 3
   },
   {
     "word": "million",
     "definition": "Nombre égal à mille milliers (1 000 000).",
-    "example": "Exemple avec le mot \"million\".",
+    "example": "Le mot \"million\" est important à connaître.",
     "niveau": 3
   },
   {
     "word": "étang",
-    "definition": "Mot français: étang",
-    "example": "Exemple avec le mot \"étang\".",
+    "definition": "Définition du mot \"étang\".",
+    "example": "Je connais le mot \"étang\".",
     "niveau": 2
   },
   {
     "word": "mille",
     "definition": "Nombre égal à dix centaines (1 000).",
-    "example": "Exemple avec le mot \"mille\".",
+    "example": "Je peux utiliser le mot \"mille\" dans une phrase.",
     "niveau": 2
   },
   {
     "word": "mode",
-    "definition": "Mot français: mode",
-    "example": "Exemple avec le mot \"mode\".",
+    "definition": "Définition du mot \"mode\".",
+    "example": "Le mot \"mode\" a une belle signification.",
     "niveau": 2
   },
   {
     "word": "court",
-    "definition": "Mot français: court",
-    "example": "Exemple avec le mot \"court\".",
+    "definition": "Qui a une petite longueur.",
+    "example": "Je me souviens du mot \"court\".",
     "niveau": 2
   },
   {
     "word": "cent",
     "definition": "Nombre égal à dix dizaines (100).",
-    "example": "Exemple avec le mot \"cent\".",
+    "example": "\"cent\" est un mot que j'aime bien.",
     "niveau": 2
   },
   {
     "word": "cent",
     "definition": "Nombre égal à dix dizaines (100).",
-    "example": "Exemple avec le mot \"cent\".",
+    "example": "\"cent\" est un mot que j'aime bien.",
     "niveau": 2
   },
   {
     "word": "pharmacie",
-    "definition": "Mot français: pharmacie",
-    "example": "Exemple avec le mot \"pharmacie\".",
+    "definition": "Définition du mot \"pharmacie\".",
+    "example": "Je connais le mot \"pharmacie\".",
     "niveau": 2
   },
   {
     "word": "site web",
     "definition": "être debout",
-    "example": "Exemple avec le mot \"site web\".",
+    "example": "Je connais le mot \"site web\".",
     "niveau": 2
   },
   {
     "word": "cent",
     "definition": "Nombre égal à dix dizaines (100).",
-    "example": "Exemple avec le mot \"cent\".",
+    "example": "\"cent\" est un mot que j'aime bien.",
     "niveau": 2
   },
   {
     "word": "Préservation",
     "definition": "acquisition de connaissances",
-    "example": "Exemple avec le mot \"Préservation\".",
+    "example": "Le mot \"Préservation\" est important à connaître.",
     "niveau": 2
   },
   {
     "word": "examen",
-    "definition": "Mot français: examen",
-    "example": "Exemple avec le mot \"examen\".",
+    "definition": "Définition du mot \"examen\".",
+    "example": "J'ai appris le mot \"examen\" aujourd'hui.",
     "niveau": 2
   },
   {
     "word": "Conservation",
     "definition": "acquisition de connaissances",
-    "example": "Exemple avec le mot \"Conservation\".",
+    "example": "\"Conservation\" est un mot intéressant.",
     "niveau": 2
   },
   {
     "word": "Paradoxe",
     "definition": "acquisition de connaissances",
-    "example": "Exemple avec le mot \"Paradoxe\".",
+    "example": "\"Paradoxe\" est un mot intéressant.",
     "niveau": 2
   },
   {
     "word": "loyauté",
-    "definition": "Mot français: loyauté",
-    "example": "Exemple avec le mot \"loyauté\".",
+    "definition": "Définition du mot \"loyauté\".",
+    "example": "\"loyauté\" est un mot que j'aime bien.",
     "niveau": 3
   },
   {
     "word": "milliard",
     "definition": "Un milliard est égal à mille millions (1 000 000 000).",
-    "example": "Exemple avec le mot \"milliard\".",
+    "example": "Je peux utiliser le mot \"milliard\" dans une phrase.",
     "niveau": 3
   },
   {
     "word": "étranger",
-    "definition": "Mot français: étranger",
-    "example": "Exemple avec le mot \"étranger\".",
+    "definition": "Définition du mot \"étranger\".",
+    "example": "\"étranger\" est un mot intéressant.",
     "niveau": 2
   },
   {
     "word": "langue",
-    "definition": "Mot français: langue",
-    "example": "Exemple avec le mot \"langue\".",
+    "definition": "Définition du mot \"langue\".",
+    "example": "\"langue\" est un mot que j'aime bien.",
     "niveau": 2
   },
   {
     "word": "athlétisme",
-    "definition": "Mot français: athlétisme",
-    "example": "Exemple avec le mot \"athlétisme\".",
+    "definition": "Définition du mot \"athlétisme\".",
+    "example": "Je peux utiliser le mot \"athlétisme\" dans une phrase.",
     "niveau": 3
   },
   {
     "word": "éléphant",
-    "definition": "Mot français: éléphant",
-    "example": "Exemple avec le mot \"éléphant\".",
+    "definition": "Définition du mot \"éléphant\".",
+    "example": "\"éléphant\" est un mot intéressant.",
     "niveau": 2
   },
   {
     "word": "natation",
-    "definition": "Mot français: natation",
-    "example": "Exemple avec le mot \"natation\".",
+    "definition": "Définition du mot \"natation\".",
+    "example": "\"natation\" est un mot intéressant.",
     "niveau": 2
   },
   {
     "word": "réseau",
-    "definition": "Mot français: réseau",
-    "example": "Exemple avec le mot \"réseau\".",
+    "definition": "Ensemble de choses connectées entre elles.",
+    "example": "Internet est un réseau d'ordinateurs.",
     "niveau": 2
   },
   {
     "word": "mille",
     "definition": "Nombre égal à dix centaines (1 000).",
-    "example": "Exemple avec le mot \"mille\".",
+    "example": "Je peux utiliser le mot \"mille\" dans une phrase.",
     "niveau": 2
   },
   {
     "word": "coussin",
-    "definition": "Mot français: coussin",
-    "example": "Exemple avec le mot \"coussin\".",
+    "definition": "Définition du mot \"coussin\".",
+    "example": "J'ai appris le mot \"coussin\" aujourd'hui.",
     "niveau": 2
   },
   {
     "word": "mille",
     "definition": "Nombre égal à dix centaines (1 000).",
-    "example": "Exemple avec le mot \"mille\".",
+    "example": "Je peux utiliser le mot \"mille\" dans une phrase.",
     "niveau": 2
   },
   {
     "word": "mille",
     "definition": "Nombre égal à dix centaines (1 000).",
-    "example": "Exemple avec le mot \"mille\".",
+    "example": "Je peux utiliser le mot \"mille\" dans une phrase.",
     "niveau": 2
   },
   {
     "word": "lion",
-    "definition": "Mot français: lion",
-    "example": "Exemple avec le mot \"lion\".",
+    "definition": "Définition du mot \"lion\".",
+    "example": "\"lion\" est un mot que j'aime bien.",
     "niveau": 2
   },
   {
     "word": "équitation",
-    "definition": "Mot français: équitation",
-    "example": "Exemple avec le mot \"équitation\".",
+    "definition": "Définition du mot \"équitation\".",
+    "example": "Je connais le mot \"équitation\".",
     "niveau": 3
   },
   {
     "word": "Sédiment",
     "definition": "acquisition de connaissances",
-    "example": "Exemple avec le mot \"Sédiment\".",
+    "example": "J'ai appris le mot \"Sédiment\" aujourd'hui.",
     "niveau": 2
   },
   {
     "word": "milliard",
     "definition": "Un milliard est égal à mille millions (1 000 000 000).",
-    "example": "Exemple avec le mot \"milliard\".",
+    "example": "Je peux utiliser le mot \"milliard\" dans une phrase.",
     "niveau": 3
   },
   {
     "word": "manière",
-    "definition": "Mot français: manière",
-    "example": "Exemple avec le mot \"manière\".",
+    "definition": "Définition du mot \"manière\".",
+    "example": "\"manière\" est un mot que j'aime bien.",
     "niveau": 3
   },
   {
     "word": "Vitesse",
     "definition": "acquisition de connaissances",
-    "example": "Exemple avec le mot \"Vitesse\".",
+    "example": "Le mot \"Vitesse\" a une belle signification.",
     "niveau": 2
   },
   {
     "word": "saison",
     "definition": "période de l'année",
-    "example": "Exemple avec le mot \"saison\".",
+    "example": "Le mot \"saison\" est utile dans la vie quotidienne.",
     "niveau": 2
   },
   {
     "word": "milliard",
     "definition": "Un milliard est égal à mille millions (1 000 000 000).",
-    "example": "Exemple avec le mot \"milliard\".",
+    "example": "Je peux utiliser le mot \"milliard\" dans une phrase.",
     "niveau": 3
   },
   {
     "word": "Frontière",
     "definition": "acquisition de connaissances",
-    "example": "Exemple avec le mot \"Frontière\".",
+    "example": "Je peux utiliser le mot \"Frontière\" dans une phrase.",
     "niveau": 2
   },
   {
     "word": "trente",
     "definition": "Nombre égal à trois dizaines (30).",
-    "example": "Exemple avec le mot \"trente\".",
+    "example": "Le mot \"trente\" a une belle signification.",
     "niveau": 2
   },
   {
     "word": "cochon",
-    "definition": "Mot français: cochon",
-    "example": "Exemple avec le mot \"cochon\".",
+    "definition": "Définition du mot \"cochon\".",
+    "example": "Je connais le mot \"cochon\".",
     "niveau": 2
   },
   {
     "word": "pharmacie",
-    "definition": "Mot français: pharmacie",
-    "example": "Exemple avec le mot \"pharmacie\".",
+    "definition": "Définition du mot \"pharmacie\".",
+    "example": "Je connais le mot \"pharmacie\".",
     "niveau": 2
   },
   {
     "word": "Prénom",
     "definition": "acquisition de connaissances",
-    "example": "Exemple avec le mot \"Prénom\".",
+    "example": "Le mot \"Prénom\" a une belle signification.",
     "niveau": 2
   }
 ]
