@@ -602,26 +602,73 @@
             }
             
             if (nbListEl) {
-                nbListEl.innerHTML = words.map(function(n) {
-                    var w = findWordInDB(n.word);
-                    if (!w) return '';
-                    var isDue = n.next <= today && !gTodayWords.some(function(tw) { return tw.word === n.word; });
-                    var hasError = n.err_days > 0;
-                    var dueClass = hasError ? 'nb-word-error' : (isDue ? 'nb-word-due' : '');
-                    var dueBadge = isDue ? ' <span style="color:#f39c12;font-size="0.8em;">!</span>' : '';
-                    var errorBadge = hasError ? ' <span style="color:#e74c3c;font-size:0.8em;">x' + n.err_days + '</span>' : '';
+                // 如果有搜索词，显示所有匹配结果
+                if (filterText) {
+                    nbListEl.innerHTML = words.map(function(n) {
+                        return renderNotebookItem(n, today);
+                    }).join('');
+                } else {
+                    // 否则按字母分组显示
+                    var grouped = {};
+                    words.forEach(function(n) {
+                        var firstLetter = n.word.charAt(0).toUpperCase();
+                        if (!grouped[firstLetter]) grouped[firstLetter] = [];
+                        grouped[firstLetter].push(n);
+                    });
                     
-                    return '<div class="notebook-item ' + dueClass + '" onclick="showDetail(\'' + n.word + '\')">' +
-                        '<div style="display:flex;flex-direction:column;flex:1;">' +
-                        '<span style="font-size:1.1em;"><strong>' + n.word + '</strong>' + dueBadge + errorBadge + '</span>' +
-                        '<span style="font-size:0.85em;color:#666;margin-top:3px;">' + (w.definition || w.def || '').substring(0, 50) + '...</span>' +
-                        '<span style="font-size:0.75em;color:#999;margin-top:2px;">Prochaine: ' + n.next + '</span>' +
-                        '</div>' +
-                        '<div style="display:flex;align-items:center;gap:8px;">' +
-                        '<span class="lvl-badge">Lvl ' + n.lvl + '</span>' +
-                        '<button onclick="event.stopPropagation(); speak(\'' + n.word + '\')" style="background:var(--s);border:none;width:35px;height:35px;border-radius:50%;color:white;font-size:1.2em;cursor:pointer;">&#128266;</button>' +
-                        '</div></div>';
-                }).join('');
+                    var html = '';
+                    var letters = Object.keys(grouped).sort();
+                    
+                    letters.forEach(function(letter) {
+                        html += '<div class="nb-group">';
+                        html += '<div class="nb-group-header nb-beginner" onclick="toggleGroup(\'' + letter + '\')">';
+                        html += '<span>' + letter + '</span>';
+                        html += '<span class="nb-group-count">' + grouped[letter].length + '</span>';
+                        html += '</div>';
+                        html += '<div id="group-' + letter + '" class="nb-group-content">';
+                        html += grouped[letter].map(function(n) {
+                            return renderNotebookItem(n, today);
+                        }).join('');
+                        html += '</div>';
+                        html += '</div>';
+                    });
+                    
+                    nbListEl.innerHTML = html;
+                    
+                    // 默认展开前3个组
+                    letters.slice(0, 3).forEach(function(letter) {
+                        var el = document.getElementById('group-' + letter);
+                        if (el) el.classList.remove('collapsed');
+                    });
+                }
+            }
+        }
+        
+        function renderNotebookItem(n, today) {
+            var w = findWordInDB(n.word);
+            if (!w) return '';
+            var isDue = n.next <= today && !gTodayWords.some(function(tw) { return tw.word === n.word; });
+            var hasError = n.err_days > 0;
+            var dueClass = hasError ? 'nb-word-error' : (isDue ? 'nb-word-due' : '');
+            var dueBadge = isDue ? ' <span style="color:#f39c12;font-size:0.8em;">!</span>' : '';
+            var errorBadge = hasError ? ' <span style="color:#e74c3c;font-size:0.8em;">x' + n.err_days + '</span>' : '';
+            
+            return '<div class="notebook-item ' + dueClass + '" onclick="showDetail(\'' + n.word + '\')">' +
+                '<div style="display:flex;flex-direction:column;flex:1;">' +
+                '<span style="font-size:1.1em;"><strong>' + n.word + '</strong>' + dueBadge + errorBadge + '</span>' +
+                '<span style="font-size:0.85em;color:#666;margin-top:3px;">' + (w.definition || w.def || '').substring(0, 50) + '...</span>' +
+                '<span style="font-size:0.75em;color:#999;margin-top:2px;">Prochaine: ' + n.next + '</span>' +
+                '</div>' +
+                '<div style="display:flex;align-items:center;gap:8px;">' +
+                '<span class="lvl-badge">Lvl ' + n.lvl + '</span>' +
+                '<button onclick="event.stopPropagation(); speak(\'' + n.word + '\')" style="background:var(--s);border:none;width:35px;height:35px;border-radius:50%;color:white;font-size:1.2em;cursor:pointer;">&#128266;</button>' +
+                '</div></div>';
+        }
+        
+        function toggleGroup(letter) {
+            var el = document.getElementById('group-' + letter);
+            if (el) {
+                el.classList.toggle('collapsed');
             }
         }
         
