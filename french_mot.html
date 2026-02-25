@@ -166,7 +166,8 @@
         let API = "";
         
         // ===== DATABASE =====
-        const DB = [
+        // 基础数据库（后备，27个单词）
+        const BASE_DB = [
             { word: "Soleil", def: "太阳", ex: "Le soleil brille.", niveau: 1 },
             { word: "Lune", def: "月亮", ex: "La lune est ronde.", niveau: 1 },
             { word: "Chat", def: "猫", ex: "Le chat miaule.", niveau: 1 },
@@ -196,6 +197,37 @@
             { word: "Condensation", def: "凝结", ex: "La condensation sur la vitre.", niveau: 3 }
         ];
         
+        // 完整数据库（从外部文件加载）
+        let FULL_DB = null;
+        const FULL_DB_PATH = "./french_full_db.json";
+        
+        // ===== HELPER FUNCTIONS =====
+        async function loadFullDatabase() {
+            try {
+                const response = await fetch(FULL_DB_PATH + "?t=" + Date.now());
+                if (response.ok) {
+                    FULL_DB = await response.json();
+                    console.log("完整数据库加载成功:", FULL_DB.length, "个单词");
+                    return true;
+                }
+            } catch (error) {
+                console.warn("无法加载完整数据库:", error);
+            }
+            // 如果加载失败，使用基础数据库
+            FULL_DB = BASE_DB;
+            console.log("使用基础数据库:", BASE_DB.length, "个单词");
+            return false;
+        }
+        
+        function getCurrentDB() {
+            return FULL_DB || BASE_DB;
+        }
+        
+        function findWordInDB(word) {
+            const db = getCurrentDB();
+            return db.find(function(d) { return d.word === word; });
+        }
+        
         // ===== INITIALIZATION =====
         async function init() {
             console.log("init() started");
@@ -218,6 +250,10 @@
                     if (warnEl) warnEl.style.display = 'block';
                 }
                 
+                // 1. 先加载完整数据库
+                await loadFullDatabase();
+                
+                // 2. 加载用户数据
                 let serverData = null;
                 try {
                     const response = await fetch(DATA_PATH + "?t=" + Date.now());
@@ -258,7 +294,7 @@
                 loadSessionMastery(today);
                 
                 gTodayWords = gData.daily_stats.words.map(function(w) {
-                    return DB.find(function(d) { return d.word === w; });
+                    return findWordInDB(w);
                 }).filter(function(x) { return x; });
                 
                 updateSyncStatus("Prêt", "#2ecc71");
@@ -273,10 +309,12 @@
         
         function generateDailyWords(today) {
             const seedVal = today.split('-').reduce(function(a, b) { return a + b.charCodeAt(0); }, 0);
-            let pool = DB.filter(function(v) { 
+            const currentDB = getCurrentDB();
+            
+            let pool = currentDB.filter(function(v) { 
                 return !gData.notebook.some(function(n) { return n.word === v.word; }); 
             });
-            if (pool.length < 5) pool = DB.slice();
+            if (pool.length < 5) pool = currentDB.slice();
             
             let newDaily = [];
             let tPool = pool.slice();
@@ -398,7 +436,8 @@
                     return gData.notebook.some(function(n) { return n.word === w.word; }) && (sessionMastery[w.word] || 0) < MASTERY_GOAL;
                 });
             } else {
-                pool = DB.filter(function(v) { 
+                const currentDB = getCurrentDB();
+                pool = currentDB.filter(function(v) { 
                     const n = gData.notebook.find(function(e) { return e.word === v.word; }); 
                     return n && n.next <= today && !gTodayWords.some(function(tw) { return tw.word === v.word; }) && (sessionMastery[v.word] || 0) < MASTERY_GOAL;
                 });
@@ -434,7 +473,8 @@
             }
             
             let opts = [target.def];
-            let all = DB.map(function(v) { return v.def; });
+            const currentDB = getCurrentDB();
+            let all = currentDB.map(function(v) { return v.def; });
             while(opts.length < 3) {
                 let r = all[Math.floor(Math.random() * all.length)];
                 if(!opts.includes(r)) opts.push(r);
@@ -452,7 +492,7 @@
             if (gIsLocked) return;
             gIsLocked = true;
             
-            const target = DB.find(function(v) { return v.word === w; });
+            const target = findWordInDB(w);
             const n = gData.notebook.find(function(e) { return e.word === w; });
             
             var feedbackEl = document.getElementById('q-feedback');
@@ -530,7 +570,7 @@
             
             if (nbListEl) {
                 nbListEl.innerHTML = words.map(function(n) {
-                    var w = DB.find(function(d) { return d.word === n.word; });
+                    var w = findWordInDB(n.word);
                     if (!w) return '';
                     var isDue = n.next <= today && !gTodayWords.some(function(tw) { return tw.word === n.word; });
                     var hasError = n.err_days > 0;
@@ -560,7 +600,7 @@
         }
         
         function showDetail(w) {
-            var d = DB.find(function(v) { return v.word === w; });
+            var d = findWordInDB(w);
             if (!d) return;
             var detailCard = document.getElementById('detail-card');
             if (detailCard) {
