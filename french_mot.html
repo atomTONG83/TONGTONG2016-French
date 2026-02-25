@@ -33,8 +33,8 @@
         .mode-btn { border: none; padding: 8px 16px; border-radius: 10px; cursor: pointer; font-weight: bold; background: #eee; color: #666; position: relative; }
         .mode-btn.active { background: var(--p); color: white; }
         .mode-btn.done::after { content: "✅"; position: absolute; top: -5px; right: -5px; font-size: 0.8em; }
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); }
-        .modal-content { background: white; margin: 15% auto; padding: 30px; border-radius: 20px; width: 85%; max-width: 550px; position: relative; max-height: 80vh; overflow-y: auto; }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); overflow-y: auto; -webkit-overflow-scrolling: touch; }
+        .modal-content { background: white; margin: 15% auto; padding: 30px; border-radius: 20px; width: 85%; max-width: 550px; position: relative; max-height: 80vh; overflow-y: auto; -webkit-overflow-scrolling: touch; }
         .close { position: absolute; right: 20px; top: 15px; font-size: 32px; cursor: pointer; color: #bbb; }
         #sync-status { position: fixed; bottom: 10px; right: 10px; font-size: 0.75em; color: white; background: #999; padding: 6px 12px; border-radius: 8px; z-index: 2000; }
         .notebook-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; border-bottom: 1px solid #eee; background: white; margin-bottom: 5px; border-radius: 10px; }
@@ -59,6 +59,39 @@
         .nb-empty { text-align: center; padding: 30px; color: #999; }
         .nb-word-due { background: #fff3cd !important; border-left: 4px solid #ffc107 !important; }
         .nb-word-error { background: #f8d7da !important; border-left: 4px solid #dc3545 !important; }
+        
+        /* iPad/移动设备优化 */
+        @media (max-width: 768px) {
+            .modal-content {
+                margin: 10% auto;
+                padding: 20px;
+                width: 90%;
+                max-height: 85vh;
+            }
+            #nb-list {
+                max-height: 50vh !important;
+            }
+            .notebook-item {
+                padding: 10px;
+                margin-bottom: 4px;
+            }
+        }
+        
+        /* 触摸设备滚动优化 */
+        #nb-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        #nb-list::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+        #nb-list::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 3px;
+        }
+        #nb-list::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
     </style>
 </head>
 <body>
@@ -130,7 +163,7 @@
                 <input type="text" class="nb-search" id="nb-search" placeholder="🔍 Rechercher..." oninput="filterNotebook()" style="margin-bottom: 0; flex: 1;">
                 <button onclick="saveData()" style="background: var(--p); color: white; border: none; padding: 0 15px; border-radius: 25px; font-size: 0.8em; cursor: pointer;">☁️ Sync Mac</button>
             </div>
-            <div id="nb-list"></div>
+            <div id="nb-list" style="max-height: 400px; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-right: 5px;"></div>
         </div>
     </div>
     <div id="detailModal" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('detailModal')">&times;</span><div id="detail-card"></div></div></div>
