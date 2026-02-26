@@ -617,9 +617,9 @@
                 }
                 sessionMastery[w] = (sessionMastery[w] || 0) + 1;
                 
-                // 增加星星（每次回答正确）
-                if (!gData.stars) gData.stars = 0;
-                gData.stars += 10; // 每次正确回答增加10星星
+                // 移除每题奖励，确保每日总量100
+                // if (!gData.stars) gData.stars = 0;
+                // gData.stars += 10; 
                 
                 if (sessionMastery[w] >= MASTERY_GOAL && n) {
                     n.lvl = Math.min(6, n.lvl + 1);
@@ -628,8 +628,8 @@
                     d.setDate(d.getDate() + INTERVALS[n.lvl]);
                     n.next = d.toISOString().split('T')[0];
                     
-                    // 掌握一个单词额外奖励
-                    gData.stars += 20; // 掌握一个单词额外20星星
+                    // 移除掌握奖励
+                    // gData.stars += 20; 
                 }
                 gCombo++;
                 errorStreak[w] = 0; // 正确回答时重置连续错误计数
@@ -709,12 +709,13 @@
             if (masteredToday >= todayWords.length && !gData.daily_stats.completed) {
                 gData.daily_stats.completed = true;
                 if (!gData.stars) gData.stars = 0;
-                gData.stars += 100; // 完成每日目标奖励100星星
+                gData.stars += 100; // 核心奖励：完成每日所有5个单词掌握，获得100星星
                 
                 setTimeout(function() { 
-                    document.getElementById('rew-val').innerText = "🎉 Magnifique !\\nTu as maîtrisé tous les mots !\\n+100 étoiles !"; 
+                    document.getElementById('rew-val').innerText = "🎉 Magnifique !\nTu as maîtrisé tous les mots !\n+100 étoiles !"; 
                     openModal('rewardModal'); 
                     speak("Félicitations"); 
+                    saveData(); // 立即同步数据
                 }, 500);
             }
         }

@@ -1,1616 +1,249 @@
 [
-  {
-    "word": "abondant",
-    "definition": "Qui existe en grande quantité.",
-    "niveau": 2,
-    "example": "J'ai appris le mot \"abondant\" aujourd'hui."
-  },
-  {
-    "word": "accueillir",
-    "definition": "Recevoir quelqu'un avec bienveillance.",
-    "niveau": 2,
-    "example": "Le mot \"accueillir\" a une belle signification."
-  },
-  {
-    "word": "admirer",
-    "definition": "Regarder avec plaisir et estime.",
-    "niveau": 2,
-    "example": "Je peux utiliser le mot \"admirer\" dans une phrase."
-  },
-  {
-    "word": "affection",
-    "definition": "Sentiment d'amitié ou d'amour.",
-    "niveau": 2,
-    "example": "\"affection\" est un mot intéressant."
-  },
-  {
-    "word": "agréable",
-    "definition": "Qui plaît, qui est sympathique.",
-    "niveau": 2,
-    "example": "Le mot \"agréable\" est utile dans la vie quotidienne."
-  },
-  {
-    "word": "ambition",
-    "definition": "Désir de réussir, de parvenir à quelque chose.",
-    "niveau": 3,
-    "example": "Je peux utiliser le mot \"ambition\" dans une phrase."
-  },
-  {
-    "word": "amitié",
-    "definition": "Sentiment d'affection entre des personnes.",
-    "niveau": 2,
-    "example": "\"amitié\" est un mot intéressant."
-  },
-  {
-    "word": "analyser",
-    "definition": "Examiner en détail pour comprendre.",
-    "niveau": 3,
-    "example": "Je connais le mot \"analyser\"."
-  },
-  {
-    "word": "ancien",
-    "definition": "Qui existe depuis longtemps.",
-    "niveau": 2,
-    "example": "Je connais le mot \"ancien\"."
-  },
-  {
-    "word": "apprécier",
-    "definition": "Reconnaître la valeur de quelque chose.",
-    "niveau": 3,
-    "example": "J'ai appris le mot \"apprécier\" aujourd'hui."
-  },
-  {
-    "word": "arbre",
-    "definition": "Plante avec un tronc et des branches.",
-    "niveau": 1,
-    "example": "L'arbre donne de l'ombre."
-  },
-  {
-    "word": "artiste",
-    "definition": "Personne qui crée des œuvres d'art.",
-    "niveau": 2,
-    "example": "Je me souviens du mot \"artiste\"."
-  },
-  {
-    "word": "attentif",
-    "definition": "Qui fait attention, qui écoute bien.",
-    "niveau": 2,
-    "example": "Le mot \"attentif\" est utile dans la vie quotidienne."
-  },
-  {
-    "word": "aventure",
-    "definition": "Expérience excitante et inhabituelle.",
-    "niveau": 2,
-    "example": "Je me souviens du mot \"aventure\"."
-  },
-  {
-    "word": "bénéfice",
-    "definition": "Avantage ou profit que l'on retire.",
-    "niveau": 3,
-    "example": "\"bénéfice\" est un mot que j'aime bien."
-  },
-  {
-    "word": "brave",
-    "definition": "Qui a du courage, qui est courageux.",
-    "niveau": 2,
-    "example": "Je peux utiliser le mot \"brave\" dans une phrase."
-  },
-  {
-    "word": "célébrer",
-    "definition": "Fêter un événement important.",
-    "niveau": 2,
-    "example": "J'ai appris le mot \"célébrer\" aujourd'hui."
-  },
-  {
-    "word": "chaleureux",
-    "definition": "Qui montre de la sympathie et de l'affection.",
-    "niveau": 3,
-    "example": "Le mot \"chaleureux\" a une belle signification."
-  },
-  {
-    "word": "changement",
-    "definition": "Passage d'un état à un autre.",
-    "niveau": 2,
-    "example": "Je peux utiliser le mot \"changement\" dans une phrase."
-  },
-  {
-    "word": "chef-d'œuvre",
-    "definition": "Œuvre d'art exceptionnelle.",
-    "niveau": 3,
-    "example": "\"chef-d'œuvre\" est un mot intéressant."
-  },
-  {
-    "word": "choisir",
-    "definition": "Prendre une décision entre plusieurs possibilités.",
-    "niveau": 2,
-    "example": "Le mot \"choisir\" est important à connaître."
-  },
-  {
-    "word": "collaborer",
-    "definition": "Travailler ensemble à une même tâche.",
-    "niveau": 3,
-    "example": "J'utilise souvent le mot \"collaborer\"."
-  },
-  {
-    "word": "comprendre",
-    "definition": "Saisir le sens de quelque chose.",
-    "niveau": 2,
-    "example": "\"comprendre\" est un mot intéressant."
-  },
-  {
-    "word": "confiance",
-    "definition": "Sentiment de sécurité et de foi en quelqu'un.",
-    "niveau": 3,
-    "example": "\"confiance\" est un mot que j'aime bien."
-  },
-  {
-    "word": "conseil",
-    "definition": "Avis donné pour aider à décider.",
-    "niveau": 2,
-    "example": "Le mot \"conseil\" est important à connaître."
-  },
-  {
-    "word": "courage",
-    "definition": "Force morale face au danger ou à la difficulté.",
-    "niveau": 2,
-    "example": "J'ai appris le mot \"courage\" aujourd'hui."
-  },
-  {
-    "word": "créatif",
-    "definition": "Qui a de l'imagination, qui invente.",
-    "niveau": 3,
-    "example": "J'ai appris le mot \"créatif\" aujourd'hui."
-  },
-  {
-    "word": "curiosité",
-    "definition": "Désir de connaître, d'apprendre.",
-    "niveau": 2,
-    "example": "J'ai appris le mot \"curiosité\" aujourd'hui."
-  },
-  {
-    "word": "découvrir",
-    "definition": "Trouver quelque chose de nouveau.",
-    "niveau": 2,
-    "example": "J'ai appris le mot \"découvrir\" aujourd'hui."
-  },
-  {
-    "word": "défendre",
-    "definition": "Protéger contre une attaque.",
-    "niveau": 2,
-    "example": "\"défendre\" est un mot intéressant."
-  },
-  {
-    "word": "délicat",
-    "definition": "Qui demande de la prudence et du soin.",
-    "niveau": 3,
-    "example": "Le mot \"délicat\" a une belle signification."
-  },
-  {
-    "word": "développer",
-    "definition": "Faire grandir, faire progresser.",
-    "niveau": 3,
-    "example": "Je connais le mot \"développer\"."
-  },
-  {
-    "word": "difficile",
-    "definition": "Qui demande beaucoup d'effort.",
-    "niveau": 2,
-    "example": "Je connais le mot \"difficile\"."
-  },
-  {
-    "word": "diligent",
-    "definition": "Qui travaille avec application et soin.",
-    "niveau": 3,
-    "example": "Je me souviens du mot \"diligent\"."
-  },
-  {
-    "word": "discuter",
-    "definition": "Échanger des idées, parler de quelque chose.",
-    "niveau": 2,
-    "example": "Je connais le mot \"discuter\"."
-  },
-  {
-    "word": "doute",
-    "definition": "Incertitude, manque de conviction.",
-    "niveau": 3,
-    "example": "Je peux utiliser le mot \"doute\" dans une phrase."
-  },
-  {
-    "word": "échange",
-    "definition": "Action de donner et recevoir en retour.",
-    "niveau": 2,
-    "example": "\"échange\" est un mot que j'aime bien."
-  },
-  {
-    "word": "effort",
-    "definition": "Application de forces physiques ou mentales.",
-    "niveau": 2,
-    "example": "\"effort\" est un mot intéressant."
-  },
-  {
-    "word": "élégant",
-    "definition": "Qui a de la grâce, du style.",
-    "niveau": 3,
-    "example": "Je peux utiliser le mot \"élégant\" dans une phrase."
-  },
-  {
-    "word": "émotion",
-    "definition": "Réaction affective intense.",
-    "niveau": 3,
-    "example": "J'utilise souvent le mot \"émotion\"."
-  },
-  {
-    "word": "encourager",
-    "definition": "Donner du courage, soutenir.",
-    "niveau": 2,
-    "example": "Le mot \"encourager\" est important à connaître."
-  },
-  {
-    "word": "énergie",
-    "definition": "Force, capacité à agir.",
-    "niveau": 2,
-    "example": "Le mot \"énergie\" est important à connaître."
-  },
-  {
-    "word": "enthousiasme",
-    "definition": "Grande joie, passion pour quelque chose.",
-    "niveau": 3,
-    "example": "Le mot \"enthousiasme\" est utile dans la vie quotidienne."
-  },
-  {
-    "word": "équilibre",
-    "definition": "État stable, harmonie entre les éléments.",
-    "niveau": 3,
-    "example": "J'utilise souvent le mot \"équilibre\"."
-  },
-  {
-    "word": "espoir",
-    "definition": "Sentiment qui fait attendre quelque chose de bon.",
-    "niveau": 2,
-    "example": "Je connais le mot \"espoir\"."
-  },
-  {
-    "word": "estimer",
-    "definition": "Avoir une bonne opinion de quelqu'un.",
-    "niveau": 3,
-    "example": "Je me souviens du mot \"estimer\"."
-  },
-  {
-    "word": "étonnant",
-    "definition": "Qui surprend, qui est remarquable.",
-    "niveau": 2,
-    "example": "Je peux utiliser le mot \"étonnant\" dans une phrase."
-  },
-  {
-    "word": "examiner",
-    "definition": "Regarder avec attention pour étudier.",
-    "niveau": 3,
-    "example": "Le mot \"examiner\" est utile dans la vie quotidienne."
-  },
-  {
-    "word": "expérience",
-    "definition": "Connaissance acquise par la pratique.",
-    "niveau": 3,
-    "example": "J'ai appris le mot \"expérience\" aujourd'hui."
-  },
-  {
-    "word": "expliquer",
-    "definition": "Rendre clair, faire comprendre.",
-    "niveau": 2,
-    "example": "Le mot \"expliquer\" est utile dans la vie quotidienne."
-  },
-  {
-    "word": "explorer",
-    "definition": "Découvrir un lieu inconnu.",
-    "niveau": 2,
-    "example": "J'ai appris le mot \"explorer\" aujourd'hui."
-  },
-  {
-    "word": "fidèle",
-    "definition": "Qui reste loyal, qui ne trahit pas.",
-    "niveau": 3,
-    "example": "J'ai appris le mot \"fidèle\" aujourd'hui."
-  },
-  {
-    "word": "fier",
-    "definition": "Qui a de l'amour-propre, de la dignité.",
-    "niveau": 2,
-    "example": "Je peux utiliser le mot \"fier\" dans une phrase."
-  },
-  {
-    "word": "fragile",
-    "definition": "Qui se casse facilement, délicat.",
-    "niveau": 2,
-    "example": "Le mot \"fragile\" est utile dans la vie quotidienne."
-  },
-  {
-    "word": "généreux",
-    "definition": "Qui donne volontiers, sans compter.",
-    "niveau": 3,
-    "example": "Je me souviens du mot \"généreux\"."
-  },
-  {
-    "word": "génial",
-    "definition": "Exceptionnel, remarquable.",
-    "niveau": 2,
-    "example": "\"génial\" est un mot intéressant."
-  },
-  {
-    "word": "gentillesse",
-    "definition": "Qualité d'une personne aimable et attentionnée.",
-    "niveau": 2,
-    "example": "\"gentillesse\" est un mot que j'aime bien."
-  },
-  {
-    "word": "habileté",
-    "definition": "Adresse, compétence dans un domaine.",
-    "niveau": 3,
-    "example": "Le mot \"habileté\" est important à connaître."
-  },
-  {
-    "word": "harmonie",
-    "definition": "Accord, équilibre entre les éléments.",
-    "niveau": 3,
-    "example": "Le mot \"harmonie\" est important à connaître."
-  },
-  {
-    "word": "honnête",
-    "definition": "Qui dit la vérité, qui est juste.",
-    "niveau": 2,
-    "example": "J'utilise souvent le mot \"honnête\"."
-  },
-  {
-    "word": "imagination",
-    "definition": "Faculté de créer des images mentales.",
-    "niveau": 2,
-    "example": "J'ai appris le mot \"imagination\" aujourd'hui."
-  },
-  {
-    "word": "important",
-    "definition": "Qui a de la valeur, qui compte beaucoup.",
-    "niveau": 2,
-    "example": "Je connais le mot \"important\"."
-  },
-  {
-    "word": "ingénieux",
-    "definition": "Qui a de l'inventivité, de l'intelligence pratique.",
-    "niveau": 3,
-    "example": "Je me souviens du mot \"ingénieux\"."
-  },
-  {
-    "word": "intelligent",
-    "definition": "Qui comprend vite, qui a de l'esprit.",
-    "niveau": 2,
-    "example": "J'utilise souvent le mot \"intelligent\"."
-  },
-  {
-    "word": "intéressant",
-    "definition": "Qui attire l'attention, qui est captivant.",
-    "niveau": 2,
-    "example": "\"intéressant\" est un mot que j'aime bien."
-  },
-  {
-    "word": "joli",
-    "definition": "Agréable à regarder, charmant.",
-    "niveau": 1,
-    "example": "\"joli\" est un mot intéressant."
-  },
-  {
-    "word": "joyeux",
-    "definition": "Qui exprime de la joie, gai.",
-    "niveau": 2,
-    "example": "J'utilise souvent le mot \"joyeux\"."
-  },
-  {
-    "word": "juste",
-    "definition": "Qui respecte l'équité, la justice.",
-    "niveau": 2,
-    "example": "Je me souviens du mot \"juste\"."
-  },
-  {
-    "word": "liberté",
-    "definition": "Possibilité d'agir sans contrainte.",
-    "niveau": 3,
-    "example": "\"liberté\" est un mot intéressant."
-  },
-  {
-    "word": "logique",
-    "definition": "Qui suit un raisonnement cohérent.",
-    "niveau": 3,
-    "example": "\"logique\" est un mot intéressant."
-  },
-  {
-    "word": "loyal",
-    "definition": "Fidèle, qui respecte ses engagements.",
-    "niveau": 3,
-    "example": "\"loyal\" est un mot intéressant."
-  },
-  {
-    "word": "magnifique",
-    "definition": "Très beau, splendide.",
-    "niveau": 2,
-    "example": "Je connais le mot \"magnifique\"."
-  },
-  {
-    "word": "mémoire",
-    "definition": "Faculté de se souvenir.",
-    "niveau": 2,
-    "example": "J'ai appris le mot \"mémoire\" aujourd'hui."
-  },
-  {
-    "word": "modeste",
-    "definition": "Qui ne se vante pas, simple.",
-    "niveau": 3,
-    "example": "Je connais le mot \"modeste\"."
-  },
-  {
-    "word": "mystère",
-    "definition": "Chose cachée, difficile à comprendre.",
-    "niveau": 2,
-    "example": "J'ai appris le mot \"mystère\" aujourd'hui."
-  },
-  {
-    "word": "naturel",
-    "definition": "Qui existe sans intervention humaine.",
-    "niveau": 2,
-    "example": "Je peux utiliser le mot \"naturel\" dans une phrase."
-  },
-  {
-    "word": "nécessaire",
-    "definition": "Dont on a besoin, indispensable.",
-    "niveau": 2,
-    "example": "Je peux utiliser le mot \"nécessaire\" dans une phrase."
-  },
-  {
-    "word": "obéissant",
-    "definition": "Qui suit les ordres, les règles.",
-    "niveau": 2,
-    "example": "Le mot \"obéissant\" a une belle signification."
-  },
-  {
-    "word": "observateur",
-    "definition": "Qui regarde avec attention.",
-    "niveau": 3,
-    "example": "Je me souviens du mot \"observateur\"."
-  },
-  {
-    "word": "obstacle",
-    "definition": "Difficulté qui empêche d'avancer.",
-    "niveau": 2,
-    "example": "Je connais le mot \"obstacle\"."
-  },
-  {
-    "word": "organiser",
-    "definition": "Mettre en ordre, préparer.",
-    "niveau": 2,
-    "example": "Le mot \"organiser\" est important à connaître."
-  },
-  {
-    "word": "original",
-    "definition": "Qui est nouveau, différent.",
-    "niveau": 3,
-    "example": "Le mot \"original\" est important à connaître."
-  },
-  {
-    "word": "pacifique",
-    "definition": "Qui aime la paix, non violent.",
-    "niveau": 3,
-    "example": "Le mot \"pacifique\" est important à connaître."
-  },
-  {
-    "word": "patience",
-    "definition": "Capacité à attendre sans s'énerver.",
-    "niveau": 2,
-    "example": "Le mot \"patience\" est important à connaître."
-  },
-  {
-    "word": "pensée",
-    "definition": "Activité de l'esprit, réflexion.",
-    "niveau": 2,
-    "example": "J'utilise souvent le mot \"pensée\"."
-  },
-  {
-    "word": "persévérant",
-    "definition": "Qui continue malgré les difficultés.",
-    "niveau": 3,
-    "example": "\"persévérant\" est un mot intéressant."
-  },
-  {
-    "word": "perspicace",
-    "definition": "Qui comprend vite et profondément.",
-    "niveau": 3,
-    "example": "\"perspicace\" est un mot que j'aime bien."
-  },
-  {
-    "word": "précis",
-    "definition": "Exact, clair et détaillé.",
-    "niveau": 2,
-    "example": "Je me souviens du mot \"précis\"."
-  },
-  {
-    "word": "préparer",
-    "definition": "Mettre en état, faire les préparatifs.",
-    "niveau": 2,
-    "example": "Le mot \"préparer\" a une belle signification."
-  },
-  {
-    "word": "prudence",
-    "definition": "Attention pour éviter les dangers.",
-    "niveau": 2,
-    "example": "Le mot \"prudence\" est utile dans la vie quotidienne."
-  },
-  {
-    "word": "qualité",
-    "definition": "Caractéristique positive d'une personne ou chose.",
-    "niveau": 2,
-    "example": "Je me souviens du mot \"qualité\"."
-  },
-  {
-    "word": "raison",
-    "definition": "Faculté de penser, de comprendre.",
-    "niveau": 3,
-    "example": "J'utilise souvent le mot \"raison\"."
-  },
-  {
-    "word": "réfléchir",
-    "definition": "Penser profondément à quelque chose.",
-    "niveau": 2,
-    "example": "Le mot \"réfléchir\" est important à connaître."
-  },
-  {
-    "word": "respect",
-    "definition": "Considération envers quelqu'un ou quelque chose.",
-    "niveau": 2,
-    "example": "Je connais le mot \"respect\"."
-  },
-  {
-    "word": "responsable",
-    "definition": "Qui doit répondre de ses actes.",
-    "niveau": 3,
-    "example": "Le mot \"responsable\" est utile dans la vie quotidienne."
-  },
-  {
-    "word": "sagesse",
-    "definition": "Connaissance et jugement acquis par l'expérience.",
-    "niveau": 3,
-    "example": "Je connais le mot \"sagesse\"."
-  },
-  {
-    "word": "sérieux",
-    "definition": "Qui fait les choses avec application.",
-    "niveau": 2,
-    "example": "Le mot \"sérieux\" est important à connaître."
-  },
-  {
-    "word": "sincère",
-    "definition": "Qui dit ce qu'il pense vraiment.",
-    "niveau": 2,
-    "example": "\"sincère\" est un mot que j'aime bien."
-  },
-  {
-    "word": "solide",
-    "definition": "Qui résiste, qui est fort.",
-    "niveau": 2,
-    "example": "Le mot \"solide\" est important à connaître."
-  },
-  {
-    "word": "souvenir",
-    "definition": "Chose dont on se rappelle.",
-    "niveau": 2,
-    "example": "Le mot \"souvenir\" est utile dans la vie quotidienne."
-  },
-  {
-    "word": "talent",
-    "definition": "Aptitude naturelle pour quelque chose.",
-    "niveau": 3,
-    "example": "Le mot \"talent\" est important à connaître."
-  },
-  {
-    "word": "tolérant",
-    "definition": "Qui accepte les différences des autres.",
-    "niveau": 3,
-    "example": "\"tolérant\" est un mot intéressant."
-  },
-  {
-    "word": "travail",
-    "definition": "Activité qui demande des efforts.",
-    "niveau": 2,
-    "example": "Le mot \"travail\" a une belle signification."
-  },
-  {
-    "word": "unique",
-    "definition": "Qui est seul de son espèce.",
-    "niveau": 2,
-    "example": "Je peux utiliser le mot \"unique\" dans une phrase."
-  },
-  {
-    "word": "utile",
-    "definition": "Qui sert à quelque chose, pratique.",
-    "niveau": 2,
-    "example": "Je connais le mot \"utile\"."
-  },
-  {
-    "word": "valoir",
-    "definition": "Avoir une certaine valeur.",
-    "niveau": 2,
-    "example": "Le mot \"valoir\" a une belle signification."
-  },
-  {
-    "word": "variété",
-    "definition": "Diversité, plusieurs sortes différentes.",
-    "niveau": 2,
-    "example": "\"variété\" est un mot intéressant."
-  },
-  {
-    "word": "vérité",
-    "definition": "Ce qui est vrai, réel.",
-    "niveau": 2,
-    "example": "J'ai appris le mot \"vérité\" aujourd'hui."
-  },
-  {
-    "word": "vif",
-    "definition": "Rapide, énergique.",
-    "niveau": 2,
-    "example": "Je connais le mot \"vif\"."
-  },
-  {
-    "word": "vivant",
-    "definition": "Qui a la vie, qui est en vie.",
-    "niveau": 1,
-    "example": "Le mot \"vivant\" est important à connaître."
-  },
-  {
-    "word": "volontaire",
-    "definition": "Qui agit par sa propre volonté.",
-    "niveau": 3,
-    "example": "\"volontaire\" est un mot que j'aime bien."
-  },
-  {
-    "word": "vouloir",
-    "definition": "Avoir l'intention, le désir de faire.",
-    "niveau": 2,
-    "example": "Le mot \"vouloir\" a une belle signification."
-  },
-  {
-    "word": "zèle",
-    "definition": "Ardeur, enthousiasme dans le travail.",
-    "niveau": 3,
-    "example": "Le mot \"zèle\" est utile dans la vie quotidienne."
-  },
-  {
-    "word": "mille",
-    "definition": "Nombre égal à dix centaines (1 000).",
-    "example": "Je peux utiliser le mot \"mille\" dans une phrase.",
-    "niveau": 2
-  },
-  {
-    "word": "forêt",
-    "definition": "Grand espace couvert d'arbres.",
-    "example": "Nous avons fait une promenade dans la forêt.",
-    "niveau": 2
-  },
-  {
-    "word": "batterie",
-    "definition": "Appareil qui produit de l'électricité.",
-    "example": "La batterie de mon téléphone est vide.",
-    "niveau": 2
-  },
-  {
-    "word": "Continent",
-    "definition": "acquisition de connaissances",
-    "example": "Le mot \"Continent\" est important à connaître.",
-    "niveau": 2
-  },
-  {
-    "word": "salle de bain",
-    "definition": "Pièce où on se lave.",
-    "example": "Je me lave dans la salle de bain.",
-    "niveau": 2
-  },
-  {
-    "word": "poste",
-    "definition": "Emploi, travail ou bureau de poste.",
-    "example": "Mon père va à son poste de travail.",
-    "niveau": 2
-  },
-  {
-    "word": "patinoire",
-    "definition": "Lieu où on peut patiner sur la glace.",
-    "example": "Nous allons à la patinoire en hiver.",
-    "niveau": 2
-  },
-  {
-    "word": "imprimante",
-    "definition": "Machine qui imprime des documents.",
-    "example": "L'imprimante imprime mes documents.",
-    "niveau": 2
-  },
-  {
-    "word": "Bienveillance",
-    "definition": "acquisition de connaissances",
-    "example": "Je peux utiliser le mot \"Bienveillance\" dans une phrase.",
-    "niveau": 3
-  },
-  {
-    "word": "faible",
-    "definition": "Qui n'a pas de force.",
-    "example": "Je me sens faible quand je suis malade.",
-    "niveau": 2
-  },
-  {
-    "word": "cent",
-    "definition": "Nombre égal à dix dizaines (100).",
-    "example": "\"cent\" est un mot que j'aime bien.",
-    "niveau": 2
-  },
-  {
-    "word": "Globalisation",
-    "definition": "acquisition de connaissances",
-    "example": "Le mot \"Globalisation\" a une belle signification.",
-    "niveau": 2
-  },
-  {
-    "word": "mille",
-    "definition": "Nombre égal à dix centaines (1 000).",
-    "example": "Je peux utiliser le mot \"mille\" dans une phrase.",
-    "niveau": 2
-  },
-  {
-    "word": "découverte",
-    "definition": "trouver quelque chose de nouveau",
-    "example": "Le mot \"découverte\" a une belle signification.",
-    "niveau": 2
-  },
-  {
-    "word": "cent",
-    "definition": "Nombre égal à dix dizaines (100).",
-    "example": "\"cent\" est un mot que j'aime bien.",
-    "niveau": 2
-  },
-  {
-    "word": "fraternité",
-    "definition": "sentiment d'affection profond",
-    "example": "J'ai appris le mot \"fraternité\" aujourd'hui.",
-    "niveau": 3
-  },
-  {
-    "word": "boucherie",
-    "definition": "Magasin où l'on vend de la viande.",
-    "example": "Le mot \"boucherie\" est important à connaître.",
-    "niveau": 2
-  },
-  {
-    "word": "botte",
-    "definition": "Chaussure haute qui couvre la jambe.",
-    "example": "Je porte des bottes quand il pleut.",
-    "niveau": 2
-  },
-  {
-    "word": "email",
-    "definition": "Message électronique envoyé par internet.",
-    "example": "J'envoie un email à mon ami.",
-    "niveau": 2
-  },
-  {
-    "word": "océan",
-    "definition": "Vaste étendue d'eau salée.",
-    "example": "L'océan est très grand et profond.",
-    "niveau": 2
-  },
-  {
-    "word": "plaine",
-    "definition": "Grande étendue de terrain plat.",
-    "example": "La plaine est plate et sans montagnes.",
-    "niveau": 2
-  },
-  {
-    "word": "sculpture",
-    "definition": "Œuvre d'art en trois dimensions.",
-    "example": "Cette sculpture est très belle.",
-    "niveau": 3
-  },
-  {
-    "word": "million",
-    "definition": "Nombre égal à mille milliers (1 000 000).",
-    "example": "Le mot \"million\" est important à connaître.",
-    "niveau": 3
-  },
-  {
-    "word": "bibliothèque",
-    "definition": "ensemble de pages avec du texte",
-    "example": "J'utilise souvent le mot \"bibliothèque\".",
-    "niveau": 2
-  },
-  {
-    "word": "mille",
-    "definition": "Nombre égal à dix centaines (1 000).",
-    "example": "Je peux utiliser le mot \"mille\" dans une phrase.",
-    "niveau": 2
-  },
-  {
-    "word": "musicien",
-    "definition": "art des sons organisés",
-    "example": "\"musicien\" est un mot que j'aime bien.",
-    "niveau": 2
-  },
-  {
-    "word": "Sincérité",
-    "definition": "acquisition de connaissances",
-    "example": "\"Sincérité\" est un mot intéressant.",
-    "niveau": 2
-  },
-  {
-    "word": "million",
-    "definition": "Nombre égal à mille milliers (1 000 000).",
-    "example": "Le mot \"million\" est important à connaître.",
-    "niveau": 3
-  },
-  {
-    "word": "mille",
-    "definition": "Nombre égal à dix centaines (1 000).",
-    "example": "Je peux utiliser le mot \"mille\" dans une phrase.",
-    "niveau": 2
-  },
-  {
-    "word": "Architecture",
-    "definition": "acquisition de connaissances",
-    "example": "Le mot \"Architecture\" est utile dans la vie quotidienne.",
-    "niveau": 2
-  },
-  {
-    "word": "entreprise",
-    "definition": "Organisation qui produit des biens ou services.",
-    "example": "Mon père travaille dans une entreprise.",
-    "niveau": 3
-  },
-  {
-    "word": "ours",
-    "definition": "Grand animal sauvage à fourrure épaisse.",
-    "example": "L'ours est un grand animal sauvage.",
-    "niveau": 2
-  },
-  {
-    "word": "journaliste",
-    "definition": "Personne qui écrit pour les journaux.",
-    "example": "Le journaliste écrit un article.",
-    "niveau": 3
-  },
-  {
-    "word": "milliard",
-    "definition": "Un milliard est égal à mille millions (1 000 000 000).",
-    "example": "Je peux utiliser le mot \"milliard\" dans une phrase.",
-    "niveau": 3
-  },
-  {
-    "word": "sandale",
-    "definition": "Chaussure ouverte pour l'été.",
-    "example": "Je porte des sandales en été.",
-    "niveau": 2
-  },
-  {
-    "word": "amour",
-    "definition": "sentiment d'affection profond",
-    "example": "\"amour\" est un mot intéressant.",
-    "niveau": 2
-  },
-  {
-    "word": "laboratoire",
-    "definition": "tester une hypothèse",
-    "example": "\"laboratoire\" est un mot que j'aime bien.",
-    "niveau": 2
-  },
-  {
-    "word": "milliard",
-    "definition": "Un milliard est égal à mille millions (1 000 000 000).",
-    "example": "Je peux utiliser le mot \"milliard\" dans une phrase.",
-    "niveau": 3
-  },
-  {
-    "word": "Analyse",
-    "definition": "acquisition de connaissances",
-    "example": "Je connais le mot \"Analyse\".",
-    "niveau": 2
-  },
-  {
-    "word": "victoire",
-    "definition": "gagner",
-    "example": "Je connais le mot \"victoire\".",
-    "niveau": 2
-  },
-  {
-    "word": "Renaissance",
-    "definition": "acquisition de connaissances",
-    "example": "J'ai appris le mot \"Renaissance\" aujourd'hui.",
-    "niveau": 2
-  },
-  {
-    "word": "joie",
-    "definition": "sentiment de joie",
-    "example": "Le mot \"joie\" est important à connaître.",
-    "niveau": 2
-  },
-  {
-    "word": "objectif",
-    "definition": "But que l'on veut atteindre.",
-    "example": "Mon objectif est de réussir à l'école.",
-    "niveau": 2
-  },
-  {
-    "word": "veste",
-    "definition": "Vêtement qui couvre le haut du corps.",
-    "example": "Je mets une veste quand il fait froid.",
-    "niveau": 2
-  },
-  {
-    "word": "Argumentation",
-    "definition": "acquisition de connaissances",
-    "example": "Le mot \"Argumentation\" est important à connaître.",
-    "niveau": 2
-  },
-  {
-    "word": "Symétrie",
-    "definition": "acquisition de connaissances",
-    "example": "Je peux utiliser le mot \"Symétrie\" dans une phrase.",
-    "niveau": 2
-  },
-  {
-    "word": "bière",
-    "definition": "Boisson alcoolisée à base d'orge.",
-    "example": "Les adultes boivent parfois de la bière.",
-    "niveau": 3
-  },
-  {
-    "word": "ensoleillé",
-    "definition": "Quand il y a beaucoup de soleil.",
-    "example": "Aujourd'hui, il fait ensoleillé.",
-    "niveau": 2
-  },
-  {
-    "word": "équipe",
-    "definition": "Définition du mot \"équipe\".",
-    "example": "Le mot \"équipe\" a une belle signification.",
-    "niveau": 2
-  },
-  {
-    "word": "violet",
-    "definition": "Couleur des violettes.",
-    "example": "Le mot \"violet\" est important à connaître.",
-    "niveau": 2
-  },
-  {
-    "word": "milliard",
-    "definition": "Un milliard est égal à mille millions (1 000 000 000).",
-    "example": "Je peux utiliser le mot \"milliard\" dans une phrase.",
-    "niveau": 3
-  },
-  {
-    "word": "ruisseau",
-    "definition": "Définition du mot \"ruisseau\".",
-    "example": "Je me souviens du mot \"ruisseau\".",
-    "niveau": 2
-  },
-  {
-    "word": "ceinture",
-    "definition": "Définition du mot \"ceinture\".",
-    "example": "\"ceinture\" est un mot que j'aime bien.",
-    "niveau": 2
-  },
-  {
-    "word": "majorité",
-    "definition": "Définition du mot \"majorité\".",
-    "example": "\"majorité\" est un mot intéressant.",
-    "niveau": 3
-  },
-  {
-    "word": "cent",
-    "definition": "Nombre égal à dix dizaines (100).",
-    "example": "\"cent\" est un mot que j'aime bien.",
-    "niveau": 2
-  },
-  {
-    "word": "grenouille",
-    "definition": "Définition du mot \"grenouille\".",
-    "example": "Le mot \"grenouille\" est important à connaître.",
-    "niveau": 2
-  },
-  {
-    "word": "biologie",
-    "definition": "Définition du mot \"biologie\".",
-    "example": "Le mot \"biologie\" est important à connaître.",
-    "niveau": 3
-  },
-  {
-    "word": "diplôme",
-    "definition": "Définition du mot \"diplôme\".",
-    "example": "J'ai appris le mot \"diplôme\" aujourd'hui.",
-    "niveau": 2
-  },
-  {
-    "word": "cent",
-    "definition": "Nombre égal à dix dizaines (100).",
-    "example": "\"cent\" est un mot que j'aime bien.",
-    "niveau": 2
-  },
-  {
-    "word": "source",
-    "definition": "liquide transparent essentiel à la vie",
-    "example": "Le mot \"source\" est important à connaître.",
-    "niveau": 2
-  },
-  {
-    "word": "milliard",
-    "definition": "Un milliard est égal à mille millions (1 000 000 000).",
-    "example": "Je peux utiliser le mot \"milliard\" dans une phrase.",
-    "niveau": 3
-  },
-  {
-    "word": "million",
-    "definition": "Nombre égal à mille milliers (1 000 000).",
-    "example": "Le mot \"million\" est important à connaître.",
-    "niveau": 3
-  },
-  {
-    "word": "étang",
-    "definition": "Définition du mot \"étang\".",
-    "example": "Je connais le mot \"étang\".",
-    "niveau": 2
-  },
-  {
-    "word": "mille",
-    "definition": "Nombre égal à dix centaines (1 000).",
-    "example": "Je peux utiliser le mot \"mille\" dans une phrase.",
-    "niveau": 2
-  },
-  {
-    "word": "mode",
-    "definition": "Définition du mot \"mode\".",
-    "example": "Le mot \"mode\" a une belle signification.",
-    "niveau": 2
-  },
-  {
-    "word": "court",
-    "definition": "Qui a une petite longueur.",
-    "example": "Je me souviens du mot \"court\".",
-    "niveau": 2
-  },
-  {
-    "word": "cent",
-    "definition": "Nombre égal à dix dizaines (100).",
-    "example": "\"cent\" est un mot que j'aime bien.",
-    "niveau": 2
-  },
-  {
-    "word": "cent",
-    "definition": "Nombre égal à dix dizaines (100).",
-    "example": "\"cent\" est un mot que j'aime bien.",
-    "niveau": 2
-  },
-  {
-    "word": "pharmacie",
-    "definition": "Définition du mot \"pharmacie\".",
-    "example": "Je connais le mot \"pharmacie\".",
-    "niveau": 2
-  },
-  {
-    "word": "site web",
-    "definition": "être debout",
-    "example": "Je connais le mot \"site web\".",
-    "niveau": 2
-  },
-  {
-    "word": "cent",
-    "definition": "Nombre égal à dix dizaines (100).",
-    "example": "\"cent\" est un mot que j'aime bien.",
-    "niveau": 2
-  },
-  {
-    "word": "Préservation",
-    "definition": "acquisition de connaissances",
-    "example": "Le mot \"Préservation\" est important à connaître.",
-    "niveau": 2
-  },
-  {
-    "word": "examen",
-    "definition": "Définition du mot \"examen\".",
-    "example": "J'ai appris le mot \"examen\" aujourd'hui.",
-    "niveau": 2
-  },
-  {
-    "word": "Conservation",
-    "definition": "acquisition de connaissances",
-    "example": "\"Conservation\" est un mot intéressant.",
-    "niveau": 2
-  },
-  {
-    "word": "Paradoxe",
-    "definition": "acquisition de connaissances",
-    "example": "\"Paradoxe\" est un mot intéressant.",
-    "niveau": 2
-  },
-  {
-    "word": "loyauté",
-    "definition": "Définition du mot \"loyauté\".",
-    "example": "\"loyauté\" est un mot que j'aime bien.",
-    "niveau": 3
-  },
-  {
-    "word": "milliard",
-    "definition": "Un milliard est égal à mille millions (1 000 000 000).",
-    "example": "Je peux utiliser le mot \"milliard\" dans une phrase.",
-    "niveau": 3
-  },
-  {
-    "word": "étranger",
-    "definition": "Définition du mot \"étranger\".",
-    "example": "\"étranger\" est un mot intéressant.",
-    "niveau": 2
-  },
-  {
-    "word": "langue",
-    "definition": "Définition du mot \"langue\".",
-    "example": "\"langue\" est un mot que j'aime bien.",
-    "niveau": 2
-  },
-  {
-    "word": "athlétisme",
-    "definition": "Définition du mot \"athlétisme\".",
-    "example": "Je peux utiliser le mot \"athlétisme\" dans une phrase.",
-    "niveau": 3
-  },
-  {
-    "word": "éléphant",
-    "definition": "Définition du mot \"éléphant\".",
-    "example": "\"éléphant\" est un mot intéressant.",
-    "niveau": 2
-  },
-  {
-    "word": "natation",
-    "definition": "Définition du mot \"natation\".",
-    "example": "\"natation\" est un mot intéressant.",
-    "niveau": 2
-  },
-  {
-    "word": "réseau",
-    "definition": "Ensemble de choses connectées entre elles.",
-    "example": "Internet est un réseau d'ordinateurs.",
-    "niveau": 2
-  },
-  {
-    "word": "mille",
-    "definition": "Nombre égal à dix centaines (1 000).",
-    "example": "Je peux utiliser le mot \"mille\" dans une phrase.",
-    "niveau": 2
-  },
-  {
-    "word": "coussin",
-    "definition": "Définition du mot \"coussin\".",
-    "example": "J'ai appris le mot \"coussin\" aujourd'hui.",
-    "niveau": 2
-  },
-  {
-    "word": "mille",
-    "definition": "Nombre égal à dix centaines (1 000).",
-    "example": "Je peux utiliser le mot \"mille\" dans une phrase.",
-    "niveau": 2
-  },
-  {
-    "word": "mille",
-    "definition": "Nombre égal à dix centaines (1 000).",
-    "example": "Je peux utiliser le mot \"mille\" dans une phrase.",
-    "niveau": 2
-  },
-  {
-    "word": "lion",
-    "definition": "Définition du mot \"lion\".",
-    "example": "\"lion\" est un mot que j'aime bien.",
-    "niveau": 2
-  },
-  {
-    "word": "équitation",
-    "definition": "Définition du mot \"équitation\".",
-    "example": "Je connais le mot \"équitation\".",
-    "niveau": 3
-  },
-  {
-    "word": "Sédiment",
-    "definition": "acquisition de connaissances",
-    "example": "J'ai appris le mot \"Sédiment\" aujourd'hui.",
-    "niveau": 2
-  },
-  {
-    "word": "milliard",
-    "definition": "Un milliard est égal à mille millions (1 000 000 000).",
-    "example": "Je peux utiliser le mot \"milliard\" dans une phrase.",
-    "niveau": 3
-  },
-  {
-    "word": "manière",
-    "definition": "Définition du mot \"manière\".",
-    "example": "\"manière\" est un mot que j'aime bien.",
-    "niveau": 3
-  },
-  {
-    "word": "Vitesse",
-    "definition": "acquisition de connaissances",
-    "example": "Le mot \"Vitesse\" a une belle signification.",
-    "niveau": 2
-  },
-  {
-    "word": "saison",
-    "definition": "période de l'année",
-    "example": "Le mot \"saison\" est utile dans la vie quotidienne.",
-    "niveau": 2
-  },
-  {
-    "word": "milliard",
-    "definition": "Un milliard est égal à mille millions (1 000 000 000).",
-    "example": "Je peux utiliser le mot \"milliard\" dans une phrase.",
-    "niveau": 3
-  },
-  {
-    "word": "Frontière",
-    "definition": "acquisition de connaissances",
-    "example": "Je peux utiliser le mot \"Frontière\" dans une phrase.",
-    "niveau": 2
-  },
-  {
-    "word": "trente",
-    "definition": "Nombre égal à trois dizaines (30).",
-    "example": "Le mot \"trente\" a une belle signification.",
-    "niveau": 2
-  },
-  {
-    "word": "cochon",
-    "definition": "Définition du mot \"cochon\".",
-    "example": "Je connais le mot \"cochon\".",
-    "niveau": 2
-  },
-  {
-    "word": "pharmacie",
-    "definition": "Définition du mot \"pharmacie\".",
-    "example": "Je connais le mot \"pharmacie\".",
-    "niveau": 2
-  },
-  {
-    "word": "Prénom",
-    "definition": "acquisition de connaissances",
-    "example": "Le mot \"Prénom\" a une belle signification.",
-    "niveau": 2
-  },
-  {
-    "word": "Atmosphère",
-    "definition": "(已学习词汇 - niveau 3)",
-    "example": "单词 \"Atmosphère\" 已在之前的课程中学习。",
-    "niveau": 2
-  },
-  {
-    "word": "Honnêteté",
-    "definition": "Mot français: Honnêteté",
-    "example": "Exemple avec le mot \"Honnêteté\".",
-    "niveau": 2
-  },
-  {
-    "word": "cahier",
-    "definition": "练习本",
-    "example": "J'écris dans mon cahier.",
-    "niveau": 1
-  },
-  {
-    "word": "Table",
-    "definition": "(已学习词汇 - niveau 1)",
-    "example": "单词 \"Table\" 已在之前的课程中学习。",
-    "niveau": 2
-  },
-  {
-    "word": "Astronomie",
-    "definition": "Mot français: Astronomie",
-    "example": "Exemple avec le mot \"Astronomie\".",
-    "niveau": 2
-  },
-  {
-    "word": "émerveillement",
-    "definition": "(已学习词汇 - niveau 4)",
-    "example": "单词 \"émerveillement\" 已在之前的课程中学习。",
-    "niveau": 3
-  },
-  {
-    "word": "Perspective",
-    "definition": "(已学习词汇 - niveau 3)",
-    "example": "单词 \"Perspective\" 已在之前的课程中学习。",
-    "niveau": 2
-  },
-  {
-    "word": "Harmonie",
-    "definition": "(已学习词汇 - niveau 2)",
-    "example": "单词 \"Harmonie\" 已在之前的课程中学习。",
-    "niveau": 2
-  },
-  {
-    "word": "Maison",
-    "definition": "Mot français: Maison",
-    "example": "Exemple avec le mot \"Maison\".",
-    "niveau": 2
-  },
-  {
-    "word": "Génétique",
-    "definition": "(已学习词汇 - niveau 0)",
-    "example": "单词 \"Génétique\" 已在之前的课程中学习。",
-    "niveau": 2
-  },
-  {
-    "word": "Préhistoire",
-    "definition": "(已学习词汇 - niveau 3)",
-    "example": "单词 \"Préhistoire\" 已在之前的课程中学习。",
-    "niveau": 2
-  },
-  {
-    "word": "Imagination",
-    "definition": "(已学习词汇 - niveau 4)",
-    "example": "单词 \"Imagination\" 已在之前的课程中学习。",
-    "niveau": 3
-  },
-  {
-    "word": "Pollinisation",
-    "definition": "(已学习词汇 - niveau 3)",
-    "example": "单词 \"Pollinisation\" 已在之前的课程中学习。",
-    "niveau": 2
-  },
-  {
-    "word": "Vertèbre",
-    "definition": "(已学习词汇 - niveau 3)",
-    "example": "单词 \"Vertèbre\" 已在之前的课程中学习。",
-    "niveau": 2
-  },
-  {
-    "word": "Pingouin",
-    "definition": "Mot français: Pingouin",
-    "example": "Exemple avec le mot \"Pingouin\".",
-    "niveau": 2
-  },
-  {
-    "word": "Indépendance",
-    "definition": "(已学习词汇 - niveau 0)",
-    "example": "单词 \"Indépendance\" 已在之前的课程中学习。",
-    "niveau": 2
-  },
-  {
-    "word": "Fraternité",
-    "definition": "Mot français: Fraternité",
-    "example": "Exemple avec le mot \"Fraternité\".",
-    "niveau": 2
-  },
-  {
-    "word": "cartable",
-    "definition": "书包",
-    "example": "Mon cartable est lourd !",
-    "niveau": 1
-  },
-  {
-    "word": "Chien",
-    "definition": "Mot français: Chien",
-    "example": "Exemple avec le mot \"Chien\".",
-    "niveau": 2
-  },
-  {
-    "word": "Biotechnologie",
-    "definition": "(已学习词汇 - niveau 1)",
-    "example": "单词 \"Biotechnologie\" 已在之前的课程中学习。",
-    "niveau": 2
-  },
-  {
-    "word": "Vidéo",
-    "definition": "Mot français: Vidéo",
-    "example": "Exemple avec le mot \"Vidéo\".",
-    "niveau": 2
-  },
-  {
-    "word": "Équilibre",
-    "definition": "(已学习词汇 - niveau 3)",
-    "example": "单词 \"Équilibre\" 已在之前的课程中学习。",
-    "niveau": 2
-  },
-  {
-    "word": "Insecte",
-    "definition": "(已学习词汇 - niveau 3)",
-    "example": "单词 \"Insecte\" 已在之前的课程中学习。",
-    "niveau": 2
-  },
-  {
-    "word": "Symphonie",
-    "definition": "(已学习词汇 - niveau 3)",
-    "example": "单词 \"Symphonie\" 已在之前的课程中学习。",
-    "niveau": 2
-  },
-  {
-    "word": "Créativité",
-    "definition": "(已学习词汇 - niveau 2)",
-    "example": "单词 \"Créativité\" 已在之前的课程中学习。",
-    "niveau": 2
-  },
-  {
-    "word": "Écosystème",
-    "definition": "(已学习词汇 - niveau 4)",
-    "example": "单词 \"Écosystème\" 已在之前的课程中学习。",
-    "niveau": 3
-  },
-  {
-    "word": "s'épanouir",
-    "definition": "(已学习词汇 - niveau 4)",
-    "example": "单词 \"s'épanouir\" 已在之前的课程中学习。",
-    "niveau": 3
-  },
-  {
-    "word": "Climax",
-    "definition": "(已学习词汇 - niveau 3)",
-    "example": "单词 \"Climax\" 已在之前的课程中学习。",
-    "niveau": 2
-  },
-  {
-    "word": "Condensation",
-    "definition": "(已学习词汇 - niveau 1)",
-    "example": "单词 \"Condensation\" 已在之前的课程中学习。",
-    "niveau": 2
-  },
-  {
-    "word": "Détermination",
-    "definition": "(已学习词汇 - niveau 3)",
-    "example": "单词 \"Détermination\" 已在之前的课程中学习。",
-    "niveau": 2
-  },
-  {
-    "word": "Volcan",
-    "definition": "(已学习词汇 - niveau 1)",
-    "example": "单词 \"Volcan\" 已在之前的课程中学习。",
-    "niveau": 2
-  },
-  {
-    "word": "Générosité",
-    "definition": "Mot français: Générosité",
-    "example": "Exemple avec le mot \"Générosité\".",
-    "niveau": 2
-  },
-  {
-    "word": "Portrait",
-    "definition": "(已学习词汇 - niveau 3)",
-    "example": "单词 \"Portrait\" 已在之前的课程中学习。",
-    "niveau": 2
-  },
-  {
-    "word": "imprévisible",
-    "definition": "(已学习词汇 - niveau 4)",
-    "example": "单词 \"imprévisible\" 已在之前的课程中学习。",
-    "niveau": 3
-  },
-  {
-    "word": "Microscope",
-    "definition": "(已学习词汇 - niveau 3)",
-    "example": "单词 \"Microscope\" 已在之前的课程中学习。",
-    "niveau": 2
-  },
-  {
-    "word": "Démocratie",
-    "definition": "Mot français: Démocratie",
-    "example": "Exemple avec le mot \"Démocratie\".",
-    "niveau": 2
-  },
-  {
-    "word": "Empathie",
-    "definition": "(已学习词汇 - niveau 1)",
-    "example": "单词 \"Empathie\" 已在之前的课程中学习。",
-    "niveau": 2
-  },
-  {
-    "word": "Protagoniste",
-    "definition": "(已学习词汇 - niveau 3)",
-    "example": "单词 \"Protagoniste\" 已在之前的课程中学习。",
-    "niveau": 2
-  },
-  {
-    "word": "Robot",
-    "definition": "Mot français: Robot",
-    "example": "Exemple avec le mot \"Robot\".",
-    "niveau": 2
-  },
-  {
-    "word": "Caméléon",
-    "definition": "(已学习词汇 - niveau 3)",
-    "example": "单词 \"Caméléon\" 已在之前的课程中学习。",
-    "niveau": 2
-  },
-  {
-    "word": "Hippopotame",
-    "definition": "(已学习词汇 - niveau 1)",
-    "example": "单词 \"Hippopotame\" 已在之前的课程中学习。",
-    "niveau": 2
-  },
-  {
-    "word": "Électricité",
-    "definition": "(已学习词汇 - niveau 3)",
-    "example": "单词 \"Électricité\" 已在之前的课程中学习。",
-    "niveau": 2
-  },
-  {
-    "word": "Persévérance",
-    "definition": "(已学习词汇 - niveau 3)",
-    "example": "单词 \"Persévérance\" 已在之前的课程中学习。",
-    "niveau": 2
-  },
-  {
-    "word": "Isolant",
-    "definition": "(已学习词汇 - niveau 3)",
-    "example": "单词 \"Isolant\" 已在之前的课程中学习。",
-    "niveau": 2
-  },
-  {
-    "word": "Chat",
-    "definition": "Mot français: Chat",
-    "example": "Exemple avec le mot \"Chat\".",
-    "niveau": 2
-  },
-  {
-    "word": "Friction",
-    "definition": "(已学习词汇 - niveau 0)",
-    "example": "单词 \"Friction\" 已在之前的课程中学习。",
-    "niveau": 2
-  },
-  {
-    "word": "stylo",
-    "definition": "钢笔",
-    "example": "J'écris avec un stylo bleu.",
-    "niveau": 1
-  },
-  {
-    "word": "Mutation",
-    "definition": "(已学习词汇 - niveau 2)",
-    "example": "单词 \"Mutation\" 已在之前的课程中学习。",
-    "niveau": 2
-  },
-  {
-    "word": "vigoureux",
-    "definition": "(已学习词汇 - niveau 4)",
-    "example": "单词 \"vigoureux\" 已在之前的课程中学习。",
-    "niveau": 3
-  },
-  {
-    "word": "Résistance",
-    "definition": "(已学习词汇 - niveau 2)",
-    "example": "单词 \"Résistance\" 已在之前的课程中学习。",
-    "niveau": 2
-  },
-  {
-    "word": "Sculpture",
-    "definition": "Mot français: Sculpture",
-    "example": "Exemple avec le mot \"Sculpture\".",
-    "niveau": 2
-  },
-  {
-    "word": "Désert",
-    "definition": "Mot français: Désert",
-    "example": "Exemple avec le mot \"Désert\".",
-    "niveau": 2
-  },
-  {
-    "word": "Mémoire",
-    "definition": "(已学习词汇 - niveau 2)",
-    "example": "单词 \"Mémoire\" 已在之前的课程中学习。",
-    "niveau": 2
-  },
-  {
-    "word": "Jardin",
-    "definition": "Mot français: Jardin",
-    "example": "Exemple avec le mot \"Jardin\".",
-    "niveau": 2
-  },
-  {
-    "word": "Soleil",
-    "definition": "Mot français: Soleil",
-    "example": "Exemple avec le mot \"Soleil\".",
-    "niveau": 2
-  },
-  {
-    "word": "Conscience",
-    "definition": "(已学习词汇 - niveau 3)",
-    "example": "单词 \"Conscience\" 已在之前的课程中学习。",
-    "niveau": 2
-  }
+  { "word": "abondant", "definition": "Qui existe en grande quantité.", "niveau": 2, "example": "Il y a un choix abondant de fruits au marché." },
+  { "word": "accueillir", "definition": "Recevoir quelqu'un avec bienveillance.", "niveau": 2, "example": "Nous allons accueillir nos amis ce soir." },
+  { "word": "admirer", "definition": "Regarder avec plaisir et estime.", "niveau": 2, "example": "J'admire ce magnifique paysage." },
+  { "word": "affection", "definition": "Sentiment d'amitié ou d'amour.", "niveau": 2, "example": "Il a beaucoup d'affection pour son petit frère." },
+  { "word": "agréable", "definition": "Qui plaît, qui est sympathique.", "niveau": 2, "example": "C'est une journée très agréable." },
+  { "word": "ambition", "definition": "Désir de réussir, de parvenir à quelque chose.", "niveau": 3, "example": "Son ambition est de devenir médecin." },
+  { "word": "amitié", "definition": "Sentiment d'affection entre des personnes.", "niveau": 2, "example": "L'amitié est précieuse." },
+  { "word": "analyser", "definition": "Examiner en détail pour comprendre.", "niveau": 3, "example": "Le scientifique analyse les résultats." },
+  { "word": "ancien", "definition": "Qui existe depuis longtemps.", "niveau": 2, "example": "C'est un château ancien." },
+  { "word": "apprécier", "definition": "Reconnaître la valeur de quelque chose.", "niveau": 3, "example": "J'apprécie ton aide." },
+  { "word": "arbre", "definition": "Plante avec un tronc et des branches.", "niveau": 1, "example": "L'arbre donne de l'ombre." },
+  { "word": "artiste", "definition": "Personne qui crée des œuvres d'art.", "niveau": 2, "example": "L'artiste peint un tableau." },
+  { "word": "attentif", "definition": "Qui fait attention, qui écoute bien.", "niveau": 2, "example": "L'élève est très attentif en classe." },
+  { "word": "aventure", "definition": "Expérience excitante et inhabituelle.", "niveau": 2, "example": "Partir en voyage est une aventure." },
+  { "word": "bénéfice", "definition": "Avantage ou profit que l'on retire.", "niveau": 3, "example": "Cette activité apporte un grand bénéfice." },
+  { "word": "brave", "definition": "Qui a du courage, qui est courageux.", "niveau": 2, "example": "Le brave chevalier a sauvé le village." },
+  { "word": "célébrer", "definition": "Fêter un événement important.", "niveau": 2, "example": "Nous allons célébrer ton anniversaire." },
+  { "word": "chaleureux", "definition": "Qui montre de la sympathie et de l'affection.", "niveau": 3, "example": "Il a reçu un accueil chaleureux." },
+  { "word": "changement", "definition": "Passage d'un état à un autre.", "niveau": 2, "example": "Le changement de saison est proche." },
+  { "word": "chef-d'œuvre", "definition": "Œuvre d'art exceptionnelle.", "niveau": 3, "example": "La Joconde est un chef-d'œuvre." },
+  { "word": "choisir", "definition": "Prendre une décision entre plusieurs possibilités.", "niveau": 2, "example": "Tu dois choisir ton dessert." },
+  { "word": "collaborer", "definition": "Travailler ensemble à une même tâche.", "niveau": 3, "example": "Ils collaborent sur un projet scientifique." },
+  { "word": "comprendre", "definition": "Saisir le sens de quelque chose.", "niveau": 2, "example": "Je commence à comprendre la leçon." },
+  { "word": "confiance", "definition": "Sentiment de sécurité et de foi en quelqu'un.", "niveau": 3, "example": "J'ai confiance en mes amis." },
+  { "word": "conseil", "definition": "Avis donné pour aider à décider.", "niveau": 2, "example": "Suis le conseil de ton professeur." },
+  { "word": "courage", "definition": "Force morale face au danger ou à la difficulté.", "niveau": 2, "example": "Il faut du courage pour dire la vérité." },
+  { "word": "créatif", "definition": "Qui a de l'imagination, qui invente.", "niveau": 3, "example": "C'est un enfant très créatif." },
+  { "word": "curiosité", "definition": "Désir de connaître, d'apprendre.", "niveau": 2, "example": "La curiosité est une bonne qualité." },
+  { "word": "découvrir", "definition": "Trouver quelque chose de nouveau.", "niveau": 2, "example": "Ils vont découvrir un trésor." },
+  { "word": "défendre", "definition": "Protéger contre une attaque.", "niveau": 2, "example": "Le chien défend sa maison." },
+  { "word": "délicat", "definition": "Qui demande de la prudence et du soin.", "niveau": 3, "example": "C'est un objet très délicat." },
+  { "word": "développer", "definition": "Faire grandir, faire progresser.", "niveau": 3, "example": "Il veut développer ses talents." },
+  { "word": "difficile", "definition": "Qui demande beaucoup d'effort.", "niveau": 2, "example": "Cet exercice est difficile." },
+  { "word": "diligent", "definition": "Qui travaille avec application et soin.", "niveau": 3, "example": "C'est un élève très diligent." },
+  { "word": "discuter", "definition": "Échanger des idées, parler de quelque chose.", "niveau": 2, "example": "Nous aimons discuter ensemble." },
+  { "word": "doute", "definition": "Incertitude, manque de conviction.", "niveau": 3, "example": "Il a un doute sur la réponse." },
+  { "word": "échange", "definition": "Action de donner et recevoir en retour.", "niveau": 2, "example": "L'échange de cadeaux est amusant." },
+  { "word": "effort", "definition": "Application de forces physiques ou mentales.", "niveau": 2, "example": "Il fait un effort pour courir vite." },
+  { "word": "élégant", "definition": "Qui a de la grâce, du style.", "niveau": 3, "example": "Il porte un costume élégant." },
+  { "word": "émotion", "definition": "Réaction affective intense.", "niveau": 3, "example": "Il a ressenti une grande émotion." },
+  { "word": "encourager", "definition": "Donner du courage, soutenir.", "niveau": 2, "example": "Les parents encouragent leurs enfants." },
+  { "word": "énergie", "definition": "Force, capacité à agir.", "niveau": 2, "example": "Il a beaucoup d'énergie le matin." },
+  { "word": "enthousiasme", "definition": "Grande joie, passion pour quelque chose.", "niveau": 3, "example": "Il travaille avec enthousiasme." },
+  { "word": "équilibre", "definition": "État stable, harmonie entre les éléments.", "niveau": 3, "example": "Il faut garder l'équilibre sur le vélo." },
+  { "word": "espoir", "definition": "Sentiment qui fait attendre quelque chose de bon.", "niveau": 2, "example": "Gardons l'espoir d'un beau voyage." },
+  { "word": "estimer", "definition": "Avoir une bonne opinion de quelqu'un.", "niveau": 3, "example": "J'estime beaucoup mon professeur." },
+  { "word": "étonnant", "definition": "Qui surprend, qui est remarquable.", "niveau": 2, "example": "C'est un spectacle étonnant." },
+  { "word": "examiner", "definition": "Regarder avec attention pour étudier.", "niveau": 3, "example": "Le docteur examine le patient." },
+  { "word": "expérience", "definition": "Connaissance acquise par la pratique.", "niveau": 3, "example": "Il a beaucoup d'expérience en cuisine." },
+  { "word": "expliquer", "definition": "Rendre clair, faire comprendre.", "niveau": 2, "example": "Peux-tu m'expliquer cet exercice ?" },
+  { "word": "explorer", "definition": "Découvrir un lieu inconnu.", "niveau": 2, "example": "Les explorateurs vont explorer la jungle." },
+  { "word": "fidèle", "definition": "Qui reste loyal, qui ne trahit pas.", "niveau": 3, "example": "Le chien est un animal fidèle." },
+  { "word": "fier", "definition": "Qui a de l'amour-propre, de la dignité.", "niveau": 2, "example": "Je suis fier de ton travail." },
+  { "word": "fragile", "definition": "Qui se casse facilement, délicat.", "niveau": 2, "example": "Attention, ce verre est fragile." },
+  { "word": "généreux", "definition": "Qui donne volontiers, sans compter.", "niveau": 3, "example": "Il est très généreux avec les autres." },
+  { "word": "génial", "definition": "Exceptionnel, remarquable.", "niveau": 2, "example": "C'est une idée géniale !" },
+  { "word": "gentillesse", "definition": "Qualité d'une personne aimable.", "niveau": 2, "example": "Sa gentillesse plaît à tout le monde." },
+  { "word": "habileté", "definition": "Adresse, compétence dans un domaine.", "niveau": 3, "example": "Il dessine avec beaucoup d'habileté." },
+  { "word": "harmonie", "definition": "Accord, équilibre entre les éléments.", "niveau": 3, "example": "Il y a une belle harmonie dans cette musique." },
+  { "word": "honnête", "definition": "Qui dit la vérité, qui est juste.", "niveau": 2, "example": "C'est un homme très honnête." },
+  { "word": "imagination", "definition": "Faculté de créer des images mentales.", "niveau": 2, "example": "Il a une imagination débordante." },
+  { "word": "important", "definition": "Qui a de la valeur, qui compte beaucoup.", "niveau": 2, "example": "C'est un rendez-vous important." },
+  { "word": "ingénieux", "definition": "Qui a de l'intelligence pratique.", "niveau": 3, "example": "C'est un système ingénieux." },
+  { "word": "intelligent", "definition": "Qui comprend vite, qui a de l'esprit.", "niveau": 2, "example": "Cet élève est très intelligent." },
+  { "word": "intéressant", "definition": "Qui attire l'attention, qui est captivant.", "niveau": 2, "example": "Ce livre est très intéressant." },
+  { "word": "joli", "definition": "Agréable à regarder, charmant.", "niveau": 1, "example": "C'est un joli petit chat." },
+  { "word": "joyeux", "definition": "Qui exprime de la joie, gai.", "niveau": 2, "example": "Il est toujours joyeux." },
+  { "word": "juste", "definition": "Qui respecte l'équité, la justice.", "niveau": 2, "example": "C'est une punition juste." },
+  { "word": "liberté", "definition": "Possibilité d'agir sans contrainte.", "niveau": 3, "example": "La liberté est un droit fondamental." },
+  { "word": "logique", "definition": "Qui suit un raisonnement cohérent.", "niveau": 3, "example": "C'est une suite logique." },
+  { "word": "loyal", "definition": "Fidèle, qui respecte ses engagements.", "niveau": 3, "example": "C'est un ami loyal." },
+  { "word": "magnifique", "definition": "Très beau, splendide.", "niveau": 2, "example": "Le coucher de soleil est magnifique." },
+  { "word": "mémoire", "definition": "Faculté de se souvenir.", "niveau": 2, "example": "Il a une excellente mémoire." },
+  { "word": "modeste", "definition": "Qui ne se vante pas, simple.", "niveau": 3, "example": "Malgré son succès, il reste modeste." },
+  { "word": "mystère", "definition": "Chose cachée, difficile à comprendre.", "niveau": 2, "example": "C'est un grand mystère." },
+  { "word": "naturel", "definition": "Qui existe sans intervention humaine.", "niveau": 2, "example": "C'est un produit naturel." },
+  { "word": "nécessaire", "definition": "Dont on a besoin, indispensable.", "niveau": 2, "example": "Le sommeil est nécessaire à la santé." },
+  { "word": "obéissant", "definition": "Qui suit les ordres, les règles.", "niveau": 2, "example": "L'enfant est très obéissant." },
+  { "word": "observateur", "definition": "Qui regarde avec attention.", "niveau": 3, "example": "C'est un observateur attentif." },
+  { "word": "obstacle", "definition": "Difficulté qui empêche d'avancer.", "niveau": 2, "example": "Il a franchi tous les obstacles." },
+  { "word": "organiser", "definition": "Mettre en ordre, préparer.", "niveau": 2, "example": "Il faut organiser la fête." },
+  { "word": "original", "definition": "Qui est nouveau, différent.", "niveau": 3, "example": "C'est un vêtement très original." },
+  { "word": "pacifique", "definition": "Qui aime la paix, non violent.", "niveau": 3, "example": "C'est un pays pacifique." },
+  { "word": "patience", "definition": "Capacité à attendre sans s'énerver.", "niveau": 2, "example": "Il faut de la patience pour pêcher." },
+  { "word": "pensée", "definition": "Activité de l'esprit, réflexion.", "niveau": 2, "example": "J'ai eu une pensée pour toi." },
+  { "word": "persévérant", "definition": "Qui continue malgré les difficultés.", "niveau": 3, "example": "Il est persévérant dans ses efforts." },
+  { "word": "perspicace", "definition": "Qui comprend vite et profondément.", "niveau": 3, "example": "C'est une analyse très perspicace." },
+  { "word": "précis", "definition": "Exact, clair et détaillé.", "niveau": 2, "example": "Il a donné des détails précis." },
+  { "word": "préparer", "definition": "Mettre en état, faire les préparatifs.", "niveau": 2, "example": "Je vais préparer le repas." },
+  { "word": "prudence", "definition": "Attention pour éviter les dangers.", "niveau": 2, "example": "Il faut conduire avec prudence." },
+  { "word": "qualité", "definition": "Caractéristique positive d'une personne.", "niveau": 2, "example": "La gentillesse est sa meilleure qualité." },
+  { "word": "raison", "definition": "Faculté de penser, de comprendre.", "niveau": 3, "example": "Il a fini par entendre raison." },
+  { "word": "réfléchir", "definition": "Penser profondément à quelque chose.", "niveau": 2, "example": "Prends le temps de réfléchir." },
+  { "word": "respect", "definition": "Considération envers quelqu'un.", "niveau": 2, "example": "Le respect des autres est important." },
+  { "word": "responsable", "definition": "Qui doit répondre de ses actes.", "niveau": 3, "example": "Il est responsable de ce projet." },
+  { "word": "sagesse", "definition": "Connaissance et jugement acquis par l'expérience.", "niveau": 3, "example": "C'est un homme plein de sagesse." },
+  { "word": "sérieux", "definition": "Qui fait les choses avec application.", "niveau": 2, "example": "C'est un travail très sérieux." },
+  { "word": "sincère", "definition": "Qui dit ce qu'il pense vraiment.", "niveau": 2, "example": "Il a fait une promesse sincère." },
+  { "word": "solide", "definition": "Qui résiste, qui est fort.", "niveau": 2, "example": "Cette table est très solide." },
+  { "word": "souvenir", "definition": "Chose dont on se rappelle.", "niveau": 2, "example": "C'est un beau souvenir de vacances." },
+  { "word": "talent", "definition": "Aptitude naturelle pour quelque chose.", "niveau": 3, "example": "Elle a un grand talent pour le chant." },
+  { "word": "tolérant", "definition": "Qui accepte les différences des autres.", "niveau": 3, "example": "Il est très tolérant avec ses amis." },
+  { "word": "travail", "definition": "Activité qui demande des efforts.", "niveau": 2, "example": "Le travail est essentiel." },
+  { "word": "unique", "definition": "Qui est seul de son espèce.", "niveau": 2, "example": "Chaque flocon de neige est unique." },
+  { "word": "utile", "definition": "Qui sert à quelque chose, pratique.", "niveau": 2, "example": "Ce couteau est très utile." },
+  { "word": "valoir", "definition": "Avoir une certaine valeur.", "niveau": 2, "example": "Ton travail va valoir une récompense." },
+  { "word": "variété", "definition": "Diversité, plusieurs sortes différentes.", "niveau": 2, "example": "Il y a une grande variété de fleurs." },
+  { "word": "vérité", "definition": "Ce qui est vrai, réel.", "niveau": 2, "example": "Il faut toujours dire la vérité." },
+  { "word": "vif", "definition": "Rapide, énergique.", "niveau": 2, "example": "C'est un enfant vif et intelligent." },
+  { "word": "vivant", "definition": "Qui a la vie, qui est en vie.", "niveau": 1, "example": "La plante est toujours vivante." },
+  { "word": "volontaire", "definition": "Qui agit par sa propre volonté.", "niveau": 3, "example": "C'est une action volontaire." },
+  { "word": "vouloir", "definition": "Avoir l'intention, le désir de faire.", "niveau": 2, "example": "Je veux réussir mon examen." },
+  { "word": "zèle", "definition": "Ardeur, enthousiasme dans le travail.", "niveau": 3, "example": "Il travaille avec beaucoup de zèle." },
+  { "word": "mille", "definition": "Nombre égal à dix centaines (1 000).", "niveau": 2, "example": "Il y a mille étoiles dans le ciel." },
+  { "word": "forêt", "definition": "Grand espace couvert d'arbres.", "niveau": 2, "example": "Nous nous promenons dans la forêt." },
+  { "word": "batterie", "definition": "Appareil qui produit de l'électricité.", "niveau": 2, "example": "La batterie de mon jouet est vide." },
+  { "word": "Continent", "definition": "Vaste étendue de terre à la surface du globe.", "niveau": 2, "example": "L'Europe est un continent." },
+  { "word": "salle de bain", "definition": "Pièce où on se lave.", "niveau": 2, "example": "Je me brosse les dents dans la salle de bain." },
+  { "word": "poste", "definition": "Lieu où l'on travaille ou dépose le courrier.", "niveau": 2, "example": "Je vais à la poste pour envoyer un colis." },
+  { "word": "patinoire", "definition": "Lieu où on peut patiner sur la glace.", "niveau": 2, "example": "Nous allons à la patinoire en hiver." },
+  { "word": "imprimante", "definition": "Machine qui imprime des documents.", "niveau": 2, "example": "L'imprimante a fini d'imprimer." },
+  { "word": "Bienveillance", "definition": "Disposition à vouloir le bien des autres.", "niveau": 3, "example": "Il agit avec beaucoup de bienveillance." },
+  { "word": "faible", "definition": "Qui n'a pas de force.", "niveau": 2, "example": "Je me sens faible quand je suis fatigué." },
+  { "word": "cent", "definition": "Nombre égal à dix dizaines (100).", "niveau": 2, "example": "Il a cent billes." },
+  { "word": "Globalisation", "definition": "Extension des échanges à l'échelle mondiale.", "niveau": 3, "example": "La globalisation affecte l'économie." },
+  { "word": "découverte", "definition": "Action de trouver ce qui était inconnu.", "niveau": 2, "example": "C'est une découverte scientifique majeure." },
+  { "word": "fraternité", "definition": "Lien de solidarité entre les êtres humains.", "niveau": 3, "example": "La fraternité est inscrite dans notre devise." },
+  { "word": "boucherie", "definition": "Magasin où l'on vend de la viande.", "niveau": 2, "example": "Je vais à la boucherie pour acheter du poulet." },
+  { "word": "botte", "definition": "Chaussure montante qui protège le pied et la jambe.", "niveau": 2, "example": "Je mets mes bottes pour aller dans la boue." },
+  { "word": "email", "definition": "Message électronique envoyé par internet.", "niveau": 2, "example": "J'ai reçu un email de ma grand-mère." },
+  { "word": "océan", "definition": "Vaste étendue d'eau salée couvrant la Terre.", "niveau": 2, "example": "Les baleines vivent dans l'océan." },
+  { "word": "plaine", "definition": "Grande étendue de pays plat.", "niveau": 2, "example": "Les vaches paissent dans la plaine." },
+  { "word": "sculpture", "definition": "Art de façonner des formes en volume.", "niveau": 3, "example": "Il y a une belle sculpture au milieu de la place." },
+  { "word": "million", "definition": "Nombre égal à mille milliers (1 000 000).", "niveau": 3, "example": "Il a gagné un million au loto." },
+  { "word": "bibliothèque", "definition": "Lieu où l'on range et consulte des livres.", "niveau": 2, "example": "Je vais à la bibliothèque pour lire." },
+  { "word": "musicien", "definition": "Personne qui joue de la musique.", "niveau": 2, "example": "Le musicien joue du piano." },
+  { "word": "Sincérité", "definition": "Qualité de celui qui dit la vérité.", "niveau": 2, "example": "Sa sincérité est appréciée." },
+  { "word": "Architecture", "definition": "Art de concevoir et construire des bâtiments.", "niveau": 3, "example": "L'architecture de ce monument est moderne." },
+  { "word": "entreprise", "definition": "Organisation qui produit des biens.", "niveau": 3, "example": "Mon père travaille dans une grande entreprise." },
+  { "word": "ours", "definition": "Grand mammifère à fourrure épaisse.", "niveau": 2, "example": "L'ours brun dort pendant l'hiver." },
+  { "word": "journaliste", "definition": "Personne qui écrit des articles de presse.", "niveau": 3, "example": "Le journaliste pose des questions." },
+  { "word": "milliard", "definition": "Un milliard est égal à mille millions.", "niveau": 3, "example": "La Terre a plus de huit milliards d'habitants." },
+  { "word": "sandale", "definition": "Chaussure légère ouverte.", "niveau": 2, "example": "Je porte des sandales à la plage." },
+  { "word": "amour", "definition": "Sentiment d'affection vive pour quelqu'un.", "niveau": 2, "example": "L'amour d'une mère est infini." },
+  { "word": "laboratoire", "definition": "Lieu de recherches scientifiques.", "niveau": 3, "example": "Le chercheur travaille dans son laboratoire." },
+  { "word": "Analyse", "definition": "Étude détaillée pour comprendre un sujet.", "niveau": 3, "example": "L'analyse du sang a donné ses résultats." },
+  { "word": "victoire", "definition": "Succès remporté dans une lutte ou épreuve.", "niveau": 2, "example": "Ils fêtent leur victoire après le match." },
+  { "word": "Renaissance", "definition": "Période de renouveau artistique et culturel.", "niveau": 3, "example": "Léonard de Vinci est un peintre de la Renaissance." },
+  { "word": "joie", "definition": "Émotion vive de bonheur.", "niveau": 2, "example": "Sa réussite est une grande joie." },
+  { "word": "objectif", "definition": "But précis que l'on veut atteindre.", "niveau": 2, "example": "Mon objectif est de finir mon livre." },
+  { "word": "veste", "definition": "Vêtement de dessus boutonné par devant.", "niveau": 2, "example": "Mets ta veste pour sortir." },
+  { "word": "Argumentation", "definition": "Ensemble d'arguments pour convaincre.", "niveau": 3, "example": "Son argumentation était très solide." },
+  { "word": "Symétrie", "definition": "Correspondance exacte de deux parties.", "niveau": 3, "example": "Les ailes du papillon ont une belle symétrie." },
+  { "word": "bière", "definition": "Boisson alcoolisée à base de céréales.", "niveau": 3, "example": "Les adultes trinquent avec une bière." },
+  { "word": "ensoleillé", "definition": "Exposé à la lumière du soleil.", "niveau": 2, "example": "Il fait un temps très ensoleillé." },
+  { "word": "équipe", "definition": "Groupe de personnes travaillant ensemble.", "niveau": 2, "example": "Notre équipe de foot a gagné." },
+  { "word": "violet", "definition": "Couleur située entre le bleu et le rouge.", "niveau": 2, "example": "Le ciel devient violet au crépuscule." },
+  { "word": "ruisseau", "definition": "Petit cours d'eau naturel.", "niveau": 2, "example": "Le ruisseau coule dans la vallée." },
+  { "word": "ceinture", "definition": "Bande servant à serrer un vêtement à la taille.", "niveau": 2, "example": "Il serre sa ceinture." },
+  { "word": "majorité", "definition": "Le plus grand nombre de voix.", "niveau": 3, "example": "Il a obtenu la majorité des votes." },
+  { "word": "grenouille", "definition": "Petit animal qui vit près de l'eau.", "niveau": 2, "example": "La grenouille saute dans l'étang." },
+  { "word": "biologie", "definition": "Science qui étudie les êtres vivants.", "niveau": 3, "example": "Nous étudions la biologie à l'école." },
+  { "word": "diplôme", "definition": "Acte officiel attestant un succès scolaire.", "niveau": 3, "example": "Il a reçu son diplôme hier." },
+  { "word": "source", "definition": "Eau qui sort de terre naturellement.", "niveau": 2, "example": "L'eau de cette source est fraîche." },
+  { "word": "étang", "definition": "Étendue d'eau stagnante moins grande qu'un lac.", "niveau": 2, "example": "Il y a des canards sur l'étang." },
+  { "word": "mode", "definition": "Manière de vivre ou de s'habiller passagère.", "niveau": 2, "example": "Ce chapeau est à la mode." },
+  { "word": "court", "definition": "Qui a peu de longueur.", "niveau": 2, "example": "Il a les cheveux courts." },
+  { "word": "pharmacie", "definition": "Magasin où l'on achète des médicaments.", "niveau": 2, "example": "Je vais à la pharmacie pour des pansements." },
+  { "word": "site web", "definition": "Ensemble de pages sur internet.", "niveau": 2, "example": "Consulte ce site web pour tes recherches." },
+  { "word": "Préservation", "definition": "Action de protéger de la dégradation.", "niveau": 3, "example": "La préservation de la nature est vitale." },
+  { "word": "examen", "definition": "Épreuve pour vérifier les connaissances.", "niveau": 2, "example": "L'examen de français aura lieu demain." },
+  { "word": "Conservation", "definition": "Action de maintenir en bon état.", "niveau": 3, "example": "La conservation des aliments est importante." },
+  { "word": "Paradoxe", "definition": "Proposition qui semble illogique.", "niveau": 3, "example": "C'est un paradoxe étrange." },
+  { "word": "loyauté", "definition": "Qualité de fidélité et de droiture.", "niveau": 3, "example": "Sa loyauté envers ses amis est exemplaire." },
+  { "word": "étranger", "definition": "Qui vient d'un autre pays.", "niveau": 2, "example": "Il parle une langue étrangère." },
+  { "word": "langue", "definition": "Système de signes servant à communiquer.", "niveau": 2, "example": "Le français est ma langue maternelle." },
+  { "word": "athlétisme", "definition": "Ensemble d'activités sportives (course, saut, lancer).", "niveau": 3, "example": "Il fait de l'athlétisme au stade." },
+  { "word": "éléphant", "definition": "Très grand mammifère avec une trompe.", "niveau": 2, "example": "L'éléphant a de grandes oreilles." },
+  { "word": "natation", "definition": "Action de nager, sport nautique.", "niveau": 2, "example": "La natation est bonne pour le dos." },
+  { "word": "réseau", "definition": "Ensemble d'éléments connectés.", "niveau": 3, "example": "Le réseau internet est mondial." },
+  { "word": "coussin", "definition": "Sorte de sac rempli de matière souple.", "niveau": 2, "example": "Je pose ma tête sur le coussin." },
+  { "word": "lion", "definition": "Grand fauve prédateur vivant en Afrique.", "niveau": 2, "example": "Le lion est le roi de la savane." },
+  { "word": "équitation", "definition": "Art de monter à cheval.", "niveau": 3, "example": "Elle fait de l'équitation le mercredi." },
+  { "word": "Sédiment", "definition": "Matière déposée par l'eau ou le vent.", "niveau": 3, "example": "Les sédiments s'accumulent au fond du lac." },
+  { "word": "manière", "definition": "Façon particulière d'agir.", "niveau": 3, "example": "Il a une drôle de manière de marcher." },
+  { "word": "Vitesse", "definition": "Rapidité du mouvement.", "niveau": 2, "example": "La vitesse est limitée sur la route." },
+  { "word": "saison", "definition": "Période de l'année (printemps, été, automne, hiver).", "niveau": 2, "example": "L'été est ma saison préférée." },
+  { "word": "Frontière", "definition": "Limite entre deux États ou régions.", "niveau": 3, "example": "Nous avons passé la frontière suisse." },
+  { "word": "trente", "definition": "Nombre égal à trois dizaines.", "niveau": 2, "example": "Il y a trente jours en avril." },
+  { "word": "cochon", "definition": "Animal de la ferme à groin.", "niveau": 2, "example": "Le cochon se roule dans la boue." },
+  { "word": "Prénom", "definition": "Nom qui précède le nom de famille.", "niveau": 1, "example": "Mon prénom est Jingyi." },
+  { "word": "Atmosphère", "definition": "Couche d'air entourant la Terre.", "niveau": 3, "example": "L'atmosphère nous protège." },
+  { "word": "Honnêteté", "definition": "Qualité de droiture et de sincérité.", "niveau": 3, "example": "L'honnêteté est une grande vertu." },
+  { "word": "cahier", "definition": "Assemblage de feuilles pour écrire.", "niveau": 1, "example": "J'écris mes leçons dans mon cahier." },
+  { "word": "Table", "definition": "Meuble sur lequel on mange ou travaille.", "niveau": 1, "example": "Nous déjeunons autour de la table." },
+  { "word": "Astronomie", "definition": "Science qui étudie les astres.", "niveau": 3, "example": "Il observe les étoiles grâce à l'astronomie." },
+  { "word": "émerveillement", "definition": "Sentiment d'admiration et de surprise.", "niveau": 3, "example": "L'aurore boréale a causé un grand émerveillement." },
+  { "word": "Perspective", "definition": "Manière de voir et d'envisager les choses.", "niveau": 3, "example": "Sa perspective sur le problème est intéressante." },
+  { "word": "Harmonie", "definition": "Accord parfait entre les sons ou les éléments.", "niveau": 3, "example": "L'harmonie de l'orchestre était parfaite." },
+  { "word": "Maison", "definition": "Bâtiment servant d'habitation.", "niveau": 1, "example": "Ma maison a un toit rouge." },
+  { "word": "Génétique", "definition": "Science de l'hérédité.", "niveau": 3, "example": "La génétique explique la couleur de nos yeux." },
+  { "word": "Préhistoire", "definition": "Période avant l'invention de l'écriture.", "niveau": 3, "example": "Les mammouths vivaient pendant la préhistoire." },
+  { "word": "Imagination", "definition": "Faculté de se représenter des choses inexistantes.", "niveau": 2, "example": "L'imagination permet de créer des histoires." },
+  { "word": "Pollinisation", "definition": "Transport du pollen pour féconder les fleurs.", "niveau": 3, "example": "Les abeilles sont essentielles à la pollinisation." },
+  { "word": "Vertèbre", "definition": "Chacun des os de la colonne vertébrale.", "niveau": 3, "example": "L'homme possède 33 vertèbres." },
+  { "word": "Pingouin", "definition": "Oiseau marin des régions polaires.", "niveau": 2, "example": "Le pingouin plonge dans l'eau glacée." },
+  { "word": "Indépendance", "definition": "État de liberté et d'autonomie.", "niveau": 3, "example": "Le pays fête son indépendance." },
+  { "word": "Fraternité", "definition": "Sentiment de solidarité entre les hommes.", "niveau": 3, "example": "La fraternité unit les peuples." },
+  { "word": "cartable", "definition": "Sac pour transporter les fournitures scolaires.", "niveau": 1, "example": "Mon cartable est bleu." },
+  { "word": "Chien", "definition": "Mammifère domestique carnivore.", "niveau": 1, "example": "Le chien remue la queue." },
+  { "word": "Biotechnologie", "definition": "Utilisation du vivant pour créer des produits.", "niveau": 3, "example": "La biotechnologie aide à créer des médicaments." },
+  { "word": "Vidéo", "definition": "Enregistrement d'images animées.", "niveau": 2, "example": "Regardons une vidéo de nos vacances." },
+  { "word": "Équilibre", "definition": "État de stabilité entre deux forces.", "niveau": 3, "example": "Il a perdu l'équilibre sur la glace." },
+  { "word": "Insecte", "definition": "Petit animal invertébré à six pattes.", "niveau": 1, "example": "La fourmi est un insecte." },
+  { "word": "Symphonie", "definition": "Composition musicale pour orchestre.", "niveau": 3, "example": "Beethoven a écrit neuf symphonies." },
+  { "word": "Créativité", "definition": "Pouvoir de créer, d'inventer.", "niveau": 3, "example": "La créativité est importante pour un artiste." },
+  { "word": "Écosystème", "definition": "Ensemble d'êtres vivants et leur environnement.", "niveau": 3, "example": "La forêt est un écosystème fragile." },
+  { "word": "s'épanouir", "definition": "Devenir pleinement heureux et ouvert.", "niveau": 3, "example": "L'enfant s'épanouit dans son sport." },
+  { "word": "Climax", "definition": "Moment le plus intense d'un récit.", "niveau": 3, "example": "Le climax du film arrive à la fin." },
+  { "word": "Condensation", "definition": "Passage de la vapeur à l'état liquide.", "niveau": 3, "example": "La condensation se forme sur la fenêtre froide." },
+  { "word": "Détermination", "definition": "Fermeté et volonté d'aboutir.", "niveau": 3, "example": "Sa détermination l'a conduit au succès." },
+  { "word": "Volcan", "definition": "Montagne qui rejette de la lave.", "niveau": 2, "example": "Le volcan est entré en éruption." },
+  { "word": "Générosité", "definition": "Qualité de celui qui donne avec plaisir.", "niveau": 3, "example": "Sa générosité envers les pauvres est exemplaire." },
+  { "word": "Portrait", "definition": "Représentation d'une personne réelle.", "niveau": 2, "example": "L'artiste dessine un portrait au crayon." },
+  { "word": "imprévisible", "definition": "Qu'on ne peut pas prévoir.", "niveau": 3, "example": "Le temps en montagne est imprévisible." },
+  { "word": "Microscope", "definition": "Instrument pour voir des objets minuscules.", "niveau": 2, "example": "Le biologiste utilise un microscope." },
+  { "word": "Démocratie", "definition": "Système politique où le peuple décide.", "niveau": 3, "example": "La liberté d'expression est vitale en démocratie." },
+  { "word": "Empathie", "definition": "Capacité de ressentir ce qu'un autre éprouve.", "niveau": 3, "example": "L'empathie permet de mieux aider les autres." },
+  { "word": "Protagoniste", "definition": "Personnage principal d'une histoire.", "niveau": 3, "example": "Le protagoniste triomphe à la fin." },
+  { "word": "Robot", "definition": "Machine automatique capable de tâches.", "niveau": 2, "example": "Le robot nettoie le salon." },
+  { "word": "Caméléon", "definition": "Lézard capable de changer de couleur.", "niveau": 2, "example": "Le caméléon se camoufle dans les feuilles." },
+  { "word": "Hippopotame", "definition": "Gros mammifère d'Afrique vivant dans l'eau.", "niveau": 2, "example": "L'hippopotame bâille largement." },
+  { "word": "Électricité", "definition": "Forme d'énergie servant à s'éclairer.", "niveau": 2, "example": "La foudre est une décharge d'électricité." },
+  { "word": "Persévérance", "definition": "Qualité de celui qui n'abandonne jamais.", "niveau": 3, "example": "La persévérance est la clé de la réussite." },
+  { "word": "Isolant", "definition": "Matière qui ne laisse pas passer l'énergie.", "niveau": 2, "example": "Le bois est un bon isolant thermique." },
+  { "word": "Chat", "definition": "Petit mammifère domestique carnivore.", "niveau": 1, "example": "Le chat dort sur le canapé." },
+  { "word": "Friction", "definition": "Frottement de deux corps l'un contre l'autre.", "niveau": 3, "example": "La friction des mains les réchauffe." },
+  { "word": "stylo", "definition": "Instrument servant à écrire avec de l'encre.", "niveau": 1, "example": "J'ai un nouveau stylo plume." },
+  { "word": "Mutation", "definition": "Changement brusque des caractères génétiques.", "niveau": 3, "example": "La mutation a créé une nouvelle espèce." },
+  { "word": "vigoureux", "definition": "Plein de force et de vitalité.", "niveau": 3, "example": "Cet arbre a une croissance vigoureuse." },
+  { "word": "Résistance", "definition": "Action de s'opposer à une force.", "niveau": 3, "example": "La résistance au froid est importante." },
+  { "word": "Sculpture", "definition": "Art de représenter des formes par le modelage.", "niveau": 3, "example": "Cette sculpture est faite de marbre." },
+  { "word": "Désert", "definition": "Région aride avec très peu d'eau.", "niveau": 2, "example": "Il fait très chaud dans le désert." },
+  { "word": "Mémoire", "definition": "Capacité de conserver et rappeler des informations.", "niveau": 2, "example": "Il a une bonne mémoire des chiffres." },
+  { "word": "Jardin", "definition": "Terrain où l'on cultive des fleurs ou légumes.", "niveau": 1, "example": "Nous plantons des roses dans le jardin." },
+  { "word": "Soleil", "definition": "Astre central qui éclaire le système solaire.", "niveau": 1, "example": "Le soleil se lève à l'est." },
+  { "word": "Conscience", "definition": "Connaissance immédiate de sa propre existence.", "niveau": 3, "example": "Il agit en toute conscience." }
 ]
