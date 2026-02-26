@@ -1,5 +1,5 @@
 {
-  "stars": 1870,
+  "stars": 2000,
   "notebook": [
     {
       "word": "Sinc\u00e9rit\u00e9",
@@ -453,8 +453,8 @@
     },
     {
       "word": "milliard",
-      "lvl": 0,
-      "next": "2026-02-26",
+      "lvl": 1,
+      "next": "2026-02-28",
       "err_days": 0
     },
     {
@@ -472,7 +472,7 @@
   ],
   "daily_stats": {
     "date": "2026-02-26",
-    "completed": false,
+    "completed": true,
     "words": [
       "appr\u00e9cier",
       "unique",
