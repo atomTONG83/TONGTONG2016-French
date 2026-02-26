@@ -191,6 +191,7 @@
         // ===== STATE =====
         let gData = { stars: 100, notebook: [], daily_stats: { date: "", completed: false, words: [] }, last_milestone: 0 };
         let sessionMastery = {}; 
+        let errorCount = {}; // 新增：记录每个单词的错误次数（2次错误才惩罚）
         let gTodayWords = [];
         let gGameMode = 'new';
         let gMistakes = {};
@@ -599,6 +600,7 @@
                 }
                 gCombo++;
                 delete gMistakes[w];
+                errorCount[w] = 0; // 正确回答时重置错误计数
                 speak("Très bien");
                 
                 // 检查是否完成每日目标
@@ -610,21 +612,39 @@
                 }, 1000);
             } else {
                 btn.classList.add('wrong');
+                
+                // 记录错误次数
+                errorCount[w] = (errorCount[w] || 0) + 1;
+                
                 if (feedbackEl) {
-                    feedbackEl.innerHTML = "❌ Dommage !";
-                    feedbackEl.style.color = "var(--e)";
+                    if (errorCount[w] >= 2) {
+                        feedbackEl.innerHTML = "❌ Deux erreurs ! Niveau réinitialisé.";
+                        feedbackEl.style.color = "var(--e)";
+                    } else {
+                        feedbackEl.innerHTML = "⚠️ Première erreur. Une autre erreur réinitialisera le niveau.";
+                        feedbackEl.style.color = "#f39c12"; // 橙色警告
+                    }
                 }
-                sessionMastery[w] = 0;
+                
                 allBtns.forEach(function(b) { if(b.innerText === (target.definition || target.def || '')) b.classList.add('correct'); });
                 gCombo = 0;
-                if (n) {
+                
+                // 只有第2次错误才惩罚
+                if (errorCount[w] >= 2 && n) {
+                    sessionMastery[w] = 0;
                     n.lvl = 0;
                     let d = new Date();
                     d.setDate(d.getDate() + 1);
                     n.next = d.toISOString().split('T')[0];
                     n.err_days = (n.err_days || 0) + 1;
+                    errorCount[w] = 0; // 重置错误计数
+                    speak("Dommage, niveau réinitialisé");
+                } else {
+                    // 第一次错误，只警告不清零
+                    // 保持sessionMastery不变，让用户有机会继续
+                    speak("Attention");
                 }
-                speak("Dommage");
+                
                 setTimeout(function() { 
                     refreshUI(); 
                     saveData(); // 自动保存
