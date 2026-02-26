@@ -1276,5 +1276,341 @@
     "definition": "acquisition de connaissances",
     "example": "Le mot \"Prénom\" a une belle signification.",
     "niveau": 2
+  },
+  {
+    "word": "Atmosphère",
+    "definition": "(已学习词汇 - niveau 3)",
+    "example": "单词 \"Atmosphère\" 已在之前的课程中学习。",
+    "niveau": 2
+  },
+  {
+    "word": "Honnêteté",
+    "definition": "Mot français: Honnêteté",
+    "example": "Exemple avec le mot \"Honnêteté\".",
+    "niveau": 2
+  },
+  {
+    "word": "cahier",
+    "definition": "练习本",
+    "example": "J'écris dans mon cahier.",
+    "niveau": 1
+  },
+  {
+    "word": "Table",
+    "definition": "(已学习词汇 - niveau 1)",
+    "example": "单词 \"Table\" 已在之前的课程中学习。",
+    "niveau": 2
+  },
+  {
+    "word": "Astronomie",
+    "definition": "Mot français: Astronomie",
+    "example": "Exemple avec le mot \"Astronomie\".",
+    "niveau": 2
+  },
+  {
+    "word": "émerveillement",
+    "definition": "(已学习词汇 - niveau 4)",
+    "example": "单词 \"émerveillement\" 已在之前的课程中学习。",
+    "niveau": 3
+  },
+  {
+    "word": "Perspective",
+    "definition": "(已学习词汇 - niveau 3)",
+    "example": "单词 \"Perspective\" 已在之前的课程中学习。",
+    "niveau": 2
+  },
+  {
+    "word": "Harmonie",
+    "definition": "(已学习词汇 - niveau 2)",
+    "example": "单词 \"Harmonie\" 已在之前的课程中学习。",
+    "niveau": 2
+  },
+  {
+    "word": "Maison",
+    "definition": "Mot français: Maison",
+    "example": "Exemple avec le mot \"Maison\".",
+    "niveau": 2
+  },
+  {
+    "word": "Génétique",
+    "definition": "(已学习词汇 - niveau 0)",
+    "example": "单词 \"Génétique\" 已在之前的课程中学习。",
+    "niveau": 2
+  },
+  {
+    "word": "Préhistoire",
+    "definition": "(已学习词汇 - niveau 3)",
+    "example": "单词 \"Préhistoire\" 已在之前的课程中学习。",
+    "niveau": 2
+  },
+  {
+    "word": "Imagination",
+    "definition": "(已学习词汇 - niveau 4)",
+    "example": "单词 \"Imagination\" 已在之前的课程中学习。",
+    "niveau": 3
+  },
+  {
+    "word": "Pollinisation",
+    "definition": "(已学习词汇 - niveau 3)",
+    "example": "单词 \"Pollinisation\" 已在之前的课程中学习。",
+    "niveau": 2
+  },
+  {
+    "word": "Vertèbre",
+    "definition": "(已学习词汇 - niveau 3)",
+    "example": "单词 \"Vertèbre\" 已在之前的课程中学习。",
+    "niveau": 2
+  },
+  {
+    "word": "Pingouin",
+    "definition": "Mot français: Pingouin",
+    "example": "Exemple avec le mot \"Pingouin\".",
+    "niveau": 2
+  },
+  {
+    "word": "Indépendance",
+    "definition": "(已学习词汇 - niveau 0)",
+    "example": "单词 \"Indépendance\" 已在之前的课程中学习。",
+    "niveau": 2
+  },
+  {
+    "word": "Fraternité",
+    "definition": "Mot français: Fraternité",
+    "example": "Exemple avec le mot \"Fraternité\".",
+    "niveau": 2
+  },
+  {
+    "word": "cartable",
+    "definition": "书包",
+    "example": "Mon cartable est lourd !",
+    "niveau": 1
+  },
+  {
+    "word": "Chien",
+    "definition": "Mot français: Chien",
+    "example": "Exemple avec le mot \"Chien\".",
+    "niveau": 2
+  },
+  {
+    "word": "Biotechnologie",
+    "definition": "(已学习词汇 - niveau 1)",
+    "example": "单词 \"Biotechnologie\" 已在之前的课程中学习。",
+    "niveau": 2
+  },
+  {
+    "word": "Vidéo",
+    "definition": "Mot français: Vidéo",
+    "example": "Exemple avec le mot \"Vidéo\".",
+    "niveau": 2
+  },
+  {
+    "word": "Équilibre",
+    "definition": "(已学习词汇 - niveau 3)",
+    "example": "单词 \"Équilibre\" 已在之前的课程中学习。",
+    "niveau": 2
+  },
+  {
+    "word": "Insecte",
+    "definition": "(已学习词汇 - niveau 3)",
+    "example": "单词 \"Insecte\" 已在之前的课程中学习。",
+    "niveau": 2
+  },
+  {
+    "word": "Symphonie",
+    "definition": "(已学习词汇 - niveau 3)",
+    "example": "单词 \"Symphonie\" 已在之前的课程中学习。",
+    "niveau": 2
+  },
+  {
+    "word": "Créativité",
+    "definition": "(已学习词汇 - niveau 2)",
+    "example": "单词 \"Créativité\" 已在之前的课程中学习。",
+    "niveau": 2
+  },
+  {
+    "word": "Écosystème",
+    "definition": "(已学习词汇 - niveau 4)",
+    "example": "单词 \"Écosystème\" 已在之前的课程中学习。",
+    "niveau": 3
+  },
+  {
+    "word": "s'épanouir",
+    "definition": "(已学习词汇 - niveau 4)",
+    "example": "单词 \"s'épanouir\" 已在之前的课程中学习。",
+    "niveau": 3
+  },
+  {
+    "word": "Climax",
+    "definition": "(已学习词汇 - niveau 3)",
+    "example": "单词 \"Climax\" 已在之前的课程中学习。",
+    "niveau": 2
+  },
+  {
+    "word": "Condensation",
+    "definition": "(已学习词汇 - niveau 1)",
+    "example": "单词 \"Condensation\" 已在之前的课程中学习。",
+    "niveau": 2
+  },
+  {
+    "word": "Détermination",
+    "definition": "(已学习词汇 - niveau 3)",
+    "example": "单词 \"Détermination\" 已在之前的课程中学习。",
+    "niveau": 2
+  },
+  {
+    "word": "Volcan",
+    "definition": "(已学习词汇 - niveau 1)",
+    "example": "单词 \"Volcan\" 已在之前的课程中学习。",
+    "niveau": 2
+  },
+  {
+    "word": "Générosité",
+    "definition": "Mot français: Générosité",
+    "example": "Exemple avec le mot \"Générosité\".",
+    "niveau": 2
+  },
+  {
+    "word": "Portrait",
+    "definition": "(已学习词汇 - niveau 3)",
+    "example": "单词 \"Portrait\" 已在之前的课程中学习。",
+    "niveau": 2
+  },
+  {
+    "word": "imprévisible",
+    "definition": "(已学习词汇 - niveau 4)",
+    "example": "单词 \"imprévisible\" 已在之前的课程中学习。",
+    "niveau": 3
+  },
+  {
+    "word": "Microscope",
+    "definition": "(已学习词汇 - niveau 3)",
+    "example": "单词 \"Microscope\" 已在之前的课程中学习。",
+    "niveau": 2
+  },
+  {
+    "word": "Démocratie",
+    "definition": "Mot français: Démocratie",
+    "example": "Exemple avec le mot \"Démocratie\".",
+    "niveau": 2
+  },
+  {
+    "word": "Empathie",
+    "definition": "(已学习词汇 - niveau 1)",
+    "example": "单词 \"Empathie\" 已在之前的课程中学习。",
+    "niveau": 2
+  },
+  {
+    "word": "Protagoniste",
+    "definition": "(已学习词汇 - niveau 3)",
+    "example": "单词 \"Protagoniste\" 已在之前的课程中学习。",
+    "niveau": 2
+  },
+  {
+    "word": "Robot",
+    "definition": "Mot français: Robot",
+    "example": "Exemple avec le mot \"Robot\".",
+    "niveau": 2
+  },
+  {
+    "word": "Caméléon",
+    "definition": "(已学习词汇 - niveau 3)",
+    "example": "单词 \"Caméléon\" 已在之前的课程中学习。",
+    "niveau": 2
+  },
+  {
+    "word": "Hippopotame",
+    "definition": "(已学习词汇 - niveau 1)",
+    "example": "单词 \"Hippopotame\" 已在之前的课程中学习。",
+    "niveau": 2
+  },
+  {
+    "word": "Électricité",
+    "definition": "(已学习词汇 - niveau 3)",
+    "example": "单词 \"Électricité\" 已在之前的课程中学习。",
+    "niveau": 2
+  },
+  {
+    "word": "Persévérance",
+    "definition": "(已学习词汇 - niveau 3)",
+    "example": "单词 \"Persévérance\" 已在之前的课程中学习。",
+    "niveau": 2
+  },
+  {
+    "word": "Isolant",
+    "definition": "(已学习词汇 - niveau 3)",
+    "example": "单词 \"Isolant\" 已在之前的课程中学习。",
+    "niveau": 2
+  },
+  {
+    "word": "Chat",
+    "definition": "Mot français: Chat",
+    "example": "Exemple avec le mot \"Chat\".",
+    "niveau": 2
+  },
+  {
+    "word": "Friction",
+    "definition": "(已学习词汇 - niveau 0)",
+    "example": "单词 \"Friction\" 已在之前的课程中学习。",
+    "niveau": 2
+  },
+  {
+    "word": "stylo",
+    "definition": "钢笔",
+    "example": "J'écris avec un stylo bleu.",
+    "niveau": 1
+  },
+  {
+    "word": "Mutation",
+    "definition": "(已学习词汇 - niveau 2)",
+    "example": "单词 \"Mutation\" 已在之前的课程中学习。",
+    "niveau": 2
+  },
+  {
+    "word": "vigoureux",
+    "definition": "(已学习词汇 - niveau 4)",
+    "example": "单词 \"vigoureux\" 已在之前的课程中学习。",
+    "niveau": 3
+  },
+  {
+    "word": "Résistance",
+    "definition": "(已学习词汇 - niveau 2)",
+    "example": "单词 \"Résistance\" 已在之前的课程中学习。",
+    "niveau": 2
+  },
+  {
+    "word": "Sculpture",
+    "definition": "Mot français: Sculpture",
+    "example": "Exemple avec le mot \"Sculpture\".",
+    "niveau": 2
+  },
+  {
+    "word": "Désert",
+    "definition": "Mot français: Désert",
+    "example": "Exemple avec le mot \"Désert\".",
+    "niveau": 2
+  },
+  {
+    "word": "Mémoire",
+    "definition": "(已学习词汇 - niveau 2)",
+    "example": "单词 \"Mémoire\" 已在之前的课程中学习。",
+    "niveau": 2
+  },
+  {
+    "word": "Jardin",
+    "definition": "Mot français: Jardin",
+    "example": "Exemple avec le mot \"Jardin\".",
+    "niveau": 2
+  },
+  {
+    "word": "Soleil",
+    "definition": "Mot français: Soleil",
+    "example": "Exemple avec le mot \"Soleil\".",
+    "niveau": 2
+  },
+  {
+    "word": "Conscience",
+    "definition": "(已学习词汇 - niveau 3)",
+    "example": "单词 \"Conscience\" 已在之前的课程中学习。",
+    "niveau": 2
   }
 ]
