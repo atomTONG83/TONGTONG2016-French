@@ -191,7 +191,7 @@
         // ===== STATE =====
         let gData = { stars: 100, notebook: [], daily_stats: { date: "", completed: false, words: [] }, last_milestone: 0 };
         let sessionMastery = {}; 
-        let gMistakes = {}; // 恢复备份版本：记录第一次错误
+        let errorStreak = {}; // 修改：记录连续错误次数（连续2次错误才惩罚）
         let gTodayWords = [];
         let gGameMode = 'new';
         let gCombo = 0;
@@ -632,7 +632,7 @@
                     gData.stars += 20; // 掌握一个单词额外20星星
                 }
                 gCombo++;
-                delete gMistakes[w]; // 正确回答时清除错误记录
+                errorStreak[w] = 0; // 正确回答时重置连续错误计数
                 speak("Très bien");
                 
                 // 检查是否完成每日目标
@@ -644,25 +644,19 @@
                 }, 1000);
             } else {
                 btn.classList.add('wrong');
-                if (feedbackEl) {
-                    feedbackEl.innerHTML = "❌ Dommage !";
-                    feedbackEl.style.color = "var(--e)";
-                }
-                sessionMastery[w] = 0;
                 allBtns.forEach(function(b) { if(b.innerText === (target.definition || target.def || '')) b.classList.add('correct'); });
                 
-                // 恢复备份版本的错误处理逻辑
-                if (!gMistakes[w]) {
-                    // 第一次错误：只记录，不立即惩罚
-                    gMistakes[w] = 1;
-                    speak("Attention");
-                    setTimeout(function() { 
-                        refreshUI(); 
-                        saveData(); // 自动保存
-                        saveSession(); // 会话保存
-                    }, 1800);
-                } else {
-                    // 第二次错误：惩罚
+                // 记录连续错误次数
+                errorStreak[w] = (errorStreak[w] || 0) + 1;
+                sessionMastery[w] = 0; // 错误时重置正确连续计数
+                
+                if (errorStreak[w] >= 2) {
+                    // 连续2次错误：真正惩罚
+                    if (feedbackEl) {
+                        feedbackEl.innerHTML = "❌ Deux erreurs consécutives ! Niveau réinitialisé.";
+                        feedbackEl.style.color = "var(--e)";
+                    }
+                    
                     gCombo = 0; 
                     if (n) { 
                         n.lvl = 0; 
@@ -678,16 +672,25 @@
                                 feedbackEl.innerHTML = "❌ Mot trop difficile, retiré du carnet.";
                             }
                             speak("Mot retiré");
+                        } else {
+                            speak("Dommage, niveau réinitialisé");
                         }
                     }
-                    delete gMistakes[w];
-                    speak("Dommage");
-                    setTimeout(function() { 
-                        refreshUI(); 
-                        saveData(); // 自动保存
-                        saveSession(); // 会话保存
-                    }, 1800);
+                    errorStreak[w] = 0; // 重置连续错误计数
+                } else {
+                    // 第一次错误：只警告
+                    if (feedbackEl) {
+                        feedbackEl.innerHTML = "⚠️ Première erreur. Une autre erreur consécutive réinitialisera le niveau.";
+                        feedbackEl.style.color = "#f39c12";
+                    }
+                    speak("Attention");
                 }
+                
+                setTimeout(function() { 
+                    refreshUI(); 
+                    saveData(); // 自动保存
+                    saveSession(); // 会话保存
+                }, 1800);
             }
         }
         
