@@ -498,17 +498,47 @@
       "lvl": 1,
       "next": "2026-03-01",
       "err_days": 0
+    },
+    {
+      "word": "site web",
+      "lvl": 0,
+      "next": "2026-02-28",
+      "err_days": 0
+    },
+    {
+      "word": "discuter",
+      "lvl": 0,
+      "next": "2026-02-28",
+      "err_days": 0
+    },
+    {
+      "word": "harmonie",
+      "lvl": 0,
+      "next": "2026-02-28",
+      "err_days": 0
+    },
+    {
+      "word": "cent",
+      "lvl": 0,
+      "next": "2026-02-28",
+      "err_days": 0
+    },
+    {
+      "word": "plaine",
+      "lvl": 0,
+      "next": "2026-02-28",
+      "err_days": 0
     }
   ],
   "daily_stats": {
-    "date": "2026-02-27",
-    "completed": true,
+    "date": "2026-02-28",
+    "completed": false,
     "words": [
-      "source",
-      "important",
-      "accueillir",
-      "raison",
-      "honn\u00eate"
+      "site web",
+      "discuter",
+      "harmonie",
+      "cent",
+      "plaine"
     ]
   },
   "last_milestone": 1000
