@@ -1,5 +1,5 @@
 {
-  "stars": 1900,
+  "stars": 2000,
   "notebook": [
     {
       "word": "Sinc\u00e9rit\u00e9",
@@ -519,8 +519,8 @@
     },
     {
       "word": "cent",
-      "lvl": 0,
-      "next": "2026-02-28",
+      "lvl": 1,
+      "next": "2026-03-02",
       "err_days": 0
     },
     {
@@ -532,7 +532,7 @@
   ],
   "daily_stats": {
     "date": "2026-02-28",
-    "completed": false,
+    "completed": true,
     "words": [
       "site web",
       "discuter",
