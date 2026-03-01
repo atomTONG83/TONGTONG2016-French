@@ -118,6 +118,7 @@
             </div>
             <div class="progress-container"><div class="bar bar-new" id="bar-n"></div><div class="bar bar-rev" id="bar-r"></div></div>
             <div id="ui-completion-status" style="text-align:center; margin-top:5px; font-weight:bold; font-size:0.9em;"></div>
+            <button id="end-session-btn" class="action-btn" style="width:100%; margin-top:10px; background-color:var(--p);" onclick="checkReviewBeforeEnd()">Terminer la séance</button>
         </div>
 
         <div class="card">
@@ -394,6 +395,56 @@
             } catch(e) {}
         }
         
+        function updateProgressBars() {
+            // 计算新词进度
+            var todayWords = gTodayWords || [];
+            var masteredToday = 0;
+            todayWords.forEach(function(tw) {
+                if (sessionMastery[tw.word] >= MASTERY_GOAL) {
+                    masteredToday++;
+                }
+            });
+            var newProgress = todayWords.length > 0 ? (masteredToday / todayWords.length) * 100 : 100;
+            
+            // 计算复习词进度
+            var reviewStatus = getReviewCompletionStatus();
+            var reviewProgress = reviewStatus.total > 0 ? (reviewStatus.mastered / reviewStatus.total) * 100 : 100;
+            
+            // 更新进度条宽度
+            var barNewEl = document.getElementById('bar-n');
+            var barRevEl = document.getElementById('bar-r');
+            var progressTextEl = document.getElementById('ui-progress');
+            var completionStatusEl = document.getElementById('ui-completion-status');
+            
+            if (barNewEl) barNewEl.style.width = newProgress + '%';
+            if (barRevEl) barRevEl.style.width = reviewProgress + '%';
+            
+            // 更新进度文本
+            if (progressTextEl) {
+                progressTextEl.textContent = Math.round((newProgress + reviewProgress) / 2) + '%';
+            }
+            
+            // 更新完成状态文本
+            if (completionStatusEl) {
+                if (todayWords.length === 0 && reviewStatus.total === 0) {
+                    completionStatusEl.textContent = "✅ Aucun mot à apprendre aujourd'hui. Repose-toi !";
+                    completionStatusEl.style.color = '#2ecc71';
+                } else if (newProgress === 100 && reviewProgress === 100) {
+                    completionStatusEl.textContent = "✅ Bravo ! Tous les mots du jour et révisions terminés !";
+                    completionStatusEl.style.color = '#2ecc71';
+                } else if (newProgress === 100 && reviewProgress < 100) {
+                    completionStatusEl.textContent = "⚠️ Nouveaux mots terminés. Révisions restantes: " + (reviewStatus.total - reviewStatus.mastered) + "/" + reviewStatus.total;
+                    completionStatusEl.style.color = '#f39c12';
+                } else if (newProgress < 100 && reviewProgress === 100) {
+                    completionStatusEl.textContent = "ℹ️ Révisions terminées. Nouveaux mots restants: " + (todayWords.length - masteredToday) + "/" + todayWords.length;
+                    completionStatusEl.style.color = '#3498db';
+                } else {
+                    completionStatusEl.textContent = "📚 En cours: Nouveaux " + masteredToday + "/" + todayWords.length + " | Révisions " + reviewStatus.mastered + "/" + reviewStatus.total;
+                    completionStatusEl.style.color = '#666';
+                }
+            }
+        }
+        
         function refreshUI() {
             var starsEl = document.getElementById('ui-stars');
             var trophiesEl = document.getElementById('ui-trophies');
@@ -411,6 +462,7 @@
                 }).join('');
             }
             
+            updateProgressBars();
             updateQuiz();
         }
         
@@ -694,8 +746,31 @@
             }
         }
         
+        function getReviewCompletionStatus() {
+            const today = new Date().toISOString().split('T')[0];
+            const currentDB = getCurrentDB();
+            let reviewWords = [];
+            if (gData.notebook) {
+                reviewWords = currentDB.filter(function(v) { 
+                    const n = gData.notebook.find(function(e) { return e.word === v.word; }); 
+                    return n && n.next <= today && !gTodayWords.some(function(tw) { return tw.word === v.word; });
+                });
+            }
+            let masteredReview = 0;
+            reviewWords.forEach(function(w) {
+                if (sessionMastery[w.word] >= MASTERY_GOAL) {
+                    masteredReview++;
+                }
+            });
+            return {
+                total: reviewWords.length,
+                mastered: masteredReview,
+                completed: reviewWords.length === 0 || masteredReview >= reviewWords.length
+            };
+        }
+        
         function checkDailyCompletion() {
-            // 计算今日进度
+            // 计算今日新词进度
             var todayWords = gTodayWords || [];
             var masteredToday = 0;
             
@@ -705,19 +780,57 @@
                 }
             });
             
-            // 如果掌握了所有今日单词且尚未完成
-            if (masteredToday >= todayWords.length && !gData.daily_stats.completed) {
+            // 计算复习词进度
+            var reviewStatus = getReviewCompletionStatus();
+            
+            // 如果掌握了所有今日新词 AND 完成了所有待复习旧词，且尚未标记为完成
+            if (masteredToday >= todayWords.length && reviewStatus.completed && !gData.daily_stats.completed) {
                 gData.daily_stats.completed = true;
                 if (!gData.stars) gData.stars = 0;
-                gData.stars += 100; // 核心奖励：完成每日所有5个单词掌握，获得100星星
+                gData.stars += 100; // 核心奖励：完成每日所有新词+所有待复习旧词，获得100星星
                 
                 setTimeout(function() { 
-                    document.getElementById('rew-val').innerText = "🎉 Magnifique !\nTu as maîtrisé tous les mots !\n+100 étoiles !"; 
+                    document.getElementById('rew-val').innerText = "🎉 Magnifique !\nTu as maîtrisé tous les mots du jour et terminé toutes les révisions !\n+100 étoiles !"; 
                     openModal('rewardModal'); 
                     speak("Félicitations"); 
                     saveData(); // 立即同步数据
                 }, 500);
+            } else if (masteredToday >= todayWords.length && !reviewStatus.completed) {
+                // 新词已完成但复习未完成，提示用户
+                setTimeout(function() {
+                    document.getElementById('rew-val').innerText = "⚠️ Attention !\nTu as maîtrisé les nouveaux mots, mais il reste " + (reviewStatus.total - reviewStatus.mastered) + " mot(s) à réviser.\nTermine toutes les révisions pour obtenir tes 100 étoiles !"; 
+                    openModal('rewardModal');
+                    speak("Révisions manquantes");
+                }, 500);
             }
+        }
+        
+        function checkReviewBeforeEnd() {
+            var reviewStatus = getReviewCompletionStatus();
+            var todayWords = gTodayWords || [];
+            var masteredToday = 0;
+            todayWords.forEach(function(tw) {
+                if (sessionMastery[tw.word] >= MASTERY_GOAL) {
+                    masteredToday++;
+                }
+            });
+            var newWordsCompleted = masteredToday >= todayWords.length;
+            if (!newWordsCompleted) {
+                document.getElementById('rew-val').innerText = "⚠️ Tu n'as pas encore terminé tous les nouveaux mots du jour. Continue !";
+                openModal('rewardModal');
+                speak("Continue");
+                return;
+            }
+            if (!reviewStatus.completed) {
+                document.getElementById('rew-val').innerText = "⚠️ Attention !\nIl reste " + (reviewStatus.total - reviewStatus.mastered) + " mot(s) à réviser.\nTermine toutes les révisions pour obtenir tes 100 étoiles !";
+                openModal('rewardModal');
+                speak("Révisions manquantes");
+                return;
+            }
+            // 如果新词和复习都已完成，则显示成功消息
+            document.getElementById('rew-val').innerText = "🎉 Félicitations !\nTu as terminé tous les nouveaux mots et toutes les révisions du jour.\nTu as gagné 100 étoiles !";
+            openModal('rewardModal');
+            speak("Bravo");
         }
         
         function openNotebook() {
