@@ -528,16 +528,47 @@
       "lvl": 1,
       "next": "2026-03-02",
       "err_days": 0
+    },
+    {
+      "word": "\u00e9tranger",
+      "lvl": 0,
+      "next": "2026-03-01",
+      "err_days": 0
+    },
+    {
+      "word": "imprimante",
+      "lvl": 0,
+      "next": "2026-03-01",
+      "err_days": 0
+    },
+    {
+      "word": "chaleureux",
+      "lvl": 0,
+      "next": "2026-03-01",
+      "err_days": 0
+    },
+    {
+      "word": "dipl\u00f4me",
+      "lvl": 0,
+      "next": "2026-03-01",
+      "err_days": 0
+    },
+    {
+      "word": "ob\u00e9issant",
+      "lvl": 0,
+      "next": "2026-03-01",
+      "err_days": 0
     }
   ],
   "daily_stats": {
-    "date": "2026-02-28",
-    "completed": true,
+    "date": "2026-03-01",
+    "completed": false,
     "words": [
-      "discuter",
-      "harmonie",
-      "cent",
-      "plaine"
+      "\u00e9tranger",
+      "imprimante",
+      "chaleureux",
+      "dipl\u00f4me",
+      "ob\u00e9issant"
     ]
   },
   "last_milestone": 1000
