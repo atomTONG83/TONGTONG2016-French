@@ -748,17 +748,17 @@
         
         function getReviewCompletionStatus() {
             const today = new Date().toISOString().split('T')[0];
-            const currentDB = getCurrentDB();
             let reviewWords = [];
             if (gData.notebook) {
-                reviewWords = currentDB.filter(function(v) { 
-                    const n = gData.notebook.find(function(e) { return e.word === v.word; }); 
-                    return n && n.next <= today && !gTodayWords.some(function(tw) { return tw.word === v.word; });
+                // 修改逻辑：以笔记本为准，而不是以数据库为准
+                reviewWords = gData.notebook.filter(function(n) { 
+                    // 必须是今天或之前需要复习的，且不是今天刚学的新词
+                    return n.next <= today && !gData.daily_stats.words.includes(n.word);
                 });
             }
             let masteredReview = 0;
-            reviewWords.forEach(function(w) {
-                if (sessionMastery[w.word] >= MASTERY_GOAL) {
+            reviewWords.forEach(function(n) {
+                if ((sessionMastery[n.word] || 0) >= MASTERY_GOAL) {
                     masteredReview++;
                 }
             });
