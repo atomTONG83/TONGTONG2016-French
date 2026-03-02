@@ -60,6 +60,32 @@
         .nb-word-due { background: #fff3cd !important; border-left: 4px solid #ffc107 !important; }
         .nb-word-error { background: #f8d7da !important; border-left: 4px solid #dc3545 !important; }
         
+        /* 版本信息样式 */
+        .version-info {
+            text-align: center;
+            margin: 5px 0 15px 0;
+            font-size: 0.75em;
+            color: #666;
+            background: #f8f9fa;
+            padding: 6px 12px;
+            border-radius: 15px;
+            display: inline-block;
+            border: 1px solid #e9ecef;
+        }
+        .version-badge {
+            background: #6c757d;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.7em;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        .version-date {
+            color: #495057;
+            font-style: italic;
+        }
+        
         /* iPad/移动设备优化 */
         @media (max-width: 768px) {
             .modal-content {
@@ -101,6 +127,12 @@
                 <a href="index.html" style="text-decoration: none; color: var(--p); font-weight: bold; font-size: 0.9em;">← Retour</a>
             </div>
             <h1>💎 Le Trésor des Mots de Jingyi <span class="lvl-badge" style="background:var(--w); color:black; padding:6px 12px; font-size:0.5em;">CM1</span></h1>
+            <div style="text-align: center; margin: 5px 0 10px 0;">
+                <div class="version-info">
+                    <span class="version-badge">v3.2</span>
+                    <span class="version-date">Dernière mise à jour: 2026-03-02</span>
+                </div>
+            </div>
             <p id="ui-date" style="font-weight: bold; color: var(--p); font-size: 1.1em; margin: 10px 0;"></p>
             <p style="color: #666; font-size: 0.9em;">Mission : Maîtrise tous les mots !</p>
         </div>
