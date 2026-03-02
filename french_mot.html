@@ -269,9 +269,10 @@
         const FULL_DB_PATH = "./french_full_db.json";
         
         // 版本信息
-        const APP_VERSION = "3.3";
+        const APP_VERSION = "3.4";
         const LAST_UPDATE = "2026-03-02";
         const VERSION_CHANGES = [
+            "v3.4 (2026-03-02): Correction iPad - affichage forcé de l'état 'terminé' lorsque les données indiquent la complétion",
             "v3.3 (2026-03-02): Correction complète de la sauvegarde de session - les progrès ne sont plus perdus au rafraîchissement",
             "v3.2 (2026-03-02): Réduction des popups, feedback visuel simplifié",
             "v3.1 (2026-02-26): Système de récompense optimisé",
@@ -385,6 +386,16 @@
                     return findWordInDB(w);
                 }).filter(function(x) { return x; });
                 
+                // 🔧 iPAD FIX: Ensure sessionMastery has today's words if completed
+                if (gData.daily_stats.date === today && gData.daily_stats.completed === true) {
+                    console.log('📱 iPad Fix: Today is marked completed, setting sessionMastery');
+                    gTodayWords.forEach(function(tw) {
+                        if (tw && tw.word) {
+                            sessionMastery[tw.word] = MASTERY_GOAL;
+                        }
+                    });
+                }
+                
                 updateSyncStatus("Prêt", "#2ecc71");
                 
             } catch (e) {
@@ -451,6 +462,21 @@
             var progressTextEl = document.getElementById('ui-progress');
             var completionStatusEl = document.getElementById('ui-completion-status');
             
+            // 🔧 FIX FOR iPAD: If data says completed, force show completed
+            var today = new Date().toISOString().split('T')[0];
+            var shouldShowCompleted = false;
+            
+            if (gData && gData.daily_stats && gData.daily_stats.date === today && gData.daily_stats.completed === true) {
+                shouldShowCompleted = true;
+                console.log('📱 iPad Fix: Data shows completed for today, forcing display');
+            }
+            
+            if (shouldShowCompleted) {
+                // Force 100% progress
+                newProgress = 100;
+                reviewProgress = 100;
+            }
+            
             if (barNewEl) barNewEl.style.width = newProgress + '%';
             if (barRevEl) barRevEl.style.width = reviewProgress + '%';
             
@@ -461,7 +487,11 @@
             
             // 更新完成状态文本
             if (completionStatusEl) {
-                if (todayWords.length === 0 && reviewStatus.total === 0) {
+                if (shouldShowCompleted) {
+                    // 🔧 FORCE SHOW COMPLETED FOR iPAD
+                    completionStatusEl.textContent = "✅ Bravo ! Tous les mots du jour et révisions terminés !";
+                    completionStatusEl.style.color = '#2ecc71';
+                } else if (todayWords.length === 0 && reviewStatus.total === 0) {
                     completionStatusEl.textContent = "✅ Aucun mot à apprendre aujourd'hui. Repose-toi !";
                     completionStatusEl.style.color = '#2ecc71';
                 } else if (newProgress === 100 && reviewProgress === 100) {
