@@ -128,7 +128,7 @@
             </div>
             <h1>💎 Le Trésor des Mots de Jingyi <span class="lvl-badge" style="background:var(--w); color:black; padding:6px 12px; font-size:0.5em;">CM1</span></h1>
             <div style="text-align: center; margin: 5px 0 10px 0;">
-                <div class="version-info">
+                <div class="version-info" id="version-display">
                     <span class="version-badge">v3.2</span>
                     <span class="version-date">Dernière mise à jour: 2026-03-02</span>
                 </div>
@@ -266,6 +266,17 @@
         // 完整数据库（从外部文件加载）
         let FULL_DB = null;
         const FULL_DB_PATH = "./french_full_db.json";
+        
+        // 版本信息
+        const APP_VERSION = "3.2";
+        const LAST_UPDATE = "2026-03-02";
+        const VERSION_CHANGES = [
+            "v3.2 (2026-03-02): Réduction des popups, feedback visuel simplifié",
+            "v3.1 (2026-02-26): Système de récompense optimisé",
+            "v3.0 (2026-02-25): Interface responsive pour iPad",
+            "v2.0 (2026-02-20): Système d'apprentissage par répétition espacée",
+            "v1.0 (2026-02-18): Version initiale avec 44 mots"
+        ];
         
         // ===== HELPER FUNCTIONS =====
         async function loadFullDatabase() {
