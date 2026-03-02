@@ -378,7 +378,7 @@
                     generateDailyWords(today);
                 }
                 
-                loadSessionMastery(today);
+
                 
                 gTodayWords = gData.daily_stats.words.map(function(w) {
                     return findWordInDB(w);
@@ -417,23 +417,7 @@
             try { localStorage.removeItem('french_session_mastery'); } catch(e) {}
         }
         
-        function loadSessionMastery(today) {
-            try {
-                const saved = localStorage.getItem('french_session_mastery');
-                if (saved) {
-                    const parsed = JSON.parse(saved);
-                    if (parsed.date === today) {
-                        sessionMastery = parsed.data || {};
-                    } else {
-                        sessionMastery = {};
-                    }
-                } else {
-                    sessionMastery = {};
-                }
-            } catch (e) {
-                sessionMastery = {};
-            }
-        }
+
         
         function updateSyncStatus(msg, bg) {
             try {
@@ -589,7 +573,7 @@
                     timestamp: new Date().toISOString()
                 };
                 localStorage.setItem('french_session_data', JSON.stringify(sessionData));
-                console.log('Session saved for date:', today);
+                console.log('Session saved for date:', today, 'sessionMastery:', Object.keys(sessionMastery).length, 'words');
             } catch(e) {
                 console.error('Session save error:', e);
             }
@@ -598,6 +582,12 @@
         function loadSession() {
             try {
                 var today = new Date().toISOString().split('T')[0];
+                
+                // 清理旧键名数据（兼容性处理）
+                try {
+                    localStorage.removeItem('french_session_mastery');
+                } catch(e) {}
+                
                 var saved = localStorage.getItem('french_session_data');
                 if (saved) {
                     var sessionData = JSON.parse(saved);
@@ -606,7 +596,7 @@
                         sessionMastery = sessionData.sessionMastery || {};
                         gMistakes = sessionData.gMistakes || {};
                         gCombo = sessionData.gCombo || 0;
-                        console.log('Session loaded for date:', today);
+                        console.log('Session loaded for date:', today, 'sessionMastery:', Object.keys(sessionMastery).length, 'words');
                     } else {
                         // 如果是不同日期，清空会话状态
                         sessionMastery = {};
@@ -614,6 +604,11 @@
                         gCombo = 0;
                         console.log('New day, session reset');
                     }
+                } else {
+                    console.log('No session data found');
+                    sessionMastery = {};
+                    gMistakes = {};
+                    gCombo = 0;
                 }
             } catch(e) {
                 console.error('Session load error:', e);
