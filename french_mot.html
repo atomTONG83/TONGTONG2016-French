@@ -320,6 +320,12 @@
                     dateEl.innerText = new Date().toLocaleDateString('fr-FR', { weekday:'long', day:'numeric', month:'long' });
                 }
                 
+                // 更新版本显示
+                var versionEl = document.getElementById('version-display');
+                if (versionEl) {
+                    versionEl.innerHTML = '<span class="version-badge">v' + APP_VERSION + '</span><span class="version-date">Dernière mise à jour: ' + LAST_UPDATE + '</span>';
+                }
+                
                 const today = new Date().toISOString().split('T')[0];
                 
                 const isLocal = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" || window.location.hostname === MAC_IP);
