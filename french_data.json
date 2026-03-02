@@ -1,4 +1,6 @@
 {
   "test": "data",
-  "timestamp": "2026-03-02T21:45:00"
+  "timestamp": "2026-03-02T21:45:00",
+  "stars": 100,
+  "test_timestamp": "2026-03-02T21:50:00"
 }
