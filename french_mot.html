@@ -225,6 +225,7 @@
         let gData = { stars: 100, notebook: [], daily_stats: { date: "", completed: false, words: [] }, last_milestone: 0 };
         let sessionMastery = {}; 
         let errorStreak = {}; // 修改：记录连续错误次数（连续2次错误才惩罚）
+        let gMistakes = {};   // 新增：记录错误统计
         let gTodayWords = [];
         let gGameMode = 'new';
         let gCombo = 0;
