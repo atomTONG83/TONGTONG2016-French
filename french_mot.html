@@ -680,12 +680,15 @@
                     d.setDate(d.getDate() + INTERVALS[n.lvl]);
                     n.next = d.toISOString().split('T')[0];
                     
-                    // 移除掌握奖励
-                    // gData.stars += 20; 
+                    // 掌握单词时的轻量庆祝
+                    if (feedbackEl) {
+                        feedbackEl.innerHTML = "🎉 Mot maîtrisé ! Niveau " + n.lvl + " atteint !";
+                        feedbackEl.style.color = "#9b59b6";
+                    }
+                    speak("Bravo");
                 }
                 gCombo++;
                 errorStreak[w] = 0; // 正确回答时重置连续错误计数
-                speak("Très bien");
                 
                 // 检查是否完成每日目标
                 checkDailyCompletion();
@@ -705,7 +708,7 @@
                 if (errorStreak[w] >= 2) {
                     // 连续2次错误：真正惩罚
                     if (feedbackEl) {
-                        feedbackEl.innerHTML = "❌ Deux erreurs consécutives ! Niveau réinitialisé.";
+                        feedbackEl.innerHTML = "❌ Niveau réinitialisé";
                         feedbackEl.style.color = "var(--e)";
                     }
                     
@@ -721,18 +724,18 @@
                         if (n.err_days >= 2) {
                             gData.notebook = gData.notebook.filter(function(e) { return e.word !== w; });
                             if (feedbackEl) {
-                                feedbackEl.innerHTML = "❌ Mot trop difficile, retiré du carnet.";
+                                feedbackEl.innerHTML = "❌ Mot retiré du carnet";
                             }
                             speak("Mot retiré");
                         } else {
-                            speak("Dommage, niveau réinitialisé");
+                            speak("Dommage");
                         }
                     }
                     errorStreak[w] = 0; // 重置连续错误计数
                 } else {
-                    // 第一次错误：只警告
+                    // 第一次错误：简洁提示
                     if (feedbackEl) {
-                        feedbackEl.innerHTML = "⚠️ Première erreur. Une autre erreur consécutive réinitialisera le niveau.";
+                        feedbackEl.innerHTML = "⚠️ Première erreur";
                         feedbackEl.style.color = "#f39c12";
                     }
                     speak("Attention");
@@ -795,14 +798,9 @@
                     speak("Félicitations"); 
                     saveData(); // 立即同步数据
                 }, 500);
-            } else if (masteredToday >= todayWords.length && !reviewStatus.completed) {
-                // 新词已完成但复习未完成，提示用户
-                setTimeout(function() {
-                    document.getElementById('rew-val').innerText = "⚠️ Attention !\nTu as maîtrisé les nouveaux mots, mais il reste " + (reviewStatus.total - reviewStatus.mastered) + " mot(s) à réviser.\nTermine toutes les révisions pour obtenir tes 100 étoiles !"; 
-                    openModal('rewardModal');
-                    speak("Révisions manquantes");
-                }, 500);
             }
+            // 移除新词已完成但复习未完成的提示（避免频繁弹窗）
+            // 用户可以通过点击"结束今日学习"按钮来查看进度
         }
         
         function checkReviewBeforeEnd() {
