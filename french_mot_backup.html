@@ -161,7 +161,7 @@
         document.getElementById('sync-status').style.background = "#9b59b6";
         
         const MAC_IP = "192.168.32.70";
-        const PORT = "8888";
+        const PORT = "8889";
         // API address - detect if running on Mac mini or remote
         const isLocal = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" || window.location.hostname === MAC_IP || window.location.hostname === "TONGdeMac-mini.local");
         const API = isLocal ? `http://${window.location.hostname}:${PORT}` : `http://${MAC_IP}:${PORT}`;
