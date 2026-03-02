@@ -515,14 +515,7 @@
             updateQuiz();
         }
         
-        function saveSession() {
-            try {
-                localStorage.setItem('french_session_mastery', JSON.stringify({ 
-                    date: new Date().toISOString().split('T')[0], 
-                    data: sessionMastery 
-                }));
-            } catch(e) {}
-        }
+
         
         async function saveData() {
             try {
@@ -585,15 +578,17 @@
         
         function saveSession() {
             try {
-                // 保存会话状态，防止网络问题导致进度丢失
+                // 保存会话状态，防止页面刷新导致进度丢失
+                var today = new Date().toISOString().split('T')[0];
                 var sessionData = {
                     sessionMastery: sessionMastery,
-                    gMistakes: gMistakes,
-                    gCombo: gCombo,
+                    gMistakes: gMistakes || {},
+                    gCombo: gCombo || 0,
+                    date: today,  // 添加日期标记
                     timestamp: new Date().toISOString()
                 };
                 localStorage.setItem('french_session_data', JSON.stringify(sessionData));
-                console.log('Session saved');
+                console.log('Session saved for date:', today);
             } catch(e) {
                 console.error('Session save error:', e);
             }
@@ -601,16 +596,29 @@
         
         function loadSession() {
             try {
+                var today = new Date().toISOString().split('T')[0];
                 var saved = localStorage.getItem('french_session_data');
                 if (saved) {
                     var sessionData = JSON.parse(saved);
-                    sessionMastery = sessionData.sessionMastery || {};
-                    gMistakes = sessionData.gMistakes || {};
-                    gCombo = sessionData.gCombo || 0;
-                    console.log('Session loaded');
+                    // 只恢复当天的会话数据
+                    if (sessionData.date === today) {
+                        sessionMastery = sessionData.sessionMastery || {};
+                        gMistakes = sessionData.gMistakes || {};
+                        gCombo = sessionData.gCombo || 0;
+                        console.log('Session loaded for date:', today);
+                    } else {
+                        // 如果是不同日期，清空会话状态
+                        sessionMastery = {};
+                        gMistakes = {};
+                        gCombo = 0;
+                        console.log('New day, session reset');
+                    }
                 }
             } catch(e) {
                 console.error('Session load error:', e);
+                sessionMastery = {};
+                gMistakes = {};
+                gCombo = 0;
             }
         }
         
@@ -744,7 +752,8 @@
                 
                 setTimeout(function() { 
                     refreshUI(); 
-                    saveData(); // 自动保存
+                    saveData(); // 自动保存到服务器
+                    saveSession(); // 保存会话状态到 localStorage
                 }, 1000);
             } else {
                 btn.classList.add('wrong');
@@ -1041,6 +1050,20 @@
         window.onclick = function(e) {
             if (e.target.className === 'modal') e.target.style.display = "none";
         };
+        
+        // 页面卸载前自动保存会话状态
+        window.addEventListener('beforeunload', function(e) {
+            saveSession();
+            console.log('Session saved before page unload');
+        });
+        
+        // 页面可见性变化时保存
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                saveSession();
+                console.log('Session saved on page hide');
+            }
+        });
         
         window.onload = init;
     </script>
