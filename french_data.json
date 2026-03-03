@@ -1,4 +1,599 @@
 {
-  "stars": 2150,
-  "notebook": []
+  "stars": 2100,
+  "notebook": [
+    {
+      "word": "Sinc\u00e9rit\u00e9",
+      "lvl": 3,
+      "next": "2026-03-06",
+      "err_days": 0
+    },
+    {
+      "word": "Perspective",
+      "lvl": 3,
+      "next": "2026-03-04",
+      "err_days": 0
+    },
+    {
+      "word": "G\u00e9n\u00e9tique",
+      "lvl": 2,
+      "next": "2026-03-03",
+      "err_days": 0
+    },
+    {
+      "word": "Pr\u00e9histoire",
+      "lvl": 3,
+      "next": "2026-03-04",
+      "err_days": 0
+    },
+    {
+      "word": "\u00c9quilibre",
+      "lvl": 3,
+      "next": "2026-03-04",
+      "err_days": 0
+    },
+    {
+      "word": "Climax",
+      "lvl": 3,
+      "next": "2026-03-04",
+      "err_days": 0
+    },
+    {
+      "word": "Friction",
+      "lvl": 2,
+      "next": "2026-03-03",
+      "err_days": 0
+    },
+    {
+      "word": "Conservation",
+      "lvl": 3,
+      "next": "2026-03-04",
+      "err_days": 0
+    },
+    {
+      "word": "D\u00e9termination",
+      "lvl": 3,
+      "next": "2026-03-04",
+      "err_days": 0
+    },
+    {
+      "word": "Insecte",
+      "lvl": 3,
+      "next": "2026-03-04",
+      "err_days": 0
+    },
+    {
+      "word": "Chat",
+      "lvl": 3,
+      "next": "2026-03-04",
+      "err_days": 0
+    },
+    {
+      "word": "Vert\u00e8bre",
+      "lvl": 3,
+      "next": "2026-03-04",
+      "err_days": 0
+    },
+    {
+      "word": "Bienveillance",
+      "lvl": 4,
+      "next": "2026-03-11",
+      "err_days": 0
+    },
+    {
+      "word": "Fraternit\u00e9",
+      "lvl": 4,
+      "next": "2026-03-12",
+      "err_days": 0
+    },
+    {
+      "word": "Imagination",
+      "lvl": 4,
+      "next": "2026-03-12",
+      "err_days": 0
+    },
+    {
+      "word": "G\u00e9n\u00e9rosit\u00e9",
+      "lvl": 4,
+      "next": "2026-03-12",
+      "err_days": 0
+    },
+    {
+      "word": "Honn\u00eatet\u00e9",
+      "lvl": 4,
+      "next": "2026-03-12",
+      "err_days": 0
+    },
+    {
+      "word": "Continent",
+      "lvl": 4,
+      "next": "2026-03-16",
+      "err_days": 0
+    },
+    {
+      "word": "\u00c9lectricit\u00e9",
+      "lvl": 4,
+      "next": "2026-03-16",
+      "err_days": 0
+    },
+    {
+      "word": "D\u00e9mocratie",
+      "lvl": 4,
+      "next": "2026-03-17",
+      "err_days": 0
+    },
+    {
+      "word": "Symphonie",
+      "lvl": 1,
+      "next": "2026-03-03",
+      "err_days": 0
+    },
+    {
+      "word": "Protagoniste",
+      "lvl": 4,
+      "next": "2026-03-15",
+      "err_days": 0
+    },
+    {
+      "word": "Microscope",
+      "lvl": 4,
+      "next": "2026-03-15",
+      "err_days": 0
+    },
+    {
+      "word": "Pollinisation",
+      "lvl": 4,
+      "next": "2026-03-16",
+      "err_days": 0
+    },
+    {
+      "word": "Renaissance",
+      "lvl": 4,
+      "next": "2026-03-16",
+      "err_days": 0
+    },
+    {
+      "word": "Portrait",
+      "lvl": 4,
+      "next": "2026-03-17",
+      "err_days": 0
+    },
+    {
+      "word": "Atmosph\u00e8re",
+      "lvl": 4,
+      "next": "2026-03-16",
+      "err_days": 0
+    },
+    {
+      "word": "Fronti\u00e8re",
+      "lvl": 3,
+      "next": "2026-02-28",
+      "err_days": 0
+    },
+    {
+      "word": "Pers\u00e9v\u00e9rance",
+      "lvl": 4,
+      "next": "2026-03-15",
+      "err_days": 0
+    },
+    {
+      "word": "Astronomie",
+      "lvl": 4,
+      "next": "2026-03-15",
+      "err_days": 0
+    },
+    {
+      "word": "Conscience",
+      "lvl": 4,
+      "next": "2026-03-16",
+      "err_days": 0
+    },
+    {
+      "word": "Isolant",
+      "lvl": 4,
+      "next": "2026-03-16",
+      "err_days": 0
+    },
+    {
+      "word": "D\u00e9sert",
+      "lvl": 3,
+      "next": "2026-03-01",
+      "err_days": 0
+    },
+    {
+      "word": "Cam\u00e9l\u00e9on",
+      "lvl": 4,
+      "next": "2026-03-16",
+      "err_days": 0
+    },
+    {
+      "word": "Maison",
+      "lvl": 4,
+      "next": "2026-03-16",
+      "err_days": 0
+    },
+    {
+      "word": "cartable",
+      "lvl": 4,
+      "next": "2026-02-28",
+      "err_days": 0
+    },
+    {
+      "word": "cahier",
+      "lvl": 5,
+      "next": "2026-04-01",
+      "err_days": 0
+    },
+    {
+      "word": "stylo",
+      "lvl": 5,
+      "next": "2026-03-31",
+      "err_days": 0
+    },
+    {
+      "word": "\u00e9merveillement",
+      "lvl": 5,
+      "next": "2026-04-01",
+      "err_days": 0
+    },
+    {
+      "word": "curiosit\u00e9",
+      "lvl": 5,
+      "next": "2026-03-31",
+      "err_days": 0
+    },
+    {
+      "word": "impr\u00e9visible",
+      "lvl": 5,
+      "next": "2026-03-30",
+      "err_days": 0
+    },
+    {
+      "word": "s'\u00e9panouir",
+      "lvl": 4,
+      "next": "2026-02-28",
+      "err_days": 0
+    },
+    {
+      "word": "\u00c9cosyst\u00e8me",
+      "lvl": 4,
+      "next": "2026-03-05",
+      "err_days": 0
+    },
+    {
+      "word": "Cr\u00e9ativit\u00e9",
+      "lvl": 3,
+      "next": "2026-03-06",
+      "err_days": 0
+    },
+    {
+      "word": "Pr\u00e9servation",
+      "lvl": 3,
+      "next": "2026-03-06",
+      "err_days": 0
+    },
+    {
+      "word": "Harmonie",
+      "lvl": 3,
+      "next": "2026-03-06",
+      "err_days": 0
+    },
+    {
+      "word": "Pingouin",
+      "lvl": 3,
+      "next": "2026-03-06",
+      "err_days": 0
+    },
+    {
+      "word": "Sym\u00e9trie",
+      "lvl": 3,
+      "next": "2026-03-06",
+      "err_days": 0
+    },
+    {
+      "word": "Sculpture",
+      "lvl": 3,
+      "next": "2026-03-07",
+      "err_days": 0
+    },
+    {
+      "word": "M\u00e9moire",
+      "lvl": 3,
+      "next": "2026-03-06",
+      "err_days": 0
+    },
+    {
+      "word": "Pr\u00e9nom",
+      "lvl": 3,
+      "next": "2026-03-09",
+      "err_days": 0
+    },
+    {
+      "word": "Analyse",
+      "lvl": 3,
+      "next": "2026-03-07",
+      "err_days": 0
+    },
+    {
+      "word": "R\u00e9sistance",
+      "lvl": 3,
+      "next": "2026-03-09",
+      "err_days": 0
+    },
+    {
+      "word": "Jardin",
+      "lvl": 2,
+      "next": "2026-02-28",
+      "err_days": 0
+    },
+    {
+      "word": "Mutation",
+      "lvl": 3,
+      "next": "2026-03-08",
+      "err_days": 0
+    },
+    {
+      "word": "Architecture",
+      "lvl": 3,
+      "next": "2026-03-07",
+      "err_days": 0
+    },
+    {
+      "word": "Paradoxe",
+      "lvl": 2,
+      "next": "2026-03-01",
+      "err_days": 0
+    },
+    {
+      "word": "Vitesse",
+      "lvl": 3,
+      "next": "2026-03-08",
+      "err_days": 0
+    },
+    {
+      "word": "Chien",
+      "lvl": 2,
+      "next": "2026-03-01",
+      "err_days": 0
+    },
+    {
+      "word": "Argumentation",
+      "lvl": 2,
+      "next": "2026-03-03",
+      "err_days": 0
+    },
+    {
+      "word": "Ind\u00e9pendance",
+      "lvl": 2,
+      "next": "2026-03-03",
+      "err_days": 0
+    },
+    {
+      "word": "Table",
+      "lvl": 3,
+      "next": "2026-03-09",
+      "err_days": 0
+    },
+    {
+      "word": "Hippopotame",
+      "lvl": 3,
+      "next": "2026-03-09",
+      "err_days": 0
+    },
+    {
+      "word": "S\u00e9diment",
+      "lvl": 2,
+      "next": "2026-03-02",
+      "err_days": 0
+    },
+    {
+      "word": "Volcan",
+      "lvl": 2,
+      "next": "2026-03-02",
+      "err_days": 0
+    },
+    {
+      "word": "Robot",
+      "lvl": 3,
+      "next": "2026-03-09",
+      "err_days": 0
+    },
+    {
+      "word": "Soleil",
+      "lvl": 3,
+      "next": "2026-03-09",
+      "err_days": 0
+    },
+    {
+      "word": "Globalisation",
+      "lvl": 3,
+      "next": "2026-03-09",
+      "err_days": 0
+    },
+    {
+      "word": "Biotechnologie",
+      "lvl": 3,
+      "next": "2026-03-09",
+      "err_days": 0
+    },
+    {
+      "word": "Empathie",
+      "lvl": 2,
+      "next": "2026-03-02",
+      "err_days": 0
+    },
+    {
+      "word": "Condensation",
+      "lvl": 2,
+      "next": "2026-03-02",
+      "err_days": 0
+    },
+    {
+      "word": "Vid\u00e9o",
+      "lvl": 2,
+      "next": "2026-03-02",
+      "err_days": 0
+    },
+    {
+      "word": "appr\u00e9cier",
+      "lvl": 3,
+      "next": "2026-03-05",
+      "err_days": 0
+    },
+    {
+      "word": "unique",
+      "lvl": 3,
+      "next": "2026-03-05",
+      "err_days": 0
+    },
+    {
+      "word": "milliard",
+      "lvl": 3,
+      "next": "2026-03-05",
+      "err_days": 0
+    },
+    {
+      "word": "boucherie",
+      "lvl": 3,
+      "next": "2026-03-05",
+      "err_days": 0
+    },
+    {
+      "word": "mille",
+      "lvl": 3,
+      "next": "2026-03-05",
+      "err_days": 0
+    },
+    {
+      "word": "source",
+      "lvl": 2,
+      "next": "2026-03-03",
+      "err_days": 0
+    },
+    {
+      "word": "important",
+      "lvl": 2,
+      "next": "2026-03-03",
+      "err_days": 0
+    },
+    {
+      "word": "accueillir",
+      "lvl": 2,
+      "next": "2026-03-03",
+      "err_days": 0
+    },
+    {
+      "word": "raison",
+      "lvl": 1,
+      "next": "2026-03-01",
+      "err_days": 0
+    },
+    {
+      "word": "honn\u00eate",
+      "lvl": 1,
+      "next": "2026-03-01",
+      "err_days": 0
+    },
+    {
+      "word": "site web",
+      "lvl": 2,
+      "next": "2026-03-06",
+      "err_days": 0
+    },
+    {
+      "word": "discuter",
+      "lvl": 1,
+      "next": "2026-03-02",
+      "err_days": 0
+    },
+    {
+      "word": "harmonie",
+      "lvl": 2,
+      "next": "2026-03-06",
+      "err_days": 0
+    },
+    {
+      "word": "cent",
+      "lvl": 1,
+      "next": "2026-03-02",
+      "err_days": 0
+    },
+    {
+      "word": "plaine",
+      "lvl": 2,
+      "next": "2026-03-06",
+      "err_days": 0
+    },
+    {
+      "word": "\u00e9tranger",
+      "lvl": 2,
+      "next": "2026-03-05",
+      "err_days": 0
+    },
+    {
+      "word": "imprimante",
+      "lvl": 2,
+      "next": "2026-03-05",
+      "err_days": 0
+    },
+    {
+      "word": "chaleureux",
+      "lvl": 2,
+      "next": "2026-03-05",
+      "err_days": 0
+    },
+    {
+      "word": "dipl\u00f4me",
+      "lvl": 2,
+      "next": "2026-03-05",
+      "err_days": 0
+    },
+    {
+      "word": "ob\u00e9issant",
+      "lvl": 2,
+      "next": "2026-03-05",
+      "err_days": 0
+    },
+    {
+      "word": "r\u00e9seau",
+      "lvl": 4,
+      "next": "2026-03-17",
+      "err_days": 0
+    },
+    {
+      "word": "v\u00e9rit\u00e9",
+      "lvl": 5,
+      "next": "2026-04-01",
+      "err_days": 0
+    },
+    {
+      "word": "r\u00e9fl\u00e9chir",
+      "lvl": 4,
+      "next": "2026-03-17",
+      "err_days": 0
+    },
+    {
+      "word": "solide",
+      "lvl": 4,
+      "next": "2026-03-17",
+      "err_days": 0
+    },
+    {
+      "word": "ing\u00e9nieux",
+      "lvl": 5,
+      "next": "2026-04-01",
+      "err_days": 0
+    }
+  ],
+  "daily_stats": {
+    "date": "2026-03-03",
+    "completed": false,
+    "words": [
+      "Chien",
+      "S\u00e9diment",
+      "Argumentation",
+      "Volcan",
+      "source"
+    ]
+  },
+  "last_milestone": 1000
 }
