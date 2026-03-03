@@ -523,7 +523,7 @@
             if (wordsListEl) {
                 wordsListEl.innerHTML = gTodayWords.map(function(w) {
                     var isAdded = gData.notebook.some(function(n) { return n.word === w.word; });
-                    return '<div class="daily-item"><div class="mot">' + w.word + '</div><div class="definition">' + (w.definition || w.def || '') + '</div><div class="exemple">"' + (w.example || w.ex || '') + '"</div><div style="margin-top:10px"><button class="action-btn" onclick="speak(\'' + w.word + '\')">Ecouter</button> <button class="action-btn" style="background:' + (isAdded ? '#ccc' : 'var(--p)') + '" onclick="addWord(\'' + w.word + '\')">' + (isAdded ? 'Ajoute' : 'Ajouter') + '</button></div></div>';
+                    return '<div class="daily-item"><div class="mot">' + w.word + '</div><div class="definition">' + (w.definition || w.def || '') + '</div><div class="exemple">"' + (w.example || w.ex || '') + '"</div><div style="margin-top:10px"><button class="action-btn" onclick="speak(\'' + w.word.replace(/'/g, "\\'") + '\')">Ecouter</button> <button class="action-btn" style="background:' + (isAdded ? '#ccc' : 'var(--p)') + '" onclick="addWord(\'' + w.word.replace(/'/g, "\\'") + '\')">' + (isAdded ? 'Ajoute' : 'Ajouter') + '</button></div></div>';
                 }).join('');
             }
             
