@@ -871,11 +871,19 @@
             // 计算复习词进度
             var reviewStatus = getReviewCompletionStatus();
             
-            // 如果掌握了所有今日新词 AND 完成了所有待复习旧词，且尚未标记为完成
-            if (masteredToday >= todayWords.length && reviewStatus.completed && !gData.daily_stats.completed) {
+            // 严格的日期检查：确保daily_stats.date是今天
+            var today = new Date().toISOString().split('T')[0];
+            var isToday = gData.daily_stats && gData.daily_stats.date === today;
+            
+            // 如果掌握了所有今日新词 AND 完成了所有待复习旧词，且尚未标记为完成，且日期是今天
+            if (masteredToday >= todayWords.length && reviewStatus.completed && isToday && !gData.daily_stats.completed) {
                 gData.daily_stats.completed = true;
                 if (!gData.stars) gData.stars = 0;
                 gData.stars += 100; // 核心奖励：完成每日所有新词+所有待复习旧词，获得100星星
+                
+                // 记录奖励时间戳，防止重复
+                gData.daily_stats.rewarded_at = new Date().toISOString();
+                gData.daily_stats.rewarded_stars = 100;
                 
                 setTimeout(function() { 
                     document.getElementById('rew-val').innerText = "🎉 Magnifique !\nTu as maîtrisé tous les mots du jour et terminé toutes les révisions !\n+100 étoiles !"; 
@@ -910,8 +918,15 @@
                 speak("Révisions manquantes");
                 return;
             }
-            // 如果新词和复习都已完成，则显示成功消息
-            document.getElementById('rew-val').innerText = "🎉 Félicitations !\nTu as terminé tous les nouveaux mots et toutes les révisions du jour.\nTu as gagné 100 étoiles !";
+            // 如果新词和复习都已完成，则显示成功消息（但不自动给星星，由checkDailyCompletion处理）
+            var today = new Date().toISOString().split('T')[0];
+            var isToday = gData.daily_stats && gData.daily_stats.date === today;
+            
+            if (isToday && gData.daily_stats.completed) {
+                document.getElementById('rew-val').innerText = "✅ Déjà terminé !\nTu as déjà terminé tous les mots du jour et reçu tes 100 étoiles.";
+            } else {
+                document.getElementById('rew-val').innerText = "🎉 Félicitations !\nTu as terminé tous les nouveaux mots et toutes les révisions du jour.\nTu as gagné 100 étoiles !";
+            }
             openModal('rewardModal');
             speak("Bravo");
         }
