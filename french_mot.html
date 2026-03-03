@@ -729,7 +729,10 @@
             
             if (optionsEl) {
                 optionsEl.innerHTML = opts.map(function(o) {
-                    return '<button class="opt-btn" onclick="checkQuiz(this, \'' + o.replace(/'/g, "\\'") + '\', \'' + target.word + '\')">' + o + '</button>';
+                    // 转义选项文本和单词中的单引号
+                    var escapedOpt = o.replace(/'/g, "\\'");
+                    var escapedWord = target.word.replace(/'/g, "\\'");
+                    return '<button class="opt-btn" onclick="checkQuiz(this, \'' + escapedOpt + '\', \'' + escapedWord + '\')">' + o + '</button>';
                 }).join('');
             }
         }
