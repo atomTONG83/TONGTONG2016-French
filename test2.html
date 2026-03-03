@@ -14,7 +14,7 @@
         document.getElementById('sync-status').style.background = "purple";
         
         const MAC_IP = "192.168.32.70";
-        const PORT = "8889";
+        const PORT = "8888";
         const isLocal = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" || window.location.hostname === MAC_IP);
         const API = isLocal ? `http://${window.location.hostname}:${PORT}` : `http://${MAC_IP}:${PORT}`;
         const DATA_PATH = "./french_data.json";
