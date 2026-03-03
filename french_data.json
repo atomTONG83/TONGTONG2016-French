@@ -27,8 +27,8 @@
     },
     {
       "word": "important",
-      "lvl": 0,
-      "next": "2026-03-03",
+      "lvl": 1,
+      "next": "2026-03-05",
       "err_days": 0
     }
   ],
