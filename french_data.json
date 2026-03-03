@@ -1,5 +1,5 @@
 {
-  "stars": 2100,
+  "stars": 2200,
   "notebook": [
     {
       "word": "Sinc\u00e9rit\u00e9",
@@ -429,8 +429,8 @@
     },
     {
       "word": "Vid\u00e9o",
-      "lvl": 2,
-      "next": "2026-03-02",
+      "lvl": 3,
+      "next": "2026-03-10",
       "err_days": 0
     },
     {
@@ -586,14 +586,16 @@
   ],
   "daily_stats": {
     "date": "2026-03-03",
-    "completed": false,
+    "completed": true,
     "words": [
       "Chien",
       "S\u00e9diment",
       "Argumentation",
       "Volcan",
       "source"
-    ]
+    ],
+    "rewarded_at": "2026-03-03T18:27:14.982Z",
+    "rewarded_stars": 100
   },
   "last_milestone": 1000
 }
