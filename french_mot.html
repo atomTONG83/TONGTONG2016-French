@@ -357,9 +357,19 @@
                 const isLocal = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" || window.location.hostname === MAC_IP);
                 API = isLocal ? "http://" + window.location.hostname + ":" + PORT : "http://" + MAC_IP + ":" + PORT;
                 
+                // 只有当Supabase不可用且是HTTPS页面访问HTTP API时才显示警告
                 if (window.location.protocol === 'https:' && API.startsWith('http:')) {
                     var warnEl = document.getElementById('connection-warning');
-                    if (warnEl) warnEl.style.display = 'block';
+                    if (warnEl) {
+                        // 检查Supabase是否可用
+                        if (window.FrenchSupabase && window.FrenchSupabase.supabaseReady) {
+                            // Supabase可用，不显示警告
+                            warnEl.style.display = 'none';
+                        } else {
+                            // Supabase不可用，显示警告
+                            warnEl.style.display = 'block';
+                        }
+                    }
                 }
                 
                 // 1. 先加载完整数据库
