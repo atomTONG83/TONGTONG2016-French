@@ -87,7 +87,58 @@ async function saveToSupabase(gData) {
     
     if (profileError) throw new Error(`用户档案更新失败: ${profileError.message}`);
     
-    // 2. 同步每日学习记录
+    // 2. 同步单词本数据（核心修复）
+    if (gData.notebook && Array.isArray(gData.notebook)) {
+      console.log(`📝 同步单词本: ${gData.notebook.length} 个单词`);
+      
+      // 2a. 先删除用户的所有单词记录
+      const { error: deleteError } = await supabaseClient
+        .from('french_notebook')
+        .delete()
+        .eq('profile_id', profileId);
+      
+      if (deleteError) {
+        console.warn('单词本清理警告（可能为空）:', deleteError.message);
+      }
+      
+      // 2b. 批量插入所有单词（如果列表不为空）
+      if (gData.notebook.length > 0) {
+        const notebookItems = gData.notebook.map(item => {
+          // 计算是否已掌握（level >= 7）
+          const level = item.lvl || 0;
+          const mastered = level >= 7;
+          
+          return {
+            profile_id: profileId,
+            word: item.word,
+            level: level,
+            next_review: item.next || null,
+            error_days: item.err_days || 0,
+            mastered: mastered,
+            added_at: new Date().toISOString()
+          };
+        });
+        
+        // 分批插入避免超时（每批30个）
+        const batchSize = 30;
+        for (let i = 0; i < notebookItems.length; i += batchSize) {
+          const batch = notebookItems.slice(i, i + batchSize);
+          const { error: insertError } = await supabaseClient
+            .from('french_notebook')
+            .insert(batch);
+          
+          if (insertError) {
+            throw new Error(`单词本批次 ${i/batchSize + 1} 插入失败: ${insertError.message}`);
+          }
+          
+          console.log(`  ✅ 批次 ${i/batchSize + 1}: ${batch.length} 个单词`);
+        }
+        
+        console.log(`✅ 单词本同步完成: ${notebookItems.length} 个单词`);
+      }
+    }
+    
+    // 3. 同步每日学习记录
     if (gData.daily_stats && gData.daily_stats.date) {
       const { error: sessionError } = await supabaseClient
         .from('daily_sessions')
@@ -102,7 +153,7 @@ async function saveToSupabase(gData) {
       if (sessionError) console.warn('每日记录同步警告:', sessionError);
     }
     
-    console.log('✅ 云端保存成功');
+    console.log('✅ 云端保存成功（包括单词本）');
     return { status: 'success', stars: gData.stars };
     
   } catch (error) {
