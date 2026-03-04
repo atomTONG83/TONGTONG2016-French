@@ -216,7 +216,32 @@
                     el.innerText = "JS Loading...";
                     el.style.background = "#9b59b6";
                 }
-            } catch(e) {}
+                
+                // 立即隐藏警告（如果Supabase已加载）
+                var warningEl = document.getElementById('connection-warning');
+                if (warningEl) {
+                    // 检查Supabase是否已初始化
+                    if (window.FrenchSupabase && window.FrenchSupabase.supabaseReady) {
+                        console.log('🚀 立即隐藏警告：Supabase可用');
+                        warningEl.style.display = 'none';
+                    } else {
+                        // 设置一个检查器，当Supabase加载后隐藏警告
+                        var checkCount = 0;
+                        var checkInterval = setInterval(function() {
+                            checkCount++;
+                            if (window.FrenchSupabase && window.FrenchSupabase.supabaseReady) {
+                                clearInterval(checkInterval);
+                                console.log('🚀 Supabase加载完成，隐藏警告');
+                                warningEl.style.display = 'none';
+                            } else if (checkCount > 20) { // 最多检查2秒
+                                clearInterval(checkInterval);
+                            }
+                        }, 100);
+                    }
+                }
+            } catch(e) {
+                console.log('立即执行函数错误:', e);
+            }
         })();
         
         // ===== CONSTANTS =====
