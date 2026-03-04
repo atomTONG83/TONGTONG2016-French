@@ -339,6 +339,13 @@
                 // 加载会话数据（防止网络问题导致进度丢失）
                 loadSession();
                 
+                // 立即隐藏警告（如果Supabase可用）
+                var warnEl = document.getElementById('connection-warning');
+                if (warnEl && window.FrenchSupabase && window.FrenchSupabase.supabaseReady) {
+                    console.log('✅ Supabase可用，隐藏警告');
+                    warnEl.style.display = 'none';
+                }
+                
                 updateSyncStatus("Chargement...", "#f1c40f");
                 
                 var dateEl = document.getElementById('ui-date');
@@ -357,14 +364,12 @@
                 const isLocal = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" || window.location.hostname === MAC_IP);
                 API = isLocal ? "http://" + window.location.hostname + ":" + PORT : "http://" + MAC_IP + ":" + PORT;
                 
-                // 只有当Supabase不可用且是HTTPS页面访问HTTP API时才显示警告
+                // 只有当Supabase不可用且是HTTPS页面访问HTTP API时才显示警告（向后兼容）
                 if (window.location.protocol === 'https:' && API && API.startsWith('http:')) {
-                    var warnEl = document.getElementById('connection-warning');
                     if (warnEl) {
                         // 检查Supabase是否可用
                         if (window.FrenchSupabase && window.FrenchSupabase.supabaseReady) {
-                            // Supabase可用，不显示警告
-                            warnEl.style.display = 'none';
+                            // Supabase可用，不显示警告（已经在上面隐藏了）
                         } else {
                             // Supabase不可用，显示警告
                             warnEl.style.display = 'block';
