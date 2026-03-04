@@ -1,5 +1,5 @@
 {
-  "stars": 2200,
+  "stars": 2100,
   "notebook": [
     {
       "word": "Sinc\u00e9rit\u00e9",
@@ -9,8 +9,8 @@
     },
     {
       "word": "Perspective",
-      "lvl": 3,
-      "next": "2026-03-04",
+      "lvl": 4,
+      "next": "2026-03-19",
       "err_days": 0
     },
     {
@@ -33,8 +33,8 @@
     },
     {
       "word": "Climax",
-      "lvl": 3,
-      "next": "2026-03-04",
+      "lvl": 4,
+      "next": "2026-03-19",
       "err_days": 0
     },
     {
@@ -45,8 +45,8 @@
     },
     {
       "word": "Conservation",
-      "lvl": 3,
-      "next": "2026-03-04",
+      "lvl": 4,
+      "next": "2026-03-19",
       "err_days": 0
     },
     {
@@ -585,17 +585,15 @@
     }
   ],
   "daily_stats": {
-    "date": "2026-03-03",
-    "completed": true,
+    "date": "2026-03-04",
+    "completed": false,
     "words": [
-      "Chien",
-      "S\u00e9diment",
-      "Argumentation",
-      "Volcan",
-      "source"
-    ],
-    "rewarded_at": "2026-03-03T18:27:14.982Z",
-    "rewarded_stars": 100
+      "Vert\u00e8bre",
+      "Climax",
+      "important",
+      "Conservation",
+      "Perspective"
+    ]
   },
   "last_milestone": 1000
 }
