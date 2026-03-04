@@ -358,7 +358,7 @@
                 API = isLocal ? "http://" + window.location.hostname + ":" + PORT : "http://" + MAC_IP + ":" + PORT;
                 
                 // 只有当Supabase不可用且是HTTPS页面访问HTTP API时才显示警告
-                if (window.location.protocol === 'https:' && API.startsWith('http:')) {
+                if (window.location.protocol === 'https:' && API && API.startsWith('http:')) {
                     var warnEl = document.getElementById('connection-warning');
                     if (warnEl) {
                         // 检查Supabase是否可用
