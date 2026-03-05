@@ -78,27 +78,66 @@
             <div class="empty-msg" id="loading-msg">⏳ 正在加载今日任务...</div>
         </div>
         
+        <!-- Supabase客户端库 -->
+        <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+        
         <script>
-        // 从API获取今日任务
+        // Supabase配置（与法语学习系统相同）
+        const SUPABASE_CONFIG = {
+            url: 'https://ghbmmnapyupusmyxjkvv.supabase.co',
+            key: 'sb_publishable_MkMhoECq7wo5qFi3K9Shcg_7LiPM1oU'
+        };
+        
+        let supabaseClient = null;
+        
+        // 初始化Supabase客户端
+        function initSupabase() {
+            try {
+                if (window.supabase && SUPABASE_CONFIG.url && SUPABASE_CONFIG.key) {
+                    supabaseClient = window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.key);
+                    console.log('✅ Supabase客户端初始化成功');
+                    return true;
+                } else {
+                    console.warn('❌ Supabase配置不完整或库未加载');
+                    return false;
+                }
+            } catch (error) {
+                console.error('❌ Supabase初始化失败:', error);
+                return false;
+            }
+        }
+        
+        // 从Supabase获取今日任务
         async function loadTodayTasks() {
             const container = document.getElementById('tasks-container');
             const loadingMsg = document.getElementById('loading-msg');
             
             try {
-                // 从后台API获取任务
-                const response = await fetch('http://192.168.32.70:3333/get_reminders?list=童童任务');
-                if (!response.ok) throw new Error('无法获取任务列表');
+                // 初始化Supabase
+                if (!initSupabase() || !supabaseClient) {
+                    throw new Error('Supabase客户端初始化失败');
+                }
                 
-                const data = await response.json();
-                const tasks = data.reminders || [];
+                // 从Supabase视图获取格式化任务数据
+                const { data, error } = await supabaseClient
+                    .from('reminders_tasks_formatted')
+                    .select('*')
+                    .order('is_today', { ascending: false })
+                    .order('due_date', { ascending: true, nullsLast: true })
+                    .order('created_at', { ascending: false })
+                    .limit(20);
+                
+                if (error) throw error;
+                
+                const tasks = data || [];
+                console.log(`📊 从Supabase获取到 ${tasks.length} 个任务`);
                 
                 // 获取今日日期
                 const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-                console.log(`今日日期: ${today}, 总任务数: ${tasks.length}`);
                 
                 // 过滤出今日任务（无论完成状态）
                 const todayTasks = tasks.filter(task => {
-                    return task.title && task.title.includes('[' + today + ']');
+                    return task.is_today === true;
                 });
                 
                 // 确定要显示的任务
@@ -125,7 +164,7 @@
                 
                 // 渲染任务卡片
                 tasksToShow.forEach((task, index) => {
-                    const taskCard = createTaskCard(task, index * 0.1);
+                    const taskCard = createTaskCardFromSupabase(task, index * 0.1);
                     container.appendChild(taskCard);
                 });
                 
@@ -141,16 +180,53 @@
                 
             } catch (error) {
                 console.error('加载任务失败:', error);
-                loadingMsg.innerHTML = '❌ 无法加载任务: ' + error.message;
+                loadingMsg.innerHTML = '❌ 无法从Supabase加载任务: ' + error.message;
                 loadingMsg.style.color = 'var(--danger)';
                 
                 // 回退：显示静态示例
                 setTimeout(() => {
                     if (container.children.length <= 1) { // 只有错误消息
-                        container.innerHTML = '<div class="empty-msg" style="color: var(--accent);">⚠️ 使用示例任务（API连接失败）</div>' + getFallbackTasks();
+                        container.innerHTML = '<div class="empty-msg" style="color: var(--accent);">⚠️ 使用示例任务（Supabase连接失败）</div>' + getFallbackTasks();
                     }
                 }, 2000);
             }
+        }
+        
+        // 为Supabase数据创建任务卡片
+        function createTaskCardFromSupabase(task, delay) {
+            const taskCard = document.createElement('div');
+            taskCard.className = 'task-card';
+            taskCard.style.animationDelay = `${delay}s`;
+            
+            const today = new Date().toISOString().split('T')[0];
+            const extractedDate = task.extracted_date || task.due_date;
+            const isToday = extractedDate === today;
+            const newBadge = isToday ? ' 🆕' : '';
+            
+            // 使用视图中的格式化字段
+            const displayIcon = task.completed ? '✅' : (task.icon || '⏳');
+            const cnText = task.chinese_text || task.title || '无标题';
+            const frText = task.french_text || '';
+            const statusText = task.completed ? '已完成' : '待完成';
+            const displayDate = extractedDate || '无日期';
+            
+            taskCard.innerHTML = `
+                <div class="card-glow"></div>
+                <div class="task-icon">${displayIcon}</div>
+                <div class="task-info">
+                    <div class="task-cn">${cnText}${newBadge}</div>
+                    ${frText ? '<div class="task-fr">' + frText + '</div>' : ''}
+                    <div class="task-status">${displayDate} • ${statusText}</div>
+                </div>
+            `;
+            
+            // 如果任务已完成，添加半透明效果
+            if (task.completed) {
+                taskCard.style.opacity = '0.7';
+                taskCard.style.filter = 'grayscale(20%)';
+            }
+            
+            return taskCard;
         }
         
         // 回退静态任务
