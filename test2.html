@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test v2</title>
+    <style>body{font-family:system-ui;padding:20px}</style>
+</head>
+<body>
+    <h1>🐛 Test v2</h1>
+    <div id="sync-status" style="position:fixed;bottom:10px;right:10px;background:#999;color:white;padding:8px 12px;border-radius:8px">Initial...</div>
+    <script>
+        document.getElementById('sync-status').innerText = "Step 1";
+        document.getElementById('sync-status').style.background = "purple";
+        
+        const MAC_IP = "192.168.32.70";
+        const PORT = "8888";
+        const isLocal = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" || window.location.hostname === MAC_IP);
+        const API = isLocal ? `http://${window.location.hostname}:${PORT}` : `http://${MAC_IP}:${PORT}`;
+        const DATA_PATH = "./french_data.json";
+        
+        let gData = { stars: 100, notebook: [], daily_stats: { date: "", completed: false, words: [] }, last_milestone: 0 };
+        
+        async function init() {
+            document.getElementById('sync-status').innerText = "Step 2 - init()";
+            document.getElementById('sync-status').style.background = "orange";
+            
+            try {
+                const response = await fetch(`${DATA_PATH}?t=${Date.now()}`);
+                document.getElementById('sync-status').innerText = "Step 3 - fetched";
+                
+                if (response.ok) {
+                    const serverData = await response.json();
+                    gData = serverData;
+                    document.getElementById('sync-status').innerText = "Data: " + gData.stars + "⭐ " + gData.notebook.length + " words";
+                    document.getElementById('sync-status').style.background = "green";
+                }
+            } catch (e) {
+                document.getElementById('sync-status').innerText = "Error: " + e.message;
+                document.getElementById('sync-status').style.background = "red";
+            }
+        }
+        
+        window.onload = init;
+    </script>
+</body>
+</html>

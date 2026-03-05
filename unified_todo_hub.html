@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="30">
+    <title>任务中心 - Unified To-Do Hub</title>
+    <style>
+        :root {
+            --bg: #020617; --card-bg: #0f172a; --border: #1e293b; --text: #f8fafc;
+            --accent-amber: #f59e0b; --accent-blue: #38bdf8; --accent-emerald: #10b981; --accent-red: #ef4444;
+        }
+        body { font-family: -apple-system, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 40px; line-height: 1.6; }
+        .container { max-width: 1400px; margin: 0 auto; }
+        header { margin-bottom: 40px; border-bottom: 1px solid var(--border); padding-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+        h1 { margin: 0; color: var(--accent-blue); font-size: 2em; letter-spacing: -1px; }
+        .ts { font-size: 0.4em; color: #475569; font-weight: normal; margin-left: 20px; }
+        .back-btn { text-decoration: none; color: #94a3b8; border: 1px solid var(--border); padding: 8px 15px; border-radius: 8px; font-size: 0.9em; transition: 0.2s; }
+        .back-btn:hover { background: var(--border); color: #fff; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 25px; }
+        .column { background: var(--card-bg); border: 1px solid var(--border); border-radius: 24px; padding: 30px; display: flex; flex-direction: column; min-height: 500px; }
+        .col-header { margin-bottom: 25px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
+        .col-header h2 { margin: 0; font-size: 1.3em; }
+        .task-list { list-style: none; padding: 0; margin: 0; }
+        .task-item { display: flex; align-items: flex-start; gap: 14px; padding: 16px; border-radius: 12px; margin-bottom: 10px; background: rgba(255,255,255,0.02); border: 1px solid transparent; transition: 0.2s; }
+        .task-item:hover { background: rgba(255,255,255,0.05); border-color: rgba(56, 189, 248, 0.2); }
+        .checkbox { width: 22px; height: 22px; border-radius: 7px; border: 2px solid #334155; flex-shrink: 0; margin-top: 2px; }
+        .task-text { font-size: 1em; color: #e2e8e0; }
+        .badge-high { background: var(--accent-red); color: white; font-size: 0.65em; padding: 2px 8px; border-radius: 5px; font-weight: 800; margin-left: 8px; vertical-align: middle; }
+        .empty-msg { text-align: center; color: #475569; padding: 60px 20px; font-style: italic; font-size: 0.9em; }
+        .count-badge { font-size: 0.6em; background: #1e293b; color: #94a3b8; padding: 2px 8px; border-radius: 10px; margin-left: auto; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <h1>📋 任务中心 <span class="ts">LAST_SYNC: 2026-02-19 22:19:55</span></h1>
+                <p style="color: #64748b; margin: 5px 0 0; font-size: 0.9em;">实时聚合：仅显示未完成项 (Active Only)</p>
+            </div>
+            <a href="master_dashboard.html" class="back-btn">← 返回总指挥部</a>
+        </header>
+
+            <div class="grid">
+            <div class="column">
+                <div class="col-header">
+                    <span style="font-size: 1.5em;">📅</span>
+                    <h2 style="color: var(--accent-blue);">计划事项</h2>
+                    <span class="count-badge">10</span>
+                </div>
+                <div class="task-list">
+                    <div class="task-item"><div class="checkbox"></div><div class="task-text">[2026-02-20] 看看优衣库有没有 AIRism 的西服卖</div></div><div class="task-item"><div class="checkbox"></div><div class="task-text">和Geoffroy聊聊宁德时代的项目</div></div><div class="task-item"><div class="checkbox"></div><div class="task-text">宁德时代项目沟通 (和 Geoffroy 聊聊)</div></div><div class="task-item"><div class="checkbox"></div><div class="task-text">贵州茅台瑞典商标 GI 冲突复审</div></div><div class="task-item"><div class="checkbox"></div><div class="task-text">意大利专利侵权诉讼跟进</div></div><div class="task-item"><div class="checkbox"></div><div class="task-text">风雅颂欧洲专利申请材料准备</div></div><div class="task-item"><div class="checkbox"></div><div class="task-text">阳光电源反馈（德国/荷兰许可、专家清单）</div></div><div class="task-item"><div class="checkbox"></div><div class="task-text">转刘力强专利OA1</div></div><div class="task-item"><div class="checkbox"></div><div class="task-text">整理工作邮箱</div></div><div class="task-item"><div class="checkbox"></div><div class="task-text">AI 拨号订餐能力探索 (Project: Autonoma-Dine)</div></div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="col-header">
+                    <span style="font-size: 1.5em;">🔥</span>
+                    <h2 style="color: var(--accent-amber);">今日焦点</h2>
+                    <span class="count-badge">3</span>
+                </div>
+                <div class="task-list">
+                    <div class="task-item"><div class="checkbox"></div><div class="task-text">[🔥 HIGH] 梳理食品加工发明的技术交底书 (正在寻找文件位置)</div></div><div class="task-item"><div class="checkbox"></div><div class="task-text">[🔥 HIGH] FIDAL 香港专利 Stage 2 提醒及年费账单跟进 (已草拟邮件)</div></div><div class="task-item"><div class="checkbox"></div><div class="task-text">[🔥 HIGH] 协调三友、钲霖事务所 3 月巴黎会议安排</div></div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="col-header">
+                    <span style="font-size: 1.5em;">👦</span>
+                    <h2 style="color: var(--accent-emerald);">童童任务</h2>
+                    <span class="count-badge">0</span>
+                </div>
+                <div class="task-list">
+                    <div class="empty-msg">童童任务已全部完成！🏆</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+    

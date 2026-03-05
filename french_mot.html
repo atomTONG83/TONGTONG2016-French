@@ -643,10 +643,10 @@
                     return false;
                 }
                 
-                // 2. 星星必须是100的倍数
+                // 2. 星星必须是100的倍数（如果不是，自动修复）
                 if (data.stars % 100 !== 0) {
-                    console.error(`❌ 星星数不是100的倍数: ${data.stars}`);
-                    return false;
+                    console.warn(`⚠️ 星星数不是100的倍数: ${data.stars} → ${Math.round(data.stars / 100) * 100} (自动修复)`);
+                    data.stars = Math.round(data.stars / 100) * 100;
                 }
                 
                 // 3. notebook必须是数组
@@ -851,6 +851,8 @@
                 }); 
                 speak("Ajoute");
                 refreshUI();
+                // 立即保存到云端
+                setTimeout(saveData, 100);
             } else { 
                 speak("Deja la"); 
             }

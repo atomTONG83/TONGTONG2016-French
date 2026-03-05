@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>💎 French Mot - Working Version</title>
+    <style>
+        :root { --p: #3498db; --s: #2ecc71; --e: #e74c3c; --w: #f1c40f; }
+        body { font-family: -apple-system, sans-serif; background: #f0f4f8; padding: 20px; color: #333; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 20px; }
+        .stats-bar { display: flex; justify-content: space-around; background: white; padding: 15px; border-radius: 50px; margin-bottom: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .stat-item { font-weight: bold; font-size: 1.1em; }
+        .card { background: white; border-radius: 15px; padding: 25px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .mot { font-size: 2.2em; color: var(--p); font-weight: bold; }
+        .definition { margin: 10px 0; font-size: 1.05em; color: #444; }
+        .exemple { background: #f9f9f9; padding: 12px; border-left: 5px solid var(--p); border-radius: 0 10px 10px 0; font-style: italic; color: #666; }
+        .opt-btn { background: white; border: 2px solid #ddd; padding: 18px; border-radius: 12px; cursor: pointer; text-align: left; font-size: 1.05em; width: 100%; margin-bottom: 10px; }
+        .opt-btn:hover { border-color: var(--p); }
+        .correct { background: var(--s) !important; color: white !important; border-color: var(--s) !important; }
+        .wrong { background: var(--e) !important; color: white !important; border-color: var(--e) !important; }
+        .action-btn { background: var(--s); color: white; border: none; padding: 10px 20px; border-radius: 50px; cursor: pointer; font-size: 0.95em; }
+        #sync-status { position: fixed; bottom: 10px; right: 10px; font-size: 0.75em; color: white; background: #999; padding: 6px 12px; border-radius: 8px; z-index: 2000; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💎 Le Trésor des Mots de Jingyi</h1>
+            <div id="ui-date"></div>
+        </div>
+        
+        <div class="stats-bar">
+            <div class="stat-item">⭐ <span id="ui-stars">0</span></div>
+            <div class="stat-item">🏆 <span id="ui-trophies">0</span></div>
+            <div class="stat-item">📚 <span id="ui-count">0</span></div>
+        </div>
+        
+        <div id="game-area" class="card">
+            <h3>🎯 Mots du jour</h3>
+            <div id="ui-words-list">Chargement...</div>
+        </div>
+    </div>
+    
+    <div id="sync-status">Initialisation...</div>
+
+    <script>
+        // Immediate test
+        document.getElementById('sync-status').innerText = "JS OK";
+        document.getElementById('sync-status').style.background = "purple";
+        
+        const MAC_IP = "192.168.32.70";
+        const PORT = "8888";
+        const DATA_PATH = "./french_data.json";
+        
+        let gData = { stars: 0, notebook: [], daily_stats: { date: "", completed: false, words: [] } };
+        
+        // Simplified DB - just a few words for testing
+        const DB = [
+            { word: "Soleil", def: "太阳", ex: "Le soleil brille.", niveau: 1 },
+            { word: "Lune", def: "月亮", ex: "La lune est ronde.", niveau: 1 },
+            { word: "Chat", def: "猫", ex: "Le chat miaule.", niveau: 1 },
+            { word: "Chien", def: "狗", ex: "Le chien aboie.", niveau: 1 },
+            { word: "Maison", def: "房子", ex: "Ma maison est jaune.", niveau: 1 }
+        ];
+        
+        async function init() {
+            document.getElementById('sync-status').innerText = "Loading...";
+            document.getElementById('sync-status').style.background = "orange";
+            
+            try {
+                const response = await fetch(`${DATA_PATH}?t=${Date.now()}`);
+                if (response.ok) {
+                    gData = await response.json();
+                    document.getElementById('sync-status').innerText = `☁️ ${gData.stars}⭐`;
+                    document.getElementById('sync-status').style.background = "#3498db";
+                } else {
+                    throw new Error("Fetch failed");
+                }
+            } catch (e) {
+                document.getElementById('sync-status').innerText = "⚠️ Offline";
+                document.getElementById('sync-status').style.background = "#e74c3c";
+            }
+            
+            refreshUI();
+        }
+        
+        function refreshUI() {
+            document.getElementById('ui-date').innerText = new Date().toLocaleDateString('fr-FR', { weekday:'long', day:'numeric', month:'long' });
+            document.getElementById('ui-stars').innerText = gData.stars || 0;
+            document.getElementById('ui-trophies').innerText = Math.floor((gData.stars || 0) / 1000);
+            document.getElementById('ui-count').innerText = (gData.notebook || []).length;
+            
+            const today = new Date().toISOString().split('T')[0];
+            if (!gData.daily_stats || gData.daily_stats.date !== today) {
+                // Generate daily words
+                gData.daily_stats = { date: today, completed: false, words: DB.slice(0, 5).map(w => w.word) };
+            }
+            
+            const words = gData.daily_stats.words.map(w => DB.find(d => d.word === w)).filter(Boolean);
+            document.getElementById('ui-words-list').innerHTML = words.map(w => `
+                <div class="card">
+                    <div class="mot">${w.word}</div>
+                    <div class="definition">${w.def}</div>
+                    <div class="exemple">"${w.ex}"</div>
+                </div>
+            `).join('');
+        }
+        
+        window.onload = init;
+    </script>
+</body>
+</html>
