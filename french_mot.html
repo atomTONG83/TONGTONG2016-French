@@ -877,20 +877,16 @@
                     err_days: 0 
                 }); 
                 
-                // 🆕 优化：如果当日新词不足5个，自动将此词加入当日学习列表
-                const today = new Date().toISOString().split('T')[0];
-                if (gData.daily_stats.date === today) {
-                    // 检查是否已在当日列表中
-                    if (!gData.daily_stats.words.includes(w)) {
-                        // 如果当日新词不足5个，添加进去
-                        if (gData.daily_stats.words.length < 5) {
-                            gData.daily_stats.words.push(w);
-                            console.log(`📝 自动将"${w}"加入当日学习列表 (${gData.daily_stats.words.length}/5)`);
-                        } else {
-                            console.log(`ℹ️ 当日已有5个新词，不自动添加"${w}"到学习列表`);
-                        }
-                    }
-                }
+                // 显示提示：添加的单词将在复习模式中出现
+                setTimeout(function() {
+                    const toast = document.createElement('div');
+                    toast.style.cssText = 'position:fixed; top:20px; left:50%; transform:translateX(-50%); background:var(--p); color:white; padding:10px 20px; border-radius:20px; z-index:1000; font-size:0.9em; box-shadow:0 3px 10px rgba(0,0,0,0.2);';
+                    toast.innerHTML = '📝 Mot ajouté ! Il apparaîtra dans les <strong>révisions</strong> demain.';
+                    document.body.appendChild(toast);
+                    setTimeout(function() {
+                        document.body.removeChild(toast);
+                    }, 3000);
+                }, 100);
                 
                 speak("Ajoute");
                 refreshUI();
