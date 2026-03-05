@@ -505,50 +505,62 @@
             const seedVal = today.split('-').reduce(function(a, b) { return a + b.charCodeAt(0); }, 0);
             const currentDB = getCurrentDB();
             
-            // 🆕 优化：优先选择用户已添加到生词本但未掌握的单词
+            // 🆕 优化2：每日新词必须从【不在生词本】的单词中选取
             let newDaily = [];
             
-            // 1. 先从用户生词本中选择未掌握的单词（级别<7）
-            let notebookCandidates = gData.notebook.filter(function(n) {
-                return (n.lvl || 0) < 7; // 未掌握的词
+            // 1. 获取未学习池（不在生词本中的单词）
+            let unlearnedPool = currentDB.filter(function(v) { 
+                return !gData.notebook.some(function(n) { return n.word === v.word; }); 
             });
             
-            if (notebookCandidates.length > 0) {
-                // 随机选择（最多5个）
-                let tPool = notebookCandidates.slice();
-                let s = seedVal;
-                for (let i = 0; i < 5 && tPool.length > 0; i++) { 
-                    let idx = s % tPool.length;
-                    newDaily.push(tPool.splice(idx, 1)[0].word); 
-                    s = s * 31 + 7; 
-                }
-                console.log(`📚 从生词本中选择 ${newDaily.length} 个未掌握单词作为当日学习词`);
+            // 如果未学习池不足5个，考虑"踢回词库"的单词
+            if (unlearnedPool.length < 5) {
+                console.log(`⚠️ 未学习池仅剩 ${unlearnedPool.length} 个单词，将考虑所有未掌握单词`);
+                // 扩大选择范围到所有未掌握单词（包括已在生词本但未掌握）
+                unlearnedPool = currentDB.filter(function(v) { 
+                    const n = gData.notebook.find(function(e) { return e.word === v.word; });
+                    // 选择：1) 不在生词本 或 2) 在生词本但未掌握(等级<7)
+                    return !n || (n.lvl || 0) < 7;
+                });
             }
             
-            // 2. 如果还不够5个，从数据库中选择新单词
-            if (newDaily.length < 5) {
-                let pool = currentDB.filter(function(v) { 
-                    return !gData.notebook.some(function(n) { return n.word === v.word; }); 
-                });
-                if (pool.length < (5 - newDaily.length)) pool = currentDB.slice();
-                
-                let tPool = pool.slice();
-                let s = seedVal * 17 + 13; // 不同的种子
-                for (let i = newDaily.length; i < 5 && tPool.length > 0; i++) { 
-                    let idx = s % tPool.length;
-                    let newWord = tPool.splice(idx, 1)[0].word;
-                    if (!newDaily.includes(newWord)) {
-                        newDaily.push(newWord);
-                    }
-                    s = s * 31 + 7; 
-                }
-                console.log(`🎯 补充 ${newDaily.length - notebookCandidates.length} 个新单词到当日学习列表`);
+            // 如果还是不足，使用整个词库（最后的手段）
+            if (unlearnedPool.length < 5) {
+                console.log(`⚠️ 词库资源紧张，使用全库`);
+                unlearnedPool = currentDB.slice();
+            }
+            
+            // 2. 根据日期种子选择5个单词
+            let tPool = unlearnedPool.slice();
+            let s = seedVal;
+            for (let i = 0; i < 5 && tPool.length > 0; i++) { 
+                let idx = s % tPool.length;
+                let selectedWord = tPool.splice(idx, 1)[0].word;
+                newDaily.push(selectedWord); 
+                s = s * 31 + 7; 
+            }
+            
+            // 检查有多少个单词已经在生词本中（应该是0，除非是上面放宽条件的情况）
+            const alreadyInNotebook = newDaily.filter(function(word) {
+                return gData.notebook.some(function(n) { return n.word === word; });
+            }).length;
+            
+            if (alreadyInNotebook > 0) {
+                console.log(`⚠️ 注意：${alreadyInNotebook} 个当日新词已在生词本中，用户将看到"已添加"状态`);
             }
             
             gData.daily_stats = { date: today, completed: false, words: newDaily };
             sessionMastery = {};
             try { localStorage.removeItem('french_session_mastery'); } catch(e) {}
-            console.log(`✅ 生成当日学习词: ${newDaily.join(', ')}`);
+            console.log(`✅ 生成当日学习词 (${newDaily.length}个): ${newDaily.join(', ')}`);
+            
+            // 🆕 重要：立即保存，锁定今日单词列表
+            setTimeout(function() {
+                if (typeof saveData === 'function') {
+                    console.log('💾 立即保存当日单词列表到云端...');
+                    saveData();
+                }
+            }, 1000);
         }
         
 
