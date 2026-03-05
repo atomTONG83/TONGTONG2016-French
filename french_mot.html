@@ -467,9 +467,69 @@
                 
                 if (gData.daily_stats.date !== today) {
                     generateDailyWords(today);
+                } else {
+                    // 🆕 优化：即使日期相同，也清理已加入生词本的当日单词
+                    if (gData.daily_stats && gData.daily_stats.words && Array.isArray(gData.daily_stats.words)) {
+                        const originalWords = gData.daily_stats.words.slice();
+                        const cleanedWords = [];
+                        const wordsToReplace = [];
+                        
+                        // 1. 分离：保留未加入生词本的词，标记已加入的待替换
+                        originalWords.forEach(function(word) {
+                            const isInNotebook = gData.notebook.some(function(n) { return n.word === word; });
+                            if (!isInNotebook) {
+                                cleanedWords.push(word);
+                            } else {
+                                wordsToReplace.push(word);
+                            }
+                        });
+                        
+                        // 2. 如果需要替换单词（有词已加入生词本）
+                        if (wordsToReplace.length > 0) {
+                            console.log(`🔄 清理当日单词：${wordsToReplace.length} 个词已在生词本中，需要替换`);
+                            
+                            // 从词库中获取新词替换
+                            const currentDB = getCurrentDB();
+                            const seedVal = today.split('-').reduce(function(a, b) { return a + b.charCodeAt(0); }, 0);
+                            let s = seedVal * 19 + 11;
+                            
+                            // 获取可用新词池（不在生词本中）
+                            let newWordPool = currentDB.filter(function(v) { 
+                                return !gData.notebook.some(function(n) { return n.word === v.word; }) && 
+                                       !cleanedWords.includes(v.word);
+                            });
+                            
+                            // 如果新词池不足，考虑未掌握的词
+                            if (newWordPool.length < wordsToReplace.length) {
+                                newWordPool = currentDB.filter(function(v) { 
+                                    const n = gData.notebook.find(function(e) { return e.word === v.word; });
+                                    return (!n || (n.lvl || 0) < 7) && !cleanedWords.includes(v.word);
+                                });
+                            }
+                            
+                            // 替换已加入生词本的词
+                            for (let i = 0; i < wordsToReplace.length && newWordPool.length > 0; i++) {
+                                let idx = s % newWordPool.length;
+                                let newWord = newWordPool.splice(idx, 1)[0].word;
+                                cleanedWords.push(newWord);
+                                s = s * 31 + 7;
+                                console.log(`   ↳ 替换 "${wordsToReplace[i]}" → "${newWord}"`);
+                            }
+                            
+                            // 更新daily_stats
+                            gData.daily_stats.words = cleanedWords;
+                            console.log(`✅ 当日单词列表已清理：${cleanedWords.join(', ')}`);
+                            
+                            // 立即保存清理后的列表
+                            setTimeout(function() {
+                                if (typeof saveData === 'function') {
+                                    console.log('💾 保存清理后的当日单词列表...');
+                                    saveData();
+                                }
+                            }, 1500);
+                        }
+                    }
                 }
-                
-
                 
                 // 安全初始化gTodayWords
                 if (gData.daily_stats && gData.daily_stats.words && Array.isArray(gData.daily_stats.words)) {
