@@ -505,23 +505,50 @@
             const seedVal = today.split('-').reduce(function(a, b) { return a + b.charCodeAt(0); }, 0);
             const currentDB = getCurrentDB();
             
-            let pool = currentDB.filter(function(v) { 
-                return !gData.notebook.some(function(n) { return n.word === v.word; }); 
-            });
-            if (pool.length < 5) pool = currentDB.slice();
-            
+            // 🆕 优化：优先选择用户已添加到生词本但未掌握的单词
             let newDaily = [];
-            let tPool = pool.slice();
-            let s = seedVal;
-            for (let i = 0; i < 5 && tPool.length > 0; i++) { 
-                let idx = s % tPool.length;
-                newDaily.push(tPool.splice(idx, 1)[0].word); 
-                s = s * 31 + 7; 
+            
+            // 1. 先从用户生词本中选择未掌握的单词（级别<7）
+            let notebookCandidates = gData.notebook.filter(function(n) {
+                return (n.lvl || 0) < 7; // 未掌握的词
+            });
+            
+            if (notebookCandidates.length > 0) {
+                // 随机选择（最多5个）
+                let tPool = notebookCandidates.slice();
+                let s = seedVal;
+                for (let i = 0; i < 5 && tPool.length > 0; i++) { 
+                    let idx = s % tPool.length;
+                    newDaily.push(tPool.splice(idx, 1)[0].word); 
+                    s = s * 31 + 7; 
+                }
+                console.log(`📚 从生词本中选择 ${newDaily.length} 个未掌握单词作为当日学习词`);
+            }
+            
+            // 2. 如果还不够5个，从数据库中选择新单词
+            if (newDaily.length < 5) {
+                let pool = currentDB.filter(function(v) { 
+                    return !gData.notebook.some(function(n) { return n.word === v.word; }); 
+                });
+                if (pool.length < (5 - newDaily.length)) pool = currentDB.slice();
+                
+                let tPool = pool.slice();
+                let s = seedVal * 17 + 13; // 不同的种子
+                for (let i = newDaily.length; i < 5 && tPool.length > 0; i++) { 
+                    let idx = s % tPool.length;
+                    let newWord = tPool.splice(idx, 1)[0].word;
+                    if (!newDaily.includes(newWord)) {
+                        newDaily.push(newWord);
+                    }
+                    s = s * 31 + 7; 
+                }
+                console.log(`🎯 补充 ${newDaily.length - notebookCandidates.length} 个新单词到当日学习列表`);
             }
             
             gData.daily_stats = { date: today, completed: false, words: newDaily };
             sessionMastery = {};
             try { localStorage.removeItem('french_session_mastery'); } catch(e) {}
+            console.log(`✅ 生成当日学习词: ${newDaily.join(', ')}`);
         }
         
 
@@ -849,6 +876,22 @@
                     next: new Date().toISOString().split('T')[0], 
                     err_days: 0 
                 }); 
+                
+                // 🆕 优化：如果当日新词不足5个，自动将此词加入当日学习列表
+                const today = new Date().toISOString().split('T')[0];
+                if (gData.daily_stats.date === today) {
+                    // 检查是否已在当日列表中
+                    if (!gData.daily_stats.words.includes(w)) {
+                        // 如果当日新词不足5个，添加进去
+                        if (gData.daily_stats.words.length < 5) {
+                            gData.daily_stats.words.push(w);
+                            console.log(`📝 自动将"${w}"加入当日学习列表 (${gData.daily_stats.words.length}/5)`);
+                        } else {
+                            console.log(`ℹ️ 当日已有5个新词，不自动添加"${w}"到学习列表`);
+                        }
+                    }
+                }
+                
                 speak("Ajoute");
                 refreshUI();
                 // 立即保存到云端
