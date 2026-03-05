@@ -184,8 +184,10 @@ async function loadFromSupabase() {
       return null;
     }
     
-    // 并行加载用户档案和单词本
-    const [profileRes, notebookRes] = await Promise.all([
+    const today = new Date().toISOString().split('T')[0];
+    
+    // 并行加载用户档案、单词本和当日学习记录
+    const [profileRes, notebookRes, sessionRes] = await Promise.all([
       supabaseClient
         .from('french_profiles')
         .select('*')
@@ -196,11 +198,19 @@ async function loadFromSupabase() {
         .from('french_notebook')
         .select('*')
         .eq('profile_id', profileId)
-        .order('added_at', { ascending: false })
+        .order('added_at', { ascending: false }),
+      
+      supabaseClient
+        .from('daily_sessions')
+        .select('*')
+        .eq('profile_id', profileId)
+        .eq('date', today)
+        .maybeSingle()  // 可能没有当日的记录
     ]);
     
     if (profileRes.error) throw new Error(`用户档案加载失败: ${profileRes.error.message}`);
     if (notebookRes.error) throw new Error(`单词本加载失败: ${notebookRes.error.message}`);
+    // sessionRes.error 可以忽略，因为可能没有当日记录
     
     // 转换为原有格式
     const cloudData = {
@@ -211,10 +221,28 @@ async function loadFromSupabase() {
         lvl: item.level,
         next: item.next_review,
         err_days: item.error_days
-      }))
+      })),
+      daily_stats: {
+        date: today,
+        completed: false,
+        words: []
+      }
     };
     
-    console.log(`✅ 云端加载成功: ${cloudData.stars}星星, ${cloudData.notebook.length}单词`);
+    // 如果有当日学习记录，恢复数据
+    if (sessionRes.data) {
+      cloudData.daily_stats = {
+        date: sessionRes.data.date || today,
+        completed: sessionRes.data.completed || false,
+        words: sessionRes.data.words_today || [],
+        stars_earned: sessionRes.data.stars_earned || 0
+      };
+      console.log(`📅 恢复当日学习记录: ${cloudData.daily_stats.words.length} 个单词，完成状态: ${cloudData.daily_stats.completed}`);
+    } else {
+      console.log('📅 无当日学习记录，使用默认值');
+    }
+    
+    console.log(`✅ 云端加载成功: ${cloudData.stars}星星, ${cloudData.notebook.length}单词, 当日记录: ${cloudData.daily_stats.words.length}词`);
     return cloudData;
     
   } catch (error) {

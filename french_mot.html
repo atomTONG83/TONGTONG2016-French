@@ -466,7 +466,7 @@
                 if (!gData.daily_stats) gData.daily_stats = { date: "", completed: false, words: [] };
                 
                 if (gData.daily_stats.date !== today) {
-                    generateDailyWords(today);
+                    await generateDailyWords(today);
                 }
                 // 🆕 已删除清理逻辑：每日5词固定，不再替换已加入生词本的单词
                 
@@ -500,7 +500,7 @@
             refreshUI();
         }
         
-        function generateDailyWords(today) {
+        async function generateDailyWords(today) {
             const seedVal = today.split('-').reduce(function(a, b) { return a + b.charCodeAt(0); }, 0);
             const currentDB = getCurrentDB();
             
@@ -554,12 +554,15 @@
             console.log(`✅ 生成当日学习词 (${newDaily.length}个): ${newDaily.join(', ')}`);
             
             // 🆕 重要：立即保存，锁定今日单词列表
-            setTimeout(function() {
-                if (typeof saveData === 'function') {
-                    console.log('💾 立即保存当日单词列表到云端...');
-                    saveData();
+            if (typeof saveData === 'function') {
+                console.log('💾 立即保存当日单词列表到云端...');
+                try {
+                    await saveData();
+                    console.log('💾 当日单词列表已成功保存到云端');
+                } catch (saveError) {
+                    console.error('保存当日单词列表失败:', saveError);
                 }
-            }, 1000);
+            }
         }
         
 
