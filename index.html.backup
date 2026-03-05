@@ -192,7 +192,46 @@
             }
         }
         
-        // 为Supabase数据创建任务卡片
+        // 中文到法文的任务翻译映射
+        const frenchTranslationMap = {
+            // 常见任务类型
+            '小提琴练习': 'Pratique du violon',
+            '学校作业': 'Devoirs scolaires',
+            '法语朗读': 'Lecture en français',
+            '词汇积累': 'Apprentissage du vocabulaire',
+            '数学应用题': 'Exercices de mathématiques',
+            '英语作业': 'Devoirs d\'anglais',
+            '童童': 'Tongtong',  // 专有名词
+            'Sortie Île St-Germain': 'Sortie Île St-Germain', // 保持原样
+            
+            // 简写版本
+            '小提琴': 'Violon',
+            '作业': 'Devoirs',
+            '朗读': 'Lecture',
+            '词汇': 'Vocabulaire',
+            '数学': 'Mathématiques',
+            '英语': 'Anglais'
+        };
+        
+        // 获取法文翻译（智能转换）
+        function getFrenchTranslation(chineseText, rawFrenchText) {
+            // 如果原始法文不是时间说明，直接使用
+            if (rawFrenchText && !rawFrenchText.includes('分钟') && !rawFrenchText.includes('：')) {
+                return rawFrenchText;
+            }
+            
+            // 尝试从映射表中查找翻译
+            for (const [chinese, french] of Object.entries(frenchTranslationMap)) {
+                if (chineseText.includes(chinese)) {
+                    return french;
+                }
+            }
+            
+            // 如果没有找到映射，返回原始法文或默认值
+            return rawFrenchText || 'Tâche quotidienne';
+        }
+        
+        // 为Supabase数据创建任务卡片（双语版）
         function createTaskCardFromSupabase(task, delay) {
             const taskCard = document.createElement('div');
             taskCard.className = 'task-card';
@@ -206,7 +245,8 @@
             // 使用视图中的格式化字段
             const displayIcon = task.completed ? '✅' : (task.icon || '⏳');
             const cnText = task.chinese_text || task.title || '无标题';
-            const frText = task.french_text || '';
+            const rawFrText = task.french_text || '';
+            const frText = getFrenchTranslation(cnText, rawFrText);
             const statusText = task.completed ? '已完成' : '待完成';
             const displayDate = extractedDate || '无日期';
             
