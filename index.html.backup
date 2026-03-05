@@ -201,8 +201,6 @@
             '词汇积累': 'Apprentissage du vocabulaire',
             '数学应用题': 'Exercices de mathématiques',
             '英语作业': 'Devoirs d\'anglais',
-            '童童': 'Tongtong',  // 专有名词
-            'Sortie Île St-Germain': 'Sortie Île St-Germain', // 保持原样
             
             // 简写版本
             '小提琴': 'Violon',
@@ -214,21 +212,46 @@
         };
         
         // 获取法文翻译（智能转换）
-        function getFrenchTranslation(chineseText, rawFrenchText) {
-            // 如果原始法文不是时间说明，直接使用
+        function getFrenchTranslation(chineseText, rawFrenchText, originalTitle) {
+            // 情况1：如果原始标题包含冒号分隔的双语格式（如"童童: Sortie Île St-Germain"）
+            if (originalTitle && originalTitle.includes(':') && 
+                (originalTitle.includes('/') || originalTitle.includes('Sortie') || originalTitle.includes('Île'))) {
+                // 提取冒号后的部分作为法文
+                const parts = originalTitle.split(':');
+                if (parts.length > 1) {
+                    return parts.slice(1).join(':').trim();
+                }
+            }
+            
+            // 情况2：如果原始法文不是时间说明，直接使用
             if (rawFrenchText && !rawFrenchText.includes('分钟') && !rawFrenchText.includes('：')) {
+                // 但如果是"Devoirs"这种简短形式，可以保持原样
                 return rawFrenchText;
             }
             
-            // 尝试从映射表中查找翻译
+            // 情况3：尝试从映射表中查找翻译
             for (const [chinese, french] of Object.entries(frenchTranslationMap)) {
                 if (chineseText.includes(chinese)) {
                     return french;
                 }
             }
             
-            // 如果没有找到映射，返回原始法文或默认值
+            // 情况4：如果没有找到映射，返回原始法文或默认值
             return rawFrenchText || 'Tâche quotidienne';
+        }
+        
+        // 获取中文显示文本（智能处理）
+        function getChineseDisplayText(chineseText, originalTitle) {
+            // 如果是特殊双语格式，显示整个去日期后的标题
+            if (originalTitle && originalTitle.includes(':') && 
+                (originalTitle.includes('/') || originalTitle.includes('Sortie') || originalTitle.includes('Île'))) {
+                // 去除日期部分
+                const cleaned = originalTitle.replace(/\[\d{4}-\d{2}-\d{2}\]\s*/g, '').trim();
+                return cleaned;
+            }
+            
+            // 否则使用提取的中文文本
+            return chineseText;
         }
         
         // 为Supabase数据创建任务卡片（双语版）
@@ -246,7 +269,11 @@
             const displayIcon = task.completed ? '✅' : (task.icon || '⏳');
             const cnText = task.chinese_text || task.title || '无标题';
             const rawFrText = task.french_text || '';
-            const frText = getFrenchTranslation(cnText, rawFrText);
+            const originalTitle = task.title || '';
+            
+            // 智能获取双语文本
+            const displayCnText = getChineseDisplayText(cnText, originalTitle);
+            const frText = getFrenchTranslation(cnText, rawFrText, originalTitle);
             const statusText = task.completed ? '已完成' : '待完成';
             const displayDate = extractedDate || '无日期';
             
@@ -254,7 +281,7 @@
                 <div class="card-glow"></div>
                 <div class="task-icon">${displayIcon}</div>
                 <div class="task-info">
-                    <div class="task-cn">${cnText}${newBadge}</div>
+                    <div class="task-cn">${displayCnText}${newBadge}</div>
                     ${frText ? '<div class="task-fr">' + frText + '</div>' : ''}
                     <div class="task-status">${displayDate} • ${statusText}</div>
                 </div>
