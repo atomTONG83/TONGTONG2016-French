@@ -6,6 +6,7 @@
   <title>French Learning — Admin Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
     body { font-family: 'Inter', sans-serif; }
@@ -67,6 +68,17 @@
     </div>
     <div class="flex items-center gap-3 flex-shrink-0">
       <span id="lastUpdated" class="text-xs text-slate-400 hidden sm:block"></span>
+      <div id="cloudStatus" class="hidden">
+        <span class="text-xs px-2 py-1 rounded-full bg-slate-100 text-slate-600 border border-slate-200">🌐 云端</span>
+      </div>
+      <button onclick="loadFromCloud()" id="cloudSyncBtn"
+        class="flex items-center gap-1.5 text-xs bg-emerald-50 hover:bg-emerald-100 text-emerald-600 font-semibold px-3 py-1.5 rounded-lg transition-colors">
+        <span id="cloudIcon" class="inline-block">☁️</span> 云端同步
+      </button>
+      <button onclick="exportToLocal()" id="exportBtn"
+        class="flex items-center gap-1.5 text-xs bg-amber-50 hover:bg-amber-100 text-amber-600 font-semibold px-3 py-1.5 rounded-lg transition-colors">
+        <span id="exportIcon" class="inline-block">📥</span> 导出备份
+      </button>
       <button onclick="loadData()" id="refreshBtn"
         class="flex items-center gap-1.5 text-xs bg-indigo-50 hover:bg-indigo-100 text-indigo-600 font-semibold px-3 py-1.5 rounded-lg transition-colors">
         <span id="refreshIcon" class="inline-block">↻</span> 刷新 Actualiser
@@ -313,6 +325,7 @@ let sortCol      = 'word';
 let sortAsc      = true;
 let currentPage  = 1;
 let lvlChartInst = null;
+let currentStars = 0;        // 当前星星数，用于导出功能
 
 const LVL = {
   0: { desc:'待定 Lvl 0',   color:'#94a3b8', bg:'bg-slate-100',   text:'text-slate-600'   },
@@ -325,11 +338,203 @@ const LVL = {
   7: { desc:'掌握 Maîtrisé',color:'#22c55e', bg:'bg-emerald-100', text:'text-emerald-700' },
 };
 
+// ── Supabase Cloud Integration ──────────────────────────────────────────────
+const SUPABASE_CONFIG = {
+  url: 'https://ghbmmnapyupusmyxjkvv.supabase.co',
+  key: 'sb_publishable_MkMhoECq7wo5qFi3K9Shcg_7LiPM1oU'
+};
+
+let supabaseClient = null;
+let currentProfileId = null;
+let isCloudMode = false;
+
+// 初始化Supabase客户端
+function initSupabase() {
+  try {
+    if (window.supabase && SUPABASE_CONFIG.url && SUPABASE_CONFIG.key) {
+      supabaseClient = window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.key);
+      console.log('✅ Supabase客户端初始化成功');
+      document.getElementById('cloudStatus').classList.remove('hidden');
+      return true;
+    } else {
+      console.warn('❌ Supabase配置不完整或库未加载');
+      return false;
+    }
+  } catch (error) {
+    console.error('❌ Supabase初始化失败:', error);
+    return false;
+  }
+}
+
+// 从云端加载数据
+async function loadFromCloud() {
+  const icon = document.getElementById('cloudIcon');
+  if (icon) icon.style.animation = 'spin 0.8s linear infinite';
+  hideBanner();
+  
+  try {
+    // 确保Supabase已初始化
+    if (!supabaseClient && !initSupabase()) {
+      throw new Error('无法初始化Supabase客户端');
+    }
+    
+    console.log('🌐 开始从云端加载数据...');
+    
+    // 获取用户档案ID
+    const { data: profileData, error: profileError } = await supabaseClient
+      .from('french_profiles')
+      .select('id, stars, last_milestone')
+      .eq('user_name', 'tongtong')
+      .single();
+    
+    if (profileError) throw new Error(`用户档案加载失败: ${profileError.message}`);
+    if (!profileData) throw new Error('未找到tongtong用户档案');
+    
+    currentProfileId = profileData.id;
+    const today = new Date().toISOString().split('T')[0];
+    
+    // 并行加载单词本和当日学习记录
+    const [notebookRes, sessionRes] = await Promise.all([
+      supabaseClient
+        .from('french_notebook')
+        .select('*')
+        .eq('profile_id', currentProfileId)
+        .order('added_at', { ascending: false }),
+      
+      supabaseClient
+        .from('daily_sessions')
+        .select('*')
+        .eq('profile_id', currentProfileId)
+        .eq('date', today)
+        .maybeSingle()
+    ]);
+    
+    if (notebookRes.error) throw new Error(`单词本加载失败: ${notebookRes.error.message}`);
+    
+    // 构建用户数据对象
+    const cloudUserData = {
+      stars: profileData.stars,
+      last_milestone: profileData.last_milestone || 1000,
+      notebook: notebookRes.data.map(item => ({
+        word: item.word,
+        lvl: item.level,
+        next: item.next_review,
+        err_days: item.error_days
+      }))
+    };
+    
+    // 如果有当日学习记录，添加到数据中
+    if (sessionRes.data) {
+      cloudUserData.daily_stats = {
+        date: sessionRes.data.date || today,
+        completed: sessionRes.data.completed || false,
+        words: sessionRes.data.words_today || [],
+        stars_earned: sessionRes.data.stars_earned || 0
+      };
+      console.log(`📅 从云端恢复当日学习记录: ${sessionRes.data.words_today?.length || 0} 个单词`);
+    }
+    
+    // 加载完整词库
+    const { data: vocabularyData, error: vocabError } = await supabaseClient
+      .from('french_vocabulary')
+      .select('*')
+      .order('word', { ascending: true });
+    
+    if (vocabError) throw new Error(`单词库加载失败: ${vocabError.message}`);
+    
+    const cloudFullDb = vocabularyData.map(item => ({
+      word: item.word,
+      definition: item.definition,
+      example: item.example,
+      niveau: item.difficulty || 1
+    }));
+    
+    isCloudMode = true;
+    updateModeDisplay();
+    processData(cloudUserData, cloudFullDb);
+    
+    document.getElementById('lastUpdated').textContent =
+      '🌐 云端同步 ' + new Date().toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'});
+    
+    console.log(`✅ 云端同步成功: ${cloudUserData.notebook.length} 单词, ${cloudFullDb.length} 词库`);
+    
+  } catch (e) {
+    showBanner('云端同步失败: ' + e.message);
+    console.error('[cloud-sync]', e);
+    isCloudMode = false;
+    updateModeDisplay();
+  } finally {
+    if (icon) icon.style.animation = '';
+  }
+}
+
+// 更新模式显示
+function updateModeDisplay() {
+  const cloudStatus = document.getElementById('cloudStatus');
+  if (!cloudStatus) return;
+  
+  if (isCloudMode) {
+    cloudStatus.innerHTML = '<span class="text-xs px-2 py-1 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-300">🌐 云端数据</span>';
+    console.log('📊 显示模式: 云端数据');
+  } else {
+    cloudStatus.innerHTML = '<span class="text-xs px-2 py-1 rounded-full bg-slate-100 text-slate-600 border border-slate-200">💻 本地数据</span>';
+    console.log('📊 显示模式: 本地数据');
+  }
+}
+
+// 导出数据到本地（备份功能）
+async function exportToLocal() {
+  try {
+    if (!notebookData.length) {
+      alert('没有数据可导出。请先加载数据。');
+      return;
+    }
+    
+    // 创建导出数据对象
+    const exportData = {
+      stars: currentStars,
+      notebook: notebookData,
+      last_milestone: 1000,
+      exported_at: new Date().toISOString(),
+      source: isCloudMode ? 'cloud' : 'local'
+    };
+    
+    // 尝试从当前数据中获取星星数（如果可用）
+    // 注意：notebookData可能不包含stars信息，我们需要从其他来源获取
+    // 这里简化处理，如果需要完整数据，建议使用云端同步
+    
+    // 创建下载链接
+    const dataStr = JSON.stringify(exportData, null, 2);
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const dataUrl = URL.createObjectURL(dataBlob);
+    
+    const downloadLink = document.createElement('a');
+    downloadLink.href = dataUrl;
+    downloadLink.download = `french_backup_${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+    
+    // 清理URL
+    setTimeout(() => URL.revokeObjectURL(dataUrl), 100);
+    
+    console.log(`📥 已导出 ${notebookData.length} 个单词到本地文件`);
+    
+  } catch (e) {
+    console.error('导出失败:', e);
+    alert('导出失败: ' + e.message);
+  }
+}
+
 // ── Load Data ─────────────────────────────────────────────────────────────────
 async function loadData() {
   const icon = document.getElementById('refreshIcon');
   if (icon) icon.style.animation = 'spin 0.8s linear infinite';
   hideBanner();
+  
+  // 设置为本地模式
+  isCloudMode = false;
+  updateModeDisplay();
 
   try {
     const [r1, r2] = await Promise.all([
@@ -357,7 +562,7 @@ async function loadData() {
 function processData(fd, db) {
   // Parse notebook
   notebookData = Array.isArray(fd) ? fd : (fd.notebook || fd.words || []);
-  const stars  = (fd && !Array.isArray(fd)) ? (fd.stars || 0) : 0;
+  currentStars = (fd && !Array.isArray(fd)) ? (fd.stars || 0) : 0;
   
   // Build lookup from full DB
   fullDbMap = {};
@@ -371,13 +576,13 @@ function processData(fd, db) {
   // Derived stats
   const mastered   = notebookData.filter(w => (w.lvl || 0) >= 7).length;
   const inProgress = notebookData.filter(w => { const l = w.lvl||0; return l >= 1 && l < 7; }).length;
-  const trophies   = Math.floor(stars / 1000);
+  const trophies   = Math.floor(currentStars / 1000);
   const pct        = notebookData.length ? Math.round(mastered / notebookData.length * 100) : 0;
 
   const todayStr = new Date().toISOString().slice(0, 10);
   const todayCount = notebookData.filter(w => w.next === todayStr).length;
 
-  renderStats(notebookData.length, mastered, inProgress, stars, trophies, pct, todayCount);
+  renderStats(notebookData.length, mastered, inProgress, currentStars, trophies, pct, todayCount);
   renderReviewSchedule();
   renderChart();
   renderRedZone();
@@ -774,6 +979,17 @@ function hideBanner() {
 }
 
 // ── Boot ──────────────────────────────────────────────────────────────────────
+// 初始化Supabase客户端
+setTimeout(() => {
+  if (initSupabase()) {
+    console.log('🌐 Supabase客户端已就绪，可以使用云端同步功能');
+  }
+}, 500);
+
+// 初始显示模式
+updateModeDisplay();
+
+// 加载本地数据
 loadData();
 </script>
 </body>
