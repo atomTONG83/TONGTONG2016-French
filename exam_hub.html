@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>复习备考中心 | Centre de Révision</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap');
+        :root { 
+            --bg: #030712; 
+            --primary: #fbbf24; 
+            --text: #f8fafc; 
+            --border: rgba(255,255,255,0.1); 
+            --glass: rgba(15, 23, 42, 0.6);
+        }
+        body { 
+            background: var(--bg); 
+            color: var(--text); 
+            font-family: 'Rajdhani', sans-serif; 
+            padding: 20px; 
+            background-image: radial-gradient(circle at top right, rgba(251, 191, 36, 0.05), transparent);
+            min-height: 100vh;
+        }
+        .container { max-width: 600px; margin: 0 auto; }
+        header { text-align: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+        h1 { font-family: 'Orbitron', sans-serif; color: var(--primary); font-size: 1.5rem; letter-spacing: 2px; }
+        
+        .month-section {
+            margin-bottom: 20px;
+        }
+
+        .month-header {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem; color: var(--primary);
+            padding: 15px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.3s;
+        }
+        .month-header:hover { background: rgba(255,255,255,0.08); }
+        .month-header::after {
+            content: '▼';
+            font-size: 0.6rem;
+            transition: 0.3s;
+        }
+        details[open] .month-header::after { transform: rotate(180deg); }
+        details[open] .month-header { border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-color: var(--primary); }
+
+        .month-content {
+            padding: 15px;
+            background: rgba(255,255,255,0.01);
+            border: 1px solid var(--border);
+            border-top: none;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        .count { font-size: 0.7rem; opacity: 0.5; margin-left: 10px; }
+
+        .exam-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 20px; border-radius: 12px;
+            text-decoration: none; color: inherit;
+            display: flex; justify-content: space-between; align-items: center;
+            transition: 0.3s; margin-bottom: 15px;
+            backdrop-filter: blur(10px);
+        }
+        .exam-card:last-child { margin-bottom: 0; }
+        .exam-card:hover { transform: translateX(5px); background: rgba(255,255,255,0.05); border-color: var(--primary); }
+        
+        .badge {
+            font-size: 0.6rem; color: #000; display: inline-block; 
+            padding: 2px 8px; border-radius: 4px; margin-bottom: 8px; font-weight: bold;
+        }
+
+        .exam-card h2 { font-size: 1.1rem; margin-bottom: 5px; color: #fff; }
+        .exam-card p { font-size: 0.8rem; opacity: 0.6; font-style: italic; }
+        
+        .meta { margin-top: 10px; font-size: 0.75rem; color: var(--primary); font-weight: 500; }
+        
+        .arrow { font-size: 1.2rem; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #0ea5e9; text-decoration: none; font-size: 0.8rem; font-weight: bold; }
+        footer { text-align: center; margin-top: 50px; opacity: 0.3; font-size: 0.6rem; letter-spacing: 2px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="tongtong_hub.html" class="back-link">← 返回主空间</a>
+            <h1>REVISION HUB<br><span style="opacity:0.5; font-size: 0.8rem;">复习备考中心</span></h1>
+        </header>
+
+        
+        <details open class="month-section">
+            <summary class="month-header">2026年02月 <span class="count">(3)</span></summary>
+            <div class="month-content">
+        
+            <a href="math_length_exam.html" class="exam-card" style="border-left: 5px solid #10b981;">
+                <div>
+                    <div class="badge" style="background: #10b981">今日重点复习</div>
+                    <h2>数学：长度单位换算</h2>
+                    <p>Maths : Mesures de longueurs</p>
+                    <div class="meta">
+                        <span>📅 考试: 2026-02-19</span>
+                        <span style="margin-left: 15px; opacity: 0.5;">📝 创建: 2026-02-18</span>
+                    </div>
+                </div>
+                <div class="arrow" style="color: #10b981">→</div>
+            </a>
+            
+            <a href="science_volcan_exam.html" class="exam-card" style="border-left: 5px solid #ef4444;">
+                <div>
+                    <div class="badge" style="background: #ef4444">今日重点复习</div>
+                    <h2>自然科学：火山</h2>
+                    <p>Sciences : Qu'est-ce qu'un volcan ?</p>
+                    <div class="meta">
+                        <span>📅 考试: 2026-02-20</span>
+                        <span style="margin-left: 15px; opacity: 0.5;">📝 创建: 2026-02-18</span>
+                    </div>
+                </div>
+                <div class="arrow" style="color: #ef4444">→</div>
+            </a>
+            
+            <a href="geo_france_landscape_exam.html" class="exam-card" style="border-left: 5px solid #0ea5e9;">
+                <div>
+                    <div class="badge" style="background: #0ea5e9">今日重点复习</div>
+                    <h2>地理：法国与景观</h2>
+                    <p>Géographie : La France et ses paysages</p>
+                    <div class="meta">
+                        <span>📅 考试: 2026-02-19</span>
+                        <span style="margin-left: 15px; opacity: 0.5;">📝 创建: 2026-02-18</span>
+                    </div>
+                </div>
+                <div class="arrow" style="color: #0ea5e9">→</div>
+            </a>
+            </div></details>
+
+        <footer>V3.3-COLLAPSIBLE | © ATOM TONG 2026</footer>
+    </div>
+</body>
+</html>
