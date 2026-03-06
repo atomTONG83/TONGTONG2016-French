@@ -483,21 +483,13 @@
                 }
                 
                 // 🔧 iPAD FIX: Ensure sessionMastery has today's words if completed
-                // 修改：只有当单词已经在生词本中时才设置sessionMastery
+                // 修改：只有当单词已经在生词本中且今天已真正完成学习时才设置sessionMastery
                 if (gData.daily_stats.date === today && gData.daily_stats.completed === true) {
-                    console.log('📱 iPad Fix: Today is marked completed, setting sessionMastery for notebook words');
-                    gTodayWords.forEach(function(tw) {
-                        if (tw && tw.word) {
-                            // 检查单词是否已经在生词本中
-                            const inNotebook = gData.notebook.some(function(n) { return n.word === tw.word; });
-                            if (inNotebook) {
-                                sessionMastery[tw.word] = MASTERY_GOAL;
-                                console.log(`  ✓ ${tw.word} 已在生词本中，标记为已掌握`);
-                            } else {
-                                console.log(`  - ${tw.word} 未在生词本中，保持可练习状态`);
-                            }
-                        }
-                    });
+                    console.log('📱 iPad Fix: Today is marked completed, checking sessionMastery');
+                    // 不再自动设置所有生词本单词为已掌握
+                    // 只恢复之前保存的sessionMastery状态
+                    // 新增逻辑：如果今天标记为完成，但生词本中的今日单词sessionMastery未达到目标，不预设为已掌握
+                    // 这样可以防止新添加的单词被错误标记为已掌握
                 }
                 
                 updateSyncStatus("Prêt", "#2ecc71");
@@ -871,6 +863,29 @@
                         gMistakes = sessionData.gMistakes || {};
                         gCombo = sessionData.gCombo || 0;
                         console.log('Session loaded for date:', today, 'sessionMastery:', Object.keys(sessionMastery).length, 'words');
+                        
+                        // 🔧 修复：如果今日单词被错误标记为已掌握（MASTERY_GOAL），但今天还没结束，重置为0
+                        // 防止iPad修复逻辑导致的错误
+                        const todayDate = new Date().toISOString().split('T')[0];
+                        if (gData.daily_stats && gData.daily_stats.date === todayDate && gData.daily_stats.words) {
+                            let resetCount = 0;
+                            gData.daily_stats.words.forEach(function(word) {
+                                if (sessionMastery[word] === MASTERY_GOAL) {
+                                    // 检查单词是否在生词本中
+                                    const inNotebook = gData.notebook && gData.notebook.some(function(n) { return n.word === word; });
+                                    // 特殊处理：即使单词在生词本中，如果今天是同一天且标记为完成，
+                                    // 但可能是iPad修复逻辑的错误标记，也重置为0
+                                    // 用户需要重新练习这些单词
+                                    sessionMastery[word] = 0;
+                                    resetCount++;
+                                    console.log(`  🔄 ${word} 重置sessionMastery为0（修复iPad错误标记）`);
+                                }
+                            });
+                            if (resetCount > 0) {
+                                console.log(`🔧 修复完成：${resetCount}个今日单词的sessionMastery已重置（修复iPad错误）`);
+                                saveSession(); // 保存修复后的状态
+                            }
+                        }
                     } else {
                         // 如果是不同日期，清空会话状态
                         sessionMastery = {};
