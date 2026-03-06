@@ -483,11 +483,19 @@
                 }
                 
                 // 🔧 iPAD FIX: Ensure sessionMastery has today's words if completed
+                // 修改：只有当单词已经在生词本中时才设置sessionMastery
                 if (gData.daily_stats.date === today && gData.daily_stats.completed === true) {
-                    console.log('📱 iPad Fix: Today is marked completed, setting sessionMastery');
+                    console.log('📱 iPad Fix: Today is marked completed, setting sessionMastery for notebook words');
                     gTodayWords.forEach(function(tw) {
                         if (tw && tw.word) {
-                            sessionMastery[tw.word] = MASTERY_GOAL;
+                            // 检查单词是否已经在生词本中
+                            const inNotebook = gData.notebook.some(function(n) { return n.word === tw.word; });
+                            if (inNotebook) {
+                                sessionMastery[tw.word] = MASTERY_GOAL;
+                                console.log(`  ✓ ${tw.word} 已在生词本中，标记为已掌握`);
+                            } else {
+                                console.log(`  - ${tw.word} 未在生词本中，保持可练习状态`);
+                            }
                         }
                     });
                 }
@@ -892,6 +900,11 @@
                     next: new Date().toISOString().split('T')[0], 
                     err_days: 0 
                 }); 
+                
+                // 🔧 关键修复：当添加新词时，重置sessionMastery为0，确保可以练习
+                sessionMastery[w] = 0;
+                console.log(`📝 ${w} 加入生词本，sessionMastery重置为0`);
+                saveSession(); // 保存会话状态
                 
                 // 显示提示：添加的单词将在复习模式中出现
                 setTimeout(function() {
