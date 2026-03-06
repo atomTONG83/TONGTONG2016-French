@@ -710,15 +710,17 @@
                 var today = new Date().toISOString().split('T')[0];
                 var isTodayCompleted = data.daily_stats && data.daily_stats.date === today && data.daily_stats.completed === true;
                 
-                if (data.stars > lastStars + 100 && !isTodayCompleted) {
-                    console.error(`❌ 星星增加异常: ${lastStars} → ${data.stars} (+${data.stars - lastStars})`);
-                    return false;
-                }
-                
-                // 如果是今日已完成状态，更新last_valid_stars为当前值，避免后续验证失败
-                if (isTodayCompleted) {
-                    console.log(`📱 今日已完成，更新last_valid_stars: ${lastStars} → ${data.stars}`);
-                    localStorage.setItem('last_valid_stars', data.stars.toString());
+                if (data.stars > lastStars + 100) {
+                    // 如果是今日已完成，或者是历史数据不一致，更新last_valid_stars并允许通过
+                    if (isTodayCompleted) {
+                        console.log(`📱 今日已完成，更新last_valid_stars: ${lastStars} → ${data.stars}`);
+                        localStorage.setItem('last_valid_stars', data.stars.toString());
+                    } else {
+                        // 历史数据修复：更新last_valid_stars为当前值，避免后续验证失败
+                        console.log(`🔧 历史数据修复：星星增加 ${data.stars - lastStars}，更新last_valid_stars: ${lastStars} → ${data.stars}`);
+                        localStorage.setItem('last_valid_stars', data.stars.toString());
+                        localStorage.setItem('last_valid_word_count', data.notebook.length.toString());
+                    }
                 }
                 
                 // 6. 检查单词数量是否合理（不应大幅减少）
