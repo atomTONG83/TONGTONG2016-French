@@ -465,7 +465,9 @@
                 if (!gData.stars) gData.stars = 100;
                 if (!gData.daily_stats) gData.daily_stats = { date: "", completed: false, words: [] };
                 
-                if (gData.daily_stats.date !== today) {
+                // 生成每日单词的条件：1) 日期不是今天 或 2) 日期是今天但单词列表为空
+                if (gData.daily_stats.date !== today || 
+                    (gData.daily_stats.date === today && (!gData.daily_stats.words || gData.daily_stats.words.length === 0))) {
                     await generateDailyWords(today);
                 }
                 // 🆕 已删除清理逻辑：每日5词固定，不再替换已加入生词本的单词

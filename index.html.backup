@@ -63,7 +63,7 @@
     <div class="bg-grid"></div>
     <div class="container">
         <header>
-            <div class="date-badge">2026年03月05日 // 05 March 2026</div>
+            <div class="date-badge">2026年03月06日 // 06 March 2026</div>
             <h1>TONGTONG's SPACE<br><span style="opacity: 0.5; font-size: 1.2rem;">童童空间</span></h1>
         </header>
         <div class="reward-card">
@@ -72,338 +72,61 @@
                 <div style="font-size: 0.6rem; letter-spacing: 2px; color: var(--primary);">CREDIT BALANCE AVAILABLE</div>
             </div>
         </div>
-                <div class="section-title">Active Mission List</div>
-        <div id="tasks-container" style="margin-bottom: 40px;">
-            <!-- 任务将动态加载到这里 -->
-            <div class="empty-msg" id="loading-msg">⏳ 正在加载今日任务...</div>
-        </div>
-        
-        <!-- Supabase客户端库 -->
-        <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-        
-        <script>
-        // Supabase配置（与法语学习系统相同）
-        const SUPABASE_CONFIG = {
-            url: 'https://ghbmmnapyupusmyxjkvv.supabase.co',
-            key: 'sb_publishable_MkMhoECq7wo5qFi3K9Shcg_7LiPM1oU'
-        };
-        
-        let supabaseClient = null;
-        
-        // 初始化Supabase客户端
-        function initSupabase() {
-            try {
-                if (window.supabase && SUPABASE_CONFIG.url && SUPABASE_CONFIG.key) {
-                    supabaseClient = window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.key);
-                    console.log('✅ Supabase客户端初始化成功');
-                    return true;
-                } else {
-                    console.warn('❌ Supabase配置不完整或库未加载');
-                    return false;
-                }
-            } catch (error) {
-                console.error('❌ Supabase初始化失败:', error);
-                return false;
-            }
-        }
-        
-        // 从Supabase获取今日任务
-        async function loadTodayTasks() {
-            const container = document.getElementById('tasks-container');
-            const loadingMsg = document.getElementById('loading-msg');
-            
-            try {
-                // 初始化Supabase
-                if (!initSupabase() || !supabaseClient) {
-                    throw new Error('Supabase客户端初始化失败');
-                }
-                
-                // 从Supabase视图获取格式化任务数据
-                const { data, error } = await supabaseClient
-                    .from('reminders_tasks_formatted')
-                    .select('*')
-                    .order('is_today', { ascending: false })
-                    .order('due_date', { ascending: true, nullsLast: true })
-                    .order('created_at', { ascending: false })
-                    .limit(20);
-                
-                if (error) throw error;
-                
-                const tasks = data || [];
-                console.log(`📊 从Supabase获取到 ${tasks.length} 个任务`);
-                
-                // 获取今日日期
-                const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-                
-                // 过滤出今日任务（无论完成状态）
-                const todayTasks = tasks.filter(task => {
-                    return task.is_today === true;
-                });
-                
-                // 确定要显示的任务
-                let tasksToShow = todayTasks;
-                let showAllCompleted = false;
-                
-                if (todayTasks.length === 0) {
-                    // 没有今日任务，显示最近的未完成任务
-                    tasksToShow = tasks.filter(task => !task.completed).slice(0, 5);
-                    if (tasksToShow.length === 0) {
-                        // 所有任务都已完成，显示最近的5个已完成任务
-                        tasksToShow = tasks.slice(0, 5);
-                        showAllCompleted = true;
-                    }
-                }
-                
-                // 清空容器
-                container.innerHTML = '';
-                
-                if (tasksToShow.length === 0) {
-                    container.innerHTML = '<div class="empty-msg">✅ 今日任务已全部完成！</div>';
-                    return;
-                }
-                
-                // 渲染任务卡片
-                tasksToShow.forEach((task, index) => {
-                    const taskCard = createTaskCardFromSupabase(task, index * 0.1);
-                    container.appendChild(taskCard);
-                });
-                
-                // 如果显示的是所有已完成任务，添加说明
-                if (showAllCompleted && tasksToShow.length > 0) {
-                    const info = document.createElement('div');
-                    info.className = 'empty-msg';
-                    info.style.fontSize = '0.7rem';
-                    info.style.marginTop = '10px';
-                    info.textContent = '所有任务均已完成 ✅';
-                    container.appendChild(info);
-                }
-                
-            } catch (error) {
-                console.error('加载任务失败:', error);
-                loadingMsg.innerHTML = '❌ 无法从Supabase加载任务: ' + error.message;
-                loadingMsg.style.color = 'var(--danger)';
-                
-                // 回退：显示静态示例
-                setTimeout(() => {
-                    if (container.children.length <= 1) { // 只有错误消息
-                        container.innerHTML = '<div class="empty-msg" style="color: var(--accent);">⚠️ 使用示例任务（Supabase连接失败）</div>' + getFallbackTasks();
-                    }
-                }, 2000);
-            }
-        }
-        
-        // 中文到法文的任务翻译映射
-        const frenchTranslationMap = {
-            // 常见任务类型
-            '小提琴练习': 'Pratique du violon',
-            '学校作业': 'Devoirs scolaires',
-            '法语朗读': 'Lecture en français',
-            '词汇积累': 'Apprentissage du vocabulaire',
-            '数学应用题': 'Exercices de mathématiques',
-            '英语作业': 'Devoirs d\'anglais',
-            
-            // 简写版本
-            '小提琴': 'Violon',
-            '作业': 'Devoirs',
-            '朗读': 'Lecture',
-            '词汇': 'Vocabulaire',
-            '数学': 'Mathématiques',
-            '英语': 'Anglais'
-        };
-        
-        // 获取法文翻译（智能转换）
-        function getFrenchTranslation(chineseText, rawFrenchText, originalTitle) {
-            // 情况1：如果原始标题包含冒号分隔的双语格式（如"童童: Sortie Île St-Germain"）
-            if (originalTitle && originalTitle.includes(':') && 
-                (originalTitle.includes('/') || originalTitle.includes('Sortie') || originalTitle.includes('Île'))) {
-                // 提取冒号后的部分作为法文
-                const parts = originalTitle.split(':');
-                if (parts.length > 1) {
-                    return parts.slice(1).join(':').trim();
-                }
-            }
-            
-            // 情况2：如果原始法文不是时间说明，直接使用
-            if (rawFrenchText && !rawFrenchText.includes('分钟') && !rawFrenchText.includes('：')) {
-                // 但如果是"Devoirs"这种简短形式，可以保持原样
-                return rawFrenchText;
-            }
-            
-            // 情况3：尝试从映射表中查找翻译
-            for (const [chinese, french] of Object.entries(frenchTranslationMap)) {
-                if (chineseText.includes(chinese)) {
-                    return french;
-                }
-            }
-            
-            // 情况4：如果没有找到映射，返回原始法文或默认值
-            return rawFrenchText || 'Tâche quotidienne';
-        }
-        
-        // 获取中文显示文本（智能处理）
-        function getChineseDisplayText(chineseText, originalTitle) {
-            // 如果是特殊双语格式，显示整个去日期后的标题
-            if (originalTitle && originalTitle.includes(':') && 
-                (originalTitle.includes('/') || originalTitle.includes('Sortie') || originalTitle.includes('Île'))) {
-                // 去除日期部分
-                const cleaned = originalTitle.replace(/\[\d{4}-\d{2}-\d{2}\]\s*/g, '').trim();
-                return cleaned;
-            }
-            
-            // 否则使用提取的中文文本
-            return chineseText;
-        }
-        
-        // 为Supabase数据创建任务卡片（双语版）
-        function createTaskCardFromSupabase(task, delay) {
-            const taskCard = document.createElement('div');
-            taskCard.className = 'task-card';
-            taskCard.style.animationDelay = `${delay}s`;
-            
-            const today = new Date().toISOString().split('T')[0];
-            const extractedDate = task.extracted_date || task.due_date;
-            const isToday = extractedDate === today;
-            const newBadge = isToday ? ' 🆕' : '';
-            
-            // 使用视图中的格式化字段
-            const displayIcon = task.completed ? '✅' : (task.icon || '⏳');
-            const cnText = task.chinese_text || task.title || '无标题';
-            const rawFrText = task.french_text || '';
-            const originalTitle = task.title || '';
-            
-            // 智能获取双语文本
-            const displayCnText = getChineseDisplayText(cnText, originalTitle);
-            const frText = getFrenchTranslation(cnText, rawFrText, originalTitle);
-            const statusText = task.completed ? '已完成' : '待完成';
-            const displayDate = extractedDate || '无日期';
-            
-            taskCard.innerHTML = `
+        <div class="section-title">Active Mission List</div>
+        <div style="margin-bottom: 40px;">
+            <div class="task-card" style="animation-delay: 0.0s">
                 <div class="card-glow"></div>
-                <div class="task-icon">${displayIcon}</div>
+                <div class="task-icon">⏳</div>
                 <div class="task-info">
-                    <div class="task-cn">${displayCnText}${newBadge}</div>
-                    ${frText ? '<div class="task-fr">' + frText + '</div>' : ''}
-                    <div class="task-status">${displayDate} • ${statusText}</div>
+                    <div class="task-cn">📚 学校作业 (Devoirs) 🆕</div>
+                    <div class="task-fr">Devoirs scolaires</div>
+                    <div class="task-status">2026-03-06 • 待完成</div>
                 </div>
-            `;
+            </div>
             
-            // 如果任务已完成，添加半透明效果
-            if (task.completed) {
-                taskCard.style.opacity = '0.7';
-                taskCard.style.filter = 'grayscale(20%)';
-            }
-            
-            return taskCard;
-        }
-        
-        // 回退静态任务
-        function getFallbackTasks() {
-            const today = new Date().toISOString().split('T')[0];
-            return `
-                <div class="task-card" style="animation-delay: 0.0s">
-                    <div class="card-glow"></div>
-                    <div class="task-icon">🎻</div>
-                    <div class="task-info">
-                        <div class="task-cn">小提琴练习 (20分钟)</div>
-                        <div class="task-fr">Pratique du violon</div>
-                        <div class="task-status">${today} • 待完成</div>
-                    </div>
-                </div>
-                <div class="task-card" style="animation-delay: 0.1s">
-                    <div class="card-glow"></div>
-                    <div class="task-icon">📚</div>
-                    <div class="task-info">
-                        <div class="task-cn">学校作业 (Devoirs)</div>
-                        <div class="task-fr">Devoirs scolaires</div>
-                        <div class="task-status">${today} • 待完成</div>
-                    </div>
-                </div>
-            `;
-        }
-        
-        // 解析任务标题
-        function parseTaskTitle(title) {
-            if (!title) return { date: '', icon: '⏳', cnText: '无标题', frText: '' };
-            
-            // 默认值
-            let date = '';
-            let icon = '⏳';
-            let cnText = title;
-            let frText = '';
-            
-            // 提取日期 [2026-03-05]
-            const dateMatch = title.match(/\[(\d{4}-\d{2}-\d{2})\]/);
-            if (dateMatch) {
-                date = dateMatch[1];
-                title = title.replace(dateMatch[0], '').trim();
-            }
-            
-            // 提取图标（第一个emoji或符号）
-            // 匹配任何非字母数字、非空格的字符（包括中文标点）
-            const iconMatch = title.match(/^([^\w\s\u4e00-\u9fa5]+\s*)/u);
-            if (iconMatch) {
-                icon = iconMatch[1].trim();
-                title = title.replace(iconMatch[0], '').trim();
-            }
-            
-            // 提取法文部分（括号内）
-            const frMatch = title.match(/\(([^)]+)\)/);
-            if (frMatch) {
-                frText = frMatch[1];
-                title = title.replace(frMatch[0], '').trim();
-            }
-            
-            // 剩余的是中文部分
-            cnText = title.trim();
-            if (!cnText && frText) {
-                cnText = frText;
-                frText = '';
-            }
-            
-            return { date, icon, cnText, frText };
-        }
-        
-        // 创建任务卡片
-        function createTaskCard(task, delay) {
-            const { date, icon, cnText, frText } = parseTaskTitle(task.title);
-            
-            const taskCard = document.createElement('div');
-            taskCard.className = 'task-card';
-            taskCard.style.animationDelay = delay + 's';
-            
-            const today = new Date().toISOString().split('T')[0];
-            const isToday = date === today;
-            const newBadge = isToday ? ' 🆕' : '';
-            
-            // 根据完成状态选择图标和状态文本
-            const statusIcon = task.completed ? '✅' : '⏳';
-            const statusText = task.completed ? '已完成' : '待完成';
-            const displayIcon = task.completed ? '✅' : (icon || '⏳');
-            
-            taskCard.innerHTML = `
+            <div class="task-card" style="animation-delay: 0.1s">
                 <div class="card-glow"></div>
-                <div class="task-icon">${displayIcon}</div>
+                <div class="task-icon">⏳</div>
                 <div class="task-info">
-                    <div class="task-cn">${cnText}${newBadge}</div>
-                    ${frText ? '<div class="task-fr">' + frText + '</div>' : ''}
-                    <div class="task-status">${date || '无日期'} • ${statusText}</div>
+                    <div class="task-cn">🇫🇷 法语朗读 (10分钟：半页–1页) 🆕</div>
+                    <div class="task-fr">Lecture en français (10 min)</div>
+                    <div class="task-status">2026-03-06 • 待完成</div>
                 </div>
-            `;
+            </div>
             
-            // 如果任务已完成，添加半透明效果
-            if (task.completed) {
-                taskCard.style.opacity = '0.7';
-                taskCard.style.filter = 'grayscale(20%)';
-            }
+            <div class="task-card" style="animation-delay: 0.2s">
+                <div class="card-glow"></div>
+                <div class="task-icon">⏳</div>
+                <div class="task-info">
+                    <div class="task-cn">✍️ 词汇积累 (5分钟：记录3个新词 + 中文 + 原句) 🆕</div>
+                    <div class="task-fr">Apprentissage du vocabulaire</div>
+                    <div class="task-status">2026-03-06 • 待完成</div>
+                </div>
+            </div>
             
-            return taskCard;
-        }
-        
-        // 页面加载时获取任务
-        document.addEventListener('DOMContentLoaded', loadTodayTasks);
-        </script><div class="section-title">Knowledge Interface</div>
+            <div class="task-card" style="animation-delay: 0.30000000000000004s">
+                <div class="card-glow"></div>
+                <div class="task-icon">⏳</div>
+                <div class="task-info">
+                    <div class="task-cn">🔢 数学应用题 (10分钟：圈关键词 + 写出求什么) 🆕</div>
+                    <div class="task-fr">Exercices de mathématiques</div>
+                    <div class="task-status">2026-03-06 • 待完成</div>
+                </div>
+            </div>
+            
+            <div class="task-card" style="animation-delay: 0.4s">
+                <div class="card-glow"></div>
+                <div class="task-icon">⏳</div>
+                <div class="task-info">
+                    <div class="task-cn">🎻 小提琴练习 (20分钟) 🆕</div>
+                    <div class="task-fr">Pratique du violon</div>
+                    <div class="task-status">2026-03-06 • 待完成</div>
+                </div>
+            </div>
+            </div>
+        <div class="section-title">Knowledge Interface</div>
         <div class="grid-2">
-            <a href="https://tongtong2016.com/french_mot.html" class="btn-launch">Le Trésor des Mots</a>
+            <a href="french_mot.html" class="btn-launch">Le Trésor des Mots</a>
             <a href="school_vocabulary.html" class="action-box" style="border-color: #818cf8;">
                 <h3>LEXIQUE</h3>
                 <p style="font-size: 0.75rem; color: #94a3b8;">学校法语生词本</p>
