@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>数学备考 | Mesures : Les Longueurs</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap');
+        
+        :root {
+            --bg: #030712;
+            --surface: #0f172a;
+            --primary: #fbbf24;
+            --accent: #0ea5e9;
+            --text: #f8fafc;
+            --border: #334155;
+            --success: #10b981;
+            --danger: #ef4444;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container { max-width: 800px; margin: 0 auto; }
+        
+        header { text-align: center; margin-bottom: 30px; border-bottom: 1px solid var(--border); padding-bottom: 20px; }
+        h1 { font-family: 'Orbitron', sans-serif; color: var(--primary); margin-bottom: 10px; font-size: 1.8rem; }
+        
+        .memo-box {
+            background: rgba(251, 191, 36, 0.05);
+            border: 1px solid var(--primary);
+            padding: 15px; border-radius: 10px; margin-bottom: 30px;
+            font-size: 0.9rem;
+        }
+        
+        .quiz-container { background: var(--surface); padding: 20px; border-radius: 15px; border: 1px solid var(--border); }
+        .question { margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .q-text { font-size: 1.1rem; font-weight: 700; margin-bottom: 15px; }
+        .q-text span { color: var(--accent); font-style: italic; font-size: 0.8rem; display: block; }
+
+        .options { display: grid; gap: 10px; }
+        .option {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            padding: 12px; border-radius: 8px; cursor: pointer;
+            transition: 0.2s; display: flex; align-items: center;
+        }
+        .option:hover { border-color: var(--primary); background: rgba(251, 191, 36, 0.1); }
+        .option.selected { border-color: var(--primary); background: rgba(251, 191, 36, 0.2); }
+        .option.correct { border-color: var(--success); background: rgba(16, 185, 129, 0.2); }
+        .option.incorrect { border-color: var(--danger); background: rgba(239, 68, 68, 0.2); }
+
+        .btn {
+            display: block; width: 100%; padding: 15px; margin-top: 20px;
+            background: var(--primary); border: none; border-radius: 8px;
+            color: #000; font-family: 'Orbitron', sans-serif; font-weight: 900;
+            cursor: pointer; text-transform: uppercase;
+        }
+
+        #result-area {
+            margin-top: 30px; padding: 20px; border-radius: 10px;
+            text-align: center; display: none;
+            background: var(--surface); border: 2px solid var(--primary);
+        }
+        .score { font-size: 3rem; font-family: 'Orbitron', sans-serif; color: var(--primary); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="tongtong_hub.html" style="color: var(--accent); text-decoration: none; font-size: 0.8rem;">← BACK TO HUB</a>
+            <h1>数学备考：长度单位换算</h1>
+            <p style="opacity: 0.7;">Mesures de longueurs : km, hm, dam, m, dm, cm, mm</p>
+        </header>
+
+        <div class="memo-box">
+            <strong>💡 Mémos Rapides :</strong><br>
+            • 1 km = 10 hm = 100 dam = 1000 m<br>
+            • 1 m = 10 dm = 100 cm = 1000 mm<br>
+            • 1 cm = 10 mm
+        </div>
+
+        <div class="quiz-container" id="quiz">
+            <!-- Questions will be injected here -->
+        </div>
+
+        <button class="btn" onclick="submitQuiz()">提交答案 (VALIDER)</button>
+
+        <div id="result-area">
+            <div class="score" id="score-val">0 / 10</div>
+            <p id="feedback-text"></p>
+            <button class="btn" style="background: var(--accent); margin-top: 20px;" onclick="location.reload()">重新练习</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            { q: "1 m = ? cm", options: ["10 cm", "100 cm", "1000 cm"], correct: 1, note: "1 mètre = 100 centimètres" },
+            { q: "1 km = ? m", options: ["100 m", "500 m", "1000 m"], correct: 2, note: "1 kilomètre = 1000 mètres" },
+            { q: "13 m = ? mm", options: ["130 mm", "1300 mm", "13000 mm"], correct: 2, note: "13 m = 13 000 mm (x1000)" },
+            { q: "4 m ___ 10 dm (比较大小)", options: ["> (更长)", "< (更短)", "= (一样)"], correct: 0, note: "4 m = 40 dm, 所以 40 dm > 10 dm" },
+            { q: "1 cm = ? mm", options: ["1 mm", "10 mm", "100 mm"], correct: 1, note: "1 centimètre = 10 millimètres" },
+            { q: "1 km = ? hm", options: ["10 hm", "100 hm", "1000 hm"], correct: 0, note: "1 kilomètre = 10 hectomètres" },
+            { q: "100 cm = ? m", options: ["1 m", "10 m", "100 m"], correct: 0, note: "100 cm = 1 m" },
+            { q: "1 hm = ? dam", options: ["1 dam", "10 dam", "100 dam"], correct: 1, note: "1 hectomètre = 10 décamètres" },
+            { q: "40 dm = ? m", options: ["4 m", "40 m", "400 m"], correct: 0, note: "40 dm = 4 m" },
+            { q: "13 m en dm ?", options: ["1.3 dm", "130 dm", "1300 dm"], correct: 1, note: "13 m = 130 dm (x10)" }
+        ];
+
+        let userAnswers = new Array(questions.length).fill(null);
+
+        function renderQuiz() {
+            const container = document.getElementById('quiz');
+            container.innerHTML = questions.map((q, i) => `
+                <div class="question" id="q-${i}">
+                    <div class="q-text">${i+1}. ${q.q}</div>
+                    <div class="options">
+                        ${q.options.map((opt, oi) => `
+                            <div class="option" onclick="selectOption(${i}, ${oi})" id="q-${i}-o-${oi}">
+                                ${opt}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function selectOption(qi, oi) {
+            userAnswers[qi] = oi;
+            document.querySelectorAll(\`#q-\${qi} .option\`).forEach(el => el.classList.remove('selected'));
+            document.getElementById(\`q-\${qi}-o-\${oi}\`).classList.add('selected');
+        }
+
+        function submitQuiz() {
+            let score = 0;
+            questions.forEach((q, i) => {
+                const options = document.querySelectorAll(\`#q-\${i} .option\`);
+                options.forEach(el => el.classList.remove('correct', 'incorrect'));
+                
+                if (userAnswers[i] === q.correct) {
+                    score++;
+                    document.getElementById(\`q-\${i}-o-\${userAnswers[i]}\`).classList.add('correct');
+                } else {
+                    if (userAnswers[i] !== null) {
+                        document.getElementById(\`q-\${i}-o-\${userAnswers[i]}\`).classList.add('incorrect');
+                    }
+                    document.getElementById(\`q-\${i}-o-\${q.correct}\`).classList.add('correct');
+                }
+            });
+
+            document.getElementById('result-area').style.display = 'block';
+            document.getElementById('score-val').innerText = \`\${score} / \${questions.length}\`;
+            document.getElementById('feedback-text').innerText = score >= 8 ? "太棒了！明天考试加油！" : "再复习一下换算表吧！";
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+
+        renderQuiz();
+    </script>
+</body>
+</html>

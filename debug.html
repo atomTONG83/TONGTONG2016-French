@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug</title>
+    <style>body{font-family:system-ui;padding:20px}</style>
+</head>
+<body>
+    <h1>🐛 Debug Mode</h1>
+    <div id="s" style="position:fixed;bottom:10px;right:10px;background:#999;color:white;padding:8px 12px;border-radius:8px">Initial...</div>
+    <script>
+        document.getElementById('s').innerText = "JS OK 1";
+        document.getElementById('s').style.background = "green";
+        fetch("./french_data.json?t="+Date.now())
+            .then(r=>r.json())
+            .then(d=>{
+                document.getElementById('s').innerText = "Data: "+d.stars+"⭐";
+                document.getElementById('s').style.background = "blue";
+            })
+            .catch(e=>{
+                document.getElementById('s').innerText = "Error: "+e.message;
+                document.getElementById('s').style.background = "red";
+            });
+    </script>
+</body>
+</html>
