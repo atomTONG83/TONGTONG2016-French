@@ -181,6 +181,14 @@
             white-space: pre-line;
             text-align: center;
         }
+        .modal-illustration {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 10px;
+            margin: 20px auto;
+            display: block;
+            border: 2px solid rgba(139, 92, 246, 0.3);
+        }
         .modal-actions {
             display: flex;
             justify-content: center;
@@ -336,7 +344,8 @@
                 titleCn: "农夫与他的孩子们",
                 author: "Jean de La Fontaine (让·德·拉封丹)",
                 content: "Travaillez, prenez de la peine :\nC'est le fonds qui manque le moins.\nUn riche laboureur, sentant sa mort prochaine,\nFit venir ses enfants, leur parla sans témoins.\n« Gardez-vous, leur dit-il, de vendre l'héritage\nQue nous ont laissé nos parents :\nUn trésor est caché dedans.\nJe ne sais pas l'endroit ; mais un peu de courage\nVous le fera trouver : vous en viendrez à bout.\nRemuez votre champ dès qu'on aura fait l'oût :\nCreusez, fouillez, bêchez ; ne laissez nulle place\nOù la main ne passe et repasse. »\nLe père mort, les fils vous retournent le champ,\nDeçà, delà, partout : si bien qu'au bout de l'an\nIl en rapporta davantage.\nD'argent, point de caché. Mais le père fut sage\nDe leur montrer, avant sa mort,\nQue le travail est un trésor.",
-                tag: "Fable (寓言)"
+                tag: "Fable (寓言)",
+                illustration: "poetry_laboureur_illustration.jpg"
             }
         ];
 
@@ -375,7 +384,15 @@
             const poem = poems[index];
             document.getElementById('modal-title').innerHTML = poem.title + (poem.titleCn ? `<br><span style="font-size: 1.5rem; color: #94a3b8;">${poem.titleCn}</span>` : '');
             document.getElementById('modal-author').textContent = poem.author;
-            document.getElementById('modal-poem').textContent = poem.content;
+            
+            // 设置诗歌内容（包含插图）
+            let poemHtml = '';
+            if (poem.illustration) {
+                poemHtml += `<img src="${poem.illustration}" alt="Illustration" class="modal-illustration">`;
+            }
+            poemHtml += `<div class="modal-poem">${poem.content}</div>`;
+            document.getElementById('modal-poem').innerHTML = poemHtml;
+            
             document.getElementById('poem-modal').style.display = 'block';
         }
 
