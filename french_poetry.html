@@ -329,16 +329,15 @@
     </div>
 
     <script>
-        // 诗歌数据库 - 待填充
+        // 诗歌数据库
         const poems = [
-            // 等待用户提供诗歌内容后填充
-            // 格式示例:
-            // {
-            //     title: "Le Corbeau et le Renard",
-            //     author: "Jean de La Fontaine",
-            //     content: "Maître Corbeau, sur un arbre perché,\nTenait en son bec un fromage...",
-            //     tag: "Fable"
-            // }
+            {
+                title: "Le Laboureur et ses Enfants",
+                titleCn: "农夫与他的孩子们",
+                author: "Jean de La Fontaine (让·德·拉封丹)",
+                content: "Travaillez, prenez de la peine :\nC'est le fonds qui manque le moins.\nUn riche laboureur, sentant sa mort prochaine,\nFit venir ses enfants, leur parla sans témoins.\n« Gardez-vous, leur dit-il, de vendre l'héritage\nQue nous ont laissé nos parents :\nUn trésor est caché dedans.\nJe ne sais pas l'endroit ; mais un peu de courage\nVous le fera trouver : vous en viendrez à bout.\nRemuez votre champ dès qu'on aura fait l'oût :\nCreusez, fouillez, bêchez ; ne laissez nulle place\nOù la main ne passe et repasse. »\nLe père mort, les fils vous retournent le champ,\nDeçà, delà, partout : si bien qu'au bout de l'an\nIl en rapporta davantage.\nD'argent, point de caché. Mais le père fut sage\nDe leur montrer, avant sa mort,\nQue le travail est un trésor.",
+                tag: "Fable (寓言)"
+            }
         ];
 
         // 渲染诗歌卡片
@@ -361,8 +360,9 @@
             grid.innerHTML = poems.map((poem, index) => `
                 <div class="poem-card" onclick="openPoem(${index})">
                     <h3 class="poem-title">${poem.title}</h3>
+                    ${poem.titleCn ? `<p style="font-size: 0.85rem; color: #64748b; margin-bottom: 8px;">${poem.titleCn}</p>` : ''}
                     <p class="poem-author">${poem.author}</p>
-                    <p class="poem-preview">${poem.content.substring(0, 100)}...</p>
+                    <p class="poem-preview">${poem.content.substring(0, 80)}...</p>
                     <span class="tag">${poem.tag || 'Poésie'}</span>
                 </div>
             `).join('');
@@ -373,7 +373,7 @@
         // 打开诗歌详情
         function openPoem(index) {
             const poem = poems[index];
-            document.getElementById('modal-title').textContent = poem.title;
+            document.getElementById('modal-title').innerHTML = poem.title + (poem.titleCn ? `<br><span style="font-size: 1.5rem; color: #94a3b8;">${poem.titleCn}</span>` : '');
             document.getElementById('modal-author').textContent = poem.author;
             document.getElementById('modal-poem').textContent = poem.content;
             document.getElementById('poem-modal').style.display = 'block';
