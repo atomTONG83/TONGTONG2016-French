@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>版本检查</title>
+    <style>body{font-family:system-ui;padding:20px;background:#000;color:#fff;}</style>
+</head>
+<body>
+    <h1>🌍 地球学习版本检查</h1>
+    <p>当前时间：<span id="time"></span></p>
+    <p>缓存 bust: <span id="cache"></span></p>
+    <hr>
+    <h3>可用版本:</h3>
+    <ul>
+        <li><a href="earth_europe_learning_v3.html?v=1">V3 高清版 (推荐)</a></li>
+        <li><a href="earth_europe_learning_v2.html?v=1">V2 增强版</a></li>
+        <li><a href="earth_europe_learning.html?v=1">V1 初版</a></li>
+    </ul>
+    <hr>
+    <p><strong>提示:</strong> 如果页面不更新，请按 <code>Cmd+Shift+R</code> 强制刷新</p>
+    <script>
+        document.getElementById('time').textContent = new Date().toLocaleString();
+        document.getElementById('cache').textContent = Date.now();
+    </script>
+</body>
+</html>
