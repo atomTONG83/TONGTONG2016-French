@@ -392,8 +392,37 @@
             ]
         };
 
-        // 当前数据
-        let chineseLearningData = JSON.parse(JSON.stringify(defaultData));
+        // 当前数据 - 直接使用默认数据，不使用缓存
+        let chineseLearningData = {
+            week: "2026-W11",
+            weekLabel: "2026 年 3 月 第 11 周",
+            lessons: [
+                {
+                    id: 1,
+                    date: "2026-03-11",
+                    day: "周三",
+                    institution: "LingoAce",
+                    type: "网课",
+                    time: "16:00",
+                    content: {
+                        recognizeChars: "29 个高频字：离、食、差、能、环、保、护、极、因、功、扔、简、单...",
+                        recognizeWords: "北极、离开、食物、保护、环境、由于、成功、简单、扔掉",
+                        writeChars: "15 个汉字：见、丽、森、关、闭、从、众、炎、圭、磊、品、晶、森、淼、焱",
+                        expressions: "\"越来越...\"、\"有...还有...\""
+                    },
+                    homework: [
+                        {
+                            id: 1,
+                            content: "制作"保护地球"小书",
+                            dueDate: "2026-03-18",
+                            completed: false
+                        }
+                    ],
+                    teacherNotes: "本节课课后作业很重要哦，辛苦家长提醒童童完成作业",
+                    parentTasks: ["离开", "成功", "由于", "扔", "北极", "简单"]
+                }
+            ]
+        };
 
         // 渲染课程卡片
         function renderLessons() {
@@ -498,17 +527,19 @@
             localStorage.setItem('chineseLearningData', JSON.stringify(chineseLearningData));
         }
 
-        // 初始化 - 不使用缓存，直接用默认数据
+        // 初始化 - 直接使用默认数据
         document.addEventListener('DOMContentLoaded', () => {
             console.log('初始化汉语学习页面...');
-            console.log('默认课程数据:', defaultData);
+            console.log('课程数据:', chineseLearningData);
             
-            document.getElementById('weekBadge').textContent = defaultData.weekLabel;
+            document.getElementById('weekBadge').textContent = chineseLearningData.weekLabel;
             renderLessons();
             
             // 显示调试信息
-            console.log('课程数量:', defaultData.lessons.length);
-            console.log('第一个课程:', defaultData.lessons[0]);
+            console.log('课程数量:', chineseLearningData.lessons.length);
+            if (chineseLearningData.lessons.length > 0) {
+                console.log('第一个课程:', chineseLearningData.lessons[0]);
+            }
         });
     </script>
 </body>
