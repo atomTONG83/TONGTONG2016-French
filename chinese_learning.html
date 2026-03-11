@@ -490,9 +490,22 @@
         function loadData() {
             const saved = localStorage.getItem('chineseLearningData');
             if (saved) {
-                const parsed = JSON.parse(saved);
-                // 合并数据，保留新字段
-                Object.assign(chineseLearningData, parsed);
+                try {
+                    const parsed = JSON.parse(saved);
+                    // 合并数据，保留新课程
+                    if (parsed.lessons && parsed.lessons.length > 0) {
+                        // 保留本地存储的数据（用户可能添加了新课程）
+                        Object.assign(chineseLearningData, parsed);
+                    }
+                } catch (e) {
+                    console.error('加载数据失败:', e);
+                }
+            }
+            // 如果还是没有课程，显示空状态
+            if (chineseLearningData.lessons.length === 0) {
+                console.log('没有课程数据');
+            } else {
+                console.log('加载了', chineseLearningData.lessons.length, '个课程');
             }
         }
 
@@ -503,9 +516,20 @@
 
         // 初始化
         document.addEventListener('DOMContentLoaded', () => {
+            // 首次访问时清除旧数据，确保显示默认课程
+            const isFirstVisit = !localStorage.getItem('chineseLearningVisited');
+            if (isFirstVisit) {
+                localStorage.removeItem('chineseLearningData');
+                localStorage.setItem('chineseLearningVisited', 'true');
+                console.log('首次访问，使用默认数据');
+            }
+            
             loadData();
             document.getElementById('weekBadge').textContent = chineseLearningData.weekLabel;
             renderLessons();
+            
+            // 调试信息
+            console.log('课程数据:', chineseLearningData);
         });
     </script>
 </body>
