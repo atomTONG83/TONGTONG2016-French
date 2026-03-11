@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🇨🇳 汉语学习 / Chinois</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap');
+        
+        :root {
+            --bg: #030712;
+            --primary: #ef4444;
+            --secondary: #f97316;
+            --accent: #fbbf24;
+            --glass: rgba(239, 68, 68, 0.1);
+            --border: rgba(239, 68, 68, 0.3);
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background: var(--bg);
+            color: #f8fafc;
+            font-family: 'Rajdhani', sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .bg-grid {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(239, 68, 68, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(239, 68, 68, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            transform: rotateX(45deg);
+            animation: moveGrid 20s linear infinite;
+        }
+        
+        @keyframes moveGrid {
+            from { background-position: 0 0; }
+            to { background-position: 0 500px; }
+        }
+        
+        .container { max-width: 600px; margin: 0 auto; }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .week-badge {
+            font-family: 'Orbitron';
+            font-size: 0.7rem;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 5px 18px;
+            display: inline-block;
+            margin-bottom: 12px;
+            background: rgba(239, 68, 68, 0.1);
+            border-radius: 20px;
+        }
+        
+        h1 {
+            font-family: 'Orbitron';
+            font-weight: 900;
+            font-size: 1.9rem;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+            background: linear-gradient(135deg, #ef4444, #f97316);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        h1 small {
+            font-size: 1rem;
+            opacity: 0.7;
+            display: block;
+            margin-top: 8px;
+            -webkit-text-fill-color: #94a3b8;
+        }
+        
+        .section-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            color: var(--primary);
+            border-left: 3px solid var(--primary);
+            padding-left: 15px;
+            margin: 35px 0 18px;
+            text-transform: uppercase;
+        }
+        
+        .lesson-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 22px;
+            margin-bottom: 18px;
+            backdrop-filter: blur(10px);
+            animation: slideIn 0.5s ease-out forwards;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .lesson-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(-30px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .lesson-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(239, 68, 68, 0.2);
+        }
+        
+        .lesson-title {
+            font-family: 'Orbitron';
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .lesson-date {
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+        
+        .lesson-section {
+            margin-bottom: 14px;
+        }
+        
+        .lesson-section h3 {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--secondary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .lesson-section ul {
+            list-style: none;
+            padding-left: 5px;
+        }
+        
+        .lesson-section li {
+            font-size: 0.85rem;
+            color: #cbd5e1;
+            margin-bottom: 4px;
+            padding-left: 12px;
+            position: relative;
+        }
+        
+        .lesson-section li::before {
+            content: '•';
+            color: var(--primary);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        
+        .homework-item {
+            background: rgba(239, 68, 68, 0.05);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .homework-item:hover {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: var(--primary);
+        }
+        
+        .homework-checkbox {
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+        
+        .homework-checkbox.checked {
+            background: var(--primary);
+        }
+        
+        .homework-checkbox.checked::after {
+            content: '✓';
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .homework-text {
+            flex: 1;
+            font-size: 0.85rem;
+            color: #cbd5e1;
+        }
+        
+        .homework-text.completed {
+            text-decoration: line-through;
+            color: #64748b;
+        }
+        
+        .teacher-notes {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(249, 115, 22, 0.05));
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 12px;
+            padding: 14px;
+            margin-top: 16px;
+        }
+        
+        .teacher-notes h3 {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--secondary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .teacher-notes p {
+            font-size: 0.85rem;
+            color: #cbd5e1;
+            line-height: 1.5;
+        }
+        
+        .parent-tasks {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed rgba(239, 68, 68, 0.3);
+        }
+        
+        .parent-tasks h4 {
+            font-size: 0.75rem;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        
+        .task-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        
+        .task-tag {
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: #64748b;
+        }
+        
+        .empty-state .icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .add-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+            transition: all 0.2s;
+        }
+        
+        .add-btn:active {
+            transform: scale(0.96);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-bottom: 40px;
+            color: #334155;
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    
+    <div class="container">
+        <header>
+            <div class="week-badge" id="weekBadge">2026 年 3 月 第 11 周</div>
+            <h1>🇨🇳 汉语学习<small>Chinois / Chinese Learning</small></h1>
+        </header>
+        
+        <div class="section-title">本周课程 / Leçons cette semaine</div>
+        
+        <div id="lessonsContainer">
+            <!-- 课程卡片会动态加载到这里 -->
+        </div>
+        
+        <div class="empty-state" id="emptyState" style="display: none;">
+            <div class="icon">📚</div>
+            <p>本周还没有课程记录</p>
+            <button class="add-btn" onclick="addLesson()">+ 添加第一堂课</button>
+        </div>
+        
+        <footer>V1.0 | © TONGTONG's SPACE 2026 | 汉语学习</footer>
+    </div>
+
+    <script>
+        // 数据结构
+        const chineseLearningData = {
+            week: "2026-W11",
+            weekLabel: "2026 年 3 月 第 11 周",
+            lessons: [
+                {
+                    id: 1,
+                    date: "2026-03-11",
+                    day: "周三",
+                    institution: "LingoAce",
+                    type: "网课",
+                    time: "16:00",
+                    content: {
+                        recognizeChars: "29 个高频字：离、食、差、能、环、保、护、极、因、功、扔、简、单...",
+                        recognizeWords: "北极、离开、食物、保护、环境、由于、成功、简单、扔掉",
+                        writeChars: "15 个汉字：见、丽、森、关、闭、从、众、炎、圭、磊、品、晶、森、淼、焱",
+                        expressions: "\"越来越...\"、\"有...还有...\""
+                    },
+                    homework: [
+                        {
+                            id: 1,
+                            content: "制作"保护地球"小书",
+                            dueDate: "2026-03-18",
+                            completed: false
+                        }
+                    ],
+                    teacherNotes: "本节课课后作业很重要哦，辛苦家长提醒童童完成作业",
+                    parentTasks: ["离开", "成功", "由于", "扔", "北极", "简单"]
+                }
+                // 可以添加更多课程
+            ]
+        };
+
+        // 渲染课程卡片
+        function renderLessons() {
+            const container = document.getElementById('lessonsContainer');
+            const emptyState = document.getElementById('emptyState');
+            
+            if (chineseLearningData.lessons.length === 0) {
+                container.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+            
+            container.style.display = 'block';
+            emptyState.style.display = 'none';
+            
+            container.innerHTML = chineseLearningData.lessons.map((lesson, index) => `
+                <div class="lesson-card" style="animation-delay: ${index * 0.1}s">
+                    <div class="lesson-header">
+                        <div>
+                            <div class="lesson-title">📖 ${lesson.day}${lesson.type} · ${lesson.institution}</div>
+                            <div class="lesson-date">${lesson.date} ${lesson.time || ''}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-section">
+                        <h3>📖 字词认读</h3>
+                        <ul>
+                            <li>${lesson.content.recognizeChars}</li>
+                            <li>${lesson.content.recognizeWords}</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="lesson-section">
+                        <h3>✍️ 字词书写</h3>
+                        <ul>
+                            <li>${lesson.content.writeChars}</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="lesson-section">
+                        <h3>💬 交际表达</h3>
+                        <ul>
+                            <li>${lesson.content.expressions}</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="lesson-section">
+                        <h3>📝 课后作业</h3>
+                        ${lesson.homework.map(hw => `
+                            <div class="homework-item" onclick="toggleHomework(${lesson.id}, ${hw.id})">
+                                <div class="homework-checkbox ${hw.completed ? 'checked' : ''}"></div>
+                                <div class="homework-text ${hw.completed ? 'completed' : ''}">
+                                    ${hw.content}
+                                    <div style="font-size: 0.7rem; color: #64748b; margin-top: 4px;">
+                                        截止：${formatDate(hw.dueDate)}
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    <div class="teacher-notes">
+                        <h3>👩‍🏫 老师评语</h3>
+                        <p>${lesson.teacherNotes}</p>
+                        
+                        ${lesson.parentTasks && lesson.parentTasks.length > 0 ? `
+                        <div class="parent-tasks">
+                            <h4>💡 家长课下提问</h4>
+                            <div class="task-tags">
+                                ${lesson.parentTasks.map(task => `<span class="task-tag">${task}</span>`).join('')}
+                            </div>
+                        </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 切换作业完成状态
+        function toggleHomework(lessonId, homeworkId) {
+            const lesson = chineseLearningData.lessons.find(l => l.id === lessonId);
+            if (!lesson) return;
+            
+            const homework = lesson.homework.find(h => h.id === homeworkId);
+            if (!homework) return;
+            
+            homework.completed = !homework.completed;
+            saveData();
+            renderLessons();
+        }
+
+        // 格式化日期
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+            return `${month}月${day}日`;
+        }
+
+        // 保存数据到 localStorage
+        function saveData() {
+            localStorage.setItem('chineseLearningData', JSON.stringify(chineseLearningData));
+        }
+
+        // 加载数据
+        function loadData() {
+            const saved = localStorage.getItem('chineseLearningData');
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                // 合并数据，保留新字段
+                Object.assign(chineseLearningData, parsed);
+            }
+        }
+
+        // 添加课程（占位函数）
+        function addLesson() {
+            alert('添加课程功能开发中...\n\n目前可以通过编辑 JSON 数据手动添加课程。');
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            loadData();
+            document.getElementById('weekBadge').textContent = chineseLearningData.weekLabel;
+            renderLessons();
+        });
+    </script>
+</body>
+</html>
