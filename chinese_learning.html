@@ -347,13 +347,66 @@
         
         <div class="section-title">本周课程 / Leçons cette semaine</div>
         
-        <div id="lessonsContainer">
-            <!-- 课程卡片会动态加载到这里 -->
-        </div>
-        
-        <div class="empty-state" id="emptyState" style="display: none;">
-            <div class="icon">📚</div>
-            <p>本周还没有课程记录</p>
+        <!-- 硬编码课程卡片，确保显示 -->
+        <div class="lesson-card">
+            <div class="lesson-header">
+                <div>
+                    <div class="lesson-title">📖 周三网课 · LingoAce</div>
+                    <div class="lesson-date">2026-03-11 16:00</div>
+                </div>
+            </div>
+            
+            <div class="lesson-section">
+                <h3>📖 字词认读</h3>
+                <ul>
+                    <li>29 个高频字：离、食、差、能、环、保、护、极、因、功、扔、简、单...</li>
+                    <li>北极、离开、食物、保护、环境、由于、成功、简单、扔掉</li>
+                </ul>
+            </div>
+            
+            <div class="lesson-section">
+                <h3>✍️ 字词书写</h3>
+                <ul>
+                    <li>15 个汉字：见、丽、森、关、闭、从、众、炎、圭、磊、品、晶、森、淼、焱</li>
+                </ul>
+            </div>
+            
+            <div class="lesson-section">
+                <h3>💬 交际表达</h3>
+                <ul>
+                    <li>"越来越..."、"有...还有..."</li>
+                </ul>
+            </div>
+            
+            <div class="lesson-section">
+                <h3>📝 课后作业</h3>
+                <div class="homework-item" onclick="this.querySelector('.homework-checkbox').classList.toggle('checked')">
+                    <div class="homework-checkbox"></div>
+                    <div class="homework-text">
+                        制作"保护地球"小书
+                        <div style="font-size: 0.7rem; color: #64748b; margin-top: 4px;">
+                            截止：3 月 18 日
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="teacher-notes">
+                <h3>👩‍🏫 老师评语</h3>
+                <p>本节课课后作业很重要哦，辛苦家长提醒童童完成作业</p>
+                
+                <div class="parent-tasks">
+                    <h4>💡 家长课下提问</h4>
+                    <div class="task-tags">
+                        <span class="task-tag">离开</span>
+                        <span class="task-tag">成功</span>
+                        <span class="task-tag">由于</span>
+                        <span class="task-tag">扔</span>
+                        <span class="task-tag">北极</span>
+                        <span class="task-tag">简单</span>
+                    </div>
+                </div>
+            </div>
         </div>
         
         <footer>V1.0 | © TONGTONG's SPACE 2026 | 汉语学习</footer>
