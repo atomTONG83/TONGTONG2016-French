@@ -66,6 +66,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            text-decoration: none;
         }
         
         .back-btn:active {
@@ -322,24 +323,6 @@
             margin-bottom: 15px;
         }
         
-        .add-btn {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border: none;
-            padding: 14px 28px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            cursor: pointer;
-            margin-top: 20px;
-            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
-            transition: all 0.2s;
-        }
-        
-        .add-btn:active {
-            transform: scale(0.96);
-        }
-        
         footer {
             text-align: center;
             margin-top: 60px;
@@ -355,7 +338,7 @@
     <div class="bg-grid"></div>
     
     <div class="container">
-        <button class="back-btn" onclick="window.location.href='index.html'" title="返回空间主页">←</button>
+        <a href="index.html" class="back-btn" title="返回空间主页">←</a>
         
         <header>
             <div class="week-badge" id="weekBadge">2026 年 3 月 第 11 周</div>
@@ -371,15 +354,14 @@
         <div class="empty-state" id="emptyState" style="display: none;">
             <div class="icon">📚</div>
             <p>本周还没有课程记录</p>
-            <button class="add-btn" onclick="addLesson()">+ 添加第一堂课</button>
         </div>
         
         <footer>V1.0 | © TONGTONG's SPACE 2026 | 汉语学习</footer>
     </div>
 
     <script>
-        // 数据结构
-        const chineseLearningData = {
+        // 默认数据 - 每次加载都使用这个
+        const defaultData = {
             week: "2026-W11",
             weekLabel: "2026 年 3 月 第 11 周",
             lessons: [
@@ -407,16 +389,18 @@
                     teacherNotes: "本节课课后作业很重要哦，辛苦家长提醒童童完成作业",
                     parentTasks: ["离开", "成功", "由于", "扔", "北极", "简单"]
                 }
-                // 可以添加更多课程
             ]
         };
+
+        // 当前数据
+        let chineseLearningData = JSON.parse(JSON.stringify(defaultData));
 
         // 渲染课程卡片
         function renderLessons() {
             const container = document.getElementById('lessonsContainer');
             const emptyState = document.getElementById('emptyState');
             
-            if (chineseLearningData.lessons.length === 0) {
+            if (!chineseLearningData.lessons || chineseLearningData.lessons.length === 0) {
                 container.style.display = 'none';
                 emptyState.style.display = 'block';
                 return;
@@ -514,53 +498,17 @@
             localStorage.setItem('chineseLearningData', JSON.stringify(chineseLearningData));
         }
 
-        // 加载数据
-        function loadData() {
-            const saved = localStorage.getItem('chineseLearningData');
-            if (saved) {
-                try {
-                    const parsed = JSON.parse(saved);
-                    // 合并数据，保留新课程
-                    if (parsed.lessons && parsed.lessons.length > 0) {
-                        // 保留本地存储的数据（用户可能添加了新课程）
-                        Object.assign(chineseLearningData, parsed);
-                    }
-                } catch (e) {
-                    console.error('加载数据失败:', e);
-                }
-            }
-            // 如果还是没有课程，显示空状态
-            if (chineseLearningData.lessons.length === 0) {
-                console.log('没有课程数据');
-            } else {
-                console.log('加载了', chineseLearningData.lessons.length, '个课程');
-            }
-        }
-
-        // 添加课程（占位函数）
-        function addLesson() {
-            alert('添加课程功能开发中...\n\n目前可以通过编辑 JSON 数据手动添加课程。');
-        }
-
-        // 初始化
+        // 初始化 - 不使用缓存，直接用默认数据
         document.addEventListener('DOMContentLoaded', () => {
-            // 强制清除旧数据，确保显示默认课程
-            localStorage.removeItem('chineseLearningData');
-            console.log('已清除缓存，使用默认数据');
+            console.log('初始化汉语学习页面...');
+            console.log('默认课程数据:', defaultData);
             
-            loadData();
-            document.getElementById('weekBadge').textContent = chineseLearningData.weekLabel;
+            document.getElementById('weekBadge').textContent = defaultData.weekLabel;
             renderLessons();
             
-            // 调试信息
-            console.log('课程数据:', chineseLearningData);
-            console.log('课程数量:', chineseLearningData.lessons.length);
-            
-            // 如果还是没有课程，显示空状态
-            if (chineseLearningData.lessons.length === 0) {
-                document.getElementById('lessonsContainer').style.display = 'none';
-                document.getElementById('emptyState').style.display = 'block';
-            }
+            // 显示调试信息
+            console.log('课程数量:', defaultData.lessons.length);
+            console.log('第一个课程:', defaultData.lessons[0]);
         });
     </script>
 </body>
