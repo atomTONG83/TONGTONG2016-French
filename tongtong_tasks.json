@@ -1,33 +1,33 @@
 {
-  "last_updated": "2026-03-11T21:19:36.660347",
+  "last_updated": "2026-03-11T21:20:17.259388",
   "tasks": [
     {
       "cn": "📚 学校作业",
-      "fr": "Tâche prioritaires",
+      "fr": "Devoirs scolaires",
       "date": "2026-03-11",
       "completed": true
     },
     {
       "cn": "🇫🇷 法语朗读",
-      "fr": "Tâche prioritaires",
+      "fr": "Lecture en français (10 min)",
       "date": "2026-03-11",
       "completed": true
     },
     {
       "cn": "✍️ 词汇积累",
-      "fr": "Tâche prioritaires",
+      "fr": "Apprentissage du vocabulaire",
       "date": "2026-03-11",
       "completed": true
     },
     {
       "cn": "🔢 数学应用题",
-      "fr": "Tâche prioritaires",
+      "fr": "Exercices de mathématiques",
       "date": "2026-03-11",
       "completed": true
     },
     {
       "cn": "🎻 小提琴练习",
-      "fr": "Tâche prioritaires",
+      "fr": "Pratique du violon (20 min)",
       "date": "2026-03-11",
       "completed": true
     }
