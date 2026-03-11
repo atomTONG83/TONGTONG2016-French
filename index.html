@@ -71,57 +71,10 @@
             </div>
         </div>
         <div class="section-title">Active Mission List</div>
-        <div style="margin-bottom: 40px;">
-            <div class="task-card" style="animation-delay: 0.0s">
-                <div class="card-glow"></div>
-                <div class="task-icon">⏳</div>
-                <div class="task-info">
-                    <div class="task-cn">📚 学校作业 🆕</div>
-                    <div class="task-fr">Tâche prioritaires</div>
-                    <div class="task-status">2026-03-11 • 待完成</div>
-                </div>
-            </div>
-
-            <div class="task-card" style="animation-delay: 0.1s">
-                <div class="card-glow"></div>
-                <div class="task-icon">⏳</div>
-                <div class="task-info">
-                    <div class="task-cn">🇫🇷 法语朗读 🆕</div>
-                    <div class="task-fr">Tâche prioritaires</div>
-                    <div class="task-status">2026-03-11 • 待完成</div>
-                </div>
-            </div>
-
-            <div class="task-card" style="animation-delay: 0.2s">
-                <div class="card-glow"></div>
-                <div class="task-icon">⏳</div>
-                <div class="task-info">
-                    <div class="task-cn">✍️ 词汇积累 🆕</div>
-                    <div class="task-fr">Tâche prioritaires</div>
-                    <div class="task-status">2026-03-11 • 待完成</div>
-                </div>
-            </div>
-
-            <div class="task-card" style="animation-delay: 0.30000000000000004s">
-                <div class="card-glow"></div>
-                <div class="task-icon">⏳</div>
-                <div class="task-info">
-                    <div class="task-cn">🔢 数学应用题 🆕</div>
-                    <div class="task-fr">Tâche prioritaires</div>
-                    <div class="task-status">2026-03-11 • 待完成</div>
-                </div>
-            </div>
-
-            <div class="task-card" style="animation-delay: 0.4s">
-                <div class="card-glow"></div>
-                <div class="task-icon">⏳</div>
-                <div class="task-info">
-                    <div class="task-cn">🎻 小提琴练习 🆕</div>
-                    <div class="task-fr">Tâche prioritaires</div>
-                    <div class="task-status">2026-03-11 • 待完成</div>
-                </div>
-            </div>
-</div>
+        <div style="margin-bottom: 40px;" id="tasks-container">
+            <!-- 任务将通过 JavaScript 动态加载 -->
+            <div class="empty-msg">🔄 正在加载任务...</div>
+        </div>
         <div class="section-title">Knowledge Interface</div>
         <div class="grid-2">
             <a href="french_mot.html" class="btn-launch">Le Trésor des Mots</a>
@@ -152,5 +105,49 @@
         </div>
         <footer>V3.8-VIBE-RESTORED | © ATOM TONG 2026 | MISSION_COMMAND</footer>
     </div>
+    
+    <script>
+        // 动态加载任务列表
+        async function loadTasks() {
+            try {
+                const response = await fetch('tongtong_tasks.json?t=' + Date.now());
+                const data = await response.json();
+                
+                const container = document.getElementById('tasks-container');
+                
+                if (!data.tasks || data.tasks.length === 0) {
+                    container.innerHTML = '<div class="empty-msg">MISSION COMPLETE. WELL DONE JINGYI. 🏆</div>';
+                    return;
+                }
+                
+                let html = '';
+                data.tasks.forEach((task, idx) => {
+                    const isNew = task.date === new Date().toISOString().split('T')[0];
+                    const newBadge = isNew ? ' 🆕' : '';
+                    const statusText = task.completed ? '已完成' : '待完成';
+                    
+                    html += `
+                    <div class="task-card" style="animation-delay: ${idx*0.1}s">
+                        <div class="card-glow"></div>
+                        <div class="task-icon">⏳</div>
+                        <div class="task-info">
+                            <div class="task-cn">${task.cn}${newBadge}</div>
+                            <div class="task-fr">${task.fr}</div>
+                            <div class="task-status">${task.date} • ${statusText}</div>
+                        </div>
+                    </div>`;
+                });
+                
+                container.innerHTML = html;
+            } catch (error) {
+                console.error('加载任务失败:', error);
+                document.getElementById('tasks-container').innerHTML = 
+                    '<div class="empty-msg">⚠️ 加载任务失败</div>';
+            }
+        }
+        
+        // 页面加载时执行
+        document.addEventListener('DOMContentLoaded', loadTasks);
+    </script>
 </body>
 </html>
