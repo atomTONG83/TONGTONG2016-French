@@ -47,6 +47,32 @@
         
         .container { max-width: 600px; margin: 0 auto; }
         
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(239, 68, 68, 0.9);
+            color: white;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .back-btn:active {
+            transform: scale(0.95);
+            background: rgba(239, 68, 68, 1);
+        }
+        
         header {
             text-align: center;
             margin-bottom: 30px;
@@ -329,6 +355,8 @@
     <div class="bg-grid"></div>
     
     <div class="container">
+        <button class="back-btn" onclick="window.location.href='index.html'" title="返回空间主页">←</button>
+        
         <header>
             <div class="week-badge" id="weekBadge">2026 年 3 月 第 11 周</div>
             <h1>🇨🇳 汉语学习<small>Chinois / Chinese Learning</small></h1>
@@ -516,13 +544,9 @@
 
         // 初始化
         document.addEventListener('DOMContentLoaded', () => {
-            // 首次访问时清除旧数据，确保显示默认课程
-            const isFirstVisit = !localStorage.getItem('chineseLearningVisited');
-            if (isFirstVisit) {
-                localStorage.removeItem('chineseLearningData');
-                localStorage.setItem('chineseLearningVisited', 'true');
-                console.log('首次访问，使用默认数据');
-            }
+            // 强制清除旧数据，确保显示默认课程
+            localStorage.removeItem('chineseLearningData');
+            console.log('已清除缓存，使用默认数据');
             
             loadData();
             document.getElementById('weekBadge').textContent = chineseLearningData.weekLabel;
@@ -530,6 +554,13 @@
             
             // 调试信息
             console.log('课程数据:', chineseLearningData);
+            console.log('课程数量:', chineseLearningData.lessons.length);
+            
+            // 如果还是没有课程，显示空状态
+            if (chineseLearningData.lessons.length === 0) {
+                document.getElementById('lessonsContainer').style.display = 'none';
+                document.getElementById('emptyState').style.display = 'block';
+            }
         });
     </script>
 </body>
