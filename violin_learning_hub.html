@@ -12,8 +12,34 @@
         .container { max-width: 1000px; margin: 0 auto; }
         header { margin-bottom: 40px; border-bottom: 1px solid var(--border); padding-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
         h1 { color: var(--accent); margin: 0; }
-        .back-btn { text-decoration: none; color: #94a3b8; border: 1px solid var(--border); padding: 8px 16px; border-radius: 8px; font-size: 0.9em; transition: 0.2s; }
-        .back-btn:hover { background: var(--border); color: #fff; }
+        
+        /* 统一返回按钮样式 */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #0ea5e9;
+            border: 2px solid #0ea5e9;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-size: 0.95em;
+            font-weight: 600;
+            transition: all 0.2s;
+            background: rgba(14, 165, 233, 0.05);
+        }
+        .back-btn:hover {
+            background: rgba(14, 165, 233, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+        }
+        .back-btn:active {
+            transform: translateY(0);
+        }
+        .back-btn svg {
+            width: 18px;
+            height: 18px;
+        }
         
         .lesson-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 30px; margin-bottom: 30px; }
         .lesson-header { display: flex; justify-content: space-between; margin-bottom: 25px; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 15px; }
@@ -37,7 +63,13 @@
     <div class="container">
         <header>
             <h1>🎻 童童小提琴学习空间</h1>
-            <a href="index.html" class="back-btn">← 返回成长空间</a>
+            <a href="index.html" class="back-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                返回空间
+            </a>
         </header>
 
         <!-- 最新作业 (2026-03-08) -->

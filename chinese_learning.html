@@ -2,7 +2,6 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>🇨🇳 汉语学习 / Chinois</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap');
@@ -47,32 +46,32 @@
         
         .container { max-width: 600px; margin: 0 auto; }
         
+        /* 统一返回按钮样式 */
         .back-btn {
             position: fixed;
             top: 20px;
             left: 20px;
-            background: rgba(239, 68, 68, 0.9);
-            color: white;
-            border: none;
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            font-size: 20px;
-            cursor: pointer;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
-            transition: all 0.2s;
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
+            gap: 8px;
             text-decoration: none;
+            color: #0ea5e9;
+            border: 2px solid #0ea5e9;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-size: 0.95em;
+            font-weight: 600;
+            transition: all 0.2s;
+            background: rgba(14, 165, 233, 0.05);
+            z-index: 1000;
         }
-        
-        .back-btn:active {
-            transform: scale(0.95);
-            background: rgba(239, 68, 68, 1);
+        .back-btn:hover {
+            background: rgba(14, 165, 233, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
         }
+        .back-btn:active { transform: translateY(0); }
+        .back-btn svg { width: 18px; height: 18px; }
         
         header {
             text-align: center;
@@ -312,17 +311,6 @@
             border: 1px solid rgba(239, 68, 68, 0.3);
         }
         
-        .empty-state {
-            text-align: center;
-            padding: 50px 20px;
-            color: #64748b;
-        }
-        
-        .empty-state .icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
-        }
-        
         footer {
             text-align: center;
             margin-top: 60px;
@@ -338,16 +326,22 @@
     <div class="bg-grid"></div>
     
     <div class="container">
-        <a href="index.html" class="back-btn" title="返回空间主页">←</a>
+        <a href="index.html" class="back-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            返回空间
+        </a>
         
         <header>
-            <div class="week-badge" id="weekBadge">2026 年 3 月 第 11 周</div>
+            <div class="week-badge">2026 年 3 月 第 11 周</div>
             <h1>🇨🇳 汉语学习<small>Chinois / Chinese Learning</small></h1>
         </header>
         
         <div class="section-title">本周课程 / Leçons cette semaine</div>
         
-        <!-- 硬编码课程卡片，确保显示 -->
+        <!-- 硬编码课程卡片 -->
         <div class="lesson-card">
             <div class="lesson-header">
                 <div>
@@ -411,189 +405,5 @@
         
         <footer>V1.0 | © TONGTONG's SPACE 2026 | 汉语学习</footer>
     </div>
-
-    <script>
-        // 默认数据 - 每次加载都使用这个
-        const defaultData = {
-            week: "2026-W11",
-            weekLabel: "2026 年 3 月 第 11 周",
-            lessons: [
-                {
-                    id: 1,
-                    date: "2026-03-11",
-                    day: "周三",
-                    institution: "LingoAce",
-                    type: "网课",
-                    time: "16:00",
-                    content: {
-                        recognizeChars: "29 个高频字：离、食、差、能、环、保、护、极、因、功、扔、简、单...",
-                        recognizeWords: "北极、离开、食物、保护、环境、由于、成功、简单、扔掉",
-                        writeChars: "15 个汉字：见、丽、森、关、闭、从、众、炎、圭、磊、品、晶、森、淼、焱",
-                        expressions: "\"越来越...\"、\"有...还有...\""
-                    },
-                    homework: [
-                        {
-                            id: 1,
-                            content: "制作"保护地球"小书",
-                            dueDate: "2026-03-18",
-                            completed: false
-                        }
-                    ],
-                    teacherNotes: "本节课课后作业很重要哦，辛苦家长提醒童童完成作业",
-                    parentTasks: ["离开", "成功", "由于", "扔", "北极", "简单"]
-                }
-            ]
-        };
-
-        // 当前数据 - 直接使用默认数据，不使用缓存
-        let chineseLearningData = {
-            week: "2026-W11",
-            weekLabel: "2026 年 3 月 第 11 周",
-            lessons: [
-                {
-                    id: 1,
-                    date: "2026-03-11",
-                    day: "周三",
-                    institution: "LingoAce",
-                    type: "网课",
-                    time: "16:00",
-                    content: {
-                        recognizeChars: "29 个高频字：离、食、差、能、环、保、护、极、因、功、扔、简、单...",
-                        recognizeWords: "北极、离开、食物、保护、环境、由于、成功、简单、扔掉",
-                        writeChars: "15 个汉字：见、丽、森、关、闭、从、众、炎、圭、磊、品、晶、森、淼、焱",
-                        expressions: "\"越来越...\"、\"有...还有...\""
-                    },
-                    homework: [
-                        {
-                            id: 1,
-                            content: "制作"保护地球"小书",
-                            dueDate: "2026-03-18",
-                            completed: false
-                        }
-                    ],
-                    teacherNotes: "本节课课后作业很重要哦，辛苦家长提醒童童完成作业",
-                    parentTasks: ["离开", "成功", "由于", "扔", "北极", "简单"]
-                }
-            ]
-        };
-
-        // 渲染课程卡片
-        function renderLessons() {
-            const container = document.getElementById('lessonsContainer');
-            const emptyState = document.getElementById('emptyState');
-            
-            if (!chineseLearningData.lessons || chineseLearningData.lessons.length === 0) {
-                container.style.display = 'none';
-                emptyState.style.display = 'block';
-                return;
-            }
-            
-            container.style.display = 'block';
-            emptyState.style.display = 'none';
-            
-            container.innerHTML = chineseLearningData.lessons.map((lesson, index) => `
-                <div class="lesson-card" style="animation-delay: ${index * 0.1}s">
-                    <div class="lesson-header">
-                        <div>
-                            <div class="lesson-title">📖 ${lesson.day}${lesson.type} · ${lesson.institution}</div>
-                            <div class="lesson-date">${lesson.date} ${lesson.time || ''}</div>
-                        </div>
-                    </div>
-                    
-                    <div class="lesson-section">
-                        <h3>📖 字词认读</h3>
-                        <ul>
-                            <li>${lesson.content.recognizeChars}</li>
-                            <li>${lesson.content.recognizeWords}</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="lesson-section">
-                        <h3>✍️ 字词书写</h3>
-                        <ul>
-                            <li>${lesson.content.writeChars}</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="lesson-section">
-                        <h3>💬 交际表达</h3>
-                        <ul>
-                            <li>${lesson.content.expressions}</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="lesson-section">
-                        <h3>📝 课后作业</h3>
-                        ${lesson.homework.map(hw => `
-                            <div class="homework-item" onclick="toggleHomework(${lesson.id}, ${hw.id})">
-                                <div class="homework-checkbox ${hw.completed ? 'checked' : ''}"></div>
-                                <div class="homework-text ${hw.completed ? 'completed' : ''}">
-                                    ${hw.content}
-                                    <div style="font-size: 0.7rem; color: #64748b; margin-top: 4px;">
-                                        截止：${formatDate(hw.dueDate)}
-                                    </div>
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                    
-                    <div class="teacher-notes">
-                        <h3>👩‍🏫 老师评语</h3>
-                        <p>${lesson.teacherNotes}</p>
-                        
-                        ${lesson.parentTasks && lesson.parentTasks.length > 0 ? `
-                        <div class="parent-tasks">
-                            <h4>💡 家长课下提问</h4>
-                            <div class="task-tags">
-                                ${lesson.parentTasks.map(task => `<span class="task-tag">${task}</span>`).join('')}
-                            </div>
-                        </div>
-                        ` : ''}
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // 切换作业完成状态
-        function toggleHomework(lessonId, homeworkId) {
-            const lesson = chineseLearningData.lessons.find(l => l.id === lessonId);
-            if (!lesson) return;
-            
-            const homework = lesson.homework.find(h => h.id === homeworkId);
-            if (!homework) return;
-            
-            homework.completed = !homework.completed;
-            saveData();
-            renderLessons();
-        }
-
-        // 格式化日期
-        function formatDate(dateStr) {
-            const date = new Date(dateStr);
-            const month = date.getMonth() + 1;
-            const day = date.getDate();
-            return `${month}月${day}日`;
-        }
-
-        // 保存数据到 localStorage
-        function saveData() {
-            localStorage.setItem('chineseLearningData', JSON.stringify(chineseLearningData));
-        }
-
-        // 初始化 - 直接使用默认数据
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('初始化汉语学习页面...');
-            console.log('课程数据:', chineseLearningData);
-            
-            document.getElementById('weekBadge').textContent = chineseLearningData.weekLabel;
-            renderLessons();
-            
-            // 显示调试信息
-            console.log('课程数量:', chineseLearningData.lessons.length);
-            if (chineseLearningData.lessons.length > 0) {
-                console.log('第一个课程:', chineseLearningData.lessons[0]);
-            }
-        });
-    </script>
 </body>
 </html>
