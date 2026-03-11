@@ -111,25 +111,58 @@
             {"word": "expérience", "lvl": 4, "next": "2026-03-18", "definition": "经验；实验"}
         ];
 
+        // 按首字母排序
+        function sortByFirstLetter(data) {
+            return data.sort((a, b) => {
+                const wordA = a.word.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                const wordB = b.word.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                return wordA.localeCompare(wordB, 'fr');
+            });
+        }
+
         // 生成词汇卡片
         function generateCards() {
             const grid = document.getElementById('vocab-grid');
-            let html = '';
             
-            vocabularyData.forEach(item => {
-                const levelClass = `level-${item.lvl}`;
-                const levelText = item.lvl === 4 ? '已掌握' : `等级 ${item.lvl}`;
-                
+            // 先排序
+            const sortedData = sortByFirstLetter([...vocabularyData]);
+            
+            // 按首字母分组
+            const groupedByLetter = {};
+            sortedData.forEach(item => {
+                const firstLetter = item.word.charAt(0).toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                if (!groupedByLetter[firstLetter]) {
+                    groupedByLetter[firstLetter] = [];
+                }
+                groupedByLetter[firstLetter].push(item);
+            });
+            
+            // 生成 HTML
+            let html = '';
+            Object.keys(groupedByLetter).sort().forEach(letter => {
                 html += `
-                    <div class="word-card">
-                        <div class="word-header">
-                            <div class="word-title">${item.word}</div>
-                            <div class="word-level ${levelClass}">${levelText}</div>
+                    <div style="grid-column: 1 / -1; margin-top: 30px; margin-bottom: 15px;">
+                        <div style="display: inline-block; background: rgba(14, 165, 233, 0.1); border: 2px solid #0ea5e9; color: #0ea5e9; padding: 8px 20px; border-radius: 20px; font-size: 1.2em; font-weight: bold;">
+                            ${letter}
                         </div>
-                        <div class="word-definition">${item.definition}</div>
-                        <div class="word-next">下次复习：<strong>${item.next}</strong></div>
                     </div>
                 `;
+                
+                groupedByLetter[letter].forEach(item => {
+                    const levelClass = `level-${item.lvl}`;
+                    const levelText = item.lvl === 4 ? '已掌握' : `等级 ${item.lvl}`;
+                    
+                    html += `
+                        <div class="word-card">
+                            <div class="word-header">
+                                <div class="word-title">${item.word}</div>
+                                <div class="word-level ${levelClass}">${levelText}</div>
+                            </div>
+                            <div class="word-definition">${item.definition}</div>
+                            <div class="word-next">下次复习：<strong>${item.next}</strong></div>
+                        </div>
+                    `;
+                });
             });
             
             grid.innerHTML = html;
