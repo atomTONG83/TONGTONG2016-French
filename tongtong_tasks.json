@@ -1,6 +1,36 @@
 {
-  "last_updated": "2026-03-11T21:20:17.259388",
+  "last_updated": "2026-03-12T17:07:06.968784",
   "tasks": [
+    {
+      "cn": "📚 学校作业",
+      "fr": "Devoirs scolaires",
+      "date": "2026-03-12",
+      "completed": false
+    },
+    {
+      "cn": "🇫🇷 法语朗读",
+      "fr": "Lecture en français (10 min)",
+      "date": "2026-03-12",
+      "completed": false
+    },
+    {
+      "cn": "✍️ 词汇积累",
+      "fr": "Apprentissage du vocabulaire",
+      "date": "2026-03-12",
+      "completed": false
+    },
+    {
+      "cn": "🔢 数学应用题",
+      "fr": "Exercices de mathématiques",
+      "date": "2026-03-12",
+      "completed": false
+    },
+    {
+      "cn": "🎻 小提琴练习",
+      "fr": "Pratique du violon (20 min)",
+      "date": "2026-03-12",
+      "completed": false
+    },
     {
       "cn": "📚 学校作业",
       "fr": "Devoirs scolaires",
