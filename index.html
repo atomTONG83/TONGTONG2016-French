@@ -61,7 +61,7 @@
     <div class="bg-grid"></div>
     <div class="container">
         <header>
-            <div class="date-badge">2026 年 03 月 11 日 // 11 March 2026</div>
+            <div class="date-badge" id="date-badge">加载中...</div>
             <h1>TONGTONG's SPACE<br><span style="opacity: 0.5; font-size: 1.2rem;">童童空间</span></h1>
         </header>
         <div class="reward-card">
@@ -146,8 +146,24 @@
             }
         }
         
+        // 动态更新日期
+        function updateDate() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth() + 1;
+            const day = now.getDate();
+            const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const weekday = weekdays[now.getDay()];
+            
+            const dateBadge = document.getElementById('date-badge');
+            dateBadge.textContent = `${year}年${month}月${day}日 // ${day} ${weekday}`;
+        }
+        
         // 页面加载时执行
-        document.addEventListener('DOMContentLoaded', loadTasks);
+        document.addEventListener('DOMContentLoaded', () => {
+            updateDate();
+            loadTasks();
+        });
     </script>
 </body>
 </html>
