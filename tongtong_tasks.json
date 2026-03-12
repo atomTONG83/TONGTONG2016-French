@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-03-12T17:39:47.858622",
+  "last_updated": "2026-03-12T17:41:14.621019",
   "tasks": [
     {
       "cn": "📚 学校作业",
@@ -30,36 +30,6 @@
       "fr": "Pratique du violon (20 min)",
       "date": "2026-03-12",
       "completed": false
-    },
-    {
-      "cn": "📚 学校作业",
-      "fr": "Devoirs scolaires",
-      "date": "2026-03-11",
-      "completed": true
-    },
-    {
-      "cn": "🇫🇷 法语朗读",
-      "fr": "Lecture en français (10 min)",
-      "date": "2026-03-11",
-      "completed": true
-    },
-    {
-      "cn": "✍️ 词汇积累",
-      "fr": "Apprentissage du vocabulaire",
-      "date": "2026-03-11",
-      "completed": true
-    },
-    {
-      "cn": "🔢 数学应用题",
-      "fr": "Exercices de mathématiques",
-      "date": "2026-03-11",
-      "completed": true
-    },
-    {
-      "cn": "🎻 小提琴练习",
-      "fr": "Pratique du violon (20 min)",
-      "date": "2026-03-11",
-      "completed": true
     }
   ]
 }
