@@ -117,7 +117,7 @@
                     <span style="font-weight: bold;">🎼 Never Back Down - 乐谱预览</span>
                     <button onclick="closePDFViewer()" style="background: transparent; border: 1px solid var(--border); color: var(--text); padding: 5px 15px; border-radius: 6px; cursor: pointer;">关闭 ✕</button>
                 </div>
-                <iframe id="pdf-iframe" src="" style="width: 100%; height: 600px; border: none; background: #fff;"></iframe>
+                <embed id="pdf-embed" src="" type="application/pdf" style="width: 100%; height: 600px; border: none;">
             </div>
             
             <div class="homework-box">
@@ -221,17 +221,16 @@
         // PDF 预览功能
         function openPDFViewer() {
             const viewer = document.getElementById('pdf-viewer');
-            const iframe = document.getElementById('pdf-iframe');
-            // 使用 Google Docs 查看器在页面内预览 PDF
-            iframe.src = 'https://docs.google.com/gview?embedded=1&url=' + encodeURIComponent('https://tongtong2016.com/never_back_down.pdf');
+            const embed = document.getElementById('pdf-embed');
+            embed.src = 'never_back_down.pdf';
             viewer.style.display = 'block';
             viewer.scrollIntoView({ behavior: 'smooth' });
         }
         
         function closePDFViewer() {
             const viewer = document.getElementById('pdf-viewer');
-            const iframe = document.getElementById('pdf-iframe');
-            iframe.src = '';
+            const embed = document.getElementById('pdf-embed');
+            embed.src = '';
             viewer.style.display = 'none';
         }
         
