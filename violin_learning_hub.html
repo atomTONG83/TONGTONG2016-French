@@ -94,10 +94,19 @@
             <div class="section">
                 <h3>📁 练习资料</h3>
                 <ul>
-                    <li>🎼 Never Back Down.pdf（乐谱）</li>
+                    <li>🎼 <a href="#" onclick="openPDFViewer(); return false;" style="color: var(--accent); text-decoration: underline;">Never Back Down.pdf（点击预览乐谱）</a></li>
                     <li>🎵 Never Back Down 伴奏.mp3</li>
                     <li>🎵 Never Back Down 示范.mp3</li>
                 </ul>
+            </div>
+            
+            <!-- PDF 预览器 -->
+            <div id="pdf-viewer" style="display: none; margin-top: 20px; border: 1px solid var(--border); border-radius: 12px; overflow: hidden;">
+                <div style="background: var(--card-bg); padding: 10px 15px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-weight: bold;">🎼 Never Back Down - 乐谱预览</span>
+                    <button onclick="closePDFViewer()" style="background: transparent; border: 1px solid var(--border); color: var(--text); padding: 5px 15px; border-radius: 6px; cursor: pointer;">关闭 ✕</button>
+                </div>
+                <iframe id="pdf-iframe" src="" style="width: 100%; height: 600px; border: none; background: #fff;"></iframe>
             </div>
             
             <div class="homework-box">
@@ -196,5 +205,24 @@
             学习空间 · 由 Pi 🥧 智能驱动
         </footer>
     </div>
+    
+    <script>
+        // PDF 预览功能
+        function openPDFViewer() {
+            const viewer = document.getElementById('pdf-viewer');
+            const iframe = document.getElementById('pdf-iframe');
+            // 使用 Google Docs 查看器在页面内预览 PDF
+            iframe.src = 'https://docs.google.com/gview?embedded=1&url=' + encodeURIComponent('https://tongtong2016.com/never_back_down.pdf');
+            viewer.style.display = 'block';
+            viewer.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function closePDFViewer() {
+            const viewer = document.getElementById('pdf-viewer');
+            const iframe = document.getElementById('pdf-iframe');
+            iframe.src = '';
+            viewer.style.display = 'none';
+        }
+    </script>
 </body>
 </html>
