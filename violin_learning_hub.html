@@ -165,11 +165,43 @@
         <!-- ========== 小提琴课 ========== -->
         <div class="section-title">🎻 小提琴课 / Cours de Violon</div>
 
-        <!-- 最新作业 (2026-03-08) -->
+        <!-- 最新作业 (2026-03-14) -->
+        <div class="lesson-card">
+            <div class="lesson-header">
+                <span class="lesson-date">课程日期：2026-03-14</span>
+                <span class="status-tag status-pending">PENDING</span>
+            </div>
+            
+            <div class="new-piece">
+                <h4>🎵 新乐曲学习</h4>
+                <p><strong>《敢问路在何方》</strong> - 3 月 14 日课程内容</p>
+                <p style="margin-top: 10px;">🎼 <a href="#" onclick="openImageViewer('ganwenluzaihefang.jpg', '敢问路在何方 - 乐谱'); return false;" style="color: var(--accent); text-decoration: underline;">查看乐谱图片</a></p>
+            </div>
+            
+            <div class="section">
+                <h3>💡 核心要点与纠偏</h3>
+                <ul>
+                    <li><strong>新曲子听赏：</strong>反复多次听《敢问路在何方》唱歌版本和小提琴版本都要听</li>
+                    <li><strong>熟悉旋律：</strong>要求熟悉其中旋律与节奏</li>
+                    <li><strong>截止时间：</strong>下周六之前必须听熟</li>
+                    <li><strong>跟拉练习：</strong>可以适当听着音乐去跟着拉</li>
+                </ul>
+            </div>
+
+            <div class="homework-box">
+                <h3>✍️ 本期作业内容</h3>
+                <p>
+                    <strong>1. 听赏新曲：</strong>反复听《敢问路在何方》（唱歌版 + 小提琴版），下周六前听熟<br>
+                    <strong>2. 跟拉练习：</strong>听着音乐跟着拉，熟悉旋律
+                </p>
+            </div>
+        </div>
+
+        <!-- 历史作业 (2026-03-08) -->
         <div class="lesson-card">
             <div class="lesson-header">
                 <span class="lesson-date">课程日期：2026-03-08</span>
-                <span class="status-tag status-pending">PENDING</span>
+                <span class="status-tag status-done">COMPLETED</span>
             </div>
             
             <div class="new-piece">
@@ -349,15 +381,28 @@
         
         // 图片查看器功能
         let currentImagePage = 1;
-        const totalImagePages = 2;
-        const imageFiles = ['shijie_zengyu_wo.jpg', 'shijie_zengyu_wo_2.jpg'];
+        let totalImagePages = 2;
+        let currentImageFiles = [];
+        
+        const defaultImageFiles = ['shijie_zengyu_wo.jpg', 'shijie_zengyu_wo_2.jpg'];
+        const ganwenluFiles = ['ganwenluzaihefang.jpg'];
         
         function openImageViewer(src, title) {
             const viewer = document.getElementById('image-viewer');
             const img = document.getElementById('image-element');
             const titleEl = document.getElementById('image-title');
             currentImagePage = 1;
-            img.src = imageFiles[0];
+            
+            // 根据标题判断使用哪组图片
+            if (title.includes('敢问路在何方')) {
+                currentImageFiles = ganwenluFiles;
+                totalImagePages = 1;
+            } else {
+                currentImageFiles = defaultImageFiles;
+                totalImagePages = 2;
+            }
+            
+            img.src = currentImageFiles[0];
             titleEl.textContent = '🎼 ' + title;
             viewer.style.display = 'block';
             updateImageControls();
@@ -380,14 +425,14 @@
         function prevImagePage() {
             if (currentImagePage <= 1) return;
             currentImagePage--;
-            document.getElementById('image-element').src = imageFiles[currentImagePage - 1];
+            document.getElementById('image-element').src = currentImageFiles[currentImagePage - 1];
             updateImageControls();
         }
-        
+
         function nextImagePage() {
             if (currentImagePage >= totalImagePages) return;
             currentImagePage++;
-            document.getElementById('image-element').src = imageFiles[currentImagePage - 1];
+            document.getElementById('image-element').src = currentImageFiles[currentImagePage - 1];
             updateImageControls();
         }
     </script>
