@@ -1,6 +1,6 @@
 {
-  "stars": 2400,
-  "last_milestone": 1000,
+  "stars": 2800,
+  "last_milestone": 2000,
   "notebook": [
     {
       "word": "Équilibre",
@@ -622,8 +622,8 @@
     }
   ],
   "daily_stats": {
-    "date": "2026-03-06",
-    "completed": false,
+    "date": "2026-03-15",
+    "completed": true,
     "words": [
       "abondant",
       "admirer",
