@@ -124,6 +124,8 @@
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <!-- 法语学习 Supabase 集成 -->
     <script src="./french_supabase.js"></script>
+    <!-- 诊断工具 -->
+    <script src="./french_diagnostic.js"></script>
 </head>
 <body>
     <div class="container">
@@ -445,7 +447,21 @@
                 
                 // 3. 决定使用哪个数据源（优先级: 云端 > 本地服务器 > 本地存储 > 新建）
                 if (cloudData) {
-                    gData = cloudData;
+                    // 🔧 修复：如果云端生词本为空，但本地服务器有数据，合并数据
+                    if (cloudData.notebook.length === 0 && serverData && serverData.notebook.length > 0) {
+                        console.log('⚠️ 云端生词本为空，合并本地服务器数据');
+                        gData = {
+                            ...cloudData,
+                            notebook: serverData.notebook,
+                            stars: Math.max(cloudData.stars, serverData.stars)
+                        };
+                        // 立即保存合并后的数据到云端
+                        if (window.FrenchSupabase && window.FrenchSupabase.supabaseReady) {
+                            window.FrenchSupabase.saveToSupabase(gData);
+                        }
+                    } else {
+                        gData = cloudData;
+                    }
                     try { localStorage.setItem('french_learning_data', JSON.stringify(gData)); } catch(e) {}
                     updateSyncStatus("同步云端 ✓", "#3498db");
                 } else if (serverData) {
@@ -819,7 +835,7 @@
                     
                     // 3秒后恢复
                     setTimeout(function() {
-                        if (navigator.onLine && window.FrenchSupabase && window.FrenchSupABASE.isOnline()) {
+                        if (navigator.onLine && window.FrenchSupabase && window.FrenchSupabase.isOnline()) {
                             statusEl.innerText = "在线";
                             statusEl.style.background = "#3498db";
                         } else {
