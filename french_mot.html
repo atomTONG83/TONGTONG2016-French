@@ -696,9 +696,19 @@
         // 数据验证函数
         function validateFrenchData(data) {
             try {
-                // 1. 检查必需字段
-                if (!data.stars || !data.notebook || !data.daily_stats) {
-                    console.error("❌ 数据缺少必需字段");
+                // 🔧 修复：确保 stars 是数字
+                if (typeof data.stars === 'string') {
+                    data.stars = parseInt(data.stars, 10);
+                }
+                
+                // 1. 检查必需字段（注意：stars 可以是 0，所以用 == null 检查）
+                if (data.stars == null || !data.notebook || !data.daily_stats) {
+                    console.error("❌ 数据缺少必需字段:", {
+                        stars: data.stars,
+                        starsType: typeof data.stars,
+                        notebook: !!data.notebook,
+                        daily_stats: !!data.daily_stats
+                    });
                     return false;
                 }
                 
@@ -716,7 +726,11 @@
                 
                 // 4. daily_stats必须包含date和completed
                 if (!data.daily_stats.date || typeof data.daily_stats.completed !== 'boolean') {
-                    console.error("❌ daily_stats格式错误");
+                    console.error("❌ daily_stats格式错误:", {
+                        date: data.daily_stats.date,
+                        completed: data.daily_stats.completed,
+                        completedType: typeof data.daily_stats.completed
+                    });
                     return false;
                 }
                 
