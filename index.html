@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TONGTONG's SPACE · V4.0</title>
+    <title>TONGTONG's SPACE · V3.8</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap');
         :root {
@@ -19,6 +20,7 @@
         .date-badge { font-family: 'Orbitron'; font-size: 0.65rem; color: var(--primary); border: 1px solid var(--primary); padding: 4px 15px; display: inline-block; margin-bottom: 10px; }
         h1 { font-family: 'Orbitron'; font-weight: 900; font-size: 1.8rem; letter-spacing: 2px; text-shadow: 0 0 20px rgba(14, 165, 233, 0.5); }
         
+        /* RESTORED COOL REWARD CARD EFFECTS */
         .reward-card { 
             background: var(--glass); 
             border: 1px solid var(--border); 
@@ -61,7 +63,7 @@
     <div class="bg-grid"></div>
     <div class="container">
         <header>
-            <div class="date-badge" id="date-badge">加载中...</div>
+            <div class="date-badge">2026年03月17日 // 17 March 2026</div>
             <h1>TONGTONG's SPACE<br><span style="opacity: 0.5; font-size: 1.2rem;">童童空间</span></h1>
         </header>
         <div class="reward-card">
@@ -71,26 +73,111 @@
             </div>
         </div>
         <div class="section-title">Active Mission List</div>
-        <div style="margin-bottom: 40px;" id="tasks-container">
-            <!-- 任务将通过 JavaScript 动态加载 -->
-            <div class="empty-msg">🔄 正在加载任务...</div>
-        </div>
+        <div style="margin-bottom: 40px;">
+            <div class="task-card" style="animation-delay: 0.0s">
+                <div class="card-glow"></div>
+                <div class="task-icon">⏳</div>
+                <div class="task-info">
+                    <div class="task-cn">📚 学校作业 (Devoirs) </div>
+                    <div class="task-fr">Devoirs scolaires</div>
+                    <div class="task-status">2026-03-15 • 待完成</div>
+                </div>
+            </div>
+            
+            <div class="task-card" style="animation-delay: 0.1s">
+                <div class="card-glow"></div>
+                <div class="task-icon">⏳</div>
+                <div class="task-info">
+                    <div class="task-cn">🇫🇷 法语朗读 (10分钟：半页–1页) </div>
+                    <div class="task-fr">Lecture en français (10 min)</div>
+                    <div class="task-status">2026-03-15 • 待完成</div>
+                </div>
+            </div>
+            
+            <div class="task-card" style="animation-delay: 0.2s">
+                <div class="card-glow"></div>
+                <div class="task-icon">⏳</div>
+                <div class="task-info">
+                    <div class="task-cn">✍️ 词汇积累 (5分钟：记录3个新词 + 中文 + 原句) </div>
+                    <div class="task-fr">Apprentissage du vocabulaire</div>
+                    <div class="task-status">2026-03-15 • 待完成</div>
+                </div>
+            </div>
+            
+            <div class="task-card" style="animation-delay: 0.30000000000000004s">
+                <div class="card-glow"></div>
+                <div class="task-icon">⏳</div>
+                <div class="task-info">
+                    <div class="task-cn">🔢 数学应用题 (10分钟：圈关键词 + 写出求什么) </div>
+                    <div class="task-fr">Exercices de mathématiques</div>
+                    <div class="task-status">2026-03-15 • 待完成</div>
+                </div>
+            </div>
+            
+            <div class="task-card" style="animation-delay: 0.4s">
+                <div class="card-glow"></div>
+                <div class="task-icon">⏳</div>
+                <div class="task-info">
+                    <div class="task-cn">🎻 小提琴练习 (20分钟) </div>
+                    <div class="task-fr">Pratique du violon</div>
+                    <div class="task-status">2026-03-15 • 待完成</div>
+                </div>
+            </div>
+            
+            <div class="task-card" style="animation-delay: 0.5s">
+                <div class="card-glow"></div>
+                <div class="task-icon">⏳</div>
+                <div class="task-info">
+                    <div class="task-cn">📚 学校作业 (Devoirs) 🆕</div>
+                    <div class="task-fr">Devoirs scolaires</div>
+                    <div class="task-status">2026-03-17 • 待完成</div>
+                </div>
+            </div>
+            
+            <div class="task-card" style="animation-delay: 0.6000000000000001s">
+                <div class="card-glow"></div>
+                <div class="task-icon">⏳</div>
+                <div class="task-info">
+                    <div class="task-cn">🇫🇷 法语朗读 (10分钟：半页–1页) 🆕</div>
+                    <div class="task-fr">Lecture en français (10 min)</div>
+                    <div class="task-status">2026-03-17 • 待完成</div>
+                </div>
+            </div>
+            
+            <div class="task-card" style="animation-delay: 0.7000000000000001s">
+                <div class="card-glow"></div>
+                <div class="task-icon">⏳</div>
+                <div class="task-info">
+                    <div class="task-cn">✍️ 词汇积累 (5分钟：记录3个新词 + 中文 + 原句) 🆕</div>
+                    <div class="task-fr">Apprentissage du vocabulaire</div>
+                    <div class="task-status">2026-03-17 • 待完成</div>
+                </div>
+            </div>
+            
+            <div class="task-card" style="animation-delay: 0.8s">
+                <div class="card-glow"></div>
+                <div class="task-icon">⏳</div>
+                <div class="task-info">
+                    <div class="task-cn">🔢 数学应用题 (10分钟：圈关键词 + 写出求什么) 🆕</div>
+                    <div class="task-fr">Exercices de mathématiques</div>
+                    <div class="task-status">2026-03-17 • 待完成</div>
+                </div>
+            </div>
+            
+            <div class="task-card" style="animation-delay: 0.9s">
+                <div class="card-glow"></div>
+                <div class="task-icon">⏳</div>
+                <div class="task-info">
+                    <div class="task-cn">🎻 小提琴练习 (20分钟) 🆕</div>
+                    <div class="task-fr">Pratique du violon</div>
+                    <div class="task-status">2026-03-17 • 待完成</div>
+                </div>
+            </div>
+            </div>
         <div class="section-title">Knowledge Interface</div>
         <div class="grid-2">
             <a href="french_mot.html" class="btn-launch">Le Trésor des Mots</a>
-            <a href="french_grammar.html" class="action-box" style="border-color: var(--purple);">
-                <h3>GRAMMAIRE</h3>
-                <p style="font-size: 0.75rem; color: #94a3b8;">法语语法学习 · Nature grammaticale du sujet</p>
-            </a>
-            <a href="earth_europe_learning_v14.html" class="action-box" style="border-color: #10b981; grid-column: span 2;">
-                <h3>🌍 3D 地球 - 欧洲国家学习</h3>
-                <p style="font-size: 0.75rem; color: #94a3b8;">Apprendre les pays européens en 3D</p>
-            </a>
-            <a href="chinese_learning.html" class="action-box" style="border-color: #ef4444; grid-column: span 2;">
-                <h3>🇨🇳 汉语学习 / Chinois</h3>
-                <p style="font-size: 0.75rem; color: #94a3b8;">每周课程记录 · 作业追踪</p>
-            </a>
-            <a href="school_vocabulary_complete.html" class="action-box" style="border-color: #818cf8;">
+            <a href="school_vocabulary.html" class="action-box" style="border-color: #818cf8;">
                 <h3>LEXIQUE</h3>
                 <p style="font-size: 0.75rem; color: #94a3b8;">学校法语生词本</p>
             </a>
@@ -100,74 +187,15 @@
             </a>
             <a href="english_learning_hub.html" class="action-box">
                 <h3>ENGLISH</h3>
-                <p style="font-size: 0.75rem; color: #94a3b8;">Write a summary paragraph about Anatole Latuile.</p>
+                <p style="font-size: 0.75rem; color: #94a3b8;">Write a summary paragraph about Anatole Latuile, Un Max de Surprises.</p>
             </a>
             <a href="violin_learning_hub.html" class="action-box">
                 <h3>VIOLIN</h3>
-                <p style="font-size: 0.75rem; color: #94a3b8;">1. 听赏音频；2.《施拉迪克》第一页拉完。</p>
+                <p style="font-size: 0.75rem; color: #94a3b8;">1. 听赏音频；2.《施拉迪克》第一页拉完（不反复）。</p>
             </a>
         </div>
-        <footer>V4.0-DYNAMIC-TASKS | © ATOM TONG 2026 | MISSION_COMMAND</footer>
+        <footer>V3.8-VIBE-RESTORED | © ATOM TONG 2026 | MISSION_COMMAND</footer>
     </div>
-    
-    <script>
-        // 动态加载任务列表
-        async function loadTasks() {
-            try {
-                const response = await fetch('tongtong_tasks.json?t=' + Date.now());
-                const data = await response.json();
-                
-                const container = document.getElementById('tasks-container');
-                
-                if (!data.tasks || data.tasks.length === 0) {
-                    container.innerHTML = '<div class="empty-msg">MISSION COMPLETE. WELL DONE JINGYI. 🏆</div>';
-                    return;
-                }
-                
-                let html = '';
-                data.tasks.forEach((task, idx) => {
-                    const isNew = task.date === new Date().toISOString().split('T')[0];
-                    const newBadge = isNew ? ' 🆕' : '';
-                    const statusText = task.completed ? '已完成' : '待完成';
-                    
-                    html += `
-                    <div class="task-card" style="animation-delay: ${idx*0.1}s">
-                        <div class="card-glow"></div>
-                        <div class="task-icon">⏳</div>
-                        <div class="task-info">
-                            <div class="task-cn">${task.cn}${newBadge}</div>
-                            <div class="task-fr">${task.fr}</div>
-                            <div class="task-status">${task.date} • ${statusText}</div>
-                        </div>
-                    </div>`;
-                });
-                
-                container.innerHTML = html;
-            } catch (error) {
-                console.error('加载任务失败:', error);
-                document.getElementById('tasks-container').innerHTML = 
-                    '<div class="empty-msg">⚠️ 加载任务失败</div>';
-            }
-        }
-        
-        // 动态更新日期
-        function updateDate() {
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = now.getMonth() + 1;
-            const day = now.getDate();
-            const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-            const weekday = weekdays[now.getDay()];
-            
-            const dateBadge = document.getElementById('date-badge');
-            dateBadge.textContent = `${year}年${month}月${day}日 // ${day} ${weekday}`;
-        }
-        
-        // 页面加载时执行
-        document.addEventListener('DOMContentLoaded', () => {
-            updateDate();
-            loadTasks();
-        });
-    </script>
 </body>
 </html>
+    
