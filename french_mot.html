@@ -701,6 +701,11 @@
                     data.stars = parseInt(data.stars, 10);
                 }
                 
+                // 🔧 修复：确保 daily_stats.completed 是布尔值
+                if (typeof data.daily_stats?.completed === 'string') {
+                    data.daily_stats.completed = data.daily_stats.completed === 'true';
+                }
+                
                 // 1. 检查必需字段（注意：stars 可以是 0，所以用 == null 检查）
                 if (data.stars == null || !data.notebook || !data.daily_stats) {
                     console.error("❌ 数据缺少必需字段:", {
