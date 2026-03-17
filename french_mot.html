@@ -784,11 +784,32 @@
                 }
                 
                 // 1. 先保存到本地存储（快速反馈）
-                localStorage.setItem('french_learning_data', JSON.stringify(gData));
+                // 🔧 修复：如果数据太大，只保存关键字段
+                try {
+                    localStorage.setItem('french_learning_data', JSON.stringify(gData));
+                } catch (e) {
+                    if (e.name === 'QuotaExceededError' || e.message.includes('quota')) {
+                        console.warn('⚠️ LocalStorage 配额超限，只保存关键字段');
+                        // 只保存关键字段
+                        const minimalData = {
+                            stars: gData.stars,
+                            last_milestone: gData.last_milestone,
+                            notebook: gData.notebook.slice(0, 50), // 只保存前50个单词
+                            daily_stats: gData.daily_stats
+                        };
+                        localStorage.setItem('french_learning_data', JSON.stringify(minimalData));
+                    } else {
+                        throw e;
+                    }
+                }
                 
                 // 2. 记录有效数据
-                localStorage.setItem('last_valid_stars', gData.stars);
-                localStorage.setItem('last_valid_word_count', gData.notebook.length);
+                try {
+                    localStorage.setItem('last_valid_stars', gData.stars);
+                    localStorage.setItem('last_valid_word_count', gData.notebook.length);
+                } catch (e) {
+                    console.warn('⚠️ LocalStorage 配额超限，跳过记录有效数据');
+                }
                 
                 // 3. 显示保存状态
                 var statusEl = document.getElementById('sync-status');
