@@ -802,18 +802,28 @@
                 let localServerSaved = false;
                 
                 // 4a. 保存到Supabase（云端）
+                console.log('🔍 检查 Supabase:', {
+                    FrenchSupabase: !!window.FrenchSupabase,
+                    supabaseReady: window.FrenchSupabase?.supabaseReady
+                });
                 if (window.FrenchSupabase && window.FrenchSupabase.supabaseReady) {
                     try {
+                        console.log('🔄 开始保存到 Supabase...');
                         const cloudResult = await window.FrenchSupabase.saveToSupabase(gData);
+                        console.log('🔄 Supabase 返回:', cloudResult);
                         if (cloudResult.status === 'success') {
                             cloudSaved = true;
                             console.log('✅ 云端保存成功');
                         } else if (cloudResult.status === 'queued') {
                             console.log('📦 数据已加入同步队列');
+                        } else {
+                            console.warn('⚠️ Supabase 返回未知状态:', cloudResult.status);
                         }
                     } catch (cloudError) {
-                        console.error('云端保存异常:', cloudError);
+                        console.error('❌ 云端保存异常:', cloudError);
                     }
+                } else {
+                    console.warn('⚠️ Supabase 未初始化，跳过云端保存');
                 }
                 
                 // 4b. 保存到本地服务器（保持向后兼容）
@@ -865,10 +875,11 @@
                 }
                 
             } catch(e) {
-                console.error('Save error:', e);
+                console.error('❌ Save error:', e);
+                console.error('❌ 错误详情:', e.message, e.stack);
                 var statusEl = document.getElementById('sync-status');
                 if (statusEl) {
-                    statusEl.innerText = "保存错误";
+                    statusEl.innerText = "保存错误: " + e.message;
                     statusEl.style.background = "#e74c3c";
                 }
             }
