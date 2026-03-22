@@ -1,274 +1,509 @@
 {
-  "stars": 2900,
+  "stars": 3000,
+  "last_milestone": 2000,
   "notebook": [
     {
-      "word": "\u00c9quilibre",
-      "lvl": 4,
-      "next": "2026-03-20",
+      "word": "admirer",
+      "lvl": 3,
+      "next": "2026-03-25",
       "err_days": 0
     },
     {
       "word": "Analyse",
+      "lvl": 5,
+      "next": "2026-04-21",
+      "err_days": 0
+    },
+    {
+      "word": "Prénom",
+      "lvl": 4,
+      "next": "2026-03-25",
+      "err_days": 0
+    },
+    {
+      "word": "Désert",
+      "lvl": 5,
+      "next": "2026-04-17",
+      "err_days": 0
+    },
+    {
+      "word": "Pollinisation",
+      "lvl": 5,
+      "next": "2026-04-17",
+      "err_days": 0
+    },
+    {
+      "word": "imprévisible",
+      "lvl": 5,
+      "next": "2026-03-30",
+      "err_days": 0
+    },
+    {
+      "word": "Détermination",
       "lvl": 3,
-      "next": "2026-03-07",
+      "next": "2026-03-25",
       "err_days": 0
     },
     {
-      "word": "Pr\u00e9nom",
-      "lvl": 3,
-      "next": "2026-03-09",
-      "err_days": 0
-    },
-    {
-      "word": "D\u00e9sert",
+      "word": "Paradoxe",
       "lvl": 4,
-      "next": "2026-03-18",
+      "next": "2026-03-25",
       "err_days": 0
     },
     {
-      "word": "Isolant",
+      "word": "Globalisation",
       "lvl": 4,
-      "next": "2026-03-16",
+      "next": "2026-03-25",
       "err_days": 0
     },
     {
-      "word": "Conscience",
-      "lvl": 4,
-      "next": "2026-03-16",
+      "word": "Fraternité",
+      "lvl": 5,
+      "next": "2026-04-17",
       "err_days": 0
     },
     {
-      "word": "Astronomie",
-      "lvl": 4,
-      "next": "2026-03-15",
+      "word": "Bienveillance",
+      "lvl": 5,
+      "next": "2026-04-10",
       "err_days": 0
     },
     {
-      "word": "cr\u00e9atif",
-      "lvl": 1,
-      "next": "2026-03-07",
+      "word": "Vertèbre",
+      "lvl": 5,
+      "next": "2026-04-04",
       "err_days": 0
     },
     {
-      "word": "Sinc\u00e9rit\u00e9",
-      "lvl": 4,
-      "next": "2026-03-21",
+      "word": "Chat",
+      "lvl": 5,
+      "next": "2026-04-18",
       "err_days": 0
     },
     {
-      "word": "source",
-      "lvl": 3,
-      "next": "2026-03-10",
-      "err_days": 0
-    },
-    {
-      "word": "mille",
-      "lvl": 4,
-      "next": "2026-03-20",
-      "err_days": 0
-    },
-    {
-      "word": "r\u00e9fl\u00e9chir",
-      "lvl": 4,
-      "next": "2026-03-17",
-      "err_days": 0
-    },
-    {
-      "word": "Continent",
-      "lvl": 4,
-      "next": "2026-03-16",
-      "err_days": 0
-    },
-    {
-      "word": "responsable",
-      "lvl": 1,
-      "next": "2026-03-07",
-      "err_days": 0
-    },
-    {
-      "word": "Sym\u00e9trie",
-      "lvl": 4,
-      "next": "2026-03-21",
-      "err_days": 0
-    },
-    {
-      "word": "analyser",
-      "lvl": 1,
-      "next": "2026-03-07",
-      "err_days": 0
-    },
-    {
-      "word": "Robot",
-      "lvl": 3,
-      "next": "2026-03-09",
-      "err_days": 0
-    },
-    {
-      "word": "Volcan",
-      "lvl": 3,
-      "next": "2026-03-10",
-      "err_days": 0
-    },
-    {
-      "word": "S\u00e9diment",
-      "lvl": 3,
-      "next": "2026-03-10",
-      "err_days": 0
-    },
-    {
-      "word": "Hippopotame",
-      "lvl": 3,
-      "next": "2026-03-09",
-      "err_days": 0
-    },
-    {
-      "word": "Table",
-      "lvl": 3,
-      "next": "2026-03-09",
-      "err_days": 0
-    },
-    {
-      "word": "Ind\u00e9pendance",
-      "lvl": 3,
-      "next": "2026-03-10",
-      "err_days": 0
-    },
-    {
-      "word": "Argumentation",
-      "lvl": 3,
-      "next": "2026-03-10",
-      "err_days": 0
-    },
-    {
-      "word": "Vitesse",
-      "lvl": 3,
-      "next": "2026-03-08",
-      "err_days": 0
-    },
-    {
-      "word": "Protagoniste",
-      "lvl": 4,
-      "next": "2026-03-15",
-      "err_days": 0
-    },
-    {
-      "word": "Symphonie",
-      "lvl": 2,
-      "next": "2026-03-07",
-      "err_days": 0
-    },
-    {
-      "word": "G\u00e9n\u00e9rosit\u00e9",
-      "lvl": 4,
-      "next": "2026-03-12",
-      "err_days": 0
-    },
-    {
-      "word": "\u00c9lectricit\u00e9",
-      "lvl": 4,
-      "next": "2026-03-16",
-      "err_days": 0
-    },
-    {
-      "word": "ing\u00e9nieux",
+      "word": "vérité",
       "lvl": 5,
       "next": "2026-04-01",
       "err_days": 0
     },
     {
-      "word": "solide",
-      "lvl": 4,
-      "next": "2026-03-17",
-      "err_days": 0
-    },
-    {
-      "word": "appr\u00e9cier",
-      "lvl": 4,
-      "next": "2026-03-20",
-      "err_days": 0
-    },
-    {
-      "word": "Pers\u00e9v\u00e9rance",
-      "lvl": 4,
-      "next": "2026-03-15",
-      "err_days": 0
-    },
-    {
-      "word": "v\u00e9rit\u00e9",
+      "word": "réseau",
       "lvl": 5,
-      "next": "2026-04-01",
+      "next": "2026-04-17",
       "err_days": 0
     },
     {
-      "word": "r\u00e9seau",
-      "lvl": 4,
-      "next": "2026-03-17",
-      "err_days": 0
-    },
-    {
-      "word": "ob\u00e9issant",
-      "lvl": 3,
-      "next": "2026-03-12",
-      "err_days": 0
-    },
-    {
-      "word": "dipl\u00f4me",
-      "lvl": 3,
-      "next": "2026-03-12",
-      "err_days": 0
-    },
-    {
-      "word": "chaleureux",
-      "lvl": 3,
-      "next": "2026-03-12",
-      "err_days": 0
-    },
-    {
-      "word": "imprimante",
-      "lvl": 3,
-      "next": "2026-03-12",
-      "err_days": 0
-    },
-    {
-      "word": "site web",
-      "lvl": 3,
-      "next": "2026-03-12",
-      "err_days": 0
-    },
-    {
-      "word": "honn\u00eate",
+      "word": "examen",
       "lvl": 2,
-      "next": "2026-03-07",
+      "next": "2026-03-26",
       "err_days": 0
     },
     {
-      "word": "raison",
-      "lvl": 3,
-      "next": "2026-03-12",
-      "err_days": 0
-    },
-    {
-      "word": "accueillir",
-      "lvl": 3,
-      "next": "2026-03-10",
-      "err_days": 0
-    },
-    {
-      "word": "important",
-      "lvl": 3,
-      "next": "2026-03-11",
+      "word": "généreux",
+      "lvl": 1,
+      "next": "2026-03-24",
       "err_days": 0
     },
     {
       "word": "Chien",
-      "lvl": 3,
-      "next": "2026-03-10",
+      "lvl": 4,
+      "next": "2026-03-25",
       "err_days": 0
     },
     {
-      "word": "\u00e9merveillement",
+      "word": "émerveillement",
       "lvl": 6,
       "next": "2026-05-04",
+      "err_days": 0
+    },
+    {
+      "word": "collaborer",
+      "lvl": 3,
+      "next": "2026-03-29",
+      "err_days": 0
+    },
+    {
+      "word": "fidèle",
+      "lvl": 2,
+      "next": "2026-03-26",
+      "err_days": 0
+    },
+    {
+      "word": "violet",
+      "lvl": 3,
+      "next": "2026-03-29",
+      "err_days": 0
+    },
+    {
+      "word": "abondant",
+      "lvl": 3,
+      "next": "2026-03-25",
+      "err_days": 0
+    },
+    {
+      "word": "curiosité",
+      "lvl": 5,
+      "next": "2026-03-31",
+      "err_days": 0
+    },
+    {
+      "word": "forêt",
+      "lvl": 3,
+      "next": "2026-03-29",
+      "err_days": 0
+    },
+    {
+      "word": "travail",
+      "lvl": 3,
+      "next": "2026-03-25",
+      "err_days": 0
+    },
+    {
+      "word": "salle de bain",
+      "lvl": 3,
+      "next": "2026-03-25",
+      "err_days": 0
+    },
+    {
+      "word": "persévérant",
+      "lvl": 3,
+      "next": "2026-03-25",
+      "err_days": 0
+    },
+    {
+      "word": "manière",
+      "lvl": 3,
+      "next": "2026-03-25",
+      "err_days": 0
+    },
+    {
+      "word": "Argumentation",
+      "lvl": 4,
+      "next": "2026-03-25",
+      "err_days": 0
+    },
+    {
+      "word": "Vitesse",
+      "lvl": 4,
+      "next": "2026-03-23",
+      "err_days": 0
+    },
+    {
+      "word": "Soleil",
+      "lvl": 4,
+      "next": "2026-03-25",
+      "err_days": 0
+    },
+    {
+      "word": "Imagination",
+      "lvl": 2,
+      "next": "2026-03-26",
+      "err_days": 0
+    },
+    {
+      "word": "Préhistoire",
+      "lvl": 5,
+      "next": "2026-04-18",
+      "err_days": 0
+    },
+    {
+      "word": "Génétique",
+      "lvl": 4,
+      "next": "2026-03-25",
+      "err_days": 0
+    },
+    {
+      "word": "Perspective",
+      "lvl": 1,
+      "next": "2026-03-24",
+      "err_days": 0
+    },
+    {
+      "word": "Sculpture",
+      "lvl": 5,
+      "next": "2026-04-21",
+      "err_days": 0
+    },
+    {
+      "word": "Mémoire",
+      "lvl": 5,
+      "next": "2026-04-21",
+      "err_days": 0
+    },
+    {
+      "word": "athlétisme",
+      "lvl": 1,
+      "next": "2026-03-24",
+      "err_days": 0
+    },
+    {
+      "word": "fragile",
+      "lvl": 1,
+      "next": "2026-03-24",
+      "err_days": 0
+    },
+    {
+      "word": "coussin",
+      "lvl": 1,
+      "next": "2026-03-24",
+      "err_days": 0
+    },
+    {
+      "word": "utile",
+      "lvl": 1,
+      "next": "2026-03-24",
+      "err_days": 0
+    },
+    {
+      "word": "honnête",
+      "lvl": 2,
+      "next": "2026-03-26",
+      "err_days": 0
+    },
+    {
+      "word": "énergie",
+      "lvl": 2,
+      "next": "2026-03-26",
+      "err_days": 0
+    },
+    {
+      "word": "expliquer",
+      "lvl": 3,
+      "next": "2026-03-29",
+      "err_days": 0
+    },
+    {
+      "word": "équilibre",
+      "lvl": 3,
+      "next": "2026-03-29",
+      "err_days": 0
+    },
+    {
+      "word": "logique",
+      "lvl": 3,
+      "next": "2026-03-29",
+      "err_days": 0
+    },
+    {
+      "word": "sincère",
+      "lvl": 2,
+      "next": "2026-03-26",
+      "err_days": 0
+    },
+    {
+      "word": "étang",
+      "lvl": 2,
+      "next": "2026-03-26",
+      "err_days": 0
+    },
+    {
+      "word": "cent",
+      "lvl": 4,
+      "next": "2026-04-02",
+      "err_days": 0
+    },
+    {
+      "word": "obéissant",
+      "lvl": 4,
+      "next": "2026-04-02",
+      "err_days": 0
+    },
+    {
+      "word": "s'épanouir",
+      "lvl": 5,
+      "next": "2026-04-02",
+      "err_days": 0
+    },
+    {
+      "word": "Vidéo",
+      "lvl": 4,
+      "next": "2026-03-25",
+      "err_days": 0
+    },
+    {
+      "word": "Condensation",
+      "lvl": 4,
+      "next": "2026-03-25",
+      "err_days": 0
+    },
+    {
+      "word": "Empathie",
+      "lvl": 4,
+      "next": "2026-03-25",
+      "err_days": 0
+    },
+    {
+      "word": "Insecte",
+      "lvl": 5,
+      "next": "2026-04-21",
+      "err_days": 0
+    },
+    {
+      "word": "Climax",
+      "lvl": 5,
+      "next": "2026-04-18",
+      "err_days": 0
+    },
+    {
+      "word": "sagesse",
+      "lvl": 2,
+      "next": "2026-03-26",
+      "err_days": 0
+    },
+    {
+      "word": "magnifique",
+      "lvl": 2,
+      "next": "2026-03-26",
+      "err_days": 0
+    },
+    {
+      "word": "fier",
+      "lvl": 2,
+      "next": "2026-03-26",
+      "err_days": 0
+    },
+    {
+      "word": "Résistance",
+      "lvl": 4,
+      "next": "2026-03-25",
+      "err_days": 0
+    },
+    {
+      "word": "Harmonie",
+      "lvl": 5,
+      "next": "2026-04-21",
+      "err_days": 0
+    },
+    {
+      "word": "Préservation",
+      "lvl": 5,
+      "next": "2026-04-21",
+      "err_days": 0
+    },
+    {
+      "word": "Créativité",
+      "lvl": 5,
+      "next": "2026-04-21",
+      "err_days": 0
+    },
+    {
+      "word": "source",
+      "lvl": 4,
+      "next": "2026-03-25",
+      "err_days": 0
+    },
+    {
+      "word": "Architecture",
+      "lvl": 5,
+      "next": "2026-04-21",
+      "err_days": 0
+    },
+    {
+      "word": "natation",
+      "lvl": 2,
+      "next": "2026-03-26",
+      "err_days": 0
+    },
+    {
+      "word": "affection",
+      "lvl": 3,
+      "next": "2026-03-29",
+      "err_days": 0
+    },
+    {
+      "word": "Biotechnologie",
+      "lvl": 4,
+      "next": "2026-03-25",
+      "err_days": 0
+    },
+    {
+      "word": "Électricité",
+      "lvl": 5,
+      "next": "2026-04-17",
+      "err_days": 0
+    },
+    {
+      "word": "ingénieux",
+      "lvl": 5,
+      "next": "2026-04-01",
+      "err_days": 0
+    },
+    {
+      "word": "important",
+      "lvl": 4,
+      "next": "2026-03-26",
+      "err_days": 0
+    },
+    {
+      "word": "Honnêteté",
+      "lvl": 5,
+      "next": "2026-04-17",
+      "err_days": 0
+    },
+    {
+      "word": "unique",
+      "lvl": 5,
+      "next": "2026-04-21",
+      "err_days": 0
+    },
+    {
+      "word": "harmonie",
+      "lvl": 4,
+      "next": "2026-04-02",
+      "err_days": 0
+    },
+    {
+      "word": "boucherie",
+      "lvl": 5,
+      "next": "2026-04-21",
+      "err_days": 0
+    },
+    {
+      "word": "Frontière",
+      "lvl": 5,
+      "next": "2026-04-17",
+      "err_days": 0
+    },
+    {
+      "word": "découvrir",
+      "lvl": 3,
+      "next": "2026-03-29",
+      "err_days": 0
+    },
+    {
+      "word": "changement",
+      "lvl": 3,
+      "next": "2026-03-29",
+      "err_days": 0
+    },
+    {
+      "word": "pharmacie",
+      "lvl": 3,
+      "next": "2026-03-29",
+      "err_days": 0
+    },
+    {
+      "word": "ruisseau",
+      "lvl": 3,
+      "next": "2026-03-29",
+      "err_days": 0
+    },
+    {
+      "word": "Microscope",
+      "lvl": 5,
+      "next": "2026-04-17",
+      "err_days": 0
+    },
+    {
+      "word": "conseil",
+      "lvl": 4,
+      "next": "2026-04-02",
+      "err_days": 0
+    },
+    {
+      "word": "joyeux",
+      "lvl": 3,
+      "next": "2026-03-25",
       "err_days": 0
     },
     {
@@ -291,347 +526,417 @@
     },
     {
       "word": "Maison",
-      "lvl": 4,
-      "next": "2026-03-16",
+      "lvl": 5,
+      "next": "2026-04-17",
       "err_days": 0
     },
     {
-      "word": "Cam\u00e9l\u00e9on",
-      "lvl": 4,
-      "next": "2026-03-16",
+      "word": "Caméléon",
+      "lvl": 5,
+      "next": "2026-04-17",
       "err_days": 0
     },
     {
-      "word": "Insecte",
-      "lvl": 4,
-      "next": "2026-03-20",
+      "word": "solide",
+      "lvl": 5,
+      "next": "2026-04-17",
       "err_days": 0
     },
     {
-      "word": "D\u00e9termination",
-      "lvl": 1,
-      "next": "2026-03-08",
+      "word": "Démocratie",
+      "lvl": 2,
+      "next": "2026-03-26",
       "err_days": 0
     },
     {
-      "word": "Conservation",
-      "lvl": 4,
-      "next": "2026-03-19",
-      "err_days": 0
-    },
-    {
-      "word": "Friction",
-      "lvl": 3,
-      "next": "2026-03-10",
-      "err_days": 0
-    },
-    {
-      "word": "Imagination",
-      "lvl": 4,
-      "next": "2026-03-12",
-      "err_days": 0
-    },
-    {
-      "word": "Pr\u00e9histoire",
-      "lvl": 4,
-      "next": "2026-03-19",
-      "err_days": 0
-    },
-    {
-      "word": "G\u00e9n\u00e9tique",
-      "lvl": 3,
-      "next": "2026-03-10",
-      "err_days": 0
-    },
-    {
-      "word": "Perspective",
-      "lvl": 4,
-      "next": "2026-03-19",
-      "err_days": 0
-    },
-    {
-      "word": "Sculpture",
-      "lvl": 3,
-      "next": "2026-03-07",
-      "err_days": 0
-    },
-    {
-      "word": "M\u00e9moire",
-      "lvl": 4,
-      "next": "2026-03-21",
-      "err_days": 0
-    },
-    {
-      "word": "D\u00e9mocratie",
-      "lvl": 4,
-      "next": "2026-03-17",
-      "err_days": 0
-    },
-    {
-      "word": "Climax",
-      "lvl": 4,
-      "next": "2026-03-19",
-      "err_days": 0
-    },
-    {
-      "word": "Fraternit\u00e9",
-      "lvl": 4,
-      "next": "2026-03-12",
-      "err_days": 0
-    },
-    {
-      "word": "Bienveillance",
-      "lvl": 4,
-      "next": "2026-03-11",
-      "err_days": 0
-    },
-    {
-      "word": "Vert\u00e8bre",
+      "word": "Écosystème",
       "lvl": 5,
       "next": "2026-04-04",
       "err_days": 0
     },
     {
-      "word": "Chat",
+      "word": "diplôme",
       "lvl": 4,
-      "next": "2026-03-19",
-      "err_days": 0
-    },
-    {
-      "word": "curiosit\u00e9",
-      "lvl": 5,
-      "next": "2026-03-31",
-      "err_days": 0
-    },
-    {
-      "word": "\u00e9tranger",
-      "lvl": 3,
-      "next": "2026-03-12",
-      "err_days": 0
-    },
-    {
-      "word": "plaine",
-      "lvl": 3,
-      "next": "2026-03-13",
-      "err_days": 0
-    },
-    {
-      "word": "cent",
-      "lvl": 2,
-      "next": "2026-03-07",
-      "err_days": 0
-    },
-    {
-      "word": "harmonie",
-      "lvl": 3,
-      "next": "2026-03-13",
-      "err_days": 0
-    },
-    {
-      "word": "discuter",
-      "lvl": 2,
-      "next": "2026-03-07",
-      "err_days": 0
-    },
-    {
-      "word": "Harmonie",
-      "lvl": 4,
-      "next": "2026-03-21",
-      "err_days": 0
-    },
-    {
-      "word": "Pr\u00e9servation",
-      "lvl": 4,
-      "next": "2026-03-21",
-      "err_days": 0
-    },
-    {
-      "word": "Cr\u00e9ativit\u00e9",
-      "lvl": 4,
-      "next": "2026-03-21",
-      "err_days": 0
-    },
-    {
-      "word": "\u00c9cosyst\u00e8me",
-      "lvl": 5,
-      "next": "2026-04-04",
-      "err_days": 0
-    },
-    {
-      "word": "s'\u00e9panouir",
-      "lvl": 5,
       "next": "2026-04-02",
       "err_days": 0
     },
     {
-      "word": "Vid\u00e9o",
-      "lvl": 3,
-      "next": "2026-03-10",
-      "err_days": 0
-    },
-    {
-      "word": "Condensation",
-      "lvl": 3,
-      "next": "2026-03-10",
-      "err_days": 0
-    },
-    {
-      "word": "Empathie",
-      "lvl": 3,
-      "next": "2026-03-10",
-      "err_days": 0
-    },
-    {
-      "word": "Biotechnologie",
-      "lvl": 3,
-      "next": "2026-03-09",
-      "err_days": 0
-    },
-    {
-      "word": "Globalisation",
-      "lvl": 3,
-      "next": "2026-03-09",
-      "err_days": 0
-    },
-    {
-      "word": "Soleil",
-      "lvl": 3,
-      "next": "2026-03-09",
-      "err_days": 0
-    },
-    {
-      "word": "boucherie",
+      "word": "chaleureux",
       "lvl": 4,
-      "next": "2026-03-20",
+      "next": "2026-04-02",
       "err_days": 0
     },
     {
-      "word": "Fronti\u00e8re",
+      "word": "imprimante",
       "lvl": 4,
-      "next": "2026-03-18",
+      "next": "2026-04-02",
       "err_days": 0
     },
     {
-      "word": "Atmosph\u00e8re",
+      "word": "site web",
       "lvl": 4,
-      "next": "2026-03-16",
+      "next": "2026-04-02",
       "err_days": 0
     },
     {
-      "word": "Portrait",
-      "lvl": 4,
-      "next": "2026-03-17",
-      "err_days": 0
-    },
-    {
-      "word": "Renaissance",
-      "lvl": 4,
-      "next": "2026-03-16",
-      "err_days": 0
-    },
-    {
-      "word": "Pollinisation",
-      "lvl": 4,
-      "next": "2026-03-16",
-      "err_days": 0
-    },
-    {
-      "word": "impr\u00e9visible",
-      "lvl": 5,
-      "next": "2026-03-30",
-      "err_days": 0
-    },
-    {
-      "word": "Microscope",
-      "lvl": 4,
-      "next": "2026-03-15",
-      "err_days": 0
-    },
-    {
-      "word": "conseil",
-      "lvl": 1,
-      "next": "2026-03-07",
-      "err_days": 0
-    },
-    {
-      "word": "Paradoxe",
+      "word": "agréable",
       "lvl": 3,
-      "next": "2026-03-10",
-      "err_days": 0
-    },
-    {
-      "word": "Architecture",
-      "lvl": 3,
-      "next": "2026-03-07",
-      "err_days": 0
-    },
-    {
-      "word": "Mutation",
-      "lvl": 3,
-      "next": "2026-03-08",
-      "err_days": 0
-    },
-    {
-      "word": "Jardin",
-      "lvl": 3,
-      "next": "2026-03-10",
-      "err_days": 0
-    },
-    {
-      "word": "R\u00e9sistance",
-      "lvl": 3,
-      "next": "2026-03-09",
-      "err_days": 0
-    },
-    {
-      "word": "original",
-      "lvl": 1,
-      "next": "2026-03-07",
-      "err_days": 0
-    },
-    {
-      "word": "Honn\u00eatet\u00e9",
-      "lvl": 4,
-      "next": "2026-03-12",
-      "err_days": 0
-    },
-    {
-      "word": "milliard",
-      "lvl": 4,
-      "next": "2026-03-20",
-      "err_days": 0
-    },
-    {
-      "word": "unique",
-      "lvl": 4,
-      "next": "2026-03-20",
-      "err_days": 0
-    },
-    {
-      "word": "veste",
-      "lvl": 1,
-      "next": "2026-03-07",
+      "next": "2026-03-25",
       "err_days": 0
     },
     {
       "word": "Pingouin",
+      "lvl": 5,
+      "next": "2026-04-21",
+      "err_days": 0
+    },
+    {
+      "word": "Conservation",
+      "lvl": 5,
+      "next": "2026-04-18",
+      "err_days": 0
+    },
+    {
+      "word": "Friction",
       "lvl": 4,
+      "next": "2026-03-25",
+      "err_days": 0
+    },
+    {
+      "word": "discuter",
+      "lvl": 4,
+      "next": "2026-04-02",
+      "err_days": 0
+    },
+    {
+      "word": "milliard",
+      "lvl": 5,
+      "next": "2026-04-21",
+      "err_days": 0
+    },
+    {
+      "word": "veste",
+      "lvl": 2,
+      "next": "2026-03-26",
+      "err_days": 0
+    },
+    {
+      "word": "Sédiment",
+      "lvl": 2,
+      "next": "2026-03-26",
+      "err_days": 0
+    },
+    {
+      "word": "Hippopotame",
+      "lvl": 4,
+      "next": "2026-03-25",
+      "err_days": 0
+    },
+    {
+      "word": "Table",
+      "lvl": 4,
+      "next": "2026-03-25",
+      "err_days": 0
+    },
+    {
+      "word": "Indépendance",
+      "lvl": 4,
+      "next": "2026-03-25",
+      "err_days": 0
+    },
+    {
+      "word": "Mutation",
+      "lvl": 4,
+      "next": "2026-03-23",
+      "err_days": 0
+    },
+    {
+      "word": "Jardin",
+      "lvl": 4,
+      "next": "2026-03-25",
+      "err_days": 0
+    },
+    {
+      "word": "Patience",
+      "lvl": 1,
       "next": "2026-03-21",
+      "err_days": 0
+    },
+    {
+      "word": "École",
+      "lvl": 1,
+      "next": "2026-03-21",
+      "err_days": 0
+    },
+    {
+      "word": "Fleur",
+      "lvl": 1,
+      "next": "2026-03-21",
+      "err_days": 0
+    },
+    {
+      "word": "Ami",
+      "lvl": 1,
+      "next": "2026-03-21",
+      "err_days": 0
+    },
+    {
+      "word": "Atmosphère",
+      "lvl": 5,
+      "next": "2026-04-17",
+      "err_days": 0
+    },
+    {
+      "word": "Portrait",
+      "lvl": 5,
+      "next": "2026-04-17",
+      "err_days": 0
+    },
+    {
+      "word": "Renaissance",
+      "lvl": 5,
+      "next": "2026-04-17",
+      "err_days": 0
+    },
+    {
+      "word": "brave",
+      "lvl": 3,
+      "next": "2026-03-25",
+      "err_days": 0
+    },
+    {
+      "word": "botte",
+      "lvl": 3,
+      "next": "2026-03-25",
+      "err_days": 0
+    },
+    {
+      "word": "mémoire",
+      "lvl": 3,
+      "next": "2026-03-25",
+      "err_days": 0
+    },
+    {
+      "word": "effort",
+      "lvl": 3,
+      "next": "2026-03-25",
+      "err_days": 0
+    },
+    {
+      "word": "ours",
+      "lvl": 3,
+      "next": "2026-03-25",
+      "err_days": 0
+    },
+    {
+      "word": "bibliothèque",
+      "lvl": 3,
+      "next": "2026-03-25",
+      "err_days": 0
+    },
+    {
+      "word": "Lune",
+      "lvl": 1,
+      "next": "2026-03-21",
+      "err_days": 0
+    },
+    {
+      "word": "Astronomie",
+      "lvl": 5,
+      "next": "2026-04-17",
+      "err_days": 0
+    },
+    {
+      "word": "créatif",
+      "lvl": 4,
+      "next": "2026-04-02",
+      "err_days": 0
+    },
+    {
+      "word": "Sincérité",
+      "lvl": 5,
+      "next": "2026-04-21",
+      "err_days": 0
+    },
+    {
+      "word": "étranger",
+      "lvl": 4,
+      "next": "2026-04-02",
+      "err_days": 0
+    },
+    {
+      "word": "plaine",
+      "lvl": 4,
+      "next": "2026-04-02",
+      "err_days": 0
+    },
+    {
+      "word": "raison",
+      "lvl": 4,
+      "next": "2026-04-02",
+      "err_days": 0
+    },
+    {
+      "word": "mille",
+      "lvl": 5,
+      "next": "2026-04-21",
+      "err_days": 0
+    },
+    {
+      "word": "réfléchir",
+      "lvl": 5,
+      "next": "2026-04-17",
+      "err_days": 0
+    },
+    {
+      "word": "original",
+      "lvl": 4,
+      "next": "2026-04-02",
+      "err_days": 0
+    },
+    {
+      "word": "Continent",
+      "lvl": 5,
+      "next": "2026-04-17",
+      "err_days": 0
+    },
+    {
+      "word": "responsable",
+      "lvl": 4,
+      "next": "2026-04-02",
+      "err_days": 0
+    },
+    {
+      "word": "Symétrie",
+      "lvl": 5,
+      "next": "2026-04-21",
+      "err_days": 0
+    },
+    {
+      "word": "analyser",
+      "lvl": 4,
+      "next": "2026-04-02",
+      "err_days": 0
+    },
+    {
+      "word": "Robot",
+      "lvl": 4,
+      "next": "2026-03-25",
+      "err_days": 0
+    },
+    {
+      "word": "échange",
+      "lvl": 3,
+      "next": "2026-03-29",
+      "err_days": 0
+    },
+    {
+      "word": "naturel",
+      "lvl": 3,
+      "next": "2026-03-29",
+      "err_days": 0
+    },
+    {
+      "word": "équipe",
+      "lvl": 3,
+      "next": "2026-03-29",
+      "err_days": 0
+    },
+    {
+      "word": "liberté",
+      "lvl": 2,
+      "next": "2026-03-26",
+      "err_days": 0
+    },
+    {
+      "word": "entreprise",
+      "lvl": 3,
+      "next": "2026-03-29",
+      "err_days": 0
+    },
+    {
+      "word": "Protagoniste",
+      "lvl": 5,
+      "next": "2026-04-17",
+      "err_days": 0
+    },
+    {
+      "word": "Symphonie",
+      "lvl": 4,
+      "next": "2026-04-02",
+      "err_days": 0
+    },
+    {
+      "word": "Générosité",
+      "lvl": 2,
+      "next": "2026-03-26",
+      "err_days": 0
+    },
+    {
+      "word": "ambition",
+      "lvl": 0,
+      "next": "2026-03-23",
+      "err_days": 1
+    },
+    {
+      "word": "aventure",
+      "lvl": 3,
+      "next": "2026-03-25",
+      "err_days": 0
+    },
+    {
+      "word": "Isolant",
+      "lvl": 5,
+      "next": "2026-04-17",
+      "err_days": 0
+    },
+    {
+      "word": "Conscience",
+      "lvl": 5,
+      "next": "2026-04-17",
+      "err_days": 0
+    },
+    {
+      "word": "Équilibre",
+      "lvl": 5,
+      "next": "2026-04-21",
+      "err_days": 0
+    },
+    {
+      "word": "Volcan",
+      "lvl": 4,
+      "next": "2026-03-25",
+      "err_days": 0
+    },
+    {
+      "word": "apprécier",
+      "lvl": 5,
+      "next": "2026-04-21",
+      "err_days": 0
+    },
+    {
+      "word": "Persévérance",
+      "lvl": 2,
+      "next": "2026-03-26",
+      "err_days": 0
+    },
+    {
+      "word": "accueillir",
+      "lvl": 4,
+      "next": "2026-03-25",
       "err_days": 0
     }
   ],
   "daily_stats": {
-    "date": "2026-03-18",
-    "completed": true,
+    "date": "2026-03-22",
+    "completed": false,
     "words": [
-      "abondant",
-      "admirer",
-      "affection",
-      "agr\u00e9able",
-      "ambition"
+      "généreux",
+      "athlétisme",
+      "fragile",
+      "coussin",
+      "utile"
     ],
-    "rewarded_at": "2026-03-06T18:57:41.157Z",
-    "rewarded_stars": 100
-  },
-  "last_milestone": 2000
+    "stars_earned": 0
+  }
 }

@@ -148,6 +148,7 @@
             <div class="stat-item">⭐ <span id="ui-stars">0</span> Stars</div>
             <div class="stat-item">🏆 <span id="ui-trophies">0</span> Trophées</div>
             <div class="stat-item" onclick="openNotebook()" style="cursor: pointer; color: var(--p); text-decoration: underline;">📓 <span id="ui-count">0</span> Mots</div>
+            <div class="stat-item" style="color: #e74c3c;">🔥 <span id="ui-streak">0</span> Jours</div>
         </div>
 
         <div class="daily-goal-box">
@@ -202,6 +203,11 @@
             <div style="display: flex; gap: 10px; margin-bottom: 15px;">
                 <input type="text" class="nb-search" id="nb-search" placeholder="🔍 Rechercher..." oninput="filterNotebook()" style="margin-bottom: 0; flex: 1;">
                 <button onclick="saveData()" style="background: var(--p); color: white; border: none; padding: 0 15px; border-radius: 25px; font-size: 0.8em; cursor: pointer;">☁️ Sync Mac</button>
+            </div>
+            <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                <button onclick="startBacklogReview()" id="backlog-btn" style="background: linear-gradient(135deg, #f39c12, #e67e22); color: white; border: none; padding: 10px 15px; border-radius: 10px; font-size: 0.85em; cursor: pointer; flex: 1; display: none;">
+                    🧹 还清积压单词 (<span id="backlog-count">0</span>)
+                </button>
             </div>
             <div id="nb-list" style="max-height: 400px; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-right: 5px;"></div>
         </div>
@@ -668,10 +674,12 @@
             var starsEl = document.getElementById('ui-stars');
             var trophiesEl = document.getElementById('ui-trophies');
             var countEl = document.getElementById('ui-count');
+            var streakEl = document.getElementById('ui-streak');
             
             if (starsEl) starsEl.innerText = gData.stars || 0;
             if (trophiesEl) trophiesEl.innerText = Math.floor((gData.stars || 0) / 1000);
             if (countEl) countEl.innerText = gData.notebook.length;
+            if (streakEl) streakEl.innerText = (gData.streak && gData.streak.current) || 0;
             
             var wordsListEl = document.getElementById('ui-words-list');
             if (wordsListEl) {
@@ -1039,10 +1047,20 @@
                 });
             } else {
                 const currentDB = getCurrentDB();
-                pool = currentDB.filter(function(v) { 
-                    const n = gData.notebook.find(function(e) { return e.word === v.word; }); 
-                    return n && n.next <= today && !gTodayWords.some(function(tw) { return tw.word === v.word; }) && (sessionMastery[v.word] || 0) < MASTERY_GOAL;
-                });
+                // 🆕 检查是否有积压还清模式
+                if (gData.daily_stats.backlog_review && gData.daily_stats.backlog_review.length > 0) {
+                    // 积压还清模式：使用指定的积压单词
+                    pool = currentDB.filter(function(v) { 
+                        return gData.daily_stats.backlog_review.includes(v.word) && 
+                               (sessionMastery[v.word] || 0) < MASTERY_GOAL;
+                    });
+                } else {
+                    // 正常复习模式：只选择【今天到期】的复习单词
+                    pool = currentDB.filter(function(v) { 
+                        const n = gData.notebook.find(function(e) { return e.word === v.word; }); 
+                        return n && n.next === today && !gTodayWords.some(function(tw) { return tw.word === v.word; }) && (sessionMastery[v.word] || 0) < MASTERY_GOAL;
+                    });
+                }
             }
             
             var feedbackEl = document.getElementById('q-feedback');
@@ -1212,10 +1230,10 @@
             const today = new Date().toISOString().split('T')[0];
             let reviewWords = [];
             if (gData.notebook) {
-                // 修改逻辑：以笔记本为准，而不是以数据库为准
+                // 🆕 修改逻辑：只检查【今天到期】的复习单词，不包括积压的
                 reviewWords = gData.notebook.filter(function(n) { 
-                    // 必须是今天或之前需要复习的，且不是今天刚学的新词
-                    return n.next <= today && !gData.daily_stats.words.includes(n.word);
+                    // 必须是【今天】需要复习的（不是今天之前积压的），且不是今天刚学的新词
+                    return n.next === today && !gData.daily_stats.words.includes(n.word);
                 });
             }
             let masteredReview = 0;
@@ -1259,12 +1277,33 @@
                 gData.daily_stats.rewarded_at = new Date().toISOString();
                 gData.daily_stats.rewarded_stars = 100;
                 
+                // 🆕 更新连胜记录
+                updateStreak();
+                
                 setTimeout(function() { 
-                    document.getElementById('rew-val').innerText = "🎉 Magnifique !\nTu as maîtrisé tous les mots du jour et terminé toutes les révisions !\n+100 étoiles !"; 
+                    var streakMsg = (gData.streak && gData.streak.current > 1) ? "\n🔥 Série de " + gData.streak.current + " jours !" : "";
+                    document.getElementById('rew-val').innerText = "🎉 Magnifique !\nTu as maîtrisé tous les mots du jour et terminé toutes les révisions !\n+100 étoiles !" + streakMsg; 
                     openModal('rewardModal'); 
                     speak("Félicitations"); 
                     saveData(); // 立即同步数据
                 }, 500);
+            }
+            // 🆕 检查积压还清是否完成
+            if (gData.daily_stats.backlog_review && gData.daily_stats.backlog_review.length > 0) {
+                var backlogCompleted = gData.daily_stats.backlog_review.every(function(w) {
+                    return (sessionMastery[w] || 0) >= MASTERY_GOAL;
+                });
+                if (backlogCompleted) {
+                    // 积压还清完成，给额外奖励
+                    gData.stars += 20; // 额外奖励20星星
+                    gData.daily_stats.backlog_review = []; // 清空积压列表
+                    setTimeout(function() {
+                        document.getElementById('rew-val').innerText = "🧹 Rattrapage terminé !\nTu as terminé tous les mots en retard !\n+20 étoiles bonus !";
+                        openModal('rewardModal');
+                        speak("Bravo");
+                        saveData();
+                    }, 500);
+                }
             }
             // 移除新词已完成但复习未完成的提示（避免频繁弹窗）
             // 用户可以通过点击"结束今日学习"按钮来查看进度
@@ -1307,7 +1346,89 @@
         
         function openNotebook() {
             renderNotebook();
+            updateBacklogButton();
             openModal('nbModal');
+        }
+        
+        // 🆕 更新连胜记录
+        function updateStreak() {
+            if (!gData.streak) {
+                gData.streak = { current: 0, last_study_date: "", longest: 0 };
+            }
+            
+            const today = new Date().toISOString().split('T')[0];
+            const lastDate = gData.streak.last_study_date;
+            
+            // 计算日期差
+            const last = new Date(lastDate);
+            const now = new Date(today);
+            const diffDays = Math.floor((now - last) / (1000 * 60 * 60 * 24));
+            
+            if (diffDays === 1) {
+                // 连续学习
+                gData.streak.current += 1;
+            } else if (diffDays === 0) {
+                // 同一天，不增加
+                return;
+            } else {
+                // 断开了，重新开始
+                gData.streak.current = 1;
+            }
+            
+            gData.streak.last_study_date = today;
+            
+            // 更新最长连胜
+            if (gData.streak.current > gData.streak.longest) {
+                gData.streak.longest = gData.streak.current;
+            }
+        }
+        
+        // 🆕 更新积压按钮显示
+        function updateBacklogButton() {
+            const today = new Date().toISOString().split('T')[0];
+            const backlogBtn = document.getElementById('backlog-btn');
+            const backlogCount = document.getElementById('backlog-count');
+            
+            if (!backlogBtn || !backlogCount) return;
+            
+            // 计算积压单词（今天之前到期的）
+            const backlog = gData.notebook.filter(function(n) {
+                return n.next < today;
+            });
+            
+            backlogCount.innerText = backlog.length;
+            backlogBtn.style.display = backlog.length > 0 ? 'block' : 'none';
+        }
+        
+        // 🆕 开始还清积压单词
+        function startBacklogReview() {
+            const today = new Date().toISOString().split('T')[0];
+            
+            // 获取积压单词（今天之前到期的）
+            const backlog = gData.notebook.filter(function(n) {
+                return n.next < today;
+            });
+            
+            if (backlog.length === 0) {
+                alert('🎉 没有积压单词！');
+                return;
+            }
+            
+            // 随机选10个（或全部如果不足10个）
+            const shuffled = backlog.sort(function() { return 0.5 - Math.random(); });
+            const selected = shuffled.slice(0, Math.min(10, shuffled.length));
+            
+            // 设置到今日复习列表
+            gData.daily_stats.backlog_review = selected.map(function(n) { return n.word; });
+            
+            closeModal('nbModal');
+            
+            // 切换到复习模式
+            setGameMode('review');
+            
+            document.getElementById('rew-val').innerText = "🧹 Mode Rattrapage !\nTu vas réviser " + selected.length + " mot(s) en retard.\nBon courage !";
+            openModal('rewardModal');
+            speak("Rattrapage");
         }
         
         function renderNotebook(filterText = '') {
