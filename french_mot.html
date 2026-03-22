@@ -149,6 +149,7 @@
             <div class="stat-item">🏆 <span id="ui-trophies">0</span> Trophées</div>
             <div class="stat-item" onclick="openNotebook()" style="cursor: pointer; color: var(--p); text-decoration: underline;">📓 <span id="ui-count">0</span> Mots</div>
             <div class="stat-item" style="color: #e74c3c;">🔥 <span id="ui-streak">0</span> Jours</div>
+            <div class="stat-item" onclick="forceRefresh()" style="cursor: pointer; color: var(--accent-amber);">🔄 刷新</div>
         </div>
 
         <div class="daily-goal-box">
@@ -307,9 +308,10 @@
         const FULL_DB_PATH = "./french_full_db.json";
         
         // 版本信息
-        const APP_VERSION = "3.5";
-        const LAST_UPDATE = "2026-03-05";
+        const APP_VERSION = "3.6";
+        const LAST_UPDATE = "2026-03-22";
         const VERSION_CHANGES = [
+            "v3.6 (2026-03-22): Correction du système de récompense (3100 étoiles), mécanisme de report des révisions, ajout du bouton de rafraîchissement forcé",
             "v3.5 (2026-03-05): Migration complète vers Supabase - synchronisation cloud, correction de la sauvegarde du carnet",
             "v3.4 (2026-03-02): Correction iPad - affichage forcé de l'état 'terminé' lorsque les données indiquent la complétion",
             "v3.3 (2026-03-02): Correction complète de la sauvegarde de session - les progrès ne sont plus perdus au rafraîchissement",
@@ -452,6 +454,7 @@
                 }
                 
                 // 3. 决定使用哪个数据源（优先级: 云端 > 本地服务器 > 本地存储 > 新建）
+                // 🆕 修复：服务器文件始终优先于 localStorage，确保数据一致性
                 if (cloudData) {
                     // 🔧 修复：如果云端生词本为空，但本地服务器有数据，合并数据
                     if (cloudData.notebook.length === 0 && serverData && serverData.notebook.length > 0) {
@@ -471,8 +474,15 @@
                     try { localStorage.setItem('french_learning_data', JSON.stringify(gData)); } catch(e) {}
                     updateSyncStatus("同步云端 ✓", "#3498db");
                 } else if (serverData) {
+                    // 🆕 服务器文件优先，强制覆盖 localStorage
                     gData = serverData;
-                    try { localStorage.setItem('french_learning_data', JSON.stringify(gData)); } catch(e) {}
+                    console.log('✅ 从服务器加载数据:', gData.stars, '星星');
+                    try { 
+                        localStorage.setItem('french_learning_data', JSON.stringify(gData)); 
+                        console.log('💾 已同步到 localStorage');
+                    } catch(e) {
+                        console.warn('LocalStorage 保存失败:', e);
+                    }
                     updateSyncStatus("同步本地服务器", "#9b59b6");
                 } else if (localData) {
                     gData = localData;
@@ -527,6 +537,31 @@
         async function generateDailyWords(today) {
             const seedVal = today.split('-').reduce(function(a, b) { return a + b.charCodeAt(0); }, 0);
             const currentDB = getCurrentDB();
+            
+            // 🆕 第一步：将过期单词的复习日期更新到今天（延续机制）
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            const yesterdayStr = yesterday.toISOString().split('T')[0];
+            
+            let extendedCount = 0;
+            gData.notebook.forEach(function(n) {
+                // 如果单词的复习日期是昨天或更早，且不是今天新学的，延续到今天
+                if (n.next <= yesterdayStr) {
+                    // 检查这个单词是否不是今天的新词
+                    const isNewWordToday = gData.daily_stats && 
+                                          gData.daily_stats.date === today && 
+                                          gData.daily_stats.words && 
+                                          gData.daily_stats.words.includes(n.word);
+                    if (!isNewWordToday) {
+                        n.next = today;
+                        extendedCount++;
+                    }
+                }
+            });
+            
+            if (extendedCount > 0) {
+                console.log(`🔄 已延续 ${extendedCount} 个过期单词到今天复习`);
+            }
             
             // 🆕 优化2：每日新词必须从【不在生词本】的单词中选取
             let newDaily = [];
@@ -1350,6 +1385,24 @@
             openModal('nbModal');
         }
         
+        // 🆕 强制刷新 - 清除缓存并从服务器重新加载
+        function forceRefresh() {
+            console.log('🔄 强制刷新中...');
+            // 清除本地存储
+            try {
+                localStorage.removeItem('french_learning_data');
+                localStorage.removeItem('french_session_mastery');
+                localStorage.removeItem('french_session_data');
+                localStorage.removeItem('last_valid_stars');
+                localStorage.removeItem('last_valid_word_count');
+                console.log('✅ 本地缓存已清除');
+            } catch(e) {
+                console.warn('清除缓存失败:', e);
+            }
+            // 重新加载页面
+            window.location.reload();
+        }
+
         // 🆕 更新连胜记录
         function updateStreak() {
             if (!gData.streak) {
@@ -1604,5 +1657,8 @@
         
         window.onload = init;
     </script>
+    <div style="position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%); background: rgba(15, 23, 42, 0.9); border: 1px solid #1e293b; border-radius: 20px; padding: 8px 20px; font-size: 0.75em; color: #94a3b8; z-index: 1000;">
+        <span style="color: #38bdf8; font-weight: bold;">v3.6</span> · 2026-03-22 · 🔄 点击顶部刷新按钮强制更新
+    </div>
 </body>
 </html>

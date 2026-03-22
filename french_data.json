@@ -1,6 +1,6 @@
 {
-  "stars": 3000,
-  "last_milestone": 2000,
+  "stars": 3100,
+  "last_milestone": 3000,
   "notebook": [
     {
       "word": "admirer",
@@ -929,14 +929,20 @@
   ],
   "daily_stats": {
     "date": "2026-03-22",
-    "completed": false,
+    "completed": true,
     "words": [
-      "généreux",
-      "athlétisme",
-      "fragile",
-      "coussin",
-      "utile"
+      "Conservation",
+      "Préhistoire",
+      "Perspective",
+      "Climax",
+      "Chat"
     ],
-    "stars_earned": 0
+    "rewarded_at": "2026-03-22T21:00:00.000Z",
+    "rewarded_stars": 100
+  },
+  "streak": {
+    "current": 1,
+    "last_study_date": "2026-03-22",
+    "longest": 1
   }
 }
