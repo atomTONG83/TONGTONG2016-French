@@ -397,6 +397,16 @@
                 
                 const today = new Date().toISOString().split('T')[0];
                 
+                // 🆕 v3.6 强制刷新：检查版本变化，如果升级则清除缓存
+                const savedVersion = localStorage.getItem('french_app_version');
+                if (savedVersion !== APP_VERSION) {
+                    console.log(`🆕 版本升级: ${savedVersion} -> ${APP_VERSION}，清除缓存...`);
+                    localStorage.removeItem('french_learning_data');
+                    localStorage.removeItem('french_session_mastery');
+                    localStorage.removeItem('french_session_data');
+                    localStorage.setItem('french_app_version', APP_VERSION);
+                }
+                
                 const isLocal = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" || window.location.hostname === MAC_IP);
                 API = isLocal ? "http://" + window.location.hostname + ":" + PORT : "http://" + MAC_IP + ":" + PORT;
                 
