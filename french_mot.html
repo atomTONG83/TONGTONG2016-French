@@ -420,11 +420,24 @@
                 // 1. 先加载完整数据库
                 await loadFullDatabase();
                 
-                // 2. 加载用户数据 - 🆕 v3.6 简化：只从服务器文件加载，禁用 Supabase
+                // 2. 加载用户数据 - 多级回退策略
+                let cloudData = null;
                 let serverData = null;
                 let localData = null;
                 
-                // 2a. 直接从服务器文件加载（唯一数据源）
+                // 2a. 首先尝试从云端(Supabase)加载
+                if (window.FrenchSupabase && window.FrenchSupabase.supabaseReady) {
+                    try {
+                        cloudData = await window.FrenchSupabase.loadFromSupabase();
+                        if (cloudData) {
+                            console.log('✅ 从云端加载数据成功:', cloudData.stars, '星星');
+                        }
+                    } catch (cloudErr) {
+                        console.warn("云端加载失败:", cloudErr);
+                    }
+                }
+                
+                // 2b. 然后尝试从本地服务器加载（向后兼容）
                 try {
                     const response = await fetch(DATA_PATH + "?t=" + Date.now());
                     if (response.ok) {
@@ -432,10 +445,10 @@
                         console.log('✅ 从服务器加载数据:', serverData.stars, '星星');
                     }
                 } catch (fetchErr) {
-                    console.warn("服务器加载失败:", fetchErr);
+                    console.warn("本地服务器加载失败:", fetchErr);
                 }
                 
-                // 2b. 备用：从本地存储加载
+                // 2c. 最后尝试从本地存储加载
                 try {
                     const localSaved = localStorage.getItem('french_learning_data');
                     if (localSaved) localData = JSON.parse(localSaved);
@@ -443,19 +456,37 @@
                     console.warn("LocalStorage读取失败:", e);
                 }
                 
-                // 3. 决定使用哪个数据源（优先级: 服务器文件 > 本地存储 > 新建）
-                if (serverData) {
-                    // 🆕 服务器文件优先
+                // 3. 决定使用哪个数据源（🆕 v3.6 修复：合并策略）
+                // 策略：使用星星数最多的数据源，然后同步到其他端
+                let maxStars = 0;
+                let bestSource = null;
+                
+                if (cloudData && cloudData.stars > maxStars) {
+                    maxStars = cloudData.stars;
+                    bestSource = 'cloud';
+                }
+                if (serverData && serverData.stars > maxStars) {
+                    maxStars = serverData.stars;
+                    bestSource = 'server';
+                }
+                if (localData && localData.stars > maxStars) {
+                    maxStars = localData.stars;
+                    bestSource = 'local';
+                }
+                
+                console.log('📊 数据源对比 - 云端:', cloudData?.stars || 0, '服务器:', serverData?.stars || 0, '本地:', localData?.stars || 0, '-> 选择:', bestSource);
+                
+                if (bestSource === 'server' && serverData) {
                     gData = serverData;
                     console.log('✅ 使用服务器数据:', gData.stars, '星星');
-                    try { 
-                        localStorage.setItem('french_learning_data', JSON.stringify(gData)); 
-                        console.log('💾 已同步到 localStorage');
-                    } catch(e) {
-                        console.warn('LocalStorage 保存失败:', e);
+                    // 同步到云端（如果云端星星少）
+                    if (window.FrenchSupabase && window.FrenchSupabase.supabaseReady && cloudData && cloudData.stars < gData.stars) {
+                        console.log('🔄 同步到云端...');
+                        window.FrenchSupabase.saveToSupabase(gData);
                     }
+                    try { localStorage.setItem('french_learning_data', JSON.stringify(gData)); } catch(e) {}
                     updateSyncStatus("同步服务器", "#9b59b6");
-                } else if (localData) {
+                } else if (bestSource === 'cloud' && cloudData) {
                     // 🔧 修复：如果云端生词本为空，但本地服务器有数据，合并数据
                     if (cloudData.notebook.length === 0 && serverData && serverData.notebook.length > 0) {
                         console.log('⚠️ 云端生词本为空，合并本地服务器数据');
@@ -474,17 +505,6 @@
                     }
                     try { localStorage.setItem('french_learning_data', JSON.stringify(gData)); } catch(e) {}
                     updateSyncStatus("同步云端 ✓", "#3498db");
-                } else if (serverData) {
-                    // 🆕 服务器文件优先，强制覆盖 localStorage
-                    gData = serverData;
-                    console.log('✅ 从服务器加载数据:', gData.stars, '星星');
-                    try { 
-                        localStorage.setItem('french_learning_data', JSON.stringify(gData)); 
-                        console.log('💾 已同步到 localStorage');
-                    } catch(e) {
-                        console.warn('LocalStorage 保存失败:', e);
-                    }
-                    updateSyncStatus("同步本地服务器", "#9b59b6");
                 } else if (localData) {
                     gData = localData;
                     updateSyncStatus("离线模式", "#e67e22");
