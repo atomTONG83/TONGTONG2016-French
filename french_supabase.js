@@ -301,7 +301,7 @@ async function loadVocabularyFromSupabase() {
       niveau: item.difficulty || 1
     }));
     
-    console.log(`✅ 单词库加载成功: ${vocabulary.length} 个单词 (upsert 策略)`;
+    console.log(`✅ 单词库加载成功: ${vocabulary.length} 个单词`);
     return vocabulary;
     
   } catch (error) {

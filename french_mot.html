@@ -490,7 +490,13 @@
                     // 这样可以防止新添加的单词被错误标记为已掌握
                 }
                 
-                updateSyncStatus("Prêt", "#2ecc71");
+                if (cloudData) {
+                    updateSyncStatus("Prêt", "#2ecc71");
+                } else if (localData || !cloudReady) {
+                    updateSyncStatus("Cache local", "#e67e22");
+                } else {
+                    updateSyncStatus("Prêt", "#2ecc71");
+                }
                 
             } catch (e) {
                 console.error("Init error:", e);
