@@ -89,19 +89,9 @@ async function saveToSupabase(gData) {
     
     // 2. 同步单词本数据（核心修复）
     if (gData.notebook && Array.isArray(gData.notebook)) {
-      console.log(`📝 同步单词本: ${gData.notebook.length} 个单词`);
+      console.log(`📝 同步单词本: ${gData.notebook.length} 个单词 (upsert 策略)`;
       
-      // 2a. 先删除用户的所有单词记录
-      const { error: deleteError } = await supabaseClient
-        .from('french_notebook')
-        .delete()
-        .eq('profile_id', profileId);
-      
-      if (deleteError) {
-        console.warn('单词本清理警告（可能为空）:', deleteError.message);
-      }
-      
-      // 2b. 批量插入所有单词（如果列表不为空）
+      // 2a. 批量 upsert 所有单词（插入或更新，不删除）
       if (gData.notebook.length > 0) {
         const notebookItems = gData.notebook.map(item => {
           // 计算是否已掌握（level >= 7）
@@ -125,16 +115,16 @@ async function saveToSupabase(gData) {
           const batch = notebookItems.slice(i, i + batchSize);
           const { error: insertError } = await supabaseClient
             .from('french_notebook')
-            .insert(batch);
+            .upsert(batch, { onConflict: 'profile_id,word' });
           
           if (insertError) {
-            throw new Error(`单词本批次 ${i/batchSize + 1} 插入失败: ${insertError.message}`);
+            throw new Error(`单词本批次 ${i/batchSize + 1} upsert 失败: ${upsertError.message}`);
           }
           
-          console.log(`  ✅ 批次 ${i/batchSize + 1}: ${batch.length} 个单词`);
+          console.log(`  ✅ 批次 ${i/batchSize + 1}: ${batch.length} 个单词 (upsert 策略)`;
         }
         
-        console.log(`✅ 单词本同步完成: ${notebookItems.length} 个单词`);
+        console.log(`✅ 单词本同步完成: ${notebookItems.length} 个单词 (upsert 策略)`;
       }
     }
     
@@ -274,7 +264,7 @@ async function loadVocabularyFromSupabase() {
       niveau: item.difficulty || 1
     }));
     
-    console.log(`✅ 单词库加载成功: ${vocabulary.length} 个单词`);
+    console.log(`✅ 单词库加载成功: ${vocabulary.length} 个单词 (upsert 策略)`;
     return vocabulary;
     
   } catch (error) {
