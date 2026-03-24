@@ -310,6 +310,41 @@ async function loadVocabularyFromSupabase() {
   }
 }
 
+async function loadSessionHistory(days) {
+  if (!supabaseClient) {
+    console.warn('Supabase客户端未初始化，无法加载趋势数据');
+    return [];
+  }
+
+  try {
+    const profileId = await getProfileId();
+    if (!profileId) {
+      return [];
+    }
+
+    const rangeDays = Number(days || 30);
+    const since = new Date();
+    since.setDate(since.getDate() - rangeDays + 1);
+    const sinceDate = since.toISOString().split('T')[0];
+
+    const { data, error } = await supabaseClient
+      .from('daily_sessions')
+      .select('date, completed, words_today, stars_earned')
+      .eq('profile_id', profileId)
+      .gte('date', sinceDate)
+      .order('date', { ascending: true });
+
+    if (error) {
+      throw new Error(`趋势数据加载失败: ${error.message}`);
+    }
+
+    return data || [];
+  } catch (error) {
+    console.error('❌ 趋势数据加载失败:', error);
+    return [];
+  }
+}
+
 // 同步队列管理
 function addToSyncQueue(gData) {
   const queueItem = {
@@ -450,6 +485,7 @@ function initFrenchSupabase() {
     supabaseReady,
     saveToSupabase,
     loadFromSupabase,
+    loadSessionHistory,
     loadVocabularyFromSupabase,
     getProfileId,
     syncQueue: () => [...syncQueue],
