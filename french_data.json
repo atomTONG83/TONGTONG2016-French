@@ -1,5 +1,5 @@
 {
-  "stars": 3100,
+  "stars": 3200,
   "last_milestone": 3000,
   "notebook": [
     {
@@ -928,17 +928,17 @@
     }
   ],
   "daily_stats": {
-    "date": "2026-03-22",
-    "completed": true,
+    "date": "2026-03-24",
+    "completed": false,
     "words": [
-      "Conservation",
-      "Préhistoire",
       "Perspective",
-      "Climax",
-      "Chat"
+      "École",
+      "généreux",
+      "athlétisme",
+      "fragile"
     ],
-    "rewarded_at": "2026-03-22T21:00:00.000Z",
-    "rewarded_stars": 100
+    "rewarded_at": null,
+    "rewarded_stars": 0
   },
   "streak": {
     "current": 1,
