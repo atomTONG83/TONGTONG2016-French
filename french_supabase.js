@@ -1,13 +1,17 @@
 /**
  * 法语学习 Supabase 集成模块
- * 保持与现有本地API兼容，同时支持云端同步
+ * 提供云端同步与离线重试队列。
  */
 
-// Supabase配置 - 从现有atom-ip.com项目复用
-const SUPABASE_CONFIG = {
-  url: 'https://ghbmmnapyupusmyxjkvv.supabase.co',
-  key: 'sb_publishable_MkMhoECq7wo5qFi3K9Shcg_7LiPM1oU'
-};
+const TONGTONG_CONFIG = window.TongtongConfig || {};
+const SUPABASE_CONFIG = Object.assign({
+  url: '',
+  key: ''
+}, TONGTONG_CONFIG.supabase || {});
+const CACHE_KEYS = Object.assign({
+  syncQueue: 'french_sync_queue'
+}, TONGTONG_CONFIG.cacheKeys || {});
+const NOTEBOOK_BATCH_SIZE = 30;
 
 // 全局变量
 let supabaseClient = null;
@@ -54,28 +58,101 @@ async function getProfileId() {
   }
 }
 
+async function syncNotebookToSupabase(profileId, notebook) {
+  const notebookList = Array.isArray(notebook) ? notebook : [];
+  console.log(`📝 同步单词本: ${notebookList.length} 个单词 (upsert + prune)`);
+
+  const { data: existingRows, error: existingError } = await supabaseClient
+    .from('french_notebook')
+    .select('word, added_at')
+    .eq('profile_id', profileId);
+
+  if (existingError) {
+    throw new Error(`单词本现状加载失败: ${existingError.message}`);
+  }
+
+  const existingAddedAt = new Map();
+  (existingRows || []).forEach(row => {
+    existingAddedAt.set(row.word, row.added_at || null);
+  });
+
+  const currentWords = new Set();
+  const nowIso = new Date().toISOString();
+  const notebookItems = [];
+
+  notebookList.forEach(item => {
+    if (!item || !item.word || currentWords.has(item.word)) {
+      return;
+    }
+
+    currentWords.add(item.word);
+
+    const level = item.lvl || 0;
+    notebookItems.push({
+      profile_id: profileId,
+      word: item.word,
+      level: level,
+      next_review: item.next || null,
+      error_days: item.err_days || 0,
+      mastered: level >= 7,
+      added_at: existingAddedAt.get(item.word) || nowIso
+    });
+  });
+
+  for (let i = 0; i < notebookItems.length; i += NOTEBOOK_BATCH_SIZE) {
+    const batch = notebookItems.slice(i, i + NOTEBOOK_BATCH_SIZE);
+    const { error: upsertError } = await supabaseClient
+      .from('french_notebook')
+      .upsert(batch, { onConflict: 'profile_id,word' });
+
+    if (upsertError) {
+      throw new Error(`单词本批次 ${Math.floor(i / NOTEBOOK_BATCH_SIZE) + 1} upsert 失败: ${upsertError.message}`);
+    }
+
+    console.log(`  ✅ 批次 ${Math.floor(i / NOTEBOOK_BATCH_SIZE) + 1}: ${batch.length} 个单词`);
+  }
+
+  const removedWords = (existingRows || [])
+    .filter(row => !currentWords.has(row.word))
+    .map(row => row.word);
+
+  for (let i = 0; i < removedWords.length; i += NOTEBOOK_BATCH_SIZE) {
+    const batch = removedWords.slice(i, i + NOTEBOOK_BATCH_SIZE);
+    const { error: deleteError } = await supabaseClient
+      .from('french_notebook')
+      .delete()
+      .eq('profile_id', profileId)
+      .in('word', batch);
+
+    if (deleteError) {
+      throw new Error(`单词本裁剪失败: ${deleteError.message}`);
+    }
+  }
+
+  if (removedWords.length > 0) {
+    console.log(`🧹 已清理 ${removedWords.length} 个云端过期单词`);
+  }
+}
+
 // 保存数据到Supabase（云端）
 async function saveToSupabase(gData) {
   if (!supabaseClient) {
     console.warn('Supabase客户端未初始化，跳过云端保存');
     return { status: 'skipped', reason: 'client_not_initialized' };
   }
-  
+
   if (!isOnline) {
     console.warn('网络离线，数据已加入同步队列');
     addToSyncQueue(gData);
     return { status: 'queued', reason: 'offline' };
   }
-  
+
   try {
     const profileId = await getProfileId();
     if (!profileId) {
       throw new Error('无法获取用户档案ID');
     }
-    
-    const today = new Date().toISOString().split('T')[0];
-    
-    // 1. 更新用户档案（星星数）
+
     const { error: profileError } = await supabaseClient
       .from('french_profiles')
       .update({
@@ -84,51 +161,13 @@ async function saveToSupabase(gData) {
         updated_at: new Date().toISOString()
       })
       .eq('id', profileId);
-    
-    if (profileError) throw new Error(`用户档案更新失败: ${profileError.message}`);
-    
-    // 2. 同步单词本数据（核心修复）
-    if (gData.notebook && Array.isArray(gData.notebook)) {
-      console.log(`📝 同步单词本: ${gData.notebook.length} 个单词 (upsert 策略)`;
-      
-      // 2a. 批量 upsert 所有单词（插入或更新，不删除）
-      if (gData.notebook.length > 0) {
-        const notebookItems = gData.notebook.map(item => {
-          // 计算是否已掌握（level >= 7）
-          const level = item.lvl || 0;
-          const mastered = level >= 7;
-          
-          return {
-            profile_id: profileId,
-            word: item.word,
-            level: level,
-            next_review: item.next || null,
-            error_days: item.err_days || 0,
-            mastered: mastered,
-            added_at: new Date().toISOString()
-          };
-        });
-        
-        // 分批插入避免超时（每批30个）
-        const batchSize = 30;
-        for (let i = 0; i < notebookItems.length; i += batchSize) {
-          const batch = notebookItems.slice(i, i + batchSize);
-          const { error: insertError } = await supabaseClient
-            .from('french_notebook')
-            .upsert(batch, { onConflict: 'profile_id,word' });
-          
-          if (insertError) {
-            throw new Error(`单词本批次 ${i/batchSize + 1} upsert 失败: ${upsertError.message}`);
-          }
-          
-          console.log(`  ✅ 批次 ${i/batchSize + 1}: ${batch.length} 个单词 (upsert 策略)`;
-        }
-        
-        console.log(`✅ 单词本同步完成: ${notebookItems.length} 个单词 (upsert 策略)`;
-      }
+
+    if (profileError) {
+      throw new Error(`用户档案更新失败: ${profileError.message}`);
     }
-    
-    // 3. 同步每日学习记录
+
+    await syncNotebookToSupabase(profileId, gData.notebook);
+
     if (gData.daily_stats && gData.daily_stats.date) {
       const { error: sessionError } = await supabaseClient
         .from('daily_sessions')
@@ -139,21 +178,19 @@ async function saveToSupabase(gData) {
           words_today: gData.daily_stats.words || [],
           stars_earned: gData.daily_stats.stars_earned || 0
         }, { onConflict: 'profile_id,date' });
-      
-      if (sessionError) console.warn('每日记录同步警告:', sessionError);
+
+      if (sessionError) {
+        console.warn('每日记录同步警告:', sessionError);
+      }
     }
-    
+
     console.log('✅ 云端保存成功（包括单词本）');
     return { status: 'success', stars: gData.stars };
-    
   } catch (error) {
     console.error('❌ 云端保存失败:', error);
-    
-    // 失败时加入同步队列，稍后重试
     addToSyncQueue(gData);
-    
-    return { 
-      status: 'queued', 
+    return {
+      status: 'queued',
       error: error.message,
       timestamp: Date.now()
     };
@@ -294,7 +331,7 @@ function addToSyncQueue(gData) {
 
 function saveSyncQueue() {
   try {
-    localStorage.setItem('french_sync_queue', JSON.stringify(syncQueue));
+    localStorage.setItem(CACHE_KEYS.syncQueue, JSON.stringify(syncQueue));
   } catch (error) {
     console.warn('同步队列保存失败:', error);
   }
@@ -302,7 +339,7 @@ function saveSyncQueue() {
 
 function loadSyncQueue() {
   try {
-    const saved = localStorage.getItem('french_sync_queue');
+    const saved = localStorage.getItem(CACHE_KEYS.syncQueue);
     if (saved) {
       syncQueue = JSON.parse(saved);
       console.log(`📦 加载同步队列: ${syncQueue.length}个待同步项`);

@@ -122,6 +122,7 @@
     
     <!-- Supabase 客户端库 -->
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="./config.js"></script>
     <!-- 法语学习 Supabase 集成 -->
     <script src="./french_supabase.js"></script>
     <!-- 诊断工具 -->
@@ -188,7 +189,7 @@
     <div id="sync-status">Initialisation...</div>
 
     <div id="connection-warning" style="display:none; position:fixed; top:0; left:0; width:100%; background:#ef4444; color:white; padding:10px; text-align:center; font-size:0.8em; z-index:3000; font-weight:bold;">
-        ⚠️ Mode "Consultation" (GitHub). Pour enregistrer tes progrès, utilise l'adresse IP locale de Papa sur l'iPad.
+        ⚠️ Cloud indisponible. Les progrès restent dans le cache local et seront resynchronisés dès que la connexion revient.
     </div>
 
     <div id="nbModal" class="modal">
@@ -198,7 +199,7 @@
             <div class="nb-stats" id="nb-stats"></div>
             <div style="display: flex; gap: 10px; margin-bottom: 15px;">
                 <input type="text" class="nb-search" id="nb-search" placeholder="🔍 Rechercher..." oninput="filterNotebook()" style="margin-bottom: 0; flex: 1;">
-                <button onclick="saveData()" style="background: var(--p); color: white; border: none; padding: 0 15px; border-radius: 25px; font-size: 0.8em; cursor: pointer;">☁️ Sync Mac</button>
+                <button onclick="saveData()" style="background: var(--p); color: white; border: none; padding: 0 15px; border-radius: 25px; font-size: 0.8em; cursor: pointer;">☁️ Sync Cloud</button>
             </div>
             <div style="display: flex; gap: 10px; margin-bottom: 15px;">
                 <button onclick="startBacklogReview()" id="backlog-btn" style="background: linear-gradient(135deg, #f39c12, #e67e22); color: white; border: none; padding: 10px 15px; border-radius: 10px; font-size: 0.85em; cursor: pointer; flex: 1; display: none;">
@@ -249,9 +250,15 @@
         })();
         
         // ===== CONSTANTS =====
-        const MAC_IP = "192.168.32.70";
-        const PORT = "3333";
-        const DATA_PATH = "./french_data.json";
+        const APP_CONFIG = window.TongtongConfig || {};
+        const CACHE_KEYS = Object.assign({
+            learningData: 'french_learning_data',
+            appVersion: 'french_app_version',
+            sessionMastery: 'french_session_mastery',
+            sessionData: 'french_session_data',
+            lastValidStars: 'last_valid_stars',
+            lastValidWordCount: 'last_valid_word_count'
+        }, APP_CONFIG.cacheKeys || {});
         const INTERVALS = [1, 2, 4, 7, 15, 30, 60];
         const MASTERY_GOAL = 2;
         
@@ -264,7 +271,6 @@
         let gGameMode = 'new';
         let gCombo = 0;
         let gIsLocked = false;
-        let API = "";
         
         // ===== DATABASE =====
         // 基础数据库（后备，27个单词）- 法语解释
@@ -303,9 +309,10 @@
         const FULL_DB_PATH = "./french_full_db.json";
         
         // 版本信息
-        const APP_VERSION = "3.6";
-        const LAST_UPDATE = "2026-03-22";
+        const APP_VERSION = APP_CONFIG.appVersion || "3.8";
+        const LAST_UPDATE = APP_CONFIG.lastUpdate || "2026-03-24";
         const VERSION_CHANGES = [
+            "v3.8 (2026-03-24): Cloud first + cache local, config extraite, sync du carnet en upsert",
             "v3.6 (2026-03-22): Correction du système de récompense (3100 étoiles), mécanisme de report des révisions, ajout du bouton de rafraîchissement forcé",
             "v3.5 (2026-03-05): Migration complète vers Supabase - synchronisation cloud, correction de la sauvegarde du carnet",
             "v3.4 (2026-03-02): Correction iPad - affichage forcé de l'état 'terminé' lorsque les données indiquent la complétion",
@@ -392,42 +399,25 @@
                 
                 const today = new Date().toISOString().split('T')[0];
                 
-                // 🆕 v3.6 强制刷新：检查版本变化，如果升级则清除缓存
-                const savedVersion = localStorage.getItem('french_app_version');
+                // v3.8: version bump clears stale caches once
+                const savedVersion = localStorage.getItem(CACHE_KEYS.appVersion);
                 if (savedVersion !== APP_VERSION) {
                     console.log(`🆕 版本升级: ${savedVersion} -> ${APP_VERSION}，清除缓存...`);
-                    localStorage.removeItem('french_learning_data');
-                    localStorage.removeItem('french_session_mastery');
-                    localStorage.removeItem('french_session_data');
-                    localStorage.setItem('french_app_version', APP_VERSION);
-                }
-                
-                const isLocal = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" || window.location.hostname === MAC_IP);
-                API = isLocal ? "http://" + window.location.hostname + ":" + PORT : "http://" + MAC_IP + ":" + PORT;
-                
-                // 只有当Supabase不可用且是HTTPS页面访问HTTP API时才显示警告（向后兼容）
-                if (window.location.protocol === 'https:' && API && API.startsWith('http:')) {
-                    if (warnEl) {
-                        // 检查Supabase是否可用
-                        if (window.FrenchSupabase && window.FrenchSupabase.supabaseReady) {
-                            // Supabase可用，不显示警告（已经在上面隐藏了）
-                        } else {
-                            // Supabase不可用，显示警告
-                            warnEl.style.display = 'block';
-                        }
-                    }
+                    localStorage.removeItem(CACHE_KEYS.learningData);
+                    localStorage.removeItem(CACHE_KEYS.sessionMastery);
+                    localStorage.removeItem(CACHE_KEYS.sessionData);
+                    localStorage.setItem(CACHE_KEYS.appVersion, APP_VERSION);
                 }
                 
                 // 1. 先加载完整数据库
                 await loadFullDatabase();
                 
-                // 2. 加载用户数据 - 多级回退策略
+                // 2. 加载用户数据 - 云端优先 + 本地缓存
                 let cloudData = null;
-                let serverData = null;
                 let localData = null;
+                const cloudReady = !!(window.FrenchSupabase && window.FrenchSupabase.supabaseReady);
                 
-                // 2a. 首先尝试从云端(Supabase)加载
-                if (window.FrenchSupabase && window.FrenchSupabase.supabaseReady) {
+                if (cloudReady) {
                     try {
                         cloudData = await window.FrenchSupabase.loadFromSupabase();
                         if (cloudData) {
@@ -438,81 +428,34 @@
                     }
                 }
                 
-                // 2b. 然后尝试从本地服务器加载（向后兼容）
+                // 2b. 本地缓存兜底
                 try {
-                    const response = await fetch(DATA_PATH + "?t=" + Date.now());
-                    if (response.ok) {
-                        serverData = await response.json();
-                        console.log('✅ 从服务器加载数据:', serverData.stars, '星星');
-                    }
-                } catch (fetchErr) {
-                    console.warn("本地服务器加载失败:", fetchErr);
-                }
-                
-                // 2c. 最后尝试从本地存储加载
-                try {
-                    const localSaved = localStorage.getItem('french_learning_data');
+                    const localSaved = localStorage.getItem(CACHE_KEYS.learningData);
                     if (localSaved) localData = JSON.parse(localSaved);
                 } catch (e) {
                     console.warn("LocalStorage读取失败:", e);
                 }
                 
-                // 3. 决定使用哪个数据源（🆕 v3.6 修复：合并策略）
-                // 策略：使用星星数最多的数据源，然后同步到其他端
-                let maxStars = 0;
-                let bestSource = null;
+                console.log('📊 数据源状态 - 云端:', !!cloudData, '本地缓存:', !!localData);
                 
-                if (cloudData && cloudData.stars > maxStars) {
-                    maxStars = cloudData.stars;
-                    bestSource = 'cloud';
-                }
-                if (serverData && serverData.stars > maxStars) {
-                    maxStars = serverData.stars;
-                    bestSource = 'server';
-                }
-                if (localData && localData.stars > maxStars) {
-                    maxStars = localData.stars;
-                    bestSource = 'local';
-                }
-                
-                console.log('📊 数据源对比 - 云端:', cloudData?.stars || 0, '服务器:', serverData?.stars || 0, '本地:', localData?.stars || 0, '-> 选择:', bestSource);
-                
-                if (bestSource === 'server' && serverData) {
-                    gData = serverData;
-                    console.log('✅ 使用服务器数据:', gData.stars, '星星');
-                    // 同步到云端（如果云端星星少）
-                    if (window.FrenchSupabase && window.FrenchSupabase.supabaseReady && cloudData && cloudData.stars < gData.stars) {
-                        console.log('🔄 同步到云端...');
-                        window.FrenchSupabase.saveToSupabase(gData);
-                    }
-                    try { localStorage.setItem('french_learning_data', JSON.stringify(gData)); } catch(e) {}
-                    updateSyncStatus("同步服务器", "#9b59b6");
-                } else if (bestSource === 'cloud' && cloudData) {
-                    // 🔧 修复：如果云端生词本为空，但本地服务器有数据，合并数据
-                    if (cloudData.notebook.length === 0 && serverData && serverData.notebook.length > 0) {
-                        console.log('⚠️ 云端生词本为空，合并本地服务器数据');
-                        gData = {
-                            ...cloudData,
-                            notebook: serverData.notebook,
-                            stars: Math.max(cloudData.stars, serverData.stars)
-                        };
-                        // 立即保存合并后的数据到云端
-                        if (window.FrenchSupabase && window.FrenchSupabase.supabaseReady) {
-                            window.FrenchSupabase.saveToSupabase(gData);
-                        }
-                    } else {
-                        gData = cloudData;
-                        console.log('✅ 从云端加载数据:', gData.stars, '星星');
-                    }
-                    try { localStorage.setItem('french_learning_data', JSON.stringify(gData)); } catch(e) {}
+                if (cloudData) {
+                    gData = cloudData;
+                    try { localStorage.setItem(CACHE_KEYS.learningData, JSON.stringify(gData)); } catch(e) {}
+                    setConnectionWarning(false);
                     updateSyncStatus("同步云端 ✓", "#3498db");
                 } else if (localData) {
                     gData = localData;
-                    updateSyncStatus("离线模式", "#e67e22");
+                    setConnectionWarning(true);
+                    updateSyncStatus("本地缓存模式", "#e67e22");
                 } else {
-                    // 全新用户
                     gData = { stars: 100, notebook: [], daily_stats: { date: "", completed: false, words: [] }, last_milestone: 0 };
-                    updateSyncStatus("新用户", "#9b59b6");
+                    if (cloudReady) {
+                        setConnectionWarning(false);
+                        updateSyncStatus("新用户", "#9b59b6");
+                    } else {
+                        setConnectionWarning(true);
+                        updateSyncStatus("本地缓存模式", "#e67e22");
+                    }
                 }
                 
                 if (!gData.notebook) gData.notebook = [];
@@ -1213,9 +1156,13 @@
                     d.setDate(d.getDate() + INTERVALS[n.lvl]);
                     n.next = d.toISOString().split('T')[0];
                     
+                    // 🛡️ v3.8 宪章修复：掌握奖励 +20⭐ (USER.md 777 条)
+                    gData.stars += 20;
+                    console.log(`🎉 掌握奖励 +20⭐ - ${w} 达到等级 ${n.lvl}`);
+                    
                     // 掌握单词时的轻量庆祝
                     if (feedbackEl) {
-                        feedbackEl.innerHTML = "🎉 Mot maîtrisé ! Niveau " + n.lvl + " atteint !";
+                        feedbackEl.innerHTML = "🎉 Mot maîtrisé ! Niveau " + n.lvl + " atteint !<br>+20⭐ bonus";
                         feedbackEl.style.color = "#9b59b6";
                     }
                     speak("Bravo");
