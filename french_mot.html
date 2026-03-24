@@ -154,6 +154,7 @@
             <div class="progress-container"><div class="bar bar-new" id="bar-n"></div><div class="bar bar-rev" id="bar-r"></div></div>
             <div id="ui-completion-status" style="text-align:center; margin-top:5px; font-weight:bold; font-size:0.9em;"></div>
             <button id="end-session-btn" class="action-btn" style="width:100%; margin-top:10px; background-color:var(--p);" onclick="checkReviewBeforeEnd()">Terminer la séance</button>
+            <button id="force-complete-btn" class="action-btn" style="width:100%; margin-top:8px; background-color:#f39c12; display:none;" onclick="forceDailyComplete()">🛠️ 强制完成 (调试用)</button>
         </div>
 
         <div class="card">
@@ -1286,7 +1287,7 @@
             const today = new Date().toISOString().split('T')[0];
             let reviewWords = [];
             if (gData.notebook) {
-                // 🆕 修改逻辑：只检查【今天到期】的复习单词，不包括积压的
+                // 🛡️ v3.8 修复：只检查【今天到期】的复习单词，不包括积压的
                 reviewWords = gData.notebook.filter(function(n) { 
                     // 必须是【今天】需要复习的（不是今天之前积压的），且不是今天刚学的新词
                     return n.next === today && !gData.daily_stats.words.includes(n.word);
@@ -1301,12 +1302,13 @@
             return {
                 total: reviewWords.length,
                 mastered: masteredReview,
-                completed: reviewWords.length === 0 || masteredReview >= reviewWords.length
+                completed: reviewWords.length === 0 || masteredReview >= reviewWords.length,
+                words: reviewWords.map(function(n) { return n.word; })
             };
         }
         
         function checkDailyCompletion() {
-            // 计算今日新词进度
+            // 🛡️ v3.8 调试日志：帮助诊断星星不加的问题
             var todayWords = gTodayWords || [];
             var masteredToday = 0;
             
@@ -1314,6 +1316,13 @@
                 if (sessionMastery[tw.word] >= MASTERY_GOAL) {
                     masteredToday++;
                 }
+            });
+            
+            console.log('📊 checkDailyCompletion 诊断:', {
+                todayWords: todayWords.map(function(w){ return w.word; }),
+                masteredToday: masteredToday,
+                todayWordsCount: todayWords.length,
+                sessionMasteryKeys: Object.keys(sessionMastery).length
             });
             
             // 计算复习词进度
@@ -1363,6 +1372,38 @@
             }
             // 移除新词已完成但复习未完成的提示（避免频繁弹窗）
             // 用户可以通过点击"结束今日学习"按钮来查看进度
+        }
+        
+        // 🛡️ v3.8 强制完成功能（调试用）
+        function forceDailyComplete() {
+            var today = new Date().toISOString().split('T')[0];
+            var isToday = gData.daily_stats && gData.daily_stats.date === today;
+            
+            if (!isToday) {
+                alert("⚠️ 日期不匹配：当前数据不是今天的");
+                return;
+            }
+            
+            if (gData.daily_stats.completed) {
+                alert("✅ 今日已完成，无需强制完成");
+                return;
+            }
+            
+            // 强制标记为完成并发放星星
+            gData.daily_stats.completed = true;
+            if (!gData.stars) gData.stars = 0;
+            gData.stars += 100;
+            gData.daily_stats.rewarded_at = new Date().toISOString();
+            gData.daily_stats.rewarded_stars = 100;
+            
+            updateStreak();
+            
+            document.getElementById('rew-val').innerText = "🛠️ 强制完成！\n+100 étoiles";
+            openModal('rewardModal');
+            speak("Bravo");
+            saveData();
+            
+            console.log('✅ 强制完成：星星 =', gData.stars);
         }
         
         function checkReviewBeforeEnd() {
