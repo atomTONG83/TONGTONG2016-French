@@ -374,17 +374,6 @@
                 API = isLocal ? "http://" + window.location.hostname + ":" + PORT : "http://" + MAC_IP + ":" + PORT;
                 
                 // 只有当Supabase不可用且是HTTPS页面访问HTTP API时才显示警告（向后兼容）
-                if (window.location.protocol === 'https:' && API && API.startsWith('http:')) {
-                    if (warnEl) {
-                        // 检查Supabase是否可用
-                        if (window.FrenchSupabase && window.FrenchSupabase.supabaseReady) {
-                            // Supabase可用，不显示警告（已经在上面隐藏了）
-                        } else {
-                            // Supabase不可用，显示警告
-                            warnEl.style.display = 'block';
-                        }
-                    }
-                }
                 
                 // 1. 先加载完整数据库
                 await loadFullDatabase();
