@@ -339,10 +339,11 @@
             console.log("init() started");
             
             try {
-                // load session（prevent data loss）
+                // 加载会话数据（防止网络问题导致进度丢失）
                 loadSession();
                 
-                // 🆕 v4.0: warning removed
+                // 🆕 v4.0: 已移除警告
+                }
                 
                 updateSyncStatus("Chargement...", "#f1c40f");
                 
@@ -351,7 +352,7 @@
                     dateEl.innerText = new Date().toLocaleDateString('fr-FR', { weekday:'long', day:'numeric', month:'long' });
                 }
                 
-                // update version display
+                // 更新版本显示
                 var versionEl = document.getElementById('version-display');
                 if (versionEl) {
                     versionEl.innerHTML = '<span class="version-badge">v' + APP_VERSION + '</span><span class="version-date">Dernière mise à jour: ' + LAST_UPDATE + '</span>';
@@ -359,10 +360,10 @@
                 
                 const today = new Date().toISOString().split('T')[0];
                 
-                // 🆕 v3.6 强制刷新：检查版本变化，如果升级则clear cache
+                // 🆕 v3.6 强制刷新：检查版本变化，如果升级则清除缓存
                 const savedVersion = localStorage.getItem('french_app_version');
                 if (savedVersion !== APP_VERSION) {
-                    console.log(`🆕 version upgrade: ${savedVersion} -> ${APP_VERSION}，clear cache...`);
+                    console.log(`🆕 版本升级: ${savedVersion} -> ${APP_VERSION}，清除缓存...`);
                     localStorage.removeItem('french_learning_data');
                     localStorage.removeItem('french_session_mastery');
                     localStorage.removeItem('french_session_data');
@@ -383,27 +384,27 @@
                     }
                 }
                 
-                // 1. load database
+                // 1. 先加载完整数据库
                 await loadFullDatabase();
                 
-                // 2. load user data - multi-level fallback
+                // 2. 加载用户数据 - 多级回退策略
                 let cloudData = null;
                 let serverData = null;
                 let localData = null;
                 
-                // 2a. try cloud first(Supabase)加载
+                // 2a. 首先尝试从云端(Supabase)加载
                 if (window.FrenchSupabase && window.FrenchSupabase.supabaseReady) {
                     try {
                         cloudData = await window.FrenchSupabase.loadFromSupabase();
                         if (cloudData) {
-                            console.log('✅ load from cloud成功:', cloudData.stars, '星星');
+                            console.log('✅ 从云端加载数据成功:', cloudData.stars, '星星');
                         }
                     } catch (cloudErr) {
                         console.warn("云端加载失败:", cloudErr);
                     }
                 }
                 
-                // 2b. then local server加载（向后兼容）
+                // 2b. 然后尝试从本地服务器加载（向后兼容）
                 try {
                     const response = await fetch(DATA_PATH + "?t=" + Date.now());
                     if (response.ok) {
@@ -414,7 +415,7 @@
                     console.warn("本地服务器加载失败:", fetchErr);
                 }
                 
-                // 2c. finally localStorage加载
+                // 2c. 最后尝试从本地存储加载
                 try {
                     const localSaved = localStorage.getItem('french_learning_data');
                     if (localSaved) localData = JSON.parse(localSaved);
@@ -444,10 +445,10 @@
                 
                 if (bestSource === 'server' && serverData) {
                     gData = serverData;
-                    console.log('✅ use server data:', gData.stars, '星星');
-                    // sync to cloud（如果云端星星少）
+                    console.log('✅ 使用服务器数据:', gData.stars, '星星');
+                    // 同步到云端（如果云端星星少）
                     if (window.FrenchSupabase && window.FrenchSupabase.supabaseReady && cloudData && cloudData.stars < gData.stars) {
-                        console.log('🔄 sync to cloud...');
+                        console.log('🔄 同步到云端...');
                         window.FrenchSupabase.saveToSupabase(gData);
                     }
                     try { localStorage.setItem('french_learning_data', JSON.stringify(gData)); } catch(e) {}
@@ -461,35 +462,35 @@
                             notebook: serverData.notebook,
                             stars: Math.max(cloudData.stars, serverData.stars)
                         };
-                        // save immediately合并后的数据到云端
+                        // 立即保存合并后的数据到云端
                         if (window.FrenchSupabase && window.FrenchSupabase.supabaseReady) {
                             window.FrenchSupabase.saveToSupabase(gData);
                         }
                     } else {
                         gData = cloudData;
-                        console.log('✅ load from cloud:', gData.stars, '星星');
+                        console.log('✅ 从云端加载数据:', gData.stars, '星星');
                     }
                     try { localStorage.setItem('french_learning_data', JSON.stringify(gData)); } catch(e) {}
                     updateSyncStatus("同步云端 ✓", "#3498db");
                 } else if (localData) {
                     gData = localData;
-                    updateSyncStatus("offline mode", "#e67e22");
+                    updateSyncStatus("离线模式", "#e67e22");
                 } else {
-                    // 全new user
+                    // 全新用户
                     gData = { stars: 100, notebook: [], daily_stats: { date: "", completed: false, words: [] }, last_milestone: 0 };
-                    updateSyncStatus("new user", "#9b59b6");
+                    updateSyncStatus("新用户", "#9b59b6");
                 }
                 
                 if (!gData.notebook) gData.notebook = [];
                 if (!gData.stars) gData.stars = 100;
                 if (!gData.daily_stats) gData.daily_stats = { date: "", completed: false, words: [] };
                 
-                // generate daily words的条件：1) date mismatch 或 2) empty word list
+                // 生成每日单词的条件：1) 日期不是今天 或 2) 日期是今天但单词列表为空
                 if (gData.daily_stats.date !== today || 
                     (gData.daily_stats.date === today && (!gData.daily_stats.words || gData.daily_stats.words.length === 0))) {
                     await generateDailyWords(today);
                 }
-                // 🆕 已删除清理逻辑：每日5词固定，不再替换已add to notebook的单词
+                // 🆕 已删除清理逻辑：每日5词固定，不再替换已加入生词本的单词
                 
                 // 安全初始化gTodayWords
                 if (gData.daily_stats && gData.daily_stats.words && Array.isArray(gData.daily_stats.words)) {
@@ -553,14 +554,14 @@
             // 🆕 优化2：每日新词必须从【不在生词本】的单词中选取
             let newDaily = [];
             
-            // 1. 获取unlearned pool（不在生词本中的单词）
+            // 1. 获取未学习池（不在生词本中的单词）
             let unlearnedPool = currentDB.filter(function(v) { 
                 return !gData.notebook.some(function(n) { return n.word === v.word; }); 
             });
             
-            // 如果unlearned pool不足5个，考虑"踢回词库"的单词
+            // 如果未学习池不足5个，考虑"踢回词库"的单词
             if (unlearnedPool.length < 5) {
-                console.log(`⚠️ unlearned pool仅剩 ${unlearnedPool.length} 个单词，将考虑所有未掌握单词`);
+                console.log(`⚠️ 未学习池仅剩 ${unlearnedPool.length} 个单词，将考虑所有未掌握单词`);
                 // 扩大选择范围到所有未掌握单词（包括已在生词本但未掌握）
                 unlearnedPool = currentDB.filter(function(v) { 
                     const n = gData.notebook.find(function(e) { return e.word === v.word; });
@@ -571,7 +572,7 @@
             
             // 如果还是不足，使用整个词库（最后的手段）
             if (unlearnedPool.length < 5) {
-                console.log(`⚠️ low vocabulary，使用全库`);
+                console.log(`⚠️ 词库资源紧张，使用全库`);
                 unlearnedPool = currentDB.slice();
             }
             
@@ -599,12 +600,12 @@
             try { localStorage.removeItem('french_session_mastery'); } catch(e) {}
             console.log(`✅ 生成当日学习词 (${newDaily.length}个): ${newDaily.join(', ')}`);
             
-            // 🆕 重要：save immediately，lock daily words
+            // 🆕 重要：立即保存，锁定今日单词列表
             if (typeof saveData === 'function') {
-                console.log('💾 save immediately当日单词列表到云端...');
+                console.log('💾 立即保存当日单词列表到云端...');
                 try {
                     await saveData();
-                    console.log('💾 当日单词列表saved to cloud');
+                    console.log('💾 当日单词列表已成功保存到云端');
                 } catch (saveError) {
                     console.error('保存当日单词列表失败:', saveError);
                 }
@@ -893,7 +894,7 @@
                             throw new Error('本地服务器错误');
                         }
                     } catch(localError) {
-                        console.error('本地服务器save failed:', localError);
+                        console.error('本地服务器保存失败:', localError);
                     }
                 }
                 
@@ -919,7 +920,7 @@
                             statusEl.innerText = "在线";
                             statusEl.style.background = "#3498db";
                         } else {
-                            statusEl.innerText = "offline mode";
+                            statusEl.innerText = "离线模式";
                             statusEl.style.background = "#95a5a6";
                         }
                     }, 3000);
@@ -1027,7 +1028,7 @@
                 
                 // 🔧 关键修复：当添加新词时，重置sessionMastery为0，确保可以练习
                 sessionMastery[w] = 0;
-                console.log(`📝 ${w} add to notebook，sessionMastery重置为0`);
+                console.log(`📝 ${w} 加入生词本，sessionMastery重置为0`);
                 saveSession(); // 保存会话状态
                 
                 // 显示提示：添加的单词将在复习模式中出现
@@ -1043,7 +1044,7 @@
                 
                 speak("Ajoute");
                 refreshUI();
-                // save immediately到云端
+                // 立即保存到云端
                 setTimeout(saveData, 100);
             } else { 
                 speak("Deja la"); 
@@ -1372,7 +1373,7 @@
             openModal('nbModal');
         }
         
-        // 🆕 强制刷新 - clear cache并从服务器重新加载
+        // 🆕 强制刷新 - 清除缓存并从服务器重新加载
         function forceRefresh() {
             console.log('🔄 强制刷新中...');
             // 清除本地存储
@@ -1384,7 +1385,7 @@
                 localStorage.removeItem('last_valid_word_count');
                 console.log('✅ 本地缓存已清除');
             } catch(e) {
-                console.warn('clear cache失败:', e);
+                console.warn('清除缓存失败:', e);
             }
             // 重新加载页面
             window.location.reload();
