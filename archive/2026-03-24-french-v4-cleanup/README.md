@@ -11,4 +11,5 @@ Preserved active files:
 Archived categories:
 - Legacy Europe learning versions `v2` to `v13`
 - Deprecated backup page `french_mot_backup.html`
+- Backup snapshots `french_mot.html.bak2` and `index.html.backup`
 - Standalone test pages `test.html` and `test2.html`

@@ -1,5 +1,31 @@
 # 童童空间更新日志 (Update Log)
 
+## 2026-03-24 全面优化 (v4.0)
+
+### 清理与结构
+- ✅ 归档旧版欧洲学习页 `v2-v13`，正式目录仅保留 `earth_europe_learning_v14.html`
+- ✅ 归档 `french_mot_backup.html`、`test.html`、`test2.html`
+- ✅ `french_mot.html` 改为纯结构页，只保留 HTML 结构、样式与脚本引用
+
+### 模块化重构
+- ✅ 拆分为 `app.js`、`ui.js`、`sync.js`、`quiz.js`、`notebook.js`
+- ✅ 修复 `config.js`，统一版本号、缓存键与网络配置
+- ✅ 保持现有 Supabase 同步逻辑不变，仅新增趋势查询接口
+
+### 体验优化
+- ✅ 新增加载骨架屏
+- ✅ 新增顶部离线/在线状态指示
+- ✅ 新增全局错误横幅与 Promise 异常捕获
+- ✅ 将“强制完成今日学习”移至 `debug.html`
+
+### 功能增强
+- ✅ 新增 JSON 导出
+- ✅ 新增本周/本月学习趋势仪表盘
+- ✅ 新增语音朗读开关（Web Speech API）
+- ✅ 生产环境默认静默日志，仅保留警告/错误
+
+---
+
 ## 2026-03-22 重大更新 (v3.6)
 
 ### 修复问题

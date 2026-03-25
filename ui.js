@@ -349,7 +349,7 @@
     }
 
     renderTrendBars(weekRecords, 'dash-week-trend');
-    renderTrendBars(monthRecords.slice(-14), 'dash-month-trend');
+    renderTrendBars(monthRecords, 'dash-month-trend');
   }
 
   document.addEventListener('click', function (event) {
