@@ -186,7 +186,6 @@
 
     <div id="sync-status">Initialisation...</div>
 
-    <div id="connection-warning" style="display:none; position:fixed; top:0; left:0; width:100%; background:#ef4444; color:white; padding:10px; text-align:center; font-size:0.8em; z-index:3000; font-weight:bold;">
     </div>
 
     <div id="nbModal" class="modal">
@@ -220,7 +219,6 @@
                 }
                 
                 // 立即隐藏警告（如果Supabase已加载）
-                var warningEl = document.getElementById('connection-warning');
                 if (warningEl) {
                     // 检查Supabase是否已初始化
                     if (window.FrenchSupabase && window.FrenchSupabase.supabaseReady) {
@@ -369,7 +367,6 @@
                 loadSession();
                 
                 // 立即隐藏警告（如果Supabase可用）
-                var warnEl = document.getElementById('connection-warning');
                 if (warnEl && window.FrenchSupabase && window.FrenchSupabase.supabaseReady) {
                     console.log('✅ Supabase可用，隐藏警告');
                     warnEl.style.display = 'none';
