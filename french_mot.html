@@ -218,28 +218,7 @@
                     el.style.background = "#9b59b6";
                 }
                 
-                // 立即隐藏警告（如果Supabase已加载）
-                    // 检查Supabase是否已初始化
-                    if (window.FrenchSupabase && window.FrenchSupabase.supabaseReady) {
-                        console.log('🚀 立即隐藏警告：Supabase可用');
-                    } else {
-                        // 设置一个检查器，当Supabase加载后隐藏警告
-                        var checkCount = 0;
-                        var checkInterval = setInterval(function() {
-                            checkCount++;
-                            if (window.FrenchSupabase && window.FrenchSupabase.supabaseReady) {
-                                clearInterval(checkInterval);
-                                console.log('🚀 Supabase加载完成，隐藏警告');
-                            } else if (checkCount > 20) { // 最多检查2秒
-                                clearInterval(checkInterval);
-                            }
-                        }, 100);
-                    }
-                }
-            } catch(e) {
-                console.log('立即执行函数错误:', e);
-            }
-        })();
+                })();
         
         // ===== CONSTANTS =====
         const MAC_IP = "192.168.32.70";
@@ -363,8 +342,7 @@
                 // 加载会话数据（防止网络问题导致进度丢失）
                 loadSession();
                 
-                // 立即隐藏警告（如果Supabase可用）
-                    console.log('✅ Supabase可用，隐藏警告');
+                // 🆕 v4.0: 已移除警告
                 }
                 
                 updateSyncStatus("Chargement...", "#f1c40f");
@@ -397,11 +375,13 @@
                 
                 // 只有当Supabase不可用且是HTTPS页面访问HTTP API时才显示警告（向后兼容）
                 if (window.location.protocol === 'https:' && API && API.startsWith('http:')) {
+                    if (warnEl) {
                         // 检查Supabase是否可用
                         if (window.FrenchSupabase && window.FrenchSupabase.supabaseReady) {
                             // Supabase可用，不显示警告（已经在上面隐藏了）
                         } else {
                             // Supabase不可用，显示警告
+                            warnEl.style.display = 'block';
                         }
                     }
                 }
