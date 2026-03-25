@@ -219,11 +219,9 @@
                 }
                 
                 // 立即隐藏警告（如果Supabase已加载）
-                if (warningEl) {
                     // 检查Supabase是否已初始化
                     if (window.FrenchSupabase && window.FrenchSupabase.supabaseReady) {
                         console.log('🚀 立即隐藏警告：Supabase可用');
-                        warningEl.style.display = 'none';
                     } else {
                         // 设置一个检查器，当Supabase加载后隐藏警告
                         var checkCount = 0;
@@ -232,7 +230,6 @@
                             if (window.FrenchSupabase && window.FrenchSupabase.supabaseReady) {
                                 clearInterval(checkInterval);
                                 console.log('🚀 Supabase加载完成，隐藏警告');
-                                warningEl.style.display = 'none';
                             } else if (checkCount > 20) { // 最多检查2秒
                                 clearInterval(checkInterval);
                             }
@@ -367,9 +364,7 @@
                 loadSession();
                 
                 // 立即隐藏警告（如果Supabase可用）
-                if (warnEl && window.FrenchSupabase && window.FrenchSupabase.supabaseReady) {
                     console.log('✅ Supabase可用，隐藏警告');
-                    warnEl.style.display = 'none';
                 }
                 
                 updateSyncStatus("Chargement...", "#f1c40f");
@@ -402,13 +397,11 @@
                 
                 // 只有当Supabase不可用且是HTTPS页面访问HTTP API时才显示警告（向后兼容）
                 if (window.location.protocol === 'https:' && API && API.startsWith('http:')) {
-                    if (warnEl) {
                         // 检查Supabase是否可用
                         if (window.FrenchSupabase && window.FrenchSupabase.supabaseReady) {
                             // Supabase可用，不显示警告（已经在上面隐藏了）
                         } else {
                             // Supabase不可用，显示警告
-                            warnEl.style.display = 'block';
                         }
                     }
                 }
