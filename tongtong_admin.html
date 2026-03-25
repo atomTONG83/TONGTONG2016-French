@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>童童空间后台管理</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-slate-50">
+    <nav class="bg-white shadow-sm border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-slate-900">🔧 童童空间后台管理</h1>
+            <a href="french_mot.html" class="text-blue-600 hover:text-blue-700">
+                <i class="fa-solid fa-house mr-2"></i>返回前台
+            </a>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- 数据管理 -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mb-4">
+                    <i class="fa-solid fa-database text-blue-600 text-xl"></i>
+                </div>
+                <h2 class="text-lg font-bold mb-2">📊 数据管理</h2>
+                <p class="text-slate-500 text-sm mb-4">Supabase 云端数据同步与本地备份</p>
+                <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl font-bold">
+                    <i class="fa-solid fa-sync mr-2"></i>同步数据
+                </button>
+            </div>
+
+            <!-- 考试配置 -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <div class="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center mb-4">
+                    <i class="fa-solid fa-pen-to-square text-purple-600 text-xl"></i>
+                </div>
+                <h2 class="text-lg font-bold mb-2">📝 考试配置</h2>
+                <p class="text-slate-500 text-sm mb-4">管理 6 个考试科目与题库</p>
+                <a href="exam_hub.html" class="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-xl font-bold block text-center">
+                    <i class="fa-solid fa-gear mr-2"></i>配置考试
+                </a>
+            </div>
+
+            <!-- 进度监控 -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <div class="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mb-4">
+                    <i class="fa-solid fa-chart-line text-emerald-600 text-xl"></i>
+                </div>
+                <h2 class="text-lg font-bold mb-2">📈 进度监控</h2>
+                <p class="text-slate-500 text-sm mb-4">查看学习进度与星星统计</p>
+                <div class="w-full bg-slate-100 py-2 rounded-xl font-bold text-center text-emerald-600">
+                    <i class="fa-solid fa-star mr-2"></i>1000 星
+                </div>
+            </div>
+
+            <!-- CSV 导出 -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <div class="w-12 h-12 bg-amber-50 rounded-xl flex items-center justify-center mb-4">
+                    <i class="fa-solid fa-file-csv text-amber-600 text-xl"></i>
+                </div>
+                <h2 class="text-lg font-bold mb-2">📄 CSV 导出</h2>
+                <p class="text-slate-500 text-sm mb-4">导出学习记录与考试成绩</p>
+                <button class="w-full bg-amber-600 hover:bg-amber-700 text-white py-2 rounded-xl font-bold">
+                    <i class="fa-solid fa-download mr-2"></i>导出数据
+                </button>
+            </div>
+
+            <!-- 词汇管理 -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <div class="w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center mb-4">
+                    <i class="fa-solid fa-book text-indigo-600 text-xl"></i>
+                </div>
+                <h2 class="text-lg font-bold mb-2">📖 词汇管理</h2>
+                <p class="text-slate-500 text-sm mb-4">管理 44 个法语词汇</p>
+                <div class="w-full bg-slate-100 py-2 rounded-xl font-bold text-center text-indigo-600">
+                    <i class="fa-solid fa-check mr-2"></i>44 词
+                </div>
+            </div>
+
+            <!-- 系统设置 -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <div class="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center mb-4">
+                    <i class="fa-solid fa-sliders text-slate-600 text-xl"></i>
+                </div>
+                <h2 class="text-lg font-bold mb-2">⚙️ 系统设置</h2>
+                <p class="text-slate-500 text-sm mb-4">配置同步频率与备份策略</p>
+                <button class="w-full bg-slate-600 hover:bg-slate-700 text-white py-2 rounded-xl font-bold">
+                    <i class="fa-solid fa-gear mr-2"></i>系统设置
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="text-center py-6 text-slate-400 text-sm">
+        © 2026 TONGTONG's SPACE · 童童空间后台管理系统
+    </footer>
+</body>
+</html>

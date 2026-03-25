@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Grammaire Française · 法语语法</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap');
+        :root {
+            --bg: #030712; --primary: #0ea5e9; --secondary: #818cf8; --accent: #fbbf24;
+            --danger: #ef4444; --glass: rgba(15, 23, 42, 0.6); --border: rgba(56, 189, 248, 0.2);
+            --success: #10b981; --purple: #a78bfa;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--bg); color: #f8fafc; font-family: 'Rajdhani', sans-serif; min-height: 100vh; overflow-x: hidden; }
+        .bg-grid { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: linear-gradient(rgba(14, 165, 233, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(14, 165, 233, 0.05) 1px, transparent 1px); background-size: 50px 50px; z-index: -1; transform: rotateX(45deg); animation: moveGrid 20s linear infinite; }
+        @keyframes moveGrid { from { background-position: 0 0; } to { background-position: 0 500px; } }
+        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+        
+        header { margin-bottom: 40px; border-bottom: 1px solid var(--border); padding-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+        h1 { color: var(--purple); margin: 0; font-family: 'Orbitron'; font-size: 1.8rem; }
+        h1 span { opacity: 0.5; font-size: 1.2rem; display: block; }
+        
+        .back-btn {
+            display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--primary);
+            border: 2px solid var(--primary); padding: 10px 20px; border-radius: 12px; font-size: 0.95em; font-weight: 600;
+            transition: all 0.2s; background: rgba(14, 165, 233, 0.05);
+        }
+        .back-btn:hover { background: rgba(14, 165, 233, 0.15); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3); }
+        
+        .section-title { 
+            font-size: 1.2rem; font-weight: 700; letter-spacing: 3px; color: var(--purple); 
+            border-left: 4px solid var(--purple); padding-left: 15px; margin: 40px 0 20px; 
+            text-transform: uppercase; font-family: 'Orbitron';
+        }
+        
+        .grammar-card {
+            background: var(--glass); border: 1px solid var(--border); border-radius: 20px;
+            padding: 30px; margin-bottom: 30px; backdrop-filter: blur(10px);
+        }
+        
+        .grammar-header {
+            display: flex; justify-content: space-between; margin-bottom: 25px;
+            align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 15px;
+        }
+        .grammar-date { font-weight: bold; font-size: 1.1em; color: var(--purple); font-family: 'Orbitron'; }
+        .status-tag { padding: 4px 12px; border-radius: 20px; font-size: 0.8em; font-weight: 800; }
+        .status-current { background: rgba(167, 139, 250, 0.1); color: var(--purple); border: 1px solid var(--purple); }
+        
+        h3 { color: #94a3b8; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px; margin-top: 25px; margin-bottom: 15px; }
+        h3:first-of-type { margin-top: 0; }
+        
+        .concept-box { 
+            background: rgba(167, 139, 250, 0.1); border-left: 4px solid var(--purple); 
+            padding: 20px; margin: 15px 0; border-radius: 0 12px 12px 0;
+        }
+        .concept-box h4 { color: var(--purple); margin: 0 0 10px 0; font-size: 1.1em; }
+        .concept-box p { margin: 0; line-height: 1.6; }
+        
+        .example-box { 
+            background: rgba(16, 185, 129, 0.1); border-left: 4px solid var(--success); 
+            padding: 20px; margin: 15px 0; border-radius: 0 12px 12px 0;
+        }
+        .example-box h4 { color: var(--success); margin: 0 0 10px 0; font-size: 1em; }
+        
+        .example-sentence { 
+            font-size: 1.1em; color: #fff; margin-bottom: 10px; font-style: italic;
+        }
+        .example-translation { 
+            font-size: 0.95em; color: #94a3b8; margin-bottom: 15px;
+        }
+        
+        .analysis-table {
+            width: 100%; border-collapse: collapse; margin: 15px 0;
+            font-size: 0.95em;
+        }
+        .analysis-table th, .analysis-table td {
+            padding: 12px; text-align: left; border-bottom: 1px solid var(--border);
+        }
+        .analysis-table th {
+            color: var(--purple); font-weight: 600; background: rgba(167, 139, 250, 0.05);
+        }
+        .analysis-table td { color: #e2e8f0; }
+        .analysis-table .sujet { color: var(--accent); font-weight: bold; }
+        .analysis-table .verbe { color: var(--primary); font-weight: bold; }
+        .analysis-table .complement { color: #94a3b8; }
+        
+        .summary-box { 
+            background: rgba(251, 191, 36, 0.1); border: 1px solid var(--accent); 
+            padding: 20px; margin: 20px 0; border-radius: 12px;
+        }
+        .summary-box h4 { color: var(--accent); margin: 0 0 15px 0; }
+        
+        .type-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 15px 0;
+        }
+        @media (max-width: 600px) {
+            .type-grid { grid-template-columns: 1fr; }
+        }
+        
+        .type-card {
+            background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+            padding: 15px; border-radius: 10px;
+        }
+        .type-card h5 { color: var(--primary); margin: 0 0 8px 0; font-size: 0.95em; }
+        .type-card p { margin: 0; font-size: 0.9em; color: #cbd5e1; }
+        
+        footer { text-align: center; margin-top: 50px; padding-bottom: 30px; color: #475569; font-size: 0.75rem; letter-spacing: 2px; }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    <div class="container">
+        <header>
+            <h1>Grammaire Française<br><span>法语语法学习</span></h1>
+            <a href="index.html" class="back-btn">← 返回空间</a>
+        </header>
+
+        <!-- 本周语法：主语的语法性质 -->
+        <div class="section-title">📚 本周语法 / Cette Semaine</div>
+        
+        <div class="grammar-card">
+            <div class="grammar-header">
+                <span class="grammar-date">Nature grammaticale du sujet</span>
+                <span class="status-tag status-current">2026-03-15</span>
+            </div>
+            
+            <div class="concept-box">
+                <h4>🎯 核心概念</h4>
+                <p>法语句子里，<strong>主语（sujet）</strong>可以由哪些成分充当？一个变位动词的主语可以是四种形式。</p>
+            </div>
+            
+            <h3>1️⃣ 人称代词 / Pronom personnel</h3>
+            <div class="example-box">
+                <div class="example-sentence">Je vais à Paris.</div>
+                <div class="example-translation">我去巴黎。</div>
+                <table class="analysis-table">
+                    <tr><th>词</th><th>词性</th></tr>
+                    <tr><td class="sujet">Je</td><td>主语（人称代词）</td></tr>
+                    <tr><td class="verbe">vais</td><td>动词</td></tr>
+                    <tr><td class="complement">à Paris</td><td>地点状语</td></tr>
+                </table>
+            </div>
+            
+            <h3>2️⃣ 专有名词 / Nom propre</h3>
+            <div class="example-box">
+                <div class="example-sentence">Joseph regarde la tour Eiffel.</div>
+                <div class="example-translation">Joseph 看着埃菲尔铁塔。</div>
+                <table class="analysis-table">
+                    <tr><th>词</th><th>词性</th></tr>
+                    <tr><td class="sujet">Joseph</td><td>主语（专有名词）</td></tr>
+                    <tr><td class="verbe">regarde</td><td>动词</td></tr>
+                    <tr><td class="complement">la tour Eiffel</td><td>宾语</td></tr>
+                </table>
+            </div>
+            
+            <h3>3️⃣ 名词词组 / Groupe nominal</h3>
+            <div class="example-box">
+                <div class="example-sentence">De nombreux visiteurs viennent à Notre-Dame.</div>
+                <div class="example-translation">许多游客来到巴黎圣母院。</div>
+                <table class="analysis-table">
+                    <tr><th>词</th><th>词性</th></tr>
+                    <tr><td class="sujet">De nombreux visiteurs</td><td>主语（名词词组）</td></tr>
+                    <tr><td class="verbe">viennent</td><td>动词</td></tr>
+                    <tr><td class="complement">à Notre-Dame</td><td>地点状语</td></tr>
+                </table>
+            </div>
+            
+            <h3>4️⃣ 动词不定式 / Verbe à l'infinitif</h3>
+            <div class="example-box">
+                <div class="example-sentence">Manger est essentiel à la vie.</div>
+                <div class="example-translation">吃是生命必需的。</div>
+                <table class="analysis-table">
+                    <tr><th>词</th><th>词性</th></tr>
+                    <tr><td class="sujet">Manger</td><td>主语（动词不定式）</td></tr>
+                    <tr><td class="verbe">est</td><td>动词</td></tr>
+                    <tr><td class="complement">essentiel à la vie</td><td>表语</td></tr>
+                </table>
+            </div>
+            
+            <div class="summary-box">
+                <h4>📋 总结表格</h4>
+                <div class="type-grid">
+                    <div class="type-card">
+                        <h5>人称代词</h5>
+                        <p>Je vais à Paris</p>
+                    </div>
+                    <div class="type-card">
+                        <h5>专有名词</h5>
+                        <p>Joseph regarde la tour Eiffel</p>
+                    </div>
+                    <div class="type-card">
+                        <h5>名词词组</h5>
+                        <p>De nombreux visiteurs viennent</p>
+                    </div>
+                    <div class="type-card">
+                        <h5>动词不定式</h5>
+                        <p>Manger est essentiel</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>GRAMMAIRE FRANÇAISE · 法语语法学习 · TONGTONG'S SPACE</footer>
+    </div>
+</body>
+</html>

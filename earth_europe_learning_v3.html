@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🌍 欧洲地图学习 - 3D Earth (V3 高清版)</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { 
+            margin: 0; 
+            overflow: hidden; 
+            background: #000; 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            touch-action: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        canvas { display: block; width: 100%; height: 100%; }
+        
+        .ui-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+        }
+        
+        .header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 15px 20px;
+            background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, transparent 100%);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            pointer-events: auto;
+        }
+        
+        .title {
+            color: #fff;
+            font-size: 18px;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .title small {
+            font-size: 12px;
+            opacity: 0.7;
+            display: block;
+        }
+        
+        .country-label {
+            position: absolute;
+            background: rgba(14, 165, 233, 0.95);
+            color: #fff;
+            padding: 12px 18px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            box-shadow: 0 4px 20px rgba(14, 165, 233, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            max-width: 280px;
+            transform: translate(-50%, -100%);
+            animation: popIn 0.3s ease-out;
+            pointer-events: auto;
+        }
+        
+        @keyframes popIn {
+            from { transform: translate(-50%, -80%); opacity: 0; }
+            to { transform: translate(-50%, -100%); opacity: 1; }
+        }
+        
+        .country-label .cn {
+            font-size: 18px;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 4px;
+        }
+        
+        .country-label .fr {
+            font-size: 14px;
+            opacity: 0.9;
+            font-style: italic;
+            display: block;
+        }
+        
+        .country-label .close {
+            position: absolute;
+            top: 4px;
+            right: 8px;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0.7;
+            line-height: 1;
+        }
+        
+        .controls {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            pointer-events: auto;
+        }
+        
+        .btn {
+            background: rgba(14, 165, 233, 0.9);
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+            transition: all 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .btn:active {
+            transform: scale(0.95);
+            background: rgba(14, 165, 233, 1);
+        }
+        
+        .btn.secondary {
+            background: rgba(255,255,255,0.15);
+        }
+        
+        .country-list {
+            position: absolute;
+            top: 80px;
+            right: 15px;
+            background: rgba(0,0,0,0.85);
+            border-radius: 12px;
+            padding: 15px;
+            max-height: calc(100% - 200px);
+            overflow-y: auto;
+            pointer-events: auto;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            min-width: 200px;
+        }
+        
+        .country-list h3 {
+            color: #0ea5e9;
+            font-size: 14px;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .country-item {
+            padding: 8px 10px;
+            margin: 4px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 13px;
+        }
+        
+        .country-item:hover {
+            background: rgba(14, 165, 233, 0.2);
+        }
+        
+        .country-item .cn {
+            font-weight: 600;
+            color: #fff;
+        }
+        
+        .country-item .fr {
+            font-size: 11px;
+            color: #94a3b8;
+            font-style: italic;
+        }
+        
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            text-align: center;
+            z-index: 1000;
+        }
+        
+        .loading h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .loading p {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+        
+        .instructions {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255,255,255,0.6);
+            font-size: 12px;
+            text-align: center;
+            pointer-events: none;
+        }
+        
+        .zoom-indicator {
+            position: absolute;
+            bottom: 90px;
+            left: 20px;
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="loading" class="loading">
+        <h2>🌍 加载高清地球中...</h2>
+        <p>Chargement de la Terre HD...</p>
+    </div>
+    
+    <div class="ui-overlay">
+        <div class="header">
+            <div class="title">
+                🇪🇺 欧洲国家学习
+                <small>Apprendre les pays européens</small>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            👆 点击国家查看名称 • 双指缩放 • 单指旋转
+        </div>
+        
+        <div class="zoom-indicator">
+            🔍 缩放：<span id="zoomLevel">100%</span>
+        </div>
+        
+        <div class="controls">
+            <button class="btn" onclick="zoomIn()">🔍 放大</button>
+            <button class="btn" onclick="zoomOut()">🔎 缩小</button>
+            <button class="btn secondary" onclick="resetView()">🔄 重置</button>
+            <button class="btn secondary" onclick="toggleList()">📋 列表</button>
+        </div>
+        
+        <div id="countryList" class="country-list" style="display: none;">
+            <h3>🇪🇺 欧洲国家 / Pays européens</h3>
+            <div id="countryListContent"></div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // 欧洲国家数据（法语 + 中文 + 经纬度）
+        const europeanCountries = [
+            { cn: "法国", fr: "France", lat: 46.603354, lng: 1.888334, color: 0x0055A4 },
+            { cn: "德国", fr: "Allemagne", lat: 51.165691, lng: 10.451526, color: 0x000000 },
+            { cn: "意大利", fr: "Italie", lat: 41.87194, lng: 12.56738, color: 0x009246 },
+            { cn: "西班牙", fr: "Espagne", lat: 40.463667, lng: -3.74922, color: 0xAA151B },
+            { cn: "葡萄牙", fr: "Portugal", lat: 39.399872, lng: -8.224454, color: 0x006600 },
+            { cn: "英国", fr: "Royaume-Uni", lat: 55.378051, lng: -3.435973, color: 0x012169 },
+            { cn: "比利时", fr: "Belgique", lat: 50.503887, lng: 4.469936, color: 0x000000 },
+            { cn: "荷兰", fr: "Pays-Bas", lat: 52.132633, lng: 5.291266, color: 0xFF6600 },
+            { cn: "瑞士", fr: "Suisse", lat: 46.818188, lng: 8.227512, color: 0xFF0000 },
+            { cn: "奥地利", fr: "Autriche", lat: 47.516231, lng: 14.550072, color: 0xED2939 },
+            { cn: "波兰", fr: "Pologne", lat: 51.919438, lng: 19.145136, color: 0xDC143C },
+            { cn: "捷克", fr: "Tchéquie", lat: 49.817492, lng: 15.472962, color: 0x11457E },
+            { cn: "瑞典", fr: "Suède", lat: 60.128161, lng: 18.643501, color: 0x006AA7 },
+            { cn: "挪威", fr: "Norvège", lat: 60.472024, lng: 8.468946, color: 0xBA0C2F },
+            { cn: "丹麦", fr: "Danemark", lat: 56.26392, lng: 9.501785, color: 0xC60C30 },
+            { cn: "芬兰", fr: "Finlande", lat: 61.92411, lng: 25.748151, color: 0x003580 },
+            { cn: "希腊", fr: "Grèce", lat: 39.074208, lng: 21.824312, color: 0x0D5EAF },
+            { cn: "爱尔兰", fr: "Irlande", lat: 53.41291, lng: -8.24389, color: 0x169B62 },
+            { cn: "罗马尼亚", fr: "Roumanie", lat: 45.943161, lng: 24.96676, color: 0x002B7F },
+            { cn: "匈牙利", fr: "Hongrie", lat: 47.162494, lng: 19.503304, color: 0x436F4D },
+            { cn: "克罗地亚", fr: "Croatie", lat: 45.1, lng: 15.2, color: 0xFF0000 },
+            { cn: "斯洛伐克", fr: "Slovaquie", lat: 48.669026, lng: 19.699024, color: 0x0B4EA2 },
+            { cn: "保加利亚", fr: "Bulgarie", lat: 42.733883, lng: 25.48583, color: 0x00966E },
+            { cn: "塞尔维亚", fr: "Serbie", lat: 44.016521, lng: 21.005859, color: 0xC6363C },
+            { cn: "乌克兰", fr: "Ukraine", lat: 48.379433, lng: 31.16558, color: 0x0057B8 }
+        ];
+
+        let scene, camera, renderer, earth, clouds, markers = [];
+        let isDragging = false, previousMousePosition = { x: 0, y: 0 };
+        let showLabels = false;
+        let currentLabel = null;
+        let targetRotation = { x: 0, y: 0 };
+        let isAutoRotating = false;
+
+        function init() {
+            scene = new THREE.Scene();
+            
+            camera = new THREE.PerspectiveCamera(
+                45, 
+                window.innerWidth / window.innerHeight, 
+                0.01, 
+                1000
+            );
+            camera.position.z = 5;
+            
+            renderer = new THREE.WebGLRenderer({ 
+                antialias: true, 
+                alpha: true,
+                preserveDrawingBuffer: true
+            });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 3));
+            document.body.appendChild(renderer.domElement);
+            
+            createStars();
+            createEarth();
+            createMarkers();
+            createLighting();
+            setupEvents();
+            populateCountryList();
+            
+            document.getElementById('loading').style.display = 'none';
+            updateZoomIndicator();
+            animate();
+        }
+
+        function createStars() {
+            const starsGeometry = new THREE.BufferGeometry();
+            const starsCount = 5000;
+            const posArray = new Float32Array(starsCount * 3);
+            
+            for(let i = 0; i < starsCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 400;
+            }
+            
+            starsGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            const starsMaterial = new THREE.PointsMaterial({ 
+                size: 0.1, 
+                color: 0xffffff,
+                transparent: true,
+                opacity: 0.9
+            });
+            const starsMesh = new THREE.Points(starsGeometry, starsMaterial);
+            scene.add(starsMesh);
+        }
+
+        function createEarth() {
+            const textureLoader = new THREE.TextureLoader();
+            textureLoader.crossOrigin = 'anonymous';
+            
+            // 高清地球 - 使用 8K 纹理
+            const earthGeometry = new THREE.SphereGeometry(1, 128, 128);
+            
+            // 加载高清纹理
+            const earthDayTexture = textureLoader.load(
+                'https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg',
+                (texture) => {
+                    texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+                }
+            );
+            
+            const earthMaterial = new THREE.MeshPhongMaterial({
+                map: earthDayTexture,
+                bumpScale: 0.05,
+                specular: new THREE.Color(0x333333),
+                shininess: 10
+            });
+            
+            earth = new THREE.Mesh(earthGeometry, earthMaterial);
+            scene.add(earth);
+            
+            // 云层 - 高清
+            const cloudGeometry = new THREE.SphereGeometry(1.015, 128, 128);
+            const cloudTexture = textureLoader.load(
+                'https://unpkg.com/three-globe/example/img/earth-clouds.png'
+            );
+            const cloudMaterial = new THREE.MeshPhongMaterial({
+                map: cloudTexture,
+                transparent: true,
+                opacity: 0.4,
+                depthWrite: false
+            });
+            clouds = new THREE.Mesh(cloudGeometry, cloudMaterial);
+            scene.add(clouds);
+            
+            // 大气层
+            const atmosphereGeometry = new THREE.SphereGeometry(1.03, 128, 128);
+            const atmosphereMaterial = new THREE.MeshBasicMaterial({
+                color: 0x4488ff,
+                transparent: true,
+                opacity: 0.2,
+                side: THREE.BackSide
+            });
+            const atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
+            scene.add(atmosphere);
+        }
+
+        function latLngToVector3(lat, lng, radius) {
+            const phi = (90 - lat) * (Math.PI / 180);
+            const theta = (lng + 180) * (Math.PI / 180);
+            
+            const x = -(radius * Math.sin(phi) * Math.cos(theta));
+            const z = (radius * Math.sin(phi) * Math.sin(theta));
+            const y = (radius * Math.cos(phi));
+            
+            return new THREE.Vector3(x, y, z);
+        }
+
+        function createMarkers() {
+            europeanCountries.forEach(country => {
+                const position = latLngToVector3(country.lat, country.lng, 1.02);
+                
+                // 标记点 - 更大更明显
+                const markerGeometry = new THREE.SphereGeometry(0.025, 24, 24);
+                const markerMaterial = new THREE.MeshBasicMaterial({
+                    color: country.color,
+                    transparent: true,
+                    opacity: 0.95
+                });
+                
+                const marker = new THREE.Mesh(markerGeometry, markerMaterial);
+                marker.position.copy(position);
+                marker.userData = country;
+                earth.add(marker);
+                markers.push(marker);
+                
+                // 外环
+                const ringGeometry = new THREE.RingGeometry(0.035, 0.05, 48);
+                const ringMaterial = new THREE.MeshBasicMaterial({
+                    color: 0xffffff,
+                    transparent: true,
+                    opacity: 0.8,
+                    side: THREE.DoubleSide
+                });
+                
+                const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+                ring.position.copy(position);
+                ring.lookAt(new THREE.Vector3(0, 0, 0));
+                earth.add(ring);
+            });
+        }
+
+        function createLighting() {
+            const ambientLight = new THREE.AmbientLight(0x555555);
+            scene.add(ambientLight);
+            
+            const sunLight = new THREE.DirectionalLight(0xffffff, 1.5);
+            sunLight.position.set(5, 3, 5);
+            scene.add(sunLight);
+            
+            const blueLight = new THREE.PointLight(0x4488ff, 0.6, 20);
+            blueLight.position.set(-5, 2, 2);
+            scene.add(blueLight);
+        }
+
+        function setupEvents() {
+            const canvas = renderer.domElement;
+            
+            canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
+            canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
+            canvas.addEventListener('touchend', handleTouchEnd);
+            
+            canvas.addEventListener('mousedown', handleMouseDown);
+            canvas.addEventListener('mousemove', handleMouseMove);
+            canvas.addEventListener('mouseup', handleMouseUp);
+            canvas.addEventListener('mouseleave', handleMouseUp);
+            canvas.addEventListener('wheel', handleWheel, { passive: false });
+            canvas.addEventListener('dblclick', handleDoubleClick);
+            
+            window.addEventListener('resize', handleResize);
+            canvas.addEventListener('click', handleClick);
+        }
+
+        let touchStartDistance = 0;
+        let initialCameraZ = 5;
+
+        function handleTouchStart(e) {
+            e.preventDefault();
+            if (e.touches.length === 1) {
+                isDragging = true;
+                previousMousePosition = { 
+                    x: e.touches[0].clientX, 
+                    y: e.touches[0].clientY 
+                };
+            } else if (e.touches.length === 2) {
+                touchStartDistance = Math.hypot(
+                    e.touches[0].clientX - e.touches[1].clientX,
+                    e.touches[0].clientY - e.touches[1].clientY
+                );
+                initialCameraZ = camera.position.z;
+            }
+        }
+
+        function handleTouchMove(e) {
+            e.preventDefault();
+            if (e.touches.length === 1 && isDragging) {
+                const deltaX = e.touches[0].clientX - previousMousePosition.x;
+                const deltaY = e.touches[0].clientY - previousMousePosition.y;
+                
+                earth.rotation.y += deltaX * 0.005;
+                earth.rotation.x += deltaY * 0.005;
+                clouds.rotation.y += deltaX * 0.006;
+                
+                previousMousePosition = { 
+                    x: e.touches[0].clientX, 
+                    y: e.touches[0].clientY 
+                };
+            } else if (e.touches.length === 2) {
+                const currentDistance = Math.hypot(
+                    e.touches[0].clientX - e.touches[1].clientX,
+                    e.touches[0].clientY - e.touches[1].clientY
+                );
+                
+                const delta = touchStartDistance - currentDistance;
+                camera.position.z = initialCameraZ + delta * 0.015;
+                camera.position.z = Math.max(1.3, Math.min(20, camera.position.z));
+                updateZoomIndicator();
+            }
+        }
+
+        function handleTouchEnd() {
+            isDragging = false;
+        }
+
+        function handleMouseDown(e) {
+            isDragging = true;
+            previousMousePosition = { x: e.clientX, y: e.clientY };
+        }
+
+        function handleMouseMove(e) {
+            if (!isDragging) return;
+            
+            const deltaX = e.clientX - previousMousePosition.x;
+            const deltaY = e.clientY - previousMousePosition.y;
+            
+            earth.rotation.y += deltaX * 0.005;
+            earth.rotation.x += deltaY * 0.005;
+            clouds.rotation.y += deltaX * 0.006;
+            
+            previousMousePosition = { x: e.clientX, y: e.clientY };
+        }
+
+        function handleMouseUp() {
+            isDragging = false;
+        }
+
+        function handleWheel(e) {
+            e.preventDefault();
+            camera.position.z += e.deltaY * 0.008;
+            camera.position.z = Math.max(1.3, Math.min(20, camera.position.z));
+            updateZoomIndicator();
+        }
+
+        function handleDoubleClick() {
+            resetView();
+        }
+
+        function handleResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function handleClick(e) {
+            const rect = renderer.domElement.getBoundingClientRect();
+            const mouse = new THREE.Vector2();
+            mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+            mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+            
+            const raycaster = new THREE.Raycaster();
+            raycaster.setFromCamera(mouse, camera);
+            
+            const intersects = raycaster.intersectObjects(markers);
+            
+            if (intersects.length > 0) {
+                const country = intersects[0].object.userData;
+                showCountryLabel(country, e.clientX, e.clientY);
+            } else {
+                hideCountryLabel();
+            }
+        }
+
+        function showCountryLabel(country, x, y) {
+            hideCountryLabel();
+            
+            const label = document.createElement('div');
+            label.className = 'country-label';
+            label.innerHTML = `
+                <span class="close" onclick="hideCountryLabel()">×</span>
+                <span class="cn">${country.cn}</span>
+                <span class="fr">${country.fr}</span>
+            `;
+            label.style.left = x + 'px';
+            label.style.top = y + 'px';
+            
+            document.querySelector('.ui-overlay').appendChild(label);
+            currentLabel = label;
+        }
+
+        function hideCountryLabel() {
+            if (currentLabel) {
+                currentLabel.remove();
+                currentLabel = null;
+            }
+        }
+
+        function populateCountryList() {
+            const content = document.getElementById('countryListContent');
+            content.innerHTML = europeanCountries.map(country => `
+                <div class="country-item" onclick="focusOnCountry('${country.fr}')">
+                    <span class="cn">${country.cn}</span>
+                    <span class="fr">${country.fr}</span>
+                </div>
+            `).join('');
+        }
+
+        function focusOnCountry(frenchName) {
+            const country = europeanCountries.find(c => c.fr === frenchName);
+            if (!country) return;
+            
+            targetRotation.y = -country.lng * (Math.PI / 180);
+            targetRotation.x = -country.lat * (Math.PI / 180);
+            
+            isAutoRotating = true;
+            
+            const zoomInterval = setInterval(() => {
+                if (camera.position.z > 1.8) {
+                    camera.position.z -= 0.05;
+                    updateZoomIndicator();
+                } else {
+                    clearInterval(zoomInterval);
+                }
+            }, 16);
+            
+            setTimeout(() => {
+                const marker = markers.find(m => m.userData.fr === frenchName);
+                if (marker) {
+                    const vector = marker.position.clone();
+                    vector.project(camera);
+                    
+                    const x = (vector.x * 0.5 + 0.5) * window.innerWidth;
+                    const y = (-vector.y * 0.5 + 0.5) * window.innerHeight;
+                    
+                    showCountryLabel(country, x, y);
+                }
+                isAutoRotating = false;
+            }, 1200);
+        }
+
+        function zoomIn() {
+            camera.position.z = Math.max(1.3, camera.position.z - 0.5);
+            updateZoomIndicator();
+        }
+
+        function zoomOut() {
+            camera.position.z = Math.min(20, camera.position.z + 0.5);
+            updateZoomIndicator();
+        }
+
+        function updateZoomIndicator() {
+            const zoom = Math.round((5 / camera.position.z) * 100);
+            document.getElementById('zoomLevel').textContent = zoom + '%';
+        }
+
+        function toggleLabels() {
+            showLabels = !showLabels;
+            markers.forEach(marker => {
+                marker.visible = showLabels;
+            });
+        }
+
+        function resetView() {
+            earth.rotation.x = 0;
+            earth.rotation.y = 0;
+            clouds.rotation.x = 0;
+            clouds.rotation.y = 0;
+            camera.position.z = 5;
+            hideCountryLabel();
+            updateZoomIndicator();
+        }
+
+        function toggleList() {
+            const list = document.getElementById('countryList');
+            list.style.display = list.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            if (isAutoRotating) {
+                earth.rotation.y += (targetRotation.y - earth.rotation.y) * 0.03;
+                earth.rotation.x += (targetRotation.x - earth.rotation.x) * 0.03;
+                clouds.rotation.y += (targetRotation.y - clouds.rotation.y) * 0.03;
+            } else if (!isDragging) {
+                earth.rotation.y += 0.0003;
+                clouds.rotation.y += 0.0004;
+            }
+            
+            renderer.render(scene, camera);
+        }
+
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

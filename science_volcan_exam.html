@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sciences : Qu'est-ce qu'un volcan ?</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap');
+        :root { --bg: #030712; --primary: #ef4444; --text: #f8fafc; --border: #334155; --correct: #10b981; --wrong: #f43f5e; }
+        body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; padding: 20px; }
+        .container { max-width: 600px; margin: 0 auto; }
+        header { text-align: center; margin-bottom: 30px; border-bottom: 1px solid var(--border); padding-bottom: 20px; }
+        .question { background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 20px; border-radius: 12px; margin-bottom: 20px; }
+        .q-title { font-weight: bold; margin-bottom: 15px; color: var(--primary); }
+        .options { display: grid; gap: 10px; }
+        .option { background: rgba(255,255,255,0.05); border: 1px solid var(--border); padding: 12px; border-radius: 8px; cursor: pointer; transition: 0.2s; }
+        .option:hover { border-color: var(--primary); }
+        .option.selected { background: rgba(239, 68, 68, 0.2); border-color: var(--primary); }
+        .option.correct { background: rgba(16, 185, 129, 0.2); border-color: var(--correct); }
+        .option.wrong { background: rgba(244, 63, 94, 0.2); border-color: var(--wrong); }
+        .btn { display: block; width: 100%; padding: 15px; background: var(--primary); color: #fff; border: none; border-radius: 8px; font-family: 'Orbitron', sans-serif; font-weight: bold; cursor: pointer; margin-top: 20px; }
+        .explanation { display: none; margin-top: 10px; font-size: 0.85rem; color: #94a3b8; padding: 10px; border-left: 2px solid var(--primary); }
+        #result-area { display: none; text-align: center; padding: 30px; border: 2px solid var(--primary); border-radius: 20px; margin-top: 30px; }
+        .score { font-size: 3rem; font-family: 'Orbitron', sans-serif; color: var(--primary); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="exam_hub.html" style="color: #0ea5e9; text-decoration: none; font-size: 0.8rem;">← Retour au Centre</a>
+            <h1 style="font-family:'Orbitron'; color: var(--primary);">SCIENCES : LES VOLCANS</h1>
+            <p>10 Questions sur les éruptions et la structure</p>
+        </header>
+
+        <div id="quiz-content"></div>
+
+        <button class="btn" id="submit-btn" onclick="validate()">VALIDER MES RÉPONSES</button>
+
+        <div id="result-area">
+            <div class="score" id="final-score">0 / 10</div>
+            <div id="final-eval" style="font-size: 1.2rem; margin: 15px 0;"></div>
+            <p id="final-msg" style="opacity:0.7; font-size:0.9rem;"></p>
+            <button class="btn" style="background: #0ea5e9; margin-top:20px;" onclick="location.reload()">REFAIRE LE TEST</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            { q: "Où est stocké le magma avant l'éruption ?", options: ["Dans le cratère", "Dans la cheminée", "Dans la chambre magmatique"], correct: 2, expl: "La chambre magmatique est le réservoir de magma situé à plusieurs kilomètres sous le volcan." },
+            { q: "Comment appelle-t-on le mélange de roches en fusion et de gaz ?", options: ["La lave", "Le magma", "Le cône"], correct: 1, expl: "Le magma est de la roche en fusion contenant des gaz, situé sous la terre." },
+            { q: "Qu'est-ce que le cratère ?", options: ["Le réservoir de magma", "Le conduit du volcan", "La bouche éruptive en haut"], correct: 2, expl: "Le cratère est l'ouverture (la bouche) au sommet de la cheminée." },
+            { q: "Comment appelle-t-on une éruption avec des fleuves de lave fluide ?", options: ["Une éruption explosive", "Une éruption effusive", "Un volcan gris"], correct: 1, expl: "L'éruption effusive laisse couler la lave comme un fleuve. Ce sont les volcans rouges." },
+            { q: "Quel est le nom des volcans qui ont des éruptions explosives ?", options: ["Les volcans rouges", "Les volcans bleus", "Les volcans gris"], correct: 2, expl: "Les volcans explosifs sont appelés 'volcans gris' à cause des cendres et de la vapeur." },
+            { q: "Une nuée ardente peut dévaler le volcan à quelle vitesse ?", options: ["10 km/h", "50 km/h", "Plus de 300 km/h"], correct: 2, expl: "C'est un mélange de gaz et de cendres très rapide et dangereux (> 300 km/h)." },
+            { q: "Quand le magma sort du volcan et perd ses gaz, on l'appelle...", options: ["La lave", "La cendre", "La bombe volcanique"], correct: 0, expl: "Une fois à l'extérieur, le magma devient de la lave." },
+            { q: "Qu'est-ce qui fait monter le magma dans la cheminée ?", options: ["Le vent", "La pression des gaz", "La pluie"], correct: 1, expl: "C'est la pression des gaz qui pousse le magma vers le haut." },
+            { q: "Le cône volcanique est formé par :", options: ["L'accumulation de neige", "L'accumulation de magma refroidi", "Le vent"], correct: 1, expl: "Au cours des siècles, les couches successives de lave durcie forment le cône." },
+            { q: "Dans quel type d'éruption trouve-t-on des 'bombes volcaniques' ?", options: ["Éruption effusive", "Éruption explosive", "Éruption calme"], correct: 1, expl: "Les bombes volcaniques sont projetées lors des éruptions explosives (volcans gris)." }
+        ];
+
+        let selections = new Array(10).fill(null);
+
+        function init() {
+            const container = document.getElementById('quiz-content');
+            let html = "";
+            for (let i = 0; i < questions.length; i++) {
+                let opts = "";
+                for (let j = 0; j < questions[i].options.length; j++) {
+                    opts += '<div class="option" id="q-' + i + '-o-' + j + '" onclick="pick(' + i + ',' + j + ')">' + questions[i].options[j] + '</div>';
+                }
+                html += '<div class="question"> <div class="q-title">Question ' + (i+1) + ' : ' + questions[i].q + '</div> <div class="options">' + opts + '</div> <div class="explanation" id="exp-' + i + '">💡 ' + questions[i].expl + '</div> </div>';
+            }
+            container.innerHTML = html;
+        }
+
+        function pick(qi, oi) {
+            selections[qi] = oi;
+            const opts = document.querySelectorAll('#q-' + qi + ' .option'); // This won't work perfectly due to flat structure, let's fix
+            // Simplified pick for this structure
+            const siblings = document.getElementById('q-'+qi+'-o-'+oi).parentNode.querySelectorAll('.option');
+            siblings.forEach(s => s.classList.remove('selected'));
+            document.getElementById('q-' + qi + '-o-' + oi).classList.add('selected');
+        }
+
+        function validate() {
+            if(selections.includes(null)) { alert("Réponds à toutes les questions !"); return; }
+            let score = 0;
+            for (let i = 0; i < questions.length; i++) {
+                const isCorrect = (selections[i] === questions[i].correct);
+                if(isCorrect) score++;
+                document.getElementById('q-' + i + '-o-' + selections[i]).classList.add(isCorrect ? 'correct' : 'wrong');
+                document.getElementById('q-' + i + '-o-' + questions[i].correct).classList.add('correct');
+                document.getElementById('exp-' + i).style.display = 'block';
+            }
+            document.getElementById('submit-btn').style.display = 'none';
+            document.getElementById('result-area').style.display = 'block';
+            document.getElementById('final-score').innerText = score + " / 10";
+            
+            let eval = ""; let msg = "";
+            if(score === 10) { eval = "EXPERT EN VOLCANOLOGIE ! 🌋"; msg = "Parfait ! Tu connais tout sur les volcans gris et rouges."; }
+            else if(score >= 7) { eval = "TRÈS BIEN ! 👍"; msg = "Tu as bien compris le cours. Relis les explications pour les petites erreurs."; }
+            else { eval = "À REVOIR ! 💪"; msg = "Regarde bien ton schéma et réessaie le test."; }
+            document.getElementById('final-eval').innerText = eval;
+            document.getElementById('final-msg').innerText = msg;
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+        init();
+    </script>
+</body>
+</html>
