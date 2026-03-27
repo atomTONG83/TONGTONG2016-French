@@ -1,5 +1,5 @@
 {
-  "stars": 3200,
+  "stars": 3300,
   "last_milestone": 3000,
   "notebook": [
     {
@@ -245,7 +245,7 @@
     {
       "word": "coussin",
       "lvl": 2,
-      "next": "2026-03-26",
+      "next": "2026-04-03",
       "err_days": 0
     },
     {
@@ -658,8 +658,8 @@
     },
     {
       "word": "Patience",
-      "lvl": 1,
-      "next": "2026-04-02",
+      "lvl": 2,
+      "next": "2026-04-03",
       "err_days": 0
     },
     {
@@ -670,13 +670,13 @@
     },
     {
       "word": "Fleur",
-      "lvl": 1,
-      "next": "2026-03-25",
+      "lvl": 2,
+      "next": "2026-04-03",
       "err_days": 0
     },
     {
       "word": "Ami",
-      "lvl": 1,
+      "lvl": 2,
       "next": "2026-04-03",
       "err_days": 0
     },
@@ -736,8 +736,8 @@
     },
     {
       "word": "Lune",
-      "lvl": 1,
-      "next": "2026-03-27",
+      "lvl": 2,
+      "next": "2026-04-03",
       "err_days": 0
     },
     {
@@ -929,7 +929,7 @@
   ],
   "daily_stats": {
     "date": "2026-03-27",
-    "completed": false,
+    "completed": true,
     "words": [
       "Patience",
       "Fleur",
@@ -937,12 +937,12 @@
       "Lune",
       "coussin"
     ],
-    "rewarded_at": null,
-    "rewarded_stars": 0
+    "rewarded_at": "2026-03-27T21:00:00.000Z",
+    "rewarded_stars": 100
   },
   "streak": {
-    "current": 1,
-    "last_study_date": "2026-03-22",
-    "longest": 1
+    "current": 2,
+    "last_study_date": "2026-03-27",
+    "longest": 2
   }
 }
