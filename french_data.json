@@ -100,8 +100,8 @@
     },
     {
       "word": "généreux",
-      "lvl": 2,
-      "next": "2026-03-26",
+      "lvl": 1,
+      "next": "2026-03-28",
       "err_days": 0
     },
     {
@@ -232,14 +232,14 @@
     },
     {
       "word": "athlétisme",
-      "lvl": 2,
-      "next": "2026-03-26",
+      "lvl": 1,
+      "next": "2026-03-28",
       "err_days": 0
     },
     {
       "word": "fragile",
-      "lvl": 2,
-      "next": "2026-03-26",
+      "lvl": 1,
+      "next": "2026-03-28",
       "err_days": 0
     },
     {
@@ -250,8 +250,8 @@
     },
     {
       "word": "utile",
-      "lvl": 2,
-      "next": "2026-03-26",
+      "lvl": 1,
+      "next": "2026-03-28",
       "err_days": 0
     },
     {
@@ -616,8 +616,8 @@
     },
     {
       "word": "veste",
-      "lvl": 2,
-      "next": "2026-03-26",
+      "lvl": 1,
+      "next": "2026-03-28",
       "err_days": 0
     },
     {
@@ -928,17 +928,17 @@
     }
   ],
   "daily_stats": {
-    "date": "2026-03-27",
-    "completed": true,
+    "date": "2026-03-28",
+    "completed": false,
     "words": [
-      "Patience",
-      "Fleur",
-      "Ami",
-      "Lune",
-      "coussin"
+      "généreux",
+      "athlétisme",
+      "fragile",
+      "utile",
+      "veste"
     ],
-    "rewarded_at": "2026-03-27T21:00:00.000Z",
-    "rewarded_stars": 100
+    "rewarded_at": null,
+    "rewarded_stars": 0
   },
   "streak": {
     "current": 2,
