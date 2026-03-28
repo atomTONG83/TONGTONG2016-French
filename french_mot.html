@@ -276,7 +276,7 @@
         const FULL_DB_PATH = "./french_full_db.json";
         
         // 版本信息
-        const APP_VERSION = "4.0.1";
+        const APP_VERSION = "4.0.2";
         const LAST_UPDATE = "2026-03-28";
         const VERSION_CHANGES = [
             "v3.6 (2026-03-22): Correction du système de récompense (3100 étoiles), mécanisme de report des révisions, ajout du bouton de rafraîchissement forcé",
@@ -383,8 +383,20 @@
                 let serverData = null;
                 let localData = null;
                 
-                // 2a. 首先尝试从云端(Supabase)加载
-                if (window.FrenchSupabase && window.FrenchSupabase.supabaseReady) {
+                // 🆕 修复：优先从服务器文件加载（更可靠）
+                // 2a. 首先尝试从服务器文件加载
+                try {
+                    const response = await fetch(DATA_PATH + "?t=" + Date.now());
+                    if (response.ok) {
+                        serverData = await response.json();
+                        console.log('✅ 从服务器加载数据:', serverData.stars, '星星');
+                    }
+                } catch (fetchErr) {
+                    console.warn("服务器加载失败:", fetchErr);
+                }
+                
+                // 2b. 然后尝试从云端(Supabase)加载（备用）
+                if (!serverData && window.FrenchSupabase && window.FrenchSupabase.supabaseReady) {
                     try {
                         cloudData = await window.FrenchSupabase.loadFromSupabase();
                         if (cloudData) {
@@ -393,17 +405,6 @@
                     } catch (cloudErr) {
                         console.warn("云端加载失败:", cloudErr);
                     }
-                }
-                
-                // 2b. 然后尝试从本地服务器加载（向后兼容）
-                try {
-                    const response = await fetch(DATA_PATH + "?t=" + Date.now());
-                    if (response.ok) {
-                        serverData = await response.json();
-                        console.log('✅ 从服务器加载数据:', serverData.stars, '星星');
-                    }
-                } catch (fetchErr) {
-                    console.warn("本地服务器加载失败:", fetchErr);
                 }
                 
                 // 2c. 最后尝试从本地存储加载
