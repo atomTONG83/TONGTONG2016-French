@@ -1,5 +1,5 @@
 {
-  "stars": 3300,
+  "stars": 3400,
   "last_milestone": 3000,
   "notebook": [
     {
@@ -100,8 +100,8 @@
     },
     {
       "word": "généreux",
-      "lvl": 1,
-      "next": "2026-03-28",
+      "lvl": 2,
+      "next": "2026-04-04",
       "err_days": 0
     },
     {
@@ -232,14 +232,14 @@
     },
     {
       "word": "athlétisme",
-      "lvl": 1,
-      "next": "2026-03-28",
+      "lvl": 2,
+      "next": "2026-04-04",
       "err_days": 0
     },
     {
       "word": "fragile",
-      "lvl": 1,
-      "next": "2026-03-28",
+      "lvl": 2,
+      "next": "2026-04-04",
       "err_days": 0
     },
     {
@@ -250,8 +250,8 @@
     },
     {
       "word": "utile",
-      "lvl": 1,
-      "next": "2026-03-28",
+      "lvl": 2,
+      "next": "2026-04-04",
       "err_days": 0
     },
     {
@@ -616,8 +616,8 @@
     },
     {
       "word": "veste",
-      "lvl": 1,
-      "next": "2026-03-28",
+      "lvl": 2,
+      "next": "2026-04-04",
       "err_days": 0
     },
     {
@@ -929,7 +929,7 @@
   ],
   "daily_stats": {
     "date": "2026-03-28",
-    "completed": false,
+    "completed": true,
     "words": [
       "généreux",
       "athlétisme",
@@ -937,12 +937,12 @@
       "utile",
       "veste"
     ],
-    "rewarded_at": null,
-    "rewarded_stars": 0
+    "rewarded_at": "2026-03-28T20:00:00.000Z",
+    "rewarded_stars": 100
   },
   "streak": {
-    "current": 2,
-    "last_study_date": "2026-03-27",
-    "longest": 2
+    "current": 3,
+    "last_study_date": "2026-03-28",
+    "longest": 3
   }
 }
