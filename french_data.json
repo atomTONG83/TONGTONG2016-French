@@ -1,5 +1,5 @@
 {
-  "stars": 3500,
+  "stars": 3600,
   "last_milestone": 3000,
   "notebook": [
     {
@@ -929,7 +929,7 @@
   ],
   "daily_stats": {
     "date": "2026-03-31",
-    "completed": false,
+    "completed": true,
     "words": [
       "examen",
       "collaborer",
@@ -937,8 +937,8 @@
       "violet",
       "abondant"
     ],
-    "rewarded_at": null,
-    "rewarded_stars": 0
+    "rewarded_at": "2026-03-31T19:00:00.000Z",
+    "rewarded_stars": 100
   },
   "streak": {
     "current": 1,
