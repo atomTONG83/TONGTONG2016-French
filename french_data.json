@@ -95,7 +95,7 @@
     {
       "word": "examen",
       "lvl": 2,
-      "next": "2026-03-31",
+      "next": "2026-04-01",
       "err_days": 0
     },
     {
@@ -125,7 +125,7 @@
     {
       "word": "fidèle",
       "lvl": 2,
-      "next": "2026-03-31",
+      "next": "2026-04-01",
       "err_days": 0
     },
     {
@@ -197,7 +197,7 @@
     {
       "word": "Imagination",
       "lvl": 2,
-      "next": "2026-03-26",
+      "next": "2026-04-01",
       "err_days": 0
     },
     {
@@ -257,13 +257,13 @@
     {
       "word": "honnête",
       "lvl": 2,
-      "next": "2026-03-26",
+      "next": "2026-04-01",
       "err_days": 0
     },
     {
       "word": "énergie",
       "lvl": 2,
-      "next": "2026-03-26",
+      "next": "2026-04-01",
       "err_days": 0
     },
     {
@@ -928,17 +928,17 @@
     }
   ],
   "daily_stats": {
-    "date": "2026-03-31",
-    "completed": true,
+    "date": "2026-04-01",
+    "completed": false,
     "words": [
       "examen",
-      "collaborer",
       "fidèle",
-      "violet",
-      "abondant"
+      "Imagination",
+      "honnête",
+      "énergie"
     ],
-    "rewarded_at": "2026-03-31T19:00:00.000Z",
-    "rewarded_stars": 100
+    "rewarded_at": null,
+    "rewarded_stars": 0
   },
   "streak": {
     "current": 1,
