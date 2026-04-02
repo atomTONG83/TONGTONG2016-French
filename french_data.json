@@ -95,7 +95,7 @@
     {
       "word": "examen",
       "lvl": 2,
-      "next": "2026-04-01",
+      "next": "2026-04-02",
       "err_days": 0
     },
     {
@@ -125,7 +125,7 @@
     {
       "word": "fidèle",
       "lvl": 2,
-      "next": "2026-04-01",
+      "next": "2026-04-02",
       "err_days": 0
     },
     {
@@ -197,7 +197,7 @@
     {
       "word": "Imagination",
       "lvl": 2,
-      "next": "2026-04-01",
+      "next": "2026-04-02",
       "err_days": 0
     },
     {
@@ -257,13 +257,13 @@
     {
       "word": "honnête",
       "lvl": 2,
-      "next": "2026-04-01",
+      "next": "2026-04-02",
       "err_days": 0
     },
     {
       "word": "énergie",
       "lvl": 2,
-      "next": "2026-04-01",
+      "next": "2026-04-02",
       "err_days": 0
     },
     {
@@ -928,7 +928,7 @@
     }
   ],
   "daily_stats": {
-    "date": "2026-04-01",
+    "date": "2026-04-02",
     "completed": false,
     "words": [
       "examen",
