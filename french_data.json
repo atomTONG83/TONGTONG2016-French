@@ -1,5 +1,5 @@
 {
-  "stars": 3600,
+  "stars": 3700,
   "last_milestone": 3000,
   "notebook": [
     {
@@ -94,8 +94,8 @@
     },
     {
       "word": "examen",
-      "lvl": 2,
-      "next": "2026-04-03",
+      "lvl": 3,
+      "next": "2026-04-10",
       "err_days": 0
     },
     {
@@ -124,8 +124,8 @@
     },
     {
       "word": "fidèle",
-      "lvl": 2,
-      "next": "2026-04-03",
+      "lvl": 3,
+      "next": "2026-04-10",
       "err_days": 0
     },
     {
@@ -196,8 +196,8 @@
     },
     {
       "word": "Imagination",
-      "lvl": 2,
-      "next": "2026-04-03",
+      "lvl": 3,
+      "next": "2026-04-10",
       "err_days": 0
     },
     {
@@ -244,8 +244,8 @@
     },
     {
       "word": "coussin",
-      "lvl": 2,
-      "next": "2026-04-03",
+      "lvl": 3,
+      "next": "2026-04-10",
       "err_days": 0
     },
     {
@@ -256,8 +256,8 @@
     },
     {
       "word": "honnête",
-      "lvl": 2,
-      "next": "2026-04-03",
+      "lvl": 3,
+      "next": "2026-04-10",
       "err_days": 0
     },
     {
@@ -658,8 +658,8 @@
     },
     {
       "word": "Patience",
-      "lvl": 2,
-      "next": "2026-04-03",
+      "lvl": 3,
+      "next": "2026-04-10",
       "err_days": 0
     },
     {
@@ -670,14 +670,14 @@
     },
     {
       "word": "Fleur",
-      "lvl": 2,
-      "next": "2026-04-03",
+      "lvl": 3,
+      "next": "2026-04-10",
       "err_days": 0
     },
     {
       "word": "Ami",
-      "lvl": 2,
-      "next": "2026-04-03",
+      "lvl": 3,
+      "next": "2026-04-10",
       "err_days": 0
     },
     {
@@ -736,8 +736,8 @@
     },
     {
       "word": "Lune",
-      "lvl": 2,
-      "next": "2026-04-03",
+      "lvl": 3,
+      "next": "2026-04-10",
       "err_days": 0
     },
     {
@@ -929,7 +929,7 @@
   ],
   "daily_stats": {
     "date": "2026-04-03",
-    "completed": false,
+    "completed": true,
     "words": [
       "examen",
       "fidèle",
@@ -937,8 +937,8 @@
       "coussin",
       "honnête"
     ],
-    "rewarded_at": null,
-    "rewarded_stars": 0
+    "rewarded_at": "2026-04-03T20:00:00.000Z",
+    "rewarded_stars": 100
   },
   "streak": {
     "current": 1,
