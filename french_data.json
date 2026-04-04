@@ -263,7 +263,7 @@
     {
       "word": "énergie",
       "lvl": 2,
-      "next": "2026-04-02",
+      "next": "2026-04-04",
       "err_days": 0
     },
     {
@@ -928,17 +928,17 @@
     }
   ],
   "daily_stats": {
-    "date": "2026-04-03",
-    "completed": true,
+    "date": "2026-04-04",
+    "completed": false,
     "words": [
-      "examen",
-      "fidèle",
-      "Imagination",
-      "coussin",
-      "honnête"
+      "généreux",
+      "athlétisme",
+      "fragile",
+      "utile",
+      "énergie"
     ],
-    "rewarded_at": "2026-04-03T20:00:00.000Z",
-    "rewarded_stars": 100
+    "rewarded_at": null,
+    "rewarded_stars": 0
   },
   "streak": {
     "current": 1,
