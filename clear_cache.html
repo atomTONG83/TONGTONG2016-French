@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>清理缓存 - 童童空间</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, sans-serif;
+            padding: 40px 20px;
+            text-align: center;
+            background: #f0f4f8;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1 { color: #e74c3c; }
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1em;
+            margin: 10px;
+            cursor: pointer;
+        }
+        button.clear {
+            background: #e74c3c;
+        }
+        button.back {
+            background: #2ecc71;
+        }
+        .status {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+            background: #ecf0f1;
+        }
+        .success { background: #d5f4e6; color: #27ae60; }
+        .error { background: #fadbd8; color: #e74c3c; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧹 清理缓存</h1>
+        <p>如果法语学习页面出现"保存错误"，请清理缓存。</p>
+        
+        <div id="status" class="status" style="display:none;"></div>
+        
+        <button class="clear" onclick="clearCache()">清理 LocalStorage 缓存</button>
+        <br><br>
+        <button class="back" onclick="goBack()">返回法语学习页面</button>
+        
+        <div style="margin-top:30px; font-size:0.85em; color:#7f8c8d;">
+            <p>当前 LocalStorage 使用情况：</p>
+            <p id="usage">计算中...</p>
+        </div>
+    </div>
+    
+    <script>
+        function showStatus(msg, isError) {
+            const status = document.getElementById('status');
+            status.textContent = msg;
+            status.style.display = 'block';
+            status.className = 'status ' + (isError ? 'error' : 'success');
+        }
+        
+        function clearCache() {
+            try {
+                const keys = Object.keys(localStorage);
+                let count = 0;
+                
+                // 清理法语学习相关的缓存
+                const frenchKeys = keys.filter(k => 
+                    k.includes('french') || 
+                    k.includes('session') ||
+                    k.includes('sync')
+                );
+                
+                frenchKeys.forEach(key => {
+                    localStorage.removeItem(key);
+                    count++;
+                });
+                
+                showStatus(`✅ 已清理 ${count} 项缓存，请返回法语学习页面刷新`, false);
+                updateUsage();
+            } catch (e) {
+                showStatus('❌ 清理失败: ' + e.message, true);
+            }
+        }
+        
+        function goBack() {
+            window.location.href = 'french_mot.html?v=' + Date.now();
+        }
+        
+        function updateUsage() {
+            try {
+                let total = 0;
+                for (let key in localStorage) {
+                    if (localStorage.hasOwnProperty(key)) {
+                        total += localStorage[key].length * 2; // UTF-16 = 2 bytes per char
+                    }
+                }
+                const mb = (total / 1024 / 1024).toFixed(2);
+                document.getElementById('usage').textContent = `已使用: ${mb} MB / 5 MB`;
+            } catch (e) {
+                document.getElementById('usage').textContent = '无法计算';
+            }
+        }
+        
+        // 页面加载时更新使用情况
+        updateUsage();
+        
+        // 检查是否需要自动清理
+        if (window.location.search.includes('clear=1')) {
+            clearCache();
+        }
+    </script>
+</body>
+</html>
