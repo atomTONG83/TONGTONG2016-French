@@ -5,7 +5,7 @@
     {
       "word": "admirer",
       "lvl": 2,
-      "next": "2026-04-06",
+      "next": "2026-04-08",
       "err_days": 0
     },
     {
@@ -17,7 +17,7 @@
     {
       "word": "Prénom",
       "lvl": 2,
-      "next": "2026-04-06",
+      "next": "2026-04-08",
       "err_days": 0
     },
     {
@@ -41,7 +41,7 @@
     {
       "word": "Détermination",
       "lvl": 2,
-      "next": "2026-04-06",
+      "next": "2026-04-08",
       "err_days": 0
     },
     {
@@ -101,7 +101,7 @@
     {
       "word": "généreux",
       "lvl": 2,
-      "next": "2026-04-04",
+      "next": "2026-04-08",
       "err_days": 0
     },
     {
@@ -215,7 +215,7 @@
     {
       "word": "Perspective",
       "lvl": 2,
-      "next": "2026-04-06",
+      "next": "2026-04-08",
       "err_days": 0
     },
     {
@@ -928,14 +928,14 @@
     }
   ],
   "daily_stats": {
-    "date": "2026-04-04",
+    "date": "2026-04-08",
     "completed": false,
     "words": [
+      "admirer",
+      "Prénom",
+      "Détermination",
       "généreux",
-      "athlétisme",
-      "fragile",
-      "utile",
-      "énergie"
+      "Perspective"
     ],
     "rewarded_at": null,
     "rewarded_stars": 0
