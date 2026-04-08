@@ -1,11 +1,11 @@
 {
-  "stars": 3700,
+  "stars": 3800,
   "last_milestone": 3000,
   "notebook": [
     {
       "word": "admirer",
-      "lvl": 2,
-      "next": "2026-04-08",
+      "lvl": 3,
+      "next": "2026-04-15",
       "err_days": 0
     },
     {
@@ -16,8 +16,8 @@
     },
     {
       "word": "Prénom",
-      "lvl": 2,
-      "next": "2026-04-08",
+      "lvl": 3,
+      "next": "2026-04-15",
       "err_days": 0
     },
     {
@@ -40,8 +40,8 @@
     },
     {
       "word": "Détermination",
-      "lvl": 2,
-      "next": "2026-04-08",
+      "lvl": 3,
+      "next": "2026-04-15",
       "err_days": 0
     },
     {
@@ -100,8 +100,8 @@
     },
     {
       "word": "généreux",
-      "lvl": 2,
-      "next": "2026-04-08",
+      "lvl": 3,
+      "next": "2026-04-15",
       "err_days": 0
     },
     {
@@ -214,8 +214,8 @@
     },
     {
       "word": "Perspective",
-      "lvl": 2,
-      "next": "2026-04-08",
+      "lvl": 3,
+      "next": "2026-04-15",
       "err_days": 0
     },
     {
@@ -929,7 +929,7 @@
   ],
   "daily_stats": {
     "date": "2026-04-08",
-    "completed": false,
+    "completed": true,
     "words": [
       "admirer",
       "Prénom",
@@ -937,8 +937,8 @@
       "généreux",
       "Perspective"
     ],
-    "rewarded_at": null,
-    "rewarded_stars": 0
+    "rewarded_at": "2026-04-08T20:00:00.000Z",
+    "rewarded_stars": 100
   },
   "streak": {
     "current": 1,
