@@ -233,13 +233,13 @@
     {
       "word": "athlétisme",
       "lvl": 2,
-      "next": "2026-04-04",
+      "next": "2026-04-09",
       "err_days": 0
     },
     {
       "word": "fragile",
       "lvl": 2,
-      "next": "2026-04-04",
+      "next": "2026-04-09",
       "err_days": 0
     },
     {
@@ -251,7 +251,7 @@
     {
       "word": "utile",
       "lvl": 2,
-      "next": "2026-04-04",
+      "next": "2026-04-09",
       "err_days": 0
     },
     {
@@ -263,7 +263,7 @@
     {
       "word": "énergie",
       "lvl": 2,
-      "next": "2026-04-04",
+      "next": "2026-04-09",
       "err_days": 0
     },
     {
@@ -287,7 +287,7 @@
     {
       "word": "sincère",
       "lvl": 2,
-      "next": "2026-03-26",
+      "next": "2026-04-09",
       "err_days": 0
     },
     {
@@ -928,17 +928,17 @@
     }
   ],
   "daily_stats": {
-    "date": "2026-04-08",
-    "completed": true,
+    "date": "2026-04-09",
+    "completed": false,
     "words": [
-      "admirer",
-      "Prénom",
-      "Détermination",
-      "généreux",
-      "Perspective"
+      "athlétisme",
+      "fragile",
+      "utile",
+      "énergie",
+      "sincère"
     ],
-    "rewarded_at": "2026-04-08T20:00:00.000Z",
-    "rewarded_stars": 100
+    "rewarded_at": null,
+    "rewarded_stars": 0
   },
   "streak": {
     "current": 1,
