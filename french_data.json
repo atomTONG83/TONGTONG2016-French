@@ -233,13 +233,13 @@
     {
       "word": "athlétisme",
       "lvl": 2,
-      "next": "2026-04-09",
+      "next": "2026-04-10",
       "err_days": 0
     },
     {
       "word": "fragile",
       "lvl": 2,
-      "next": "2026-04-09",
+      "next": "2026-04-10",
       "err_days": 0
     },
     {
@@ -251,7 +251,7 @@
     {
       "word": "utile",
       "lvl": 2,
-      "next": "2026-04-09",
+      "next": "2026-04-10",
       "err_days": 0
     },
     {
@@ -263,7 +263,7 @@
     {
       "word": "énergie",
       "lvl": 2,
-      "next": "2026-04-09",
+      "next": "2026-04-10",
       "err_days": 0
     },
     {
@@ -287,7 +287,7 @@
     {
       "word": "sincère",
       "lvl": 2,
-      "next": "2026-04-09",
+      "next": "2026-04-10",
       "err_days": 0
     },
     {
@@ -928,7 +928,7 @@
     }
   ],
   "daily_stats": {
-    "date": "2026-04-09",
+    "date": "2026-04-10",
     "completed": false,
     "words": [
       "athlétisme",
