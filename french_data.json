@@ -1,5 +1,5 @@
 {
-  "stars": 3800,
+  "stars": 3900,
   "last_milestone": 3000,
   "notebook": [
     {
@@ -232,14 +232,14 @@
     },
     {
       "word": "athlétisme",
-      "lvl": 2,
-      "next": "2026-04-10",
+      "lvl": 3,
+      "next": "2026-04-17",
       "err_days": 0
     },
     {
       "word": "fragile",
-      "lvl": 2,
-      "next": "2026-04-10",
+      "lvl": 3,
+      "next": "2026-04-17",
       "err_days": 0
     },
     {
@@ -250,8 +250,8 @@
     },
     {
       "word": "utile",
-      "lvl": 2,
-      "next": "2026-04-10",
+      "lvl": 3,
+      "next": "2026-04-17",
       "err_days": 0
     },
     {
@@ -262,8 +262,8 @@
     },
     {
       "word": "énergie",
-      "lvl": 2,
-      "next": "2026-04-10",
+      "lvl": 3,
+      "next": "2026-04-17",
       "err_days": 0
     },
     {
@@ -286,8 +286,8 @@
     },
     {
       "word": "sincère",
-      "lvl": 2,
-      "next": "2026-04-10",
+      "lvl": 3,
+      "next": "2026-04-17",
       "err_days": 0
     },
     {
@@ -929,7 +929,7 @@
   ],
   "daily_stats": {
     "date": "2026-04-10",
-    "completed": false,
+    "completed": true,
     "words": [
       "athlétisme",
       "fragile",
@@ -937,8 +937,8 @@
       "énergie",
       "sincère"
     ],
-    "rewarded_at": null,
-    "rewarded_stars": 0
+    "rewarded_at": "2026-04-10T19:00:00.000Z",
+    "rewarded_stars": 100
   },
   "streak": {
     "current": 1,
