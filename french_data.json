@@ -1,5 +1,5 @@
 {
-  "stars": 3900,
+  "stars": 4000,
   "last_milestone": 3000,
   "notebook": [
     {
@@ -292,8 +292,8 @@
     },
     {
       "word": "étang",
-      "lvl": 2,
-      "next": "2026-04-11",
+      "lvl": 3,
+      "next": "2026-04-18",
       "err_days": 0
     },
     {
@@ -346,20 +346,20 @@
     },
     {
       "word": "sagesse",
-      "lvl": 2,
-      "next": "2026-04-11",
+      "lvl": 3,
+      "next": "2026-04-18",
       "err_days": 0
     },
     {
       "word": "magnifique",
-      "lvl": 2,
-      "next": "2026-04-11",
+      "lvl": 3,
+      "next": "2026-04-18",
       "err_days": 0
     },
     {
       "word": "fier",
-      "lvl": 2,
-      "next": "2026-04-11",
+      "lvl": 3,
+      "next": "2026-04-18",
       "err_days": 0
     },
     {
@@ -400,8 +400,8 @@
     },
     {
       "word": "natation",
-      "lvl": 2,
-      "next": "2026-04-11",
+      "lvl": 3,
+      "next": "2026-04-18",
       "err_days": 0
     },
     {
@@ -929,7 +929,7 @@
   ],
   "daily_stats": {
     "date": "2026-04-11",
-    "completed": false,
+    "completed": true,
     "words": [
       "étang",
       "sagesse",
@@ -937,8 +937,8 @@
       "fier",
       "natation"
     ],
-    "rewarded_at": null,
-    "rewarded_stars": 0
+    "rewarded_at": "2026-04-11T18:00:00.000Z",
+    "rewarded_stars": 100
   },
   "streak": {
     "current": 1,
