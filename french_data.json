@@ -293,7 +293,7 @@
     {
       "word": "étang",
       "lvl": 2,
-      "next": "2026-03-26",
+      "next": "2026-04-11",
       "err_days": 0
     },
     {
@@ -347,19 +347,19 @@
     {
       "word": "sagesse",
       "lvl": 2,
-      "next": "2026-03-26",
+      "next": "2026-04-11",
       "err_days": 0
     },
     {
       "word": "magnifique",
       "lvl": 2,
-      "next": "2026-03-26",
+      "next": "2026-04-11",
       "err_days": 0
     },
     {
       "word": "fier",
       "lvl": 2,
-      "next": "2026-03-26",
+      "next": "2026-04-11",
       "err_days": 0
     },
     {
@@ -401,7 +401,7 @@
     {
       "word": "natation",
       "lvl": 2,
-      "next": "2026-03-26",
+      "next": "2026-04-11",
       "err_days": 0
     },
     {
@@ -928,17 +928,17 @@
     }
   ],
   "daily_stats": {
-    "date": "2026-04-10",
-    "completed": true,
+    "date": "2026-04-11",
+    "completed": false,
     "words": [
-      "athlétisme",
-      "fragile",
-      "utile",
-      "énergie",
-      "sincère"
+      "étang",
+      "sagesse",
+      "magnifique",
+      "fier",
+      "natation"
     ],
-    "rewarded_at": "2026-04-10T19:00:00.000Z",
-    "rewarded_stars": 100
+    "rewarded_at": null,
+    "rewarded_stars": 0
   },
   "streak": {
     "current": 1,
