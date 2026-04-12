@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>童童数学复习 - 质量单位比较</title>
+    <style>
+        :root {
+            --bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --primary: #4a90e2;
+            --secondary: #50c878;
+            --accent: #ff6b6b;
+            --text: #2c3e50;
+            --text-light: #7f8c8d;
+            --border: #e0e0e0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 15px;
+            color: white;
+        }
+        
+        h1 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: background 0.3s;
+        }
+        
+        .back-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        .section {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .section-title {
+            font-size: 1.3em;
+            color: var(--primary);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border);
+        }
+        
+        .unit-chain {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            color: white;
+        }
+        
+        .unit-item {
+            padding: 10px 15px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        .arrow {
+            font-size: 1.5em;
+            opacity: 0.8;
+        }
+        
+        .rule-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .rule-box h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        .example {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .example h4 {
+            color: #155724;
+            margin-bottom: 10px;
+        }
+        
+        .problem {
+            background: #f8f9fa;
+            border: 2px solid var(--border);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+        }
+        
+        .problem-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .solution {
+            margin-top: 15px;
+            padding: 15px;
+            background: #e3f2fd;
+            border-radius: 8px;
+        }
+        
+        .highlight {
+            background: #fff59d;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .note {
+            background: #fce4ec;
+            border-left: 4px solid #e91e63;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .note h4 {
+            color: #c2185b;
+            margin-bottom: 10px;
+        }
+        
+        .steps {
+            counter-reset: step;
+        }
+        
+        .step {
+            position: relative;
+            padding-left: 50px;
+            margin: 15px 0;
+        }
+        
+        .step::before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 35px;
+            height: 35px;
+            background: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: bold;
+        }
+        
+        .memory-trick {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .memory-trick h4 {
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .conversion-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        .conversion-table th,
+        .conversion-table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+        
+        .conversion-table th {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .conversion-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📐 数学复习：质量单位比较</h1>
+            <p class="subtitle">Compare - 比较大小</p>
+            <a href="index.html" class="back-btn">← 返回童童空间</a>
+        </header>
+
+        <!-- 核心规则 -->
+        <div class="section">
+            <h2 class="section-title">🎯 核心规则</h2>
+            <div class="rule-box">
+                <h4>⚠️ 记住这一条：</h4>
+                <p><strong>先把两边都换成同一种单位，再比较大小！</strong></p>
+            </div>
+        </div>
+
+        <!-- 单位链 -->
+        <div class="section">
+            <h2 class="section-title">📏 质量单位链</h2>
+            <div class="unit-chain">
+                <span class="unit-item">kg</span>
+                <span class="arrow">→</span>
+                <span class="unit-item">hg</span>
+                <span class="arrow">→</span>
+                <span class="unit-item">dag</span>
+                <span class="arrow">→</span>
+                <span class="unit-item">g</span>
+                <span class="arrow">→</span>
+                <span class="unit-item">dg</span>
+                <span class="arrow">→</span>
+                <span class="unit-item">cg</span>
+                <span class="arrow">→</span>
+                <span class="unit-item">mg</span>
+            </div>
+            <div class="example">
+                <h4>💡 记忆口诀</h4>
+                <ul>
+                    <li><strong>往右走一格</strong>：数字 × 10（变大）</li>
+                    <li><strong>往左走一格</strong>：数字 ÷ 10（变小）</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 常用换算 -->
+        <div class="section">
+            <h2 class="section-title">🔢 常用换算</h2>
+            <table class="conversion-table">
+                <tr>
+                    <th>换算</th>
+                    <th>结果</th>
+                </tr>
+                <tr>
+                    <td>1 kg</td>
+                    <td>= 100 dag = 1000 g</td>
+                </tr>
+                <tr>
+                    <td>1 dag</td>
+                    <td>= 10 g</td>
+                </tr>
+                <tr>
+                    <td>1 g</td>
+                    <td>= 10 dg = 100 cg = 1000 mg</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- 重要提示 -->
+        <div class="section">
+            <h2 class="section-title">⚠️ 重要提示</h2>
+            <div class="note">
+                <h4>📝 法语小数写法</h4>
+                <p>法语里小数用<strong>逗号</strong>，不是点！</p>
+                <ul style="margin-top: 10px;">
+                    <li><span class="highlight">37,2 dag</span> = 37.2 dag（三十七点二）</li>
+                    <li>不是 "37 2 dag"（分开写是错的）</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 例题解析 -->
+        <div class="section">
+            <h2 class="section-title">📚 例题解析</h2>
+
+            <div class="problem">
+                <span class="problem-number">1</span>
+                <strong>602 g < 6 kg</strong>
+                <div class="solution">
+                    <p><strong>解法一（换成 kg）：</strong></p>
+                    <p>602 g = 0,602 kg</p>
+                    <p>所以 0,602 kg < 6 kg ✅</p>
+                    <br>
+                    <p><strong>解法二（换成 g）：</strong></p>
+                    <p>6 kg = 6000 g</p>
+                    <p>所以 602 g < 6000 g ✅</p>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-number">2</span>
+                <strong>0,9 kg 和 90 dag</strong>
+                <div class="solution">
+                    <p><strong>换算：</strong></p>
+                    <p>1 kg = 100 dag</p>
+                    <p>0,9 kg = 0,9 × 100 dag = <span class="highlight">90 dag</span></p>
+                    <br>
+                    <p><strong>答案：0,9 kg = 90 dag</strong>（填 =）</p>
+                </div>
+            </div>
+
+            <div class="problem">
+                <span class="problem-number">3</span>
+                <strong>20,5 dag = ? g</strong>
+                <div class="solution">
+                    <p><strong>换算：</strong></p>
+                    <p>1 dag = 10 g</p>
+                    <p>20,5 dag = 20,5 × 10 g = <span class="highlight">205 g</span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 解题三步法 -->
+        <div class="section">
+            <h2 class="section-title">🎯 解题三步法</h2>
+            <div class="steps">
+                <div class="step">
+                    <strong>看单位</strong><br>
+                    两边单位不一样，不能直接比
+                </div>
+                <div class="step">
+                    <strong>统一单位</strong><br>
+                    最好统一成最熟悉的，比如 g 或 kg
+                </div>
+                <div class="step">
+                    <strong>填符号</strong><br>
+                    比较大小，填 <、> 或 =
+                </div>
+            </div>
+        </div>
+
+        <!-- 超简单记忆法 -->
+        <div class="memory-trick">
+            <h4>🧠 超简单记忆法</h4>
+            <p>把单位排成一排：</p>
+            <p style="font-size: 1.2em; margin: 15px 0; text-align: center;">
+                kg | hg | dag | g | dg | cg | mg
+            </p>
+            <p><strong>小数点（逗号）跟着单位移动：</strong></p>
+            <ul style="margin-top: 10px;">
+                <li>往右一格：数字变大 10 倍</li>
+                <li>往左一格：数字变小 10 倍</li>
+            </ul>
+            <div style="margin-top: 15px; padding: 15px; background: rgba(255,255,255,0.2); border-radius: 8px;">
+                <p><strong>例如：</strong></p>
+                <p>• 0,9 kg = 9 hg = 90 dag = 900 g</p>
+                <p>• 20,5 dag = 205 g</p>
+                <p>• 602 g = 0,602 kg</p>
+            </div>
+        </div>
+
+        <!-- 练习建议 -->
+        <div class="section">
+            <h2 class="section-title">✏️ 练习建议</h2>
+            <ol style="padding-left: 20px;">
+                <li>先熟记单位链：kg → hg → dag → g → dg → cg → mg</li>
+                <li>练习常用换算：1 kg = 1000 g，1 dag = 10 g</li>
+                <li>注意小数用逗号：37,2 不是 37.2</li>
+                <li>做题时先统一单位，再比较</li>
+            </ol>
+        </div>
+
+        <footer style="text-align: center; padding: 20px; color: var(--text-light);">
+            <p>📚 童童数学复习 | 质量单位比较</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">由 Pi 🥧 整理 | 2026-04-12</p>
+        </footer>
+    </div>
+</body>
+</html>
