@@ -545,7 +545,7 @@
     {
       "word": "Démocratie",
       "lvl": 2,
-      "next": "2026-03-26",
+      "next": "2026-04-12",
       "err_days": 0
     },
     {
@@ -617,13 +617,13 @@
     {
       "word": "veste",
       "lvl": 2,
-      "next": "2026-04-04",
+      "next": "2026-04-12",
       "err_days": 0
     },
     {
       "word": "Sédiment",
       "lvl": 2,
-      "next": "2026-03-26",
+      "next": "2026-04-12",
       "err_days": 0
     },
     {
@@ -665,7 +665,7 @@
     {
       "word": "École",
       "lvl": 2,
-      "next": "2026-04-06",
+      "next": "2026-04-12",
       "err_days": 0
     },
     {
@@ -845,7 +845,7 @@
     {
       "word": "liberté",
       "lvl": 2,
-      "next": "2026-03-26",
+      "next": "2026-04-12",
       "err_days": 0
     },
     {
@@ -928,17 +928,17 @@
     }
   ],
   "daily_stats": {
-    "date": "2026-04-11",
-    "completed": true,
+    "date": "2026-04-12",
+    "completed": false,
     "words": [
-      "étang",
-      "sagesse",
-      "magnifique",
-      "fier",
-      "natation"
+      "Démocratie",
+      "veste",
+      "Sédiment",
+      "École",
+      "liberté"
     ],
-    "rewarded_at": "2026-04-11T18:00:00.000Z",
-    "rewarded_stars": 100
+    "rewarded_at": null,
+    "rewarded_stars": 0
   },
   "streak": {
     "current": 1,
