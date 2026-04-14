@@ -545,7 +545,7 @@
     {
       "word": "Démocratie",
       "lvl": 2,
-      "next": "2026-04-13",
+      "next": "2026-04-14",
       "err_days": 0
     },
     {
@@ -617,13 +617,13 @@
     {
       "word": "veste",
       "lvl": 2,
-      "next": "2026-04-13",
+      "next": "2026-04-14",
       "err_days": 0
     },
     {
       "word": "Sédiment",
       "lvl": 2,
-      "next": "2026-04-13",
+      "next": "2026-04-14",
       "err_days": 0
     },
     {
@@ -665,7 +665,7 @@
     {
       "word": "École",
       "lvl": 2,
-      "next": "2026-04-13",
+      "next": "2026-04-14",
       "err_days": 0
     },
     {
@@ -845,7 +845,7 @@
     {
       "word": "liberté",
       "lvl": 2,
-      "next": "2026-04-13",
+      "next": "2026-04-14",
       "err_days": 0
     },
     {
@@ -928,7 +928,7 @@
     }
   ],
   "daily_stats": {
-    "date": "2026-04-13",
+    "date": "2026-04-14",
     "completed": false,
     "words": [
       "Démocratie",
