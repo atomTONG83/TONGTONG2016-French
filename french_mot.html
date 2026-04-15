@@ -276,8 +276,8 @@
         const FULL_DB_PATH = "./french_full_db.json";
         
         // 版本信息
-        const APP_VERSION = "4.0.2";
-        const LAST_UPDATE = "2026-03-28";
+        const APP_VERSION = "4.0.3";
+        const LAST_UPDATE = "2026-04-15";
         const VERSION_CHANGES = [
             "v3.6 (2026-03-22): Correction du système de récompense (3100 étoiles), mécanisme de report des révisions, ajout du bouton de rafraîchissement forcé",
             "v3.5 (2026-03-05): Migration complète vers Supabase - synchronisation cloud, correction de la sauvegarde du carnet",
@@ -1284,6 +1284,21 @@
             
             // 如果掌握了所有今日新词 AND 完成了所有待复习旧词，且尚未标记为完成，且日期是今天
             if (masteredToday >= todayWords.length && reviewStatus.completed && isToday && !gData.daily_stats.completed) {
+                // 🆕 关键修复：将 sessionMastery 同步到 gData.notebook
+                // 确保服务器保存的 notebook 中 lvl 正确更新
+                todayWords.forEach(function(tw) {
+                    if (sessionMastery[tw.word] >= MASTERY_GOAL) {
+                        var n = gData.notebook.find(function(e) { return e.word === tw.word; });
+                        if (n && n.lvl < 2) {
+                            n.lvl = 2;
+                            var nextDate = new Date();
+                            nextDate.setDate(nextDate.getDate() + 7);
+                            n.next = nextDate.toISOString().split('T')[0];
+                            console.log('✅ 同步掌握状态到 notebook:', tw.word, '-> lvl 2');
+                        }
+                    }
+                });
+                
                 gData.daily_stats.completed = true;
                 if (!gData.stars) gData.stars = 0;
                 gData.stars += 100; // 核心奖励：完成每日所有新词+所有待复习旧词，获得100星星
