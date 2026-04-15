@@ -1,5 +1,5 @@
 {
-  "stars": 4000,
+  "stars": 4100,
   "last_milestone": 4000,
   "notebook": [
     {
@@ -928,32 +928,32 @@
     },
     {
       "word": "arbre",
-      "lvl": 1,
-      "next": "2026-04-15",
+      "lvl": 2,
+      "next": "2026-04-22",
       "err_days": 0
     },
     {
       "word": "joli",
-      "lvl": 1,
-      "next": "2026-04-15",
+      "lvl": 2,
+      "next": "2026-04-22",
       "err_days": 0
     },
     {
       "word": "vivant",
-      "lvl": 1,
-      "next": "2026-04-15",
+      "lvl": 2,
+      "next": "2026-04-22",
       "err_days": 0
     },
     {
       "word": "amitié",
-      "lvl": 1,
-      "next": "2026-04-15",
+      "lvl": 2,
+      "next": "2026-04-22",
       "err_days": 0
     },
     {
       "word": "ancien",
-      "lvl": 1,
-      "next": "2026-04-15",
+      "lvl": 2,
+      "next": "2026-04-22",
       "err_days": 0
     },
     {
@@ -1229,7 +1229,7 @@
   ],
   "daily_stats": {
     "date": "2026-04-15",
-    "completed": false,
+    "completed": true,
     "words": [
       "arbre",
       "joli",
@@ -1237,8 +1237,8 @@
       "amitié",
       "ancien"
     ],
-    "rewarded_at": null,
-    "rewarded_stars": 0
+    "rewarded_at": "2026-04-15T17:00:00.000Z",
+    "rewarded_stars": 100
   },
   "streak": {
     "current": 1,
