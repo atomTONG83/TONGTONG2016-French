@@ -959,31 +959,31 @@
     {
       "word": "artiste",
       "lvl": 1,
-      "next": "2026-04-15",
+      "next": "2026-04-16",
       "err_days": 0
     },
     {
       "word": "attentif",
       "lvl": 1,
-      "next": "2026-04-15",
+      "next": "2026-04-16",
       "err_days": 0
     },
     {
       "word": "célébrer",
       "lvl": 1,
-      "next": "2026-04-15",
+      "next": "2026-04-16",
       "err_days": 0
     },
     {
       "word": "choisir",
       "lvl": 1,
-      "next": "2026-04-15",
+      "next": "2026-04-16",
       "err_days": 0
     },
     {
       "word": "comprendre",
       "lvl": 1,
-      "next": "2026-04-15",
+      "next": "2026-04-16",
       "err_days": 0
     },
     {
@@ -1228,17 +1228,17 @@
     }
   ],
   "daily_stats": {
-    "date": "2026-04-15",
-    "completed": true,
+    "date": "2026-04-16",
+    "completed": false,
     "words": [
-      "arbre",
-      "joli",
-      "vivant",
-      "amitié",
-      "ancien"
+      "artiste",
+      "attentif",
+      "célébrer",
+      "choisir",
+      "comprendre"
     ],
-    "rewarded_at": "2026-04-15T17:00:00.000Z",
-    "rewarded_stars": 100
+    "rewarded_at": null,
+    "rewarded_stars": 0
   },
   "streak": {
     "current": 1,
