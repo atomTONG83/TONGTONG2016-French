@@ -959,31 +959,31 @@
     {
       "word": "artiste",
       "lvl": 1,
-      "next": "2026-04-30",
+      "next": "2026-05-01",
       "err_days": 0
     },
     {
       "word": "attentif",
       "lvl": 1,
-      "next": "2026-04-30",
+      "next": "2026-05-01",
       "err_days": 0
     },
     {
       "word": "célébrer",
       "lvl": 1,
-      "next": "2026-04-30",
+      "next": "2026-05-01",
       "err_days": 0
     },
     {
       "word": "choisir",
       "lvl": 1,
-      "next": "2026-04-30",
+      "next": "2026-05-01",
       "err_days": 0
     },
     {
       "word": "comprendre",
       "lvl": 1,
-      "next": "2026-04-30",
+      "next": "2026-05-01",
       "err_days": 0
     },
     {
@@ -1228,7 +1228,7 @@
     }
   ],
   "daily_stats": {
-    "date": "2026-04-30",
+    "date": "2026-05-01",
     "completed": false,
     "words": [
       "artiste",
