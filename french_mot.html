@@ -966,27 +966,20 @@
                         gCombo = sessionData.gCombo || 0;
                         console.log('Session loaded for date:', today, 'sessionMastery:', Object.keys(sessionMastery).length, 'words');
                         
-                        // 🔧 修复：如果今日单词被错误标记为已掌握（MASTERY_GOAL），但今天还没结束，重置为0
-                        // 防止iPad修复逻辑导致的错误
+                        // 🔧 v4.0.4 修复：不再重置已掌握的sessionMastery
+                        // 之前逻辑会把sessionMastery[word]===MASTERY_GOAL的单词重置为0
+                        // 导致童童完成学习后重新打开App，所有进度清零，星星无法发放
+                        // 现在：已掌握的单词保持进度，只有daily_stats.completed=false时才允许继续
                         const todayDate = new Date().toISOString().split('T')[0];
                         if (gData.daily_stats && gData.daily_stats.date === todayDate && gData.daily_stats.words) {
-                            let resetCount = 0;
-                            gData.daily_stats.words.forEach(function(word) {
-                                if (sessionMastery[word] === MASTERY_GOAL) {
-                                    // 检查单词是否在生词本中
-                                    const inNotebook = gData.notebook && gData.notebook.some(function(n) { return n.word === word; });
-                                    // 特殊处理：即使单词在生词本中，如果今天是同一天且标记为完成，
-                                    // 但可能是iPad修复逻辑的错误标记，也重置为0
-                                    // 用户需要重新练习这些单词
-                                    sessionMastery[word] = 0;
-                                    resetCount++;
-                                    console.log(`  🔄 ${word} 重置sessionMastery为0（修复iPad错误标记）`);
-                                }
-                            });
-                            if (resetCount > 0) {
-                                console.log(`🔧 修复完成：${resetCount}个今日单词的sessionMastery已重置（修复iPad错误）`);
-                                saveSession(); // 保存修复后的状态
+                            // 如果今日已完成，恢复所有单词的掌握状态
+                            if (gData.daily_stats.completed) {
+                                gData.daily_stats.words.forEach(function(word) {
+                                    sessionMastery[word] = MASTERY_GOAL;
+                                });
+                                console.log('✅ 今日已完成，恢复所有单词掌握状态');
                             }
+                            console.log('  今日单词sessionMastery保持原状，不重置');
                         }
                     } else {
                         // 如果是不同日期，清空会话状态
@@ -1245,11 +1238,18 @@
             const today = new Date().toISOString().split('T')[0];
             let reviewWords = [];
             if (gData.notebook) {
-                // 🆕 修改逻辑：只检查【今天到期】的复习单词，不包括积压的
+                // 🆕 v4.0.4 修复：限制每日复习词数量，最多10个
+                // 之前逻辑要求完成所有今天到期的复习词
+                // 如果童童多天没学习，过期单词可能多达几十个，导致永远无法完成每日目标
                 reviewWords = gData.notebook.filter(function(n) { 
-                    // 必须是【今天】需要复习的（不是今天之前积压的），且不是今天刚学的新词
-                    return n.next === today && !gData.daily_stats.words.includes(n.word);
+                    // 今天是到期日或已过期（≤今天），且不是今天的新词
+                    return n.next <= today && !gData.daily_stats.words.includes(n.word);
                 });
+                // 限制最多10个复习词，避免过期太多时无法完成
+                if (reviewWords.length > 10) {
+                    reviewWords = reviewWords.slice(0, 10);
+                    console.log('⚠️ 复习词超过10个，限制为前10个');
+                }
             }
             let masteredReview = 0;
             reviewWords.forEach(function(n) {
