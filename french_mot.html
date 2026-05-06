@@ -237,6 +237,8 @@
         let gGameMode = 'new';
         let gCombo = 0;
         let gIsLocked = false;
+        let gSaveInFlight = false;
+        let gSaveAgain = false;
         let API = "";
         
         // ===== DATABASE =====
@@ -295,7 +297,7 @@
             // 优先尝试从Supabase加载单词库
             if (window.FrenchSupabase && window.FrenchSupabase.supabaseReady) {
                 try {
-                    const vocabulary = await window.FrenchSupabase.loadVocabularyFromSupabase();
+                    const vocabulary = await withTimeout(window.FrenchSupabase.loadVocabularyFromSupabase(), 3500, 'Supabase vocabulary load');
                     if (vocabulary && vocabulary.length > 0) {
                         FULL_DB = vocabulary;
                         console.log("✅ 从Supabase加载单词库成功:", FULL_DB.length, "个单词");
@@ -333,6 +335,58 @@
         function findWordInDB(word) {
             const db = getCurrentDB();
             return db.find(function(d) { return d.word === word; });
+        }
+
+        function withTimeout(promise, timeoutMs, label) {
+            let timerId;
+            const timeout = new Promise(function(_, reject) {
+                timerId = setTimeout(function() {
+                    reject(new Error((label || 'Operation') + ' timed out after ' + timeoutMs + 'ms'));
+                }, timeoutMs);
+            });
+
+            return Promise.race([promise, timeout]).finally(function() {
+                clearTimeout(timerId);
+            });
+        }
+
+        function isUsableLearningData(data) {
+            return !!(data && typeof data === 'object' && Array.isArray(data.notebook) && data.daily_stats);
+        }
+
+        function sourcePriority(name) {
+            if (name === 'local') return 3;
+            if (name === 'cloud') return 2;
+            if (name === 'server') return 1;
+            return 0;
+        }
+
+        function compareLearningSources(a, b, today) {
+            const aData = a.data || {};
+            const bData = b.data || {};
+            const aStars = Number(aData.stars || 0);
+            const bStars = Number(bData.stars || 0);
+            if (aStars !== bStars) return bStars - aStars;
+
+            const aWords = Array.isArray(aData.notebook) ? aData.notebook.length : 0;
+            const bWords = Array.isArray(bData.notebook) ? bData.notebook.length : 0;
+            if (aWords !== bWords) return bWords - aWords;
+
+            const aToday = aData.daily_stats && aData.daily_stats.date === today ? 1 : 0;
+            const bToday = bData.daily_stats && bData.daily_stats.date === today ? 1 : 0;
+            if (aToday !== bToday) return bToday - aToday;
+
+            const aDailyWords = Array.isArray(aData.daily_stats?.words) ? aData.daily_stats.words.length : 0;
+            const bDailyWords = Array.isArray(bData.daily_stats?.words) ? bData.daily_stats.words.length : 0;
+            if (aDailyWords !== bDailyWords) return bDailyWords - aDailyWords;
+
+            return sourcePriority(b.name) - sourcePriority(a.name);
+        }
+
+        function chooseBestLearningSource(sources, today) {
+            return sources
+                .filter(function(source) { return isUsableLearningData(source.data); })
+                .sort(function(a, b) { return compareLearningSources(a, b, today); })[0] || null;
         }
         
         // ===== INITIALIZATION =====
@@ -395,10 +449,11 @@
                     console.warn("服务器加载失败:", fetchErr);
                 }
                 
-                // 2b. 然后尝试从云端(Supabase)加载（备用）
-                if (!serverData && window.FrenchSupabase && window.FrenchSupabase.supabaseReady) {
+                // 2b. 尝试从云端(Supabase)加载。不要因为静态文件存在就跳过云端，
+                // 否则多设备学习时会长期使用旧的 french_data.json。
+                if (window.FrenchSupabase && window.FrenchSupabase.supabaseReady) {
                     try {
-                        cloudData = await window.FrenchSupabase.loadFromSupabase();
+                        cloudData = await withTimeout(window.FrenchSupabase.loadFromSupabase(), 3500, 'Supabase progress load');
                         if (cloudData) {
                             console.log('✅ 从云端加载数据成功:', cloudData.stars, '星星');
                         }
@@ -415,23 +470,13 @@
                     console.warn("LocalStorage读取失败:", e);
                 }
                 
-                // 3. 决定使用哪个数据源（🆕 v3.6 修复：合并策略）
-                // 策略：使用星星数最多的数据源，然后同步到其他端
-                let maxStars = 0;
-                let bestSource = null;
-                
-                if (cloudData && cloudData.stars > maxStars) {
-                    maxStars = cloudData.stars;
-                    bestSource = 'cloud';
-                }
-                if (serverData && serverData.stars > maxStars) {
-                    maxStars = serverData.stars;
-                    bestSource = 'server';
-                }
-                if (localData && localData.stars > maxStars) {
-                    maxStars = localData.stars;
-                    bestSource = 'local';
-                }
+                // 3. 决定使用哪个数据源（星星优先，其次单词数、今日数据、本机缓存）
+                const bestCandidate = chooseBestLearningSource([
+                    { name: 'cloud', data: cloudData },
+                    { name: 'server', data: serverData },
+                    { name: 'local', data: localData }
+                ], today);
+                let bestSource = bestCandidate ? bestCandidate.name : null;
                 
                 console.log('📊 数据源对比 - 云端:', cloudData?.stars || 0, '服务器:', serverData?.stars || 0, '本地:', localData?.stars || 0, '-> 选择:', bestSource);
                 
@@ -464,8 +509,12 @@
                     }
                     try { localStorage.setItem('french_learning_data', JSON.stringify(gData)); } catch(e) {}
                     updateSyncStatus("同步云端 ✓", "#3498db");
-                } else if (localData) {
+                } else if (isUsableLearningData(localData)) {
                     gData = localData;
+                    if (window.FrenchSupabase && window.FrenchSupabase.supabaseReady && (!cloudData || Number(cloudData.stars || 0) < Number(gData.stars || 0))) {
+                        console.log('🔄 本机缓存较新，后台同步到云端...');
+                        window.FrenchSupabase.saveToSupabase(gData);
+                    }
                     updateSyncStatus("离线模式", "#e67e22");
                 } else {
                     // 全新用户
@@ -493,6 +542,10 @@
                     console.error("❌ daily_stats.words无效:", gData.daily_stats);
                     gTodayWords = [];
                 }
+
+                // 数据源确定后再恢复会话状态。首次进入 init 时的 loadSession 只能看到默认 gData，
+                // 会漏掉“今日已完成”等依赖 daily_stats 的恢复逻辑。
+                loadSession();
                 
                 // 🔧 iPAD FIX: Ensure sessionMastery has today's words if completed
                 // 修改：只有当单词已经在生词本中且今天已真正完成学习时才设置sessionMastery
@@ -798,9 +851,18 @@
         }
         
         async function saveData() {
+            if (gSaveInFlight) {
+                gSaveAgain = true;
+                updateSyncStatus("Save queued...", "#f39c12");
+                return;
+            }
+
+            gSaveInFlight = true;
             try {
+                const dataToSave = JSON.parse(JSON.stringify(gData));
+
                 // 0. 数据验证
-                if (!validateFrenchData(gData)) {
+                if (!validateFrenchData(dataToSave)) {
                     console.error("❌ 数据验证失败，取消保存");
                     updateSyncStatus("Validation Failed", "#e74c3c");
                     return;
@@ -809,16 +871,16 @@
                 // 1. 先保存到本地存储（快速反馈）
                 // 🔧 修复：如果数据太大，只保存关键字段
                 try {
-                    localStorage.setItem('french_learning_data', JSON.stringify(gData));
+                    localStorage.setItem('french_learning_data', JSON.stringify(dataToSave));
                 } catch (e) {
                     if (e.name === 'QuotaExceededError' || e.message.includes('quota')) {
                         console.warn('⚠️ LocalStorage 配额超限，只保存关键字段');
                         // 只保存关键字段
                         const minimalData = {
-                            stars: gData.stars,
-                            last_milestone: gData.last_milestone,
-                            notebook: gData.notebook.slice(0, 50), // 只保存前50个单词
-                            daily_stats: gData.daily_stats
+                            stars: dataToSave.stars,
+                            last_milestone: dataToSave.last_milestone,
+                            notebook: dataToSave.notebook.slice(0, 50), // 只保存前50个单词
+                            daily_stats: dataToSave.daily_stats
                         };
                         localStorage.setItem('french_learning_data', JSON.stringify(minimalData));
                     } else {
@@ -828,8 +890,8 @@
                 
                 // 2. 记录有效数据
                 try {
-                    localStorage.setItem('last_valid_stars', gData.stars);
-                    localStorage.setItem('last_valid_word_count', gData.notebook.length);
+                    localStorage.setItem('last_valid_stars', dataToSave.stars);
+                    localStorage.setItem('last_valid_word_count', dataToSave.notebook.length);
                 } catch (e) {
                     console.warn('⚠️ LocalStorage 配额超限，跳过记录有效数据');
                 }
@@ -853,7 +915,7 @@
                 if (window.FrenchSupabase && window.FrenchSupabase.supabaseReady) {
                     try {
                         console.log('🔄 开始保存到 Supabase...');
-                        const cloudResult = await window.FrenchSupabase.saveToSupabase(gData);
+                        const cloudResult = await window.FrenchSupabase.saveToSupabase(dataToSave);
                         console.log('🔄 Supabase 返回:', cloudResult);
                         if (cloudResult.status === 'success') {
                             cloudSaved = true;
@@ -876,7 +938,7 @@
                         var response = await fetch(API + "/save_data", { 
                             method: 'POST', 
                             headers: { 'Content-Type': 'application/json' }, 
-                            body: JSON.stringify(gData) 
+                            body: JSON.stringify(dataToSave) 
                         });
                         
                         if (response.ok) {
@@ -925,6 +987,12 @@
                 if (statusEl) {
                     statusEl.innerText = "保存错误: " + e.message;
                     statusEl.style.background = "#e74c3c";
+                }
+            } finally {
+                gSaveInFlight = false;
+                if (gSaveAgain) {
+                    gSaveAgain = false;
+                    setTimeout(saveData, 0);
                 }
             }
         }

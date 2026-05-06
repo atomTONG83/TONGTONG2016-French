@@ -18,6 +18,7 @@ let supabaseClient = null;
 let currentProfileId = null;
 let syncQueue = [];
 let isOnline = navigator.onLine;
+let isSyncingQueue = false;
 
 // 初始化Supabase客户端
 function initSupabase() {
@@ -135,7 +136,7 @@ async function syncNotebookToSupabase(profileId, notebook) {
 }
 
 // 保存数据到Supabase（云端）
-async function saveToSupabase(gData) {
+async function saveToSupabase(gData, options = {}) {
   if (!supabaseClient) {
     console.warn('Supabase客户端未初始化，跳过云端保存');
     return { status: 'skipped', reason: 'client_not_initialized' };
@@ -143,7 +144,7 @@ async function saveToSupabase(gData) {
 
   if (!isOnline) {
     console.warn('网络离线，数据已加入同步队列');
-    addToSyncQueue(gData);
+    if (!options.fromQueue) addToSyncQueue(gData);
     return { status: 'queued', reason: 'offline' };
   }
 
@@ -188,7 +189,7 @@ async function saveToSupabase(gData) {
     return { status: 'success', stars: gData.stars };
   } catch (error) {
     console.error('❌ 云端保存失败:', error);
-    addToSyncQueue(gData);
+    if (!options.fromQueue) addToSyncQueue(gData);
     return {
       status: 'queued',
       error: error.message,
@@ -352,8 +353,10 @@ function addToSyncQueue(gData) {
     timestamp: Date.now(),
     attempts: 0
   };
-  
-  syncQueue.push(queueItem);
+
+  // 保存的是完整学习快照，旧快照重试成功反而可能覆盖新进度。
+  // 因此队列只保留最新状态，保证离线恢复后写回的是最近一次学习结果。
+  syncQueue = [queueItem];
   saveSyncQueue();
   
   // 如果队列不为空，启动同步尝试
@@ -389,43 +392,66 @@ async function trySyncQueue() {
   if (!isOnline || !supabaseClient || syncQueue.length === 0) {
     return;
   }
-  
-  console.log(`🔄 尝试同步队列 (${syncQueue.length}个待同步项)`);
-  
-  const failedItems = [];
-  
-  for (const item of syncQueue) {
-    item.attempts = (item.attempts || 0) + 1;
-    
-    try {
-      const result = await saveToSupabase(item.data);
-      
-      if (result.status === 'success') {
-        console.log(`✅ 队列项同步成功 (尝试 ${item.attempts}次)`);
-        // 成功项不移入failedItems，即从队列中移除
-      } else {
-        console.warn(`⚠️ 队列项同步失败，保留重试 (尝试 ${item.attempts}次)`);
-        failedItems.push(item);
-      }
-    } catch (error) {
-      console.error(`❌ 队列项同步异常:`, error);
-      if (item.attempts < 5) { // 最多尝试5次
-        failedItems.push(item);
-      } else {
-        console.warn(`🗑️ 队列项达到最大重试次数，放弃:`, item);
-      }
-    }
-    
-    // 短暂延迟，避免请求过于频繁
-    await new Promise(resolve => setTimeout(resolve, 500));
+
+  if (isSyncingQueue) {
+    return;
   }
-  
-  syncQueue = failedItems;
+
+  isSyncingQueue = true;
+  const currentQueue = syncQueue.splice(0);
   saveSyncQueue();
-  
-  if (syncQueue.length > 0) {
-    // 如果还有失败的项，30秒后再次尝试
-    setTimeout(trySyncQueue, 30000);
+  console.log(`🔄 尝试同步队列 (${currentQueue.length}个待同步项)`);
+
+  const failedItems = [];
+
+  try {
+    for (const item of currentQueue) {
+      item.attempts = (item.attempts || 0) + 1;
+
+      try {
+        const result = await saveToSupabase(item.data, { fromQueue: true });
+
+        if (result.status === 'success') {
+          console.log(`✅ 队列项同步成功 (尝试 ${item.attempts}次)`);
+          // 成功项不移入failedItems，即从队列中移除
+        } else if (item.attempts < 5) {
+          console.warn(`⚠️ 队列项同步失败，保留重试 (尝试 ${item.attempts}次)`);
+          failedItems.push(item);
+        } else {
+          console.warn(`🗑️ 队列项达到最大重试次数，放弃:`, item);
+        }
+      } catch (error) {
+        console.error(`❌ 队列项同步异常:`, error);
+        if (item.attempts < 5) { // 最多尝试5次
+          failedItems.push(item);
+        } else {
+          console.warn(`🗑️ 队列项达到最大重试次数，放弃:`, item);
+        }
+      }
+
+      // 短暂延迟，避免请求过于频繁
+      await new Promise(resolve => setTimeout(resolve, 500));
+    }
+  } finally {
+    isSyncingQueue = false;
+  }
+
+  if (failedItems.length > 0) {
+    // 若同步期间产生了更新快照，优先保留更新快照；否则保留失败项。
+    if (syncQueue.length === 0) {
+      syncQueue = failedItems.slice(-1);
+    }
+    saveSyncQueue();
+
+    if (syncQueue.length > 0) {
+      // 如果还有失败的项，30秒后再次尝试
+      setTimeout(trySyncQueue, 30000);
+    }
+  } else {
+    saveSyncQueue();
+    if (syncQueue.length > 0) {
+      setTimeout(trySyncQueue, 2000);
+    }
   }
 }
 
