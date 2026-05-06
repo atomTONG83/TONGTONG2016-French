@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>💎 Le Trésor des Mots de Jingyi</title>
     <style>
-        :root { --p: #3498db; --s: #2ecc71; --e: #e74c3c; --w: #f1c40f; --d: #2c3e50; --rv: #9b59b6; }
+        :root { --p: #3498db; --s: #2ecc71; --e: #e74c3c; --w: #f1c40f; --d: #2c3e50; --rv: #9b59b6; --accent-amber: #f39c12; }
         body { font-family: -apple-system, sans-serif; background: #f0f4f8; padding: 20px; color: #333; }
         .container { max-width: 800px; margin: 0 auto; }
         .header { text-align: center; margin-bottom: 20px; }
@@ -187,8 +187,6 @@
 
     <div id="sync-status">Initialisation...</div>
 
-    </div>
-
     <div id="nbModal" class="modal">
         <div class="modal-content" style="max-width: 600px;">
             <span class="close" onclick="closeModal('nbModal')">&times;</span>
@@ -227,6 +225,13 @@
         const DATA_PATH = "./french_data.json";
         const INTERVALS = [1, 2, 4, 7, 15, 30, 60];
         const MASTERY_GOAL = 2;
+        const DATA_SCHEMA_VERSION = "2026-05-06";
+        const PAGE_CACHE_KEYS = {
+            learningData: 'french_learning_data',
+            pendingSave: 'french_pending_save',
+            appVersion: 'french_app_version',
+            schemaVersion: 'french_data_schema_version'
+        };
         
         // ===== STATE =====
         let gData = { stars: 100, notebook: [], daily_stats: { date: "", completed: false, words: [] }, last_milestone: 0 };
@@ -239,6 +244,7 @@
         let gIsLocked = false;
         let gSaveInFlight = false;
         let gSaveAgain = false;
+        let gPendingSource = null;
         let API = "";
         
         // ===== DATABASE =====
@@ -278,9 +284,10 @@
         const FULL_DB_PATH = "./french_full_db.json";
         
         // 版本信息
-        const APP_VERSION = "4.0.3";
-        const LAST_UPDATE = "2026-04-15";
+        const APP_VERSION = "4.1.0";
+        const LAST_UPDATE = "2026-05-06";
         const VERSION_CHANGES = [
+            "v4.1.0 (2026-05-06): Protection de la source french_data.json, sauvegarde locale contrôlée, liste de révision quotidienne figée",
             "v3.6 (2026-03-22): Correction du système de récompense (3100 étoiles), mécanisme de report des révisions, ajout du bouton de rafraîchissement forcé",
             "v3.5 (2026-03-05): Migration complète vers Supabase - synchronisation cloud, correction de la sauvegarde du carnet",
             "v3.4 (2026-03-02): Correction iPad - affichage forcé de l'état 'terminé' lorsque les données indiquent la complétion",
@@ -294,7 +301,19 @@
         
         // ===== HELPER FUNCTIONS =====
         async function loadFullDatabase() {
-            // 优先尝试从Supabase加载单词库
+            // 词库只有几十 KB，本地静态文件是首屏最稳路径；Supabase 只做后台刷新。
+            try {
+                const response = await fetch(FULL_DB_PATH + "?t=" + Date.now());
+                if (response.ok) {
+                    FULL_DB = await response.json();
+                    console.log("📁 从本地文件加载单词库成功:", FULL_DB.length, "个单词");
+                    refreshVocabularyFromSupabase();
+                    return true;
+                }
+            } catch (error) {
+                console.warn("无法加载本地单词库文件:", error);
+            }
+
             if (window.FrenchSupabase && window.FrenchSupabase.supabaseReady) {
                 try {
                     const vocabulary = await withTimeout(window.FrenchSupabase.loadVocabularyFromSupabase(), 3500, 'Supabase vocabulary load');
@@ -302,30 +321,37 @@
                         FULL_DB = vocabulary;
                         console.log("✅ 从Supabase加载单词库成功:", FULL_DB.length, "个单词");
                         return true;
-                    } else {
-                        console.warn("从Supabase加载单词库返回空数据，尝试本地文件");
                     }
                 } catch (supabaseError) {
-                    console.warn("Supabase单词库加载失败，尝试本地文件:", supabaseError);
+                    console.warn("Supabase单词库加载失败:", supabaseError);
                 }
-            }
-            
-            // 如果Supabase加载失败，回退到本地静态文件
-            try {
-                const response = await fetch(FULL_DB_PATH + "?t=" + Date.now());
-                if (response.ok) {
-                    FULL_DB = await response.json();
-                    console.log("📁 从本地文件加载单词库成功:", FULL_DB.length, "个单词");
-                    return true;
-                }
-            } catch (error) {
-                console.warn("无法加载本地单词库文件:", error);
             }
             
             // 如果所有加载都失败，使用基础数据库
             FULL_DB = BASE_DB;
             console.log("⚠️ 使用基础数据库:", BASE_DB.length, "个单词");
             return false;
+        }
+
+        function refreshVocabularyFromSupabase() {
+            if (!window.FrenchSupabase || !window.FrenchSupabase.supabaseReady) return;
+
+            withTimeout(window.FrenchSupabase.loadVocabularyFromSupabase(), 3500, 'Supabase vocabulary refresh')
+                .then(function(vocabulary) {
+                    if (vocabulary && vocabulary.length > (FULL_DB || []).length) {
+                        FULL_DB = vocabulary;
+                        console.log("🔄 后台词库刷新完成:", FULL_DB.length, "个单词");
+                        if (gTodayWords && gTodayWords.length > 0) {
+                            gTodayWords = gData.daily_stats.words.map(function(w) {
+                                return findWordInDB(w);
+                            }).filter(function(x) { return x; });
+                            refreshUI();
+                        }
+                    }
+                })
+                .catch(function(error) {
+                    console.warn("后台词库刷新失败:", error);
+                });
         }
         
         function getCurrentDB() {
@@ -352,6 +378,87 @@
 
         function isUsableLearningData(data) {
             return !!(data && typeof data === 'object' && Array.isArray(data.notebook) && data.daily_stats);
+        }
+
+        function todayIso() {
+            return new Date().toISOString().split('T')[0];
+        }
+
+        function isLocalServerWritable() {
+            const host = window.location.hostname;
+            const isLocalHost = host === "localhost" || host === "127.0.0.1" || host === MAC_IP;
+            return window.location.protocol === 'http:' && isLocalHost;
+        }
+
+        function normalizeNotebookItem(item) {
+            if (!item || !item.word) return null;
+
+            return {
+                word: item.word,
+                lvl: Number(item.lvl ?? item.level ?? 0),
+                next: item.next || item.nextReview || item.next_review || todayIso(),
+                err_days: Number(item.err_days ?? item.errorStreak ?? item.error_days ?? 0)
+            };
+        }
+
+        function normalizeLearningData(data) {
+            if (!data || typeof data !== 'object') return data;
+
+            const normalized = JSON.parse(JSON.stringify(data));
+            normalized.stars = Number(normalized.stars || 0);
+            normalized.last_milestone = normalized.last_milestone || 1000;
+            normalized.notebook = (Array.isArray(normalized.notebook) ? normalized.notebook : [])
+                .map(normalizeNotebookItem)
+                .filter(function(item) { return item && item.word; });
+
+            if (!normalized.daily_stats || typeof normalized.daily_stats !== 'object') {
+                normalized.daily_stats = { date: "", completed: false, words: [] };
+            }
+            if (!Array.isArray(normalized.daily_stats.words)) {
+                normalized.daily_stats.words = [];
+            }
+            if (normalized.daily_stats.review_words && !Array.isArray(normalized.daily_stats.review_words)) {
+                normalized.daily_stats.review_words = [];
+            }
+            if (typeof normalized.daily_stats.completed === 'string') {
+                normalized.daily_stats.completed = normalized.daily_stats.completed === 'true';
+            } else {
+                normalized.daily_stats.completed = !!normalized.daily_stats.completed;
+            }
+
+            return normalized;
+        }
+
+        function getPendingSaveInfo() {
+            try {
+                const saved = localStorage.getItem(PAGE_CACHE_KEYS.pendingSave);
+                return saved ? JSON.parse(saved) : null;
+            } catch(e) {
+                return null;
+            }
+        }
+
+        function markPendingSave(reason, data) {
+            try {
+                const snapshot = data || gData || {};
+                localStorage.setItem(PAGE_CACHE_KEYS.pendingSave, JSON.stringify({
+                    reason: reason || 'unknown',
+                    stars: Number(snapshot.stars || 0),
+                    words: Array.isArray(snapshot.notebook) ? snapshot.notebook.length : 0,
+                    daily_date: snapshot.daily_stats?.date || '',
+                    completed: !!snapshot.daily_stats?.completed,
+                    timestamp: new Date().toISOString()
+                }));
+            } catch(e) {}
+        }
+
+        function clearPendingSave() {
+            try { localStorage.removeItem(PAGE_CACHE_KEYS.pendingSave); } catch(e) {}
+            gPendingSource = null;
+        }
+
+        function hasConfirmedServerAck() {
+            return !getPendingSaveInfo();
         }
 
         function sourcePriority(name) {
@@ -388,6 +495,36 @@
                 .filter(function(source) { return isUsableLearningData(source.data); })
                 .sort(function(a, b) { return compareLearningSources(a, b, today); })[0] || null;
         }
+
+        function hasPendingProgress(candidateData, canonicalData, today) {
+            if (!isUsableLearningData(candidateData)) return false;
+            if (!isUsableLearningData(canonicalData)) return true;
+
+            const candidateStars = Number(candidateData.stars || 0);
+            const canonicalStars = Number(canonicalData.stars || 0);
+            if (candidateStars > canonicalStars) return true;
+
+            const candidateWords = Array.isArray(candidateData.notebook) ? candidateData.notebook.length : 0;
+            const canonicalWords = Array.isArray(canonicalData.notebook) ? canonicalData.notebook.length : 0;
+            if (candidateWords > canonicalWords) return true;
+
+            const candidateDaily = candidateData.daily_stats || {};
+            const canonicalDaily = canonicalData.daily_stats || {};
+            if (candidateDaily.date === today && canonicalDaily.date !== today) return true;
+            if (candidateDaily.date === today && candidateDaily.completed && !canonicalDaily.completed) return true;
+
+            const candidateDailyWords = Array.isArray(candidateDaily.words) ? candidateDaily.words.length : 0;
+            const canonicalDailyWords = Array.isArray(canonicalDaily.words) ? canonicalDaily.words.length : 0;
+            return candidateDaily.date === today && candidateDailyWords > canonicalDailyWords;
+        }
+
+        function choosePendingLearningSource(candidates, canonicalData, today) {
+            return candidates
+                .filter(function(source) {
+                    return isUsableLearningData(source.data) && hasPendingProgress(source.data, canonicalData, today);
+                })
+                .sort(function(a, b) { return compareLearningSources(a, b, today); })[0] || null;
+        }
         
         // ===== INITIALIZATION =====
         async function init() {
@@ -412,20 +549,18 @@
                     versionEl.innerHTML = '<span class="version-badge">v' + APP_VERSION + '</span><span class="version-date">Dernière mise à jour: ' + LAST_UPDATE + '</span>';
                 }
                 
-                const today = new Date().toISOString().split('T')[0];
+                const today = todayIso();
                 
-                // 🆕 v3.6 强制刷新：检查版本变化，如果升级则清除缓存
-                const savedVersion = localStorage.getItem('french_app_version');
-                if (savedVersion !== APP_VERSION) {
-                    console.log(`🆕 版本升级: ${savedVersion} -> ${APP_VERSION}，清除缓存...`);
-                    localStorage.removeItem('french_learning_data');
-                    localStorage.removeItem('french_session_mastery');
-                    localStorage.removeItem('french_session_data');
-                    localStorage.setItem('french_app_version', APP_VERSION);
+                // UI 版本变化不再清除学习缓存；只有数据结构版本首次建立标记。
+                const savedSchemaVersion = localStorage.getItem(PAGE_CACHE_KEYS.schemaVersion);
+                if (savedSchemaVersion !== DATA_SCHEMA_VERSION) {
+                    console.log(`🧭 数据结构标记: ${savedSchemaVersion || 'none'} -> ${DATA_SCHEMA_VERSION}`);
+                    localStorage.setItem(PAGE_CACHE_KEYS.schemaVersion, DATA_SCHEMA_VERSION);
                 }
+                localStorage.setItem(PAGE_CACHE_KEYS.appVersion, APP_VERSION);
                 
-                const isLocal = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" || window.location.hostname === MAC_IP);
-                API = isLocal ? "http://" + window.location.hostname + ":" + PORT : "http://" + MAC_IP + ":" + PORT;
+                const canWriteLocal = isLocalServerWritable();
+                API = canWriteLocal ? "http://" + window.location.hostname + ":" + PORT : "";
                 
                 // 🆕 v4.0: 已移除 HTTPS 警告逻辑
                 
@@ -442,7 +577,7 @@
                 try {
                     const response = await fetch(DATA_PATH + "?t=" + Date.now());
                     if (response.ok) {
-                        serverData = await response.json();
+                        serverData = normalizeLearningData(await response.json());
                         console.log('✅ 从服务器加载数据:', serverData.stars, '星星');
                     }
                 } catch (fetchErr) {
@@ -455,6 +590,7 @@
                     try {
                         cloudData = await withTimeout(window.FrenchSupabase.loadFromSupabase(), 3500, 'Supabase progress load');
                         if (cloudData) {
+                            cloudData = normalizeLearningData(cloudData);
                             console.log('✅ 从云端加载数据成功:', cloudData.stars, '星星');
                         }
                     } catch (cloudErr) {
@@ -464,62 +600,82 @@
                 
                 // 2c. 最后尝试从本地存储加载
                 try {
-                    const localSaved = localStorage.getItem('french_learning_data');
-                    if (localSaved) localData = JSON.parse(localSaved);
+                    const localSaved = localStorage.getItem(PAGE_CACHE_KEYS.learningData);
+                    if (localSaved) localData = normalizeLearningData(JSON.parse(localSaved));
                 } catch (e) {
                     console.warn("LocalStorage读取失败:", e);
                 }
                 
-                // 3. 决定使用哪个数据源（星星优先，其次单词数、今日数据、本机缓存）
-                const bestCandidate = chooseBestLearningSource([
-                    { name: 'cloud', data: cloudData },
-                    { name: 'server', data: serverData },
-                    { name: 'local', data: localData }
-                ], today);
-                let bestSource = bestCandidate ? bestCandidate.name : null;
-                
-                console.log('📊 数据源对比 - 云端:', cloudData?.stars || 0, '服务器:', serverData?.stars || 0, '本地:', localData?.stars || 0, '-> 选择:', bestSource);
-                
-                if (bestSource === 'server' && serverData) {
+                // 3. 数据源仲裁：french_data.json 是确认主源，localStorage/Supabase 只承载待同步进度。
+                const pendingCandidate = choosePendingLearningSource([
+                    { name: 'local', data: localData },
+                    { name: 'cloud', data: cloudData }
+                ], serverData, today);
+                const pendingInfo = getPendingSaveInfo();
+                let bestSource = 'server';
+
+                console.log('📊 数据源对比 - 云端:', cloudData?.stars || 0, '服务器:', serverData?.stars || 0, '本地:', localData?.stars || 0, '待同步:', pendingCandidate?.name || 'none');
+
+                if (serverData) {
                     gData = serverData;
-                    console.log('✅ 使用服务器数据:', gData.stars, '星星');
-                    // 同步到云端（如果云端星星少）
-                    if (window.FrenchSupabase && window.FrenchSupabase.supabaseReady && cloudData && cloudData.stars < gData.stars) {
-                        console.log('🔄 同步到云端...');
-                        window.FrenchSupabase.saveToSupabase(gData);
-                    }
-                    try { localStorage.setItem('french_learning_data', JSON.stringify(gData)); } catch(e) {}
-                    updateSyncStatus("同步服务器", "#9b59b6");
-                } else if (bestSource === 'cloud' && cloudData) {
-                    // 🔧 修复：如果云端生词本为空，但本地服务器有数据，合并数据
-                    if (cloudData.notebook.length === 0 && serverData && serverData.notebook.length > 0) {
-                        console.log('⚠️ 云端生词本为空，合并本地服务器数据');
-                        gData = {
-                            ...cloudData,
-                            notebook: serverData.notebook,
-                            stars: Math.max(cloudData.stars, serverData.stars)
-                        };
-                        // 立即保存合并后的数据到云端
-                        if (window.FrenchSupabase && window.FrenchSupabase.supabaseReady) {
-                            window.FrenchSupabase.saveToSupabase(gData);
-                        }
-                    } else {
-                        gData = cloudData;
-                        console.log('✅ 从云端加载数据:', gData.stars, '星星');
-                    }
-                    try { localStorage.setItem('french_learning_data', JSON.stringify(gData)); } catch(e) {}
-                    updateSyncStatus("同步云端 ✓", "#3498db");
-                } else if (isUsableLearningData(localData)) {
-                    gData = localData;
-                    if (window.FrenchSupabase && window.FrenchSupabase.supabaseReady && (!cloudData || Number(cloudData.stars || 0) < Number(gData.stars || 0))) {
-                        console.log('🔄 本机缓存较新，后台同步到云端...');
-                        window.FrenchSupabase.saveToSupabase(gData);
-                    }
-                    updateSyncStatus("离线模式", "#e67e22");
+                    updateSyncStatus("确认主源", "#9b59b6");
+                } else if (pendingCandidate) {
+                    gData = pendingCandidate.data;
+                    bestSource = pendingCandidate.name;
+                    gPendingSource = bestSource;
+                    markPendingSave("no_confirmed_french_data", gData);
+                    updateSyncStatus("待 Mac 同步", "#f39c12");
                 } else {
-                    // 全新用户
-                    gData = { stars: 100, notebook: [], daily_stats: { date: "", completed: false, words: [] }, last_milestone: 0 };
-                    updateSyncStatus("新用户", "#9b59b6");
+                    const fallbackCandidate = chooseBestLearningSource([
+                        { name: 'local', data: localData },
+                        { name: 'cloud', data: cloudData }
+                    ], today);
+                    if (fallbackCandidate) {
+                        gData = fallbackCandidate.data;
+                        bestSource = fallbackCandidate.name;
+                        gPendingSource = bestSource;
+                        markPendingSave("fallback_without_server_data", gData);
+                        updateSyncStatus("离线缓存", "#e67e22");
+                    } else {
+                        gData = { stars: 100, notebook: [], daily_stats: { date: "", completed: false, words: [] }, last_milestone: 0 };
+                        bestSource = 'new';
+                        updateSyncStatus("新用户", "#9b59b6");
+                    }
+                }
+
+                if (pendingCandidate && serverData) {
+                    const canPromotePending = canWriteLocal || pendingInfo;
+                    if (canPromotePending) {
+                        gData = pendingCandidate.data;
+                        bestSource = pendingCandidate.name;
+                        gPendingSource = bestSource;
+                        markPendingSave(canWriteLocal ? "pending_progress_from_" + bestSource : "pending_until_local_mac_sync", gData);
+                        updateSyncStatus(canWriteLocal ? "待写入主源" : "待 Mac 同步", "#f39c12");
+                    }
+                }
+
+                gData = normalizeLearningData(gData);
+
+                if (serverData && window.FrenchSupabase && window.FrenchSupabase.supabaseReady && (!cloudData || Number(cloudData.stars || 0) < Number(serverData.stars || 0))) {
+                    console.log('🔄 用确认主源刷新 Supabase 镜像...');
+                    window.FrenchSupabase.saveToSupabase(serverData);
+                }
+
+                if (canWriteLocal && gPendingSource) {
+                    console.log('💾 检测到待同步进度，尝试写入 french_data.json 主源...');
+                    setTimeout(saveData, 0);
+                } else if (!gPendingSource) {
+                    clearPendingSave();
+                }
+
+                try { localStorage.setItem(PAGE_CACHE_KEYS.learningData, JSON.stringify(gData)); } catch(e) {}
+
+                if (bestSource === 'server' && !gPendingSource) {
+                    console.log('✅ 使用确认主源:', gData.stars, '星星');
+                } else if (gPendingSource) {
+                    console.log('⚠️ 使用待同步数据源:', gPendingSource, gData.stars, '星星');
+                } else {
+                    console.log('✅ 使用数据源:', bestSource, gData.stars, '星星');
                 }
                 
                 if (!gData.notebook) gData.notebook = [];
@@ -532,6 +688,7 @@
                     await generateDailyWords(today);
                 }
                 // 🆕 已删除清理逻辑：每日5词固定，不再替换已加入生词本的单词
+                ensureDailyReviewWords(today);
                 
                 // 安全初始化gTodayWords
                 if (gData.daily_stats && gData.daily_stats.words && Array.isArray(gData.daily_stats.words)) {
@@ -557,7 +714,11 @@
                     // 这样可以防止新添加的单词被错误标记为已掌握
                 }
                 
-                updateSyncStatus("Prêt", "#2ecc71");
+                if (getPendingSaveInfo()) {
+                    updateSyncStatus("待 Mac 同步", "#f39c12");
+                } else {
+                    updateSyncStatus("Prêt", "#2ecc71");
+                }
                 
             } catch (e) {
                 console.error("Init error:", e);
@@ -640,21 +801,54 @@
                 console.log(`⚠️ 注意：${alreadyInNotebook} 个当日新词已在生词本中，用户将看到"已添加"状态`);
             }
             
-            gData.daily_stats = { date: today, completed: false, words: newDaily };
+            gData.daily_stats = {
+                date: today,
+                completed: false,
+                words: newDaily,
+                review_words: buildDailyReviewWords(today, newDaily)
+            };
             sessionMastery = {};
             try { localStorage.removeItem('french_session_mastery'); } catch(e) {}
             console.log(`✅ 生成当日学习词 (${newDaily.length}个): ${newDaily.join(', ')}`);
             
-            // 🆕 重要：立即保存，锁定今日单词列表
+            // 🆕 重要：立即保存，锁定今日单词和当日复习清单
             if (typeof saveData === 'function') {
-                console.log('💾 立即保存当日单词列表到云端...');
+                console.log('💾 立即保存当日学习清单...');
                 try {
                     await saveData();
-                    console.log('💾 当日单词列表已成功保存到云端');
+                    console.log('💾 当日学习清单已保存');
                 } catch (saveError) {
-                    console.error('保存当日单词列表失败:', saveError);
+                    console.error('保存当日学习清单失败:', saveError);
                 }
             }
+        }
+
+        function buildDailyReviewWords(today, dailyWords) {
+            const dailySet = new Set(dailyWords || []);
+            return (gData.notebook || [])
+                .filter(function(n) {
+                    return n.next <= today && !dailySet.has(n.word);
+                })
+                .slice(0, 10)
+                .map(function(n) { return n.word; });
+        }
+
+        function ensureDailyReviewWords(today) {
+            if (!gData.daily_stats) {
+                gData.daily_stats = { date: today, completed: false, words: [], review_words: [] };
+            }
+            if (gData.daily_stats.date !== today) return;
+            if (!Array.isArray(gData.daily_stats.words)) {
+                gData.daily_stats.words = [];
+            }
+            if (!Array.isArray(gData.daily_stats.review_words)) {
+                gData.daily_stats.review_words = buildDailyReviewWords(today, gData.daily_stats.words);
+            }
+        }
+
+        function getDailyReviewWords(today) {
+            ensureDailyReviewWords(today);
+            return Array.isArray(gData.daily_stats.review_words) ? gData.daily_stats.review_words : [];
         }
         
 
@@ -814,6 +1008,22 @@
                     });
                     return false;
                 }
+                if (!Array.isArray(data.daily_stats.words)) {
+                    console.error("❌ daily_stats.words必须是数组");
+                    return false;
+                }
+                if (data.daily_stats.review_words && !Array.isArray(data.daily_stats.review_words)) {
+                    console.error("❌ daily_stats.review_words必须是数组");
+                    return false;
+                }
+
+                var invalidNotebookItem = data.notebook.find(function(item) {
+                    return !item.word || item.lvl == null || !item.next || item.err_days == null;
+                });
+                if (invalidNotebookItem) {
+                    console.error("❌ notebook条目字段不完整:", invalidNotebookItem);
+                    return false;
+                }
                 
                 // 5. 检查星星增加是否合理（每天最多+100）
                 var lastStars = parseInt(localStorage.getItem('last_valid_stars') || data.stars);
@@ -859,7 +1069,7 @@
 
             gSaveInFlight = true;
             try {
-                const dataToSave = JSON.parse(JSON.stringify(gData));
+                const dataToSave = normalizeLearningData(JSON.parse(JSON.stringify(gData)));
 
                 // 0. 数据验证
                 if (!validateFrenchData(dataToSave)) {
@@ -871,7 +1081,7 @@
                 // 1. 先保存到本地存储（快速反馈）
                 // 🔧 修复：如果数据太大，只保存关键字段
                 try {
-                    localStorage.setItem('french_learning_data', JSON.stringify(dataToSave));
+                    localStorage.setItem(PAGE_CACHE_KEYS.learningData, JSON.stringify(dataToSave));
                 } catch (e) {
                     if (e.name === 'QuotaExceededError' || e.message.includes('quota')) {
                         console.warn('⚠️ LocalStorage 配额超限，只保存关键字段');
@@ -882,7 +1092,7 @@
                             notebook: dataToSave.notebook.slice(0, 50), // 只保存前50个单词
                             daily_stats: dataToSave.daily_stats
                         };
-                        localStorage.setItem('french_learning_data', JSON.stringify(minimalData));
+                        localStorage.setItem(PAGE_CACHE_KEYS.learningData, JSON.stringify(minimalData));
                     } else {
                         throw e;
                     }
@@ -906,6 +1116,7 @@
                 // 4. 同时尝试保存到云端（Supabase）和本地服务器
                 let cloudSaved = false;
                 let localServerSaved = false;
+                const canWriteLocal = isLocalServerWritable();
                 
                 // 4a. 保存到Supabase（云端）
                 console.log('🔍 检查 Supabase:', {
@@ -932,14 +1143,14 @@
                     console.warn('⚠️ Supabase 未初始化，跳过云端保存');
                 }
                 
-                // 4b. 保存到本地服务器（保持向后兼容）
-                if (API) {
+                // 4b. 保存到本地服务器。只有本地 3333 页面才允许写入 french_data.json 主源。
+                if (API && canWriteLocal) {
                     try {
-                        var response = await fetch(API + "/save_data", { 
+                        var response = await withTimeout(fetch(API + "/save_data", { 
                             method: 'POST', 
                             headers: { 'Content-Type': 'application/json' }, 
                             body: JSON.stringify(dataToSave) 
-                        });
+                        }), 5000, 'local french_data save');
                         
                         if (response.ok) {
                             localServerSaved = true;
@@ -950,27 +1161,40 @@
                     } catch(localError) {
                         console.error('本地服务器保存失败:', localError);
                     }
+                } else {
+                    console.log('ℹ️ 当前页面不是本地 Mac 写入入口，跳过 /save_data');
+                }
+
+                if (localServerSaved) {
+                    clearPendingSave();
+                    gPendingSource = null;
+                } else {
+                    gPendingSource = gPendingSource || 'local';
+                    markPendingSave(canWriteLocal ? 'local_server_save_failed' : 'not_on_local_mac_page', dataToSave);
                 }
                 
                 // 5. 更新状态显示
                 if (statusEl) {
                     if (cloudSaved && localServerSaved) {
-                        statusEl.innerText = "同步云端 & 本地 ✓";
+                        statusEl.innerText = "主源 & 云端 ✓";
+                        statusEl.style.background = "#2ecc71";
+                    } else if (localServerSaved) {
+                        statusEl.innerText = "主源保存 ✓";
                         statusEl.style.background = "#2ecc71";
                     } else if (cloudSaved) {
-                        statusEl.innerText = "同步云端 ✓";
-                        statusEl.style.background = "#3498db";
-                    } else if (localServerSaved) {
-                        statusEl.innerText = "保存本地服务器 ✓";
-                        statusEl.style.background = "#9b59b6";
+                        statusEl.innerText = "云端缓存，待 Mac";
+                        statusEl.style.background = "#f39c12";
                     } else {
-                        statusEl.innerText = "仅本地存储";
-                        statusEl.style.background = "#95a5a6";
+                        statusEl.innerText = "待 Mac 同步";
+                        statusEl.style.background = "#e67e22";
                     }
                     
                     // 3秒后恢复
                     setTimeout(function() {
-                        if (navigator.onLine && window.FrenchSupabase && window.FrenchSupabase.isOnline()) {
+                        if (getPendingSaveInfo()) {
+                            statusEl.innerText = "待 Mac 同步";
+                            statusEl.style.background = "#f39c12";
+                        } else if (navigator.onLine && window.FrenchSupabase && window.FrenchSupabase.isOnline()) {
                             statusEl.innerText = "在线";
                             statusEl.style.background = "#3498db";
                         } else {
@@ -1131,10 +1355,10 @@
                                (sessionMastery[v.word] || 0) < MASTERY_GOAL;
                     });
                 } else {
-                    // 正常复习模式：只选择【今天到期】的复习单词
+                    const reviewWords = getDailyReviewWords(today);
+                    // 正常复习模式：使用当天启动时固定下来的复习清单
                     pool = currentDB.filter(function(v) { 
-                        const n = gData.notebook.find(function(e) { return e.word === v.word; }); 
-                        return n && n.next === today && !gTodayWords.some(function(tw) { return tw.word === v.word; }) && (sessionMastery[v.word] || 0) < MASTERY_GOAL;
+                        return reviewWords.includes(v.word) && (sessionMastery[v.word] || 0) < MASTERY_GOAL;
                     });
                 }
             }
@@ -1303,21 +1527,13 @@
         }
         
         function getReviewCompletionStatus() {
-            const today = new Date().toISOString().split('T')[0];
+            const today = todayIso();
             let reviewWords = [];
             if (gData.notebook) {
-                // 🆕 v4.0.4 修复：限制每日复习词数量，最多10个
-                // 之前逻辑要求完成所有今天到期的复习词
-                // 如果童童多天没学习，过期单词可能多达几十个，导致永远无法完成每日目标
-                reviewWords = gData.notebook.filter(function(n) { 
-                    // 今天是到期日或已过期（≤今天），且不是今天的新词
-                    return n.next <= today && !gData.daily_stats.words.includes(n.word);
+                const requiredReviewWords = getDailyReviewWords(today);
+                reviewWords = gData.notebook.filter(function(n) {
+                    return requiredReviewWords.includes(n.word);
                 });
-                // 限制最多10个复习词，避免过期太多时无法完成
-                if (reviewWords.length > 10) {
-                    reviewWords = reviewWords.slice(0, 10);
-                    console.log('⚠️ 复习词超过10个，限制为前10个');
-                }
             }
             let masteredReview = 0;
             reviewWords.forEach(function(n) {
@@ -1458,6 +1674,7 @@
                 localStorage.removeItem('french_session_data');
                 localStorage.removeItem('last_valid_stars');
                 localStorage.removeItem('last_valid_word_count');
+                localStorage.removeItem(PAGE_CACHE_KEYS.pendingSave);
                 console.log('✅ 本地缓存已清除');
             } catch(e) {
                 console.warn('清除缓存失败:', e);
@@ -1540,7 +1757,7 @@
             closeModal('nbModal');
             
             // 切换到复习模式
-            setGameMode('review');
+            setQuizMode('rev');
             
             document.getElementById('rew-val').innerText = "🧹 Mode Rattrapage !\nTu vas réviser " + selected.length + " mot(s) en retard.\nBon courage !";
             openModal('rewardModal');
@@ -1721,7 +1938,7 @@
         window.onload = init;
     </script>
     <div style="text-align: center; padding: 30px 20px; margin-top: 50px; border-top: 1px solid #ddd; color: #94a3b8; font-size: 0.75em;">
-        <span style="color: #38bdf8; font-weight: bold;">v3.6</span> · 2026-03-22 · 🔄 点击顶部刷新按钮强制更新
+        <span style="color: #38bdf8; font-weight: bold;">v4.1.0</span> · 2026-05-06 · 主源保护与复习清单优化
     </div>
 </body>
 </html>
