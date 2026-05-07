@@ -123,8 +123,8 @@
     <!-- Supabase 客户端库 -->
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <!-- 法语学习 Supabase 集成 -->
-    <script src="./config.js"></script>
-    <script src="./french_supabase.js"></script>
+    <script src="./config.js?v=4.1.3"></script>
+    <script src="./french_supabase.js?v=4.1.3"></script>
     <!-- 诊断工具 -->
     <script src="./french_diagnostic.js"></script>
 </head>
@@ -225,7 +225,7 @@
         const DATA_PATH = "./french_data.json";
         const INTERVALS = [1, 2, 4, 7, 15, 30, 60];
         const MASTERY_GOAL = 2;
-        const DATA_SCHEMA_VERSION = "2026-05-06";
+        const DATA_SCHEMA_VERSION = "2026-05-07-completion-lock";
         const PAGE_CACHE_KEYS = {
             learningData: 'french_learning_data',
             pendingSave: 'french_pending_save',
@@ -284,9 +284,10 @@
         const FULL_DB_PATH = "./french_full_db.json";
         
         // 版本信息
-        const APP_VERSION = "4.1.2";
+        const APP_VERSION = "4.1.3";
         const LAST_UPDATE = "2026-05-07";
         const VERSION_CHANGES = [
+            "v4.1.3 (2026-05-07): Verrou de complétion iPad - l'état terminé du cloud bloque les anciens caches incomplets",
             "v4.1.2 (2026-05-07): Correction iPad - nouveaux mots réellement nouveaux et liste de révision complète",
             "v4.1.1 (2026-05-07): Version web prioritaire, Supabase devient la source active pour tongtong2016.com",
             "v4.1.0 (2026-05-06): Protection de la source french_data.json, sauvegarde locale contrôlée, liste de révision quotidienne figée",
@@ -500,9 +501,17 @@
             return sourcePriority(name);
         }
 
+        function isTodayCompletedData(data, today) {
+            return !!(data && data.daily_stats && data.daily_stats.date === today && data.daily_stats.completed === true);
+        }
+
         function compareLearningSources(a, b, today) {
             const aData = a.data || {};
             const bData = b.data || {};
+            const aCompletedToday = isTodayCompletedData(aData, today) ? 1 : 0;
+            const bCompletedToday = isTodayCompletedData(bData, today) ? 1 : 0;
+            if (aCompletedToday !== bCompletedToday) return bCompletedToday - aCompletedToday;
+
             const aStars = Number(aData.stars || 0);
             const bStars = Number(bData.stars || 0);
             if (aStars !== bStars) return bStars - aStars;
@@ -523,9 +532,12 @@
         }
 
         function chooseBestLearningSource(sources, today) {
-            return sources
-                .filter(function(source) { return isUsableLearningData(source.data); })
-                .sort(function(a, b) { return compareLearningSources(a, b, today); })[0] || null;
+            const usableSources = sources.filter(function(source) { return isUsableLearningData(source.data); });
+            const completedSources = usableSources.filter(function(source) {
+                return isTodayCompletedData(source.data, today);
+            });
+            const candidateSources = completedSources.length > 0 ? completedSources : usableSources;
+            return candidateSources.sort(function(a, b) { return compareLearningSources(a, b, today); })[0] || null;
         }
 
         function hasPendingProgress(candidateData, canonicalData, today) {
@@ -561,6 +573,9 @@
         function hasInvalidDailyWords(today) {
             if (!gData.daily_stats || gData.daily_stats.date !== today || !Array.isArray(gData.daily_stats.words)) {
                 return true;
+            }
+            if (gData.daily_stats.completed === true) {
+                return false;
             }
 
             const notebookWords = new Set((gData.notebook || []).map(function(n) { return n.word; }));
@@ -752,6 +767,7 @@
                 }
 
                 gData = normalizeLearningData(gData);
+                const completedDayLocked = runtimeIsWebPrimary && applyCompletedDayLock(today, "source=" + bestSource);
 
                 if (!runtimeIsWebPrimary && serverData && window.FrenchSupabase && window.FrenchSupabase.supabaseReady && (!cloudData || Number(cloudData.stars || 0) < Number(serverData.stars || 0))) {
                     console.log('🔄 用确认主源刷新 Supabase 镜像...');
@@ -784,8 +800,8 @@
                     (gData.daily_stats.date === today && (!gData.daily_stats.words || gData.daily_stats.words.length === 0))) {
                     await generateDailyWords(today);
                 }
-                const repairedDailyWords = repairDailyWordsIfNeeded(today);
-                const repairedReviewWords = ensureDailyReviewWords(today);
+                const repairedDailyWords = completedDayLocked ? false : repairDailyWordsIfNeeded(today);
+                const repairedReviewWords = completedDayLocked ? false : ensureDailyReviewWords(today);
                 if (repairedDailyWords || repairedReviewWords) {
                     console.log("💾 保存修复后的今日学习/复习清单...");
                     setTimeout(saveData, 0);
@@ -809,10 +825,8 @@
                 // 修改：只有当单词已经在生词本中且今天已真正完成学习时才设置sessionMastery
                 if (gData.daily_stats.date === today && gData.daily_stats.completed === true) {
                     console.log('📱 iPad Fix: Today is marked completed, checking sessionMastery');
-                    // 不再自动设置所有生词本单词为已掌握
-                    // 只恢复之前保存的sessionMastery状态
-                    // 新增逻辑：如果今天标记为完成，但生词本中的今日单词sessionMastery未达到目标，不预设为已掌握
-                    // 这样可以防止新添加的单词被错误标记为已掌握
+                    applyCompletedDayLock(today, "post_session_restore");
+                    saveSession();
                 }
                 
                 if (getPendingSaveInfo()) {
@@ -954,8 +968,33 @@
         }
 
         function getDailyReviewWords(today) {
+            if (gData.daily_stats && gData.daily_stats.date === today && gData.daily_stats.completed === true) {
+                return [];
+            }
             ensureDailyReviewWords(today);
             return Array.isArray(gData.daily_stats.review_words) ? gData.daily_stats.review_words : [];
+        }
+
+        function applyCompletedDayLock(today, reason) {
+            if (!gData.daily_stats || gData.daily_stats.date !== today || gData.daily_stats.completed !== true) {
+                return false;
+            }
+
+            gData.daily_stats.review_words = [];
+            if (!gData.daily_stats.rewarded_stars) gData.daily_stats.rewarded_stars = 100;
+            if (!gData.daily_stats.stars_earned) gData.daily_stats.stars_earned = gData.daily_stats.rewarded_stars;
+
+            (gData.daily_stats.words || []).forEach(function(word) {
+                sessionMastery[word] = MASTERY_GOAL;
+            });
+
+            try { localStorage.removeItem('french_session_data'); } catch(e) {}
+            clearPendingSave();
+            if (window.FrenchSupabase && typeof window.FrenchSupabase.clearSyncQueue === 'function') {
+                window.FrenchSupabase.clearSyncQueue(reason || 'completed_day_lock');
+            }
+            console.log('🔒 今日完成锁已应用:', reason || 'completed_day_lock');
+            return true;
         }
         
 
@@ -1635,6 +1674,13 @@
         
         function getReviewCompletionStatus() {
             const today = todayIso();
+            if (gData.daily_stats && gData.daily_stats.date === today && gData.daily_stats.completed === true) {
+                return {
+                    total: 0,
+                    mastered: 0,
+                    completed: true
+                };
+            }
             let reviewWords = [];
             if (gData.notebook) {
                 const requiredReviewWords = getDailyReviewWords(today);
@@ -1731,6 +1777,16 @@
         }
         
         function checkReviewBeforeEnd() {
+            var today = new Date().toISOString().split('T')[0];
+            var isToday = gData.daily_stats && gData.daily_stats.date === today;
+
+            if (isToday && gData.daily_stats.completed) {
+                document.getElementById('rew-val').innerText = "✅ Déjà terminé !\nTu as déjà terminé tous les mots du jour et reçu tes 100 étoiles.";
+                openModal('rewardModal');
+                speak("Bravo");
+                return;
+            }
+
             var reviewStatus = getReviewCompletionStatus();
             var todayWords = gTodayWords || [];
             var masteredToday = 0;
@@ -1753,14 +1809,7 @@
                 return;
             }
             // 如果新词和复习都已完成，则显示成功消息（但不自动给星星，由checkDailyCompletion处理）
-            var today = new Date().toISOString().split('T')[0];
-            var isToday = gData.daily_stats && gData.daily_stats.date === today;
-            
-            if (isToday && gData.daily_stats.completed) {
-                document.getElementById('rew-val').innerText = "✅ Déjà terminé !\nTu as déjà terminé tous les mots du jour et reçu tes 100 étoiles.";
-            } else {
-                document.getElementById('rew-val').innerText = "🎉 Félicitations !\nTu as terminé tous les nouveaux mots et toutes les révisions du jour.\nTu as gagné 100 étoiles !";
-            }
+            document.getElementById('rew-val').innerText = "🎉 Félicitations !\nTu as terminé tous les nouveaux mots et toutes les révisions du jour.\nTu as gagné 100 étoiles !";
             openModal('rewardModal');
             speak("Bravo");
         }
@@ -2045,7 +2094,7 @@
         window.onload = init;
     </script>
     <div style="text-align: center; padding: 30px 20px; margin-top: 50px; border-top: 1px solid #ddd; color: #94a3b8; font-size: 0.75em;">
-        <span style="color: #38bdf8; font-weight: bold;">v4.1.2</span> · 2026-05-07 · 今日新词与复习清单修复
+        <span style="color: #38bdf8; font-weight: bold;">v4.1.3</span> · 2026-05-07 · iPad 完成状态锁定
     </div>
 </body>
 </html>

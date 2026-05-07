@@ -59,6 +59,41 @@ async function getProfileId() {
   }
 }
 
+async function shouldDropStaleSave(profileId, gData) {
+  const today = new Date().toISOString().split('T')[0];
+  const incomingDaily = gData.daily_stats || {};
+  const incomingDate = incomingDaily.date || '';
+  const incomingCompleted = incomingDate === today && incomingDaily.completed === true;
+
+  if (incomingDate !== today || incomingCompleted) {
+    return { drop: false };
+  }
+
+  const [remoteProfileRes, remoteSessionRes] = await Promise.all([
+    supabaseClient
+      .from('french_profiles')
+      .select('stars')
+      .eq('id', profileId)
+      .single(),
+    supabaseClient
+      .from('daily_sessions')
+      .select('completed, stars_earned')
+      .eq('profile_id', profileId)
+      .eq('date', today)
+      .maybeSingle()
+  ]);
+
+  if (!remoteProfileRes.error && Number(remoteProfileRes.data?.stars || 0) > Number(gData.stars || 0)) {
+    return { drop: true, reason: 'remote_has_more_stars' };
+  }
+
+  if (!remoteSessionRes.error && remoteSessionRes.data?.completed === true) {
+    return { drop: true, reason: 'remote_today_already_completed' };
+  }
+
+  return { drop: false };
+}
+
 async function syncNotebookToSupabase(profileId, notebook) {
   const notebookList = Array.isArray(notebook) ? notebook : [];
   console.log(`📝 同步单词本: ${notebookList.length} 个单词 (upsert + prune)`);
@@ -154,6 +189,12 @@ async function saveToSupabase(gData, options = {}) {
       throw new Error('无法获取用户档案ID');
     }
 
+    const staleCheck = await shouldDropStaleSave(profileId, gData);
+    if (staleCheck.drop) {
+      console.warn('🛡️ 已丢弃旧缓存保存，避免覆盖今日完成状态:', staleCheck.reason);
+      return { status: 'stale_dropped', reason: staleCheck.reason };
+    }
+
     const { error: profileError } = await supabaseClient
       .from('french_profiles')
       .update({
@@ -170,6 +211,10 @@ async function saveToSupabase(gData, options = {}) {
     await syncNotebookToSupabase(profileId, gData.notebook);
 
     if (gData.daily_stats && gData.daily_stats.date) {
+      const rawStarsEarned = gData.daily_stats.stars_earned ?? gData.daily_stats.rewarded_stars;
+      const starsEarned = rawStarsEarned != null
+        ? (Number(rawStarsEarned) || 0)
+        : (gData.daily_stats.completed ? 100 : 0);
       const { error: sessionError } = await supabaseClient
         .from('daily_sessions')
         .upsert({
@@ -177,7 +222,7 @@ async function saveToSupabase(gData, options = {}) {
           date: gData.daily_stats.date,
           completed: gData.daily_stats.completed || false,
           words_today: gData.daily_stats.words || [],
-          stars_earned: gData.daily_stats.stars_earned || 0
+          stars_earned: starsEarned
         }, { onConflict: 'profile_id,date' });
 
       if (sessionError) {
@@ -253,7 +298,8 @@ async function loadFromSupabase() {
       daily_stats: {
         date: today,
         completed: false,
-        words: []
+        words: [],
+        review_words: []
       }
     };
     
@@ -263,6 +309,7 @@ async function loadFromSupabase() {
         date: sessionRes.data.date || today,
         completed: sessionRes.data.completed || false,
         words: sessionRes.data.words_today || [],
+        review_words: [],
         stars_earned: sessionRes.data.stars_earned || 0
       };
       console.log(`📅 恢复当日学习记录: ${cloudData.daily_stats.words.length} 个单词，完成状态: ${cloudData.daily_stats.completed}`);
@@ -375,6 +422,12 @@ function saveSyncQueue() {
   }
 }
 
+function clearSyncQueue(reason = 'manual_clear') {
+  syncQueue = [];
+  saveSyncQueue();
+  console.log('🧹 同步队列已清空:', reason);
+}
+
 function loadSyncQueue() {
   try {
     const saved = localStorage.getItem(CACHE_KEYS.syncQueue);
@@ -411,7 +464,7 @@ async function trySyncQueue() {
       try {
         const result = await saveToSupabase(item.data, { fromQueue: true });
 
-        if (result.status === 'success') {
+        if (result.status === 'success' || result.status === 'stale_dropped') {
           console.log(`✅ 队列项同步成功 (尝试 ${item.attempts}次)`);
           // 成功项不移入failedItems，即从队列中移除
         } else if (item.attempts < 5) {
@@ -513,6 +566,7 @@ function initFrenchSupabase() {
     loadFromSupabase,
     loadSessionHistory,
     loadVocabularyFromSupabase,
+    clearSyncQueue,
     getProfileId,
     syncQueue: () => [...syncQueue],
     isOnline: () => isOnline
