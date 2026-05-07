@@ -284,9 +284,10 @@
         const FULL_DB_PATH = "./french_full_db.json";
         
         // 版本信息
-        const APP_VERSION = "4.1.1";
+        const APP_VERSION = "4.1.2";
         const LAST_UPDATE = "2026-05-07";
         const VERSION_CHANGES = [
+            "v4.1.2 (2026-05-07): Correction iPad - nouveaux mots réellement nouveaux et liste de révision complète",
             "v4.1.1 (2026-05-07): Version web prioritaire, Supabase devient la source active pour tongtong2016.com",
             "v4.1.0 (2026-05-06): Protection de la source french_data.json, sauvegarde locale contrôlée, liste de révision quotidienne figée",
             "v3.6 (2026-03-22): Correction du système de récompense (3100 étoiles), mécanisme de report des révisions, ajout du bouton de rafraîchissement forcé",
@@ -362,6 +363,22 @@
         function findWordInDB(word) {
             const db = getCurrentDB();
             return db.find(function(d) { return d.word === word; });
+        }
+
+        function seededDailySelection(pool, today, count) {
+            const selected = [];
+            const tPool = pool.slice();
+            let seed = today.split('-').reduce(function(a, b) {
+                return a + b.charCodeAt(0);
+            }, 0);
+
+            for (let i = 0; i < count && tPool.length > 0; i++) {
+                const idx = seed % tPool.length;
+                selected.push(tPool.splice(idx, 1)[0].word);
+                seed = seed * 31 + 7;
+            }
+
+            return selected;
         }
 
         function withTimeout(promise, timeoutMs, label) {
@@ -540,6 +557,57 @@
                 })
                 .sort(function(a, b) { return compareLearningSources(a, b, today); })[0] || null;
         }
+
+        function hasInvalidDailyWords(today) {
+            if (!gData.daily_stats || gData.daily_stats.date !== today || !Array.isArray(gData.daily_stats.words)) {
+                return true;
+            }
+
+            const notebookWords = new Set((gData.notebook || []).map(function(n) { return n.word; }));
+            const unlearnedCount = getCurrentDB().filter(function(v) { return !notebookWords.has(v.word); }).length;
+            const duplicatedDaily = new Set(gData.daily_stats.words).size !== gData.daily_stats.words.length;
+            const dailyAlreadyInNotebook = gData.daily_stats.words.filter(function(word) {
+                return notebookWords.has(word);
+            }).length;
+
+            return gData.daily_stats.words.length < 5 || duplicatedDaily || (dailyAlreadyInNotebook > 0 && unlearnedCount > 0);
+        }
+
+        function repairDailyWordsIfNeeded(today) {
+            if (!hasInvalidDailyWords(today)) {
+                return false;
+            }
+
+            const notebookWords = new Set((gData.notebook || []).map(function(n) { return n.word; }));
+            let unlearnedPool = getCurrentDB().filter(function(v) {
+                return !notebookWords.has(v.word);
+            });
+
+            if (unlearnedPool.length < 1) {
+                console.warn("今日新词修复跳过：没有未学词可选");
+                return false;
+            }
+
+            if (unlearnedPool.length < 5) {
+                console.warn("未学词不足5个，使用剩余未学词:", unlearnedPool.length);
+            }
+
+            const repairedDaily = seededDailySelection(unlearnedPool, today, 5);
+            gData.daily_stats = {
+                date: today,
+                completed: false,
+                words: repairedDaily,
+                review_words: buildDailyReviewWords(today, repairedDaily),
+                rewarded_at: null,
+                rewarded_stars: 0
+            };
+            sessionMastery = {};
+            gMistakes = {};
+            gCombo = 0;
+            try { localStorage.removeItem('french_session_data'); } catch(e) {}
+            console.log("🔧 今日新词已修复:", repairedDaily.join(', '));
+            return true;
+        }
         
         // ===== INITIALIZATION =====
         async function init() {
@@ -716,8 +784,12 @@
                     (gData.daily_stats.date === today && (!gData.daily_stats.words || gData.daily_stats.words.length === 0))) {
                     await generateDailyWords(today);
                 }
-                // 🆕 已删除清理逻辑：每日5词固定，不再替换已加入生词本的单词
-                ensureDailyReviewWords(today);
+                const repairedDailyWords = repairDailyWordsIfNeeded(today);
+                const repairedReviewWords = ensureDailyReviewWords(today);
+                if (repairedDailyWords || repairedReviewWords) {
+                    console.log("💾 保存修复后的今日学习/复习清单...");
+                    setTimeout(saveData, 0);
+                }
                 
                 // 安全初始化gTodayWords
                 if (gData.daily_stats && gData.daily_stats.words && Array.isArray(gData.daily_stats.words)) {
@@ -758,7 +830,6 @@
         }
         
         async function generateDailyWords(today) {
-            const seedVal = today.split('-').reduce(function(a, b) { return a + b.charCodeAt(0); }, 0);
             const currentDB = getCurrentDB();
             
             // 🆕 第一步：将过期单词的复习日期更新到今天（延续机制）
@@ -812,14 +883,7 @@
             }
             
             // 2. 根据日期种子选择5个单词
-            let tPool = unlearnedPool.slice();
-            let s = seedVal;
-            for (let i = 0; i < 5 && tPool.length > 0; i++) { 
-                let idx = s % tPool.length;
-                let selectedWord = tPool.splice(idx, 1)[0].word;
-                newDaily.push(selectedWord); 
-                s = s * 31 + 7; 
-            }
+            newDaily = seededDailySelection(unlearnedPool, today, 5);
             
             // 检查有多少个单词已经在生词本中（应该是0，除非是上面放宽条件的情况）
             const alreadyInNotebook = newDaily.filter(function(word) {
@@ -858,21 +922,35 @@
                 .filter(function(n) {
                     return n.next <= today && !dailySet.has(n.word);
                 })
-                .slice(0, 10)
+                .sort(function(a, b) {
+                    if ((a.next || '') !== (b.next || '')) return (a.next || '').localeCompare(b.next || '');
+                    if ((b.err_days || 0) !== (a.err_days || 0)) return (b.err_days || 0) - (a.err_days || 0);
+                    return (a.lvl || 0) - (b.lvl || 0);
+                })
                 .map(function(n) { return n.word; });
         }
 
         function ensureDailyReviewWords(today) {
+            let changed = false;
             if (!gData.daily_stats) {
                 gData.daily_stats = { date: today, completed: false, words: [], review_words: [] };
+                changed = true;
             }
-            if (gData.daily_stats.date !== today) return;
+            if (gData.daily_stats.date !== today) return changed;
             if (!Array.isArray(gData.daily_stats.words)) {
                 gData.daily_stats.words = [];
+                changed = true;
             }
-            if (!Array.isArray(gData.daily_stats.review_words)) {
-                gData.daily_stats.review_words = buildDailyReviewWords(today, gData.daily_stats.words);
+            const expectedReviewWords = buildDailyReviewWords(today, gData.daily_stats.words);
+            const currentReviewWords = Array.isArray(gData.daily_stats.review_words) ? gData.daily_stats.review_words : [];
+            const sameReviewWords = currentReviewWords.length === expectedReviewWords.length &&
+                currentReviewWords.every(function(word, index) { return word === expectedReviewWords[index]; });
+            if (!sameReviewWords && !gData.daily_stats.completed) {
+                gData.daily_stats.review_words = expectedReviewWords;
+                changed = true;
+                console.log("🔧 今日复习清单已修复:", expectedReviewWords.length, "个词");
             }
+            return changed;
         }
 
         function getDailyReviewWords(today) {
@@ -1967,7 +2045,7 @@
         window.onload = init;
     </script>
     <div style="text-align: center; padding: 30px 20px; margin-top: 50px; border-top: 1px solid #ddd; color: #94a3b8; font-size: 0.75em;">
-        <span style="color: #38bdf8; font-weight: bold;">v4.1.1</span> · 2026-05-07 · 网页优先与云端保存优化
+        <span style="color: #38bdf8; font-weight: bold;">v4.1.2</span> · 2026-05-07 · 今日新词与复习清单修复
     </div>
 </body>
 </html>
