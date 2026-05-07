@@ -13,6 +13,18 @@ const CACHE_KEYS = Object.assign({
 }, TONGTONG_CONFIG.cacheKeys || {});
 const NOTEBOOK_BATCH_SIZE = 30;
 
+function dateIsoLocal(date) {
+  const d = date || new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+
+function todayIso() {
+  return dateIsoLocal(new Date());
+}
+
 // 全局变量
 let supabaseClient = null;
 let currentProfileId = null;
@@ -60,12 +72,11 @@ async function getProfileId() {
 }
 
 async function shouldDropStaleSave(profileId, gData) {
-  const today = new Date().toISOString().split('T')[0];
   const incomingDaily = gData.daily_stats || {};
   const incomingDate = incomingDaily.date || '';
-  const incomingCompleted = incomingDate === today && incomingDaily.completed === true;
+  const incomingCompleted = incomingDaily.completed === true;
 
-  if (incomingDate !== today || incomingCompleted) {
+  if (!incomingDate || incomingCompleted) {
     return { drop: false };
   }
 
@@ -79,7 +90,7 @@ async function shouldDropStaleSave(profileId, gData) {
       .from('daily_sessions')
       .select('completed, stars_earned')
       .eq('profile_id', profileId)
-      .eq('date', today)
+      .eq('date', incomingDate)
       .maybeSingle()
   ]);
 
@@ -88,7 +99,7 @@ async function shouldDropStaleSave(profileId, gData) {
   }
 
   if (!remoteSessionRes.error && remoteSessionRes.data?.completed === true) {
-    return { drop: true, reason: 'remote_today_already_completed' };
+    return { drop: true, reason: 'remote_session_already_completed' };
   }
 
   return { drop: false };
@@ -96,7 +107,7 @@ async function shouldDropStaleSave(profileId, gData) {
 
 async function syncNotebookToSupabase(profileId, notebook) {
   const notebookList = Array.isArray(notebook) ? notebook : [];
-  console.log(`📝 同步单词本: ${notebookList.length} 个单词 (upsert + prune)`);
+  console.log(`📝 同步单词本: ${notebookList.length} 个单词 (upsert only)`);
 
   const { data: existingRows, error: existingError } = await supabaseClient
     .from('french_notebook')
@@ -148,25 +159,9 @@ async function syncNotebookToSupabase(profileId, notebook) {
     console.log(`  ✅ 批次 ${Math.floor(i / NOTEBOOK_BATCH_SIZE) + 1}: ${batch.length} 个单词`);
   }
 
-  const removedWords = (existingRows || [])
-    .filter(row => !currentWords.has(row.word))
-    .map(row => row.word);
-
-  for (let i = 0; i < removedWords.length; i += NOTEBOOK_BATCH_SIZE) {
-    const batch = removedWords.slice(i, i + NOTEBOOK_BATCH_SIZE);
-    const { error: deleteError } = await supabaseClient
-      .from('french_notebook')
-      .delete()
-      .eq('profile_id', profileId)
-      .in('word', batch);
-
-    if (deleteError) {
-      throw new Error(`单词本裁剪失败: ${deleteError.message}`);
-    }
-  }
-
-  if (removedWords.length > 0) {
-    console.log(`🧹 已清理 ${removedWords.length} 个云端过期单词`);
+  const preservedCount = (existingRows || []).filter(row => !currentWords.has(row.word)).length;
+  if (preservedCount > 0) {
+    console.log(`🛡️ 已保留 ${preservedCount} 个云端已有、当前快照未包含的单词`);
   }
 }
 
@@ -257,7 +252,7 @@ async function loadFromSupabase() {
       return null;
     }
     
-    const today = new Date().toISOString().split('T')[0];
+    const today = todayIso();
     
     // 并行加载用户档案、单词本和当日学习记录
     const [profileRes, notebookRes, sessionRes] = await Promise.all([
@@ -373,7 +368,7 @@ async function loadSessionHistory(days) {
     const rangeDays = Number(days || 30);
     const since = new Date();
     since.setDate(since.getDate() - rangeDays + 1);
-    const sinceDate = since.toISOString().split('T')[0];
+    const sinceDate = dateIsoLocal(since);
 
     const { data, error } = await supabaseClient
       .from('daily_sessions')

@@ -123,8 +123,8 @@
     <!-- Supabase 客户端库 -->
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <!-- 法语学习 Supabase 集成 -->
-    <script src="./config.js?v=4.1.3"></script>
-    <script src="./french_supabase.js?v=4.1.3"></script>
+    <script src="./config.js?v=4.1.4"></script>
+    <script src="./french_supabase.js?v=4.1.4"></script>
     <!-- 诊断工具 -->
     <script src="./french_diagnostic.js"></script>
 </head>
@@ -225,7 +225,7 @@
         const DATA_PATH = "./french_data.json";
         const INTERVALS = [1, 2, 4, 7, 15, 30, 60];
         const MASTERY_GOAL = 2;
-        const DATA_SCHEMA_VERSION = "2026-05-07-completion-lock";
+        const DATA_SCHEMA_VERSION = "2026-05-08-local-date";
         const PAGE_CACHE_KEYS = {
             learningData: 'french_learning_data',
             pendingSave: 'french_pending_save',
@@ -284,9 +284,10 @@
         const FULL_DB_PATH = "./french_full_db.json";
         
         // 版本信息
-        const APP_VERSION = "4.1.3";
-        const LAST_UPDATE = "2026-05-07";
+        const APP_VERSION = "4.1.4";
+        const LAST_UPDATE = "2026-05-08";
         const VERSION_CHANGES = [
+            "v4.1.4 (2026-05-08): Dates locales Paris/iPad et protection anti-suppression du carnet cloud",
             "v4.1.3 (2026-05-07): Verrou de complétion iPad - l'état terminé du cloud bloque les anciens caches incomplets",
             "v4.1.2 (2026-05-07): Correction iPad - nouveaux mots réellement nouveaux et liste de révision complète",
             "v4.1.1 (2026-05-07): Version web prioritaire, Supabase devient la source active pour tongtong2016.com",
@@ -399,8 +400,16 @@
             return !!(data && typeof data === 'object' && Array.isArray(data.notebook) && data.daily_stats);
         }
 
+        function dateIsoLocal(date) {
+            const d = date || new Date();
+            const y = d.getFullYear();
+            const m = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            return `${y}-${m}-${day}`;
+        }
+
         function todayIso() {
-            return new Date().toISOString().split('T')[0];
+            return dateIsoLocal(new Date());
         }
 
         function isLocalServerWritable() {
@@ -849,7 +858,7 @@
             // 🆕 第一步：将过期单词的复习日期更新到今天（延续机制）
             const yesterday = new Date();
             yesterday.setDate(yesterday.getDate() - 1);
-            const yesterdayStr = yesterday.toISOString().split('T')[0];
+            const yesterdayStr = dateIsoLocal(yesterday);
             
             let extendedCount = 0;
             gData.notebook.forEach(function(n) {
@@ -1031,7 +1040,7 @@
             var completionStatusEl = document.getElementById('ui-completion-status');
             
             // 🔧 FIX FOR iPAD: If data says completed, force show completed
-            var today = new Date().toISOString().split('T')[0];
+            var today = todayIso();
             var shouldShowCompleted = false;
             
             if (gData && gData.daily_stats && gData.daily_stats.date === today && gData.daily_stats.completed === true) {
@@ -1174,7 +1183,7 @@
                 // 5. 检查星星增加是否合理（每天最多+100）
                 var lastStars = parseInt(localStorage.getItem('last_valid_stars') || data.stars);
                 // 特殊情况：如果今日标记为已完成，可能是之前的奖励累积，允许通过
-                var today = new Date().toISOString().split('T')[0];
+                var today = todayIso();
                 var isTodayCompleted = data.daily_stats && data.daily_stats.date === today && data.daily_stats.completed === true;
                 
                 if (data.stars > lastStars + 100) {
@@ -1370,7 +1379,7 @@
         function saveSession() {
             try {
                 // 保存会话状态，防止页面刷新导致进度丢失
-                var today = new Date().toISOString().split('T')[0];
+                var today = todayIso();
                 var sessionData = {
                     sessionMastery: sessionMastery,
                     gMistakes: gMistakes || {},
@@ -1387,7 +1396,7 @@
         
         function loadSession() {
             try {
-                var today = new Date().toISOString().split('T')[0];
+                var today = todayIso();
                 
                 // 清理旧键名数据（兼容性处理）
                 try {
@@ -1408,7 +1417,7 @@
                         // 之前逻辑会把sessionMastery[word]===MASTERY_GOAL的单词重置为0
                         // 导致童童完成学习后重新打开App，所有进度清零，星星无法发放
                         // 现在：已掌握的单词保持进度，只有daily_stats.completed=false时才允许继续
-                        const todayDate = new Date().toISOString().split('T')[0];
+                        const todayDate = todayIso();
                         if (gData.daily_stats && gData.daily_stats.date === todayDate && gData.daily_stats.words) {
                             // 如果今日已完成，恢复所有单词的掌握状态
                             if (gData.daily_stats.completed) {
@@ -1445,7 +1454,7 @@
                 gData.notebook.push({ 
                     word: w, 
                     lvl: 0, 
-                    next: new Date().toISOString().split('T')[0], 
+                    next: todayIso(), 
                     err_days: 0 
                 }); 
                 
@@ -1484,7 +1493,7 @@
         }
         
         function updateQuiz() {
-            const today = new Date().toISOString().split('T')[0];
+            const today = todayIso();
             let pool = [];
             
             if (gGameMode === 'new') {
@@ -1600,7 +1609,7 @@
                     n.err_days = 0;
                     let d = new Date();
                     d.setDate(d.getDate() + INTERVALS[n.lvl]);
-                    n.next = d.toISOString().split('T')[0];
+                    n.next = dateIsoLocal(d);
                     
                     // 掌握单词时的轻量庆祝
                     if (feedbackEl) {
@@ -1640,7 +1649,7 @@
                         n.lvl = 0; 
                         let d = new Date(); 
                         d.setDate(d.getDate() + 1); 
-                        n.next = d.toISOString().split('T')[0]; 
+                        n.next = dateIsoLocal(d); 
                         n.err_days = (n.err_days || 0) + 1; 
                         
                         // 关键：连续两天都错（err_days >= 2）就踢出生词本
@@ -1716,7 +1725,7 @@
             var reviewStatus = getReviewCompletionStatus();
             
             // 严格的日期检查：确保daily_stats.date是今天
-            var today = new Date().toISOString().split('T')[0];
+            var today = todayIso();
             var isToday = gData.daily_stats && gData.daily_stats.date === today;
             
             // 如果掌握了所有今日新词 AND 完成了所有待复习旧词，且尚未标记为完成，且日期是今天
@@ -1730,7 +1739,7 @@
                             n.lvl = 2;
                             var nextDate = new Date();
                             nextDate.setDate(nextDate.getDate() + 7);
-                            n.next = nextDate.toISOString().split('T')[0];
+                            n.next = dateIsoLocal(nextDate);
                             console.log('✅ 同步掌握状态到 notebook:', tw.word, '-> lvl 2');
                         }
                     }
@@ -1777,7 +1786,7 @@
         }
         
         function checkReviewBeforeEnd() {
-            var today = new Date().toISOString().split('T')[0];
+            var today = todayIso();
             var isToday = gData.daily_stats && gData.daily_stats.date === today;
 
             if (isToday && gData.daily_stats.completed) {
@@ -1845,7 +1854,7 @@
                 gData.streak = { current: 0, last_study_date: "", longest: 0 };
             }
             
-            const today = new Date().toISOString().split('T')[0];
+            const today = todayIso();
             const lastDate = gData.streak.last_study_date;
             
             // 计算日期差
@@ -1874,7 +1883,7 @@
         
         // 🆕 更新积压按钮显示
         function updateBacklogButton() {
-            const today = new Date().toISOString().split('T')[0];
+            const today = todayIso();
             const backlogBtn = document.getElementById('backlog-btn');
             const backlogCount = document.getElementById('backlog-count');
             
@@ -1891,7 +1900,7 @@
         
         // 🆕 开始还清积压单词
         function startBacklogReview() {
-            const today = new Date().toISOString().split('T')[0];
+            const today = todayIso();
             
             // 获取积压单词（今天之前到期的）
             const backlog = gData.notebook.filter(function(n) {
@@ -1922,7 +1931,7 @@
         
         function renderNotebook(filterText = '') {
             var nbListEl = document.getElementById('nb-list');
-            const today = new Date().toISOString().split('T')[0];
+            const today = todayIso();
             
             if (!gData.notebook || gData.notebook.length === 0) {
                 if (nbListEl) nbListEl.innerHTML = "<div class='nb-empty'>📭 Ton carnet est vide.<br>Commence par ajouter des mots du jour !</div>";
@@ -2094,7 +2103,7 @@
         window.onload = init;
     </script>
     <div style="text-align: center; padding: 30px 20px; margin-top: 50px; border-top: 1px solid #ddd; color: #94a3b8; font-size: 0.75em;">
-        <span style="color: #38bdf8; font-weight: bold;">v4.1.3</span> · 2026-05-07 · iPad 完成状态锁定
+        <span style="color: #38bdf8; font-weight: bold;">v4.1.4</span> · 2026-05-08 · 本地日期与云端保护
     </div>
 </body>
 </html>
