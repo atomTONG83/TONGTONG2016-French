@@ -104,15 +104,18 @@
         .mastery-dot.filled { background: var(--accent); }
         .mastery-dot.empty { background: rgba(251, 191, 36, 0.2); }
 
-        /* Recent Activity */
-        .activity-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(56, 189, 248, 0.08); }
-        .activity-item:last-child { border-bottom: none; }
-        .activity-icon { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
-        .activity-icon.done { background: rgba(34, 197, 94, 0.2); }
-        .activity-icon.miss { background: rgba(239, 68, 68, 0.15); }
-        .activity-info { flex: 1; }
-        .activity-date { font-size: 0.85rem; font-weight: 700; }
-        .activity-detail { font-size: 0.75rem; color: var(--muted); }
+        /* Recent Activity Calendar */
+        .activity-cal-month { margin-bottom: 15px; }
+        .activity-cal-month:last-child { margin-bottom: 0; }
+        .activity-cal-title { font-family: 'Orbitron'; font-size: 0.75rem; color: var(--primary); margin-bottom: 8px; }
+        .activity-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+        .activity-cal-day { aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 6px; font-size: 0.7rem; font-weight: 700; border: 1px solid transparent; transition: 0.2s; }
+        .activity-cal-day.empty { opacity: 0; }
+        .activity-cal-day.today { border-color: var(--primary); box-shadow: 0 0 8px rgba(14, 165, 233, 0.3); }
+        .activity-cal-day.checked { background: rgba(34, 197, 94, 0.25); border-color: var(--success); color: var(--success); }
+        .activity-cal-day.future { opacity: 0.2; }
+        .activity-cal-day .wc { font-size: 0.45rem; color: var(--muted); margin-top: 1px; }
+        .activity-cal-day.checked .wc { color: rgba(34, 197, 94, 0.7); }
 
         /* Weekly Chart */
         .weekly-chart { display: flex; align-items: flex-end; gap: 8px; height: 120px; padding: 10px 0; }
@@ -526,41 +529,66 @@ function renderLevelDist(levelCounts, total) {
 function renderRecentActivity() {
     const container = document.getElementById('recentActivity');
     const now = new Date();
+    now.setHours(0,0,0,0);
     let html = '';
 
     // Build date -> session map
     const sessionMap = {};
     sessionHistory.forEach(s => { sessionMap[s.date] = s; });
 
-    for (let i = 0; i < 14; i++) {
-        const d = new Date(now);
-        d.setDate(d.getDate() - i);
-        d.setHours(0,0,0,0);
-        const key = dateKey(d);
-        const session = sessionMap[key];
-        const isToday = i === 0;
-        const dateStr = isToday ? '今天' : d.toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' });
+    // Show last 2 months as compact calendars
+    const monthNames = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+    const weekdays = ['一','二','三','四','五','六','日'];
 
-        if (session && session.completed) {
-            const wordCount = session.words_today ? session.words_today.length : 0;
-            const stars = session.stars_earned || 0;
-            html += `<div class="activity-item">
-                <div class="activity-icon done">✅</div>
-                <div class="activity-info">
-                    <div class="activity-date">${dateStr} - 打卡完成</div>
-                    <div class="activity-detail">学习了 ${wordCount} 个单词${stars ? '，获得 ' + stars + ' ⭐' : ''}</div>
-                </div>
-            </div>`;
-        } else if (!isToday) {
-            html += `<div class="activity-item">
-                <div class="activity-icon miss">💤</div>
-                <div class="activity-info">
-                    <div class="activity-date">${dateStr} - 未打卡</div>
-                    <div class="activity-detail">今天没有学习记录</div>
-                </div>
+    // Determine which months to show (current month + previous month)
+    const monthsToShow = [];
+    let y = now.getFullYear();
+    let m = now.getMonth();
+    for (let i = 0; i < 2; i++) {
+        monthsToShow.push({ year: y, month: m });
+        m--;
+        if (m < 0) { m = 11; y--; }
+    }
+    monthsToShow.reverse(); // show oldest first
+
+    monthsToShow.forEach(({ year, month }) => {
+        const firstDay = new Date(year, month, 1);
+        const lastDay = new Date(year, month + 1, 0);
+        let startOffset = firstDay.getDay() - 1;
+        if (startOffset < 0) startOffset = 6;
+
+        html += `<div class="activity-cal-month">
+            <div class="activity-cal-title">${year}年 ${monthNames[month]}</div>
+            <div class="activity-cal-grid">`;
+
+        // Weekday headers (hidden for compactness, just use empty cells)
+        for (let i = 0; i < startOffset; i++) {
+            html += '<div class="activity-cal-day empty"></div>';
+        }
+
+        for (let d = 1; d <= lastDay.getDate(); d++) {
+            const date = new Date(year, month, d);
+            const key = dateKey(date);
+            const session = sessionMap[key];
+            const isToday = date.getTime() === now.getTime();
+            const isFuture = date > now;
+            const isChecked = session && session.completed;
+            const wordCount = session && session.words_today ? session.words_today.length : 0;
+
+            let cls = 'activity-cal-day';
+            if (isToday) cls += ' today';
+            if (isChecked) cls += ' checked';
+            if (isFuture) cls += ' future';
+
+            html += `<div class="${cls}">
+                ${d}
+                ${isChecked ? `<span class="wc">${wordCount}</span>` : ''}
             </div>`;
         }
-    }
+
+        html += '</div></div>';
+    });
+
     container.innerHTML = html;
 }
 
