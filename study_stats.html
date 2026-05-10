@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>📊 学习统计 - Tongtong Space</title>
+    <!-- Supabase client (same as french_mot.html) -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="./config.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap');
         :root {
@@ -136,6 +139,12 @@
         .loading-spinner { display: inline-block; width: 30px; height: 30px; border: 3px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
+        /* Status bar */
+        .status-bar { text-align: center; padding: 8px; font-size: 0.75rem; color: var(--muted); margin-bottom: 15px; }
+        .status-bar .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
+        .status-bar .dot.online { background: var(--success); }
+        .status-bar .dot.offline { background: var(--danger); }
+
         /* Responsive */
         @media (max-width: 600px) {
             h1 { font-size: 1.3rem; }
@@ -159,6 +168,10 @@
             <h1>📊 学习统计</h1>
             <div class="subtitle">STUDY STATISTICS</div>
         </header>
+
+        <div class="status-bar" id="statusBar">
+            <span class="dot offline"></span> 加载中...
+        </div>
 
         <nav class="nav-bar">
             <a class="nav-back" href="index.html">← 返回首页</a>
@@ -236,12 +249,17 @@
 
 <script>
 // ==================== DATA ====================
-const STORAGE_KEY = 'tongtong_checkin';
 const DATA_URL = './french_data.json';
 let frenchData = null;
-let checkinData = {};
+let sessionHistory = []; // from Supabase
 let currentCalYear, currentCalMonth;
 let currentFilter = 'all';
+
+// Supabase config (same as french_mot.html)
+const SUPABASE_URL = 'https://ghbmmnapyupusmyxjkvv.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_MkMhoECq7wo5qFi3K9Shcg_7LiPM1oU';
+let supabaseClient = null;
+let profileId = null;
 
 // ==================== INIT ====================
 async function init() {
@@ -249,31 +267,26 @@ async function init() {
     const now = new Date();
     document.getElementById('dateBadge').textContent = now.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
 
-    // Load checkin data from localStorage
-    try { checkinData = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) { checkinData = {}; }
-
-    // Load french data
+    // Init Supabase
     try {
-        const resp = await fetch(DATA_URL + '?t=' + Date.now());
-        frenchData = await resp.json();
-    } catch(e) {
-        // Try local server
-        try {
-            const resp2 = await fetch('http://192.168.32.70:3333/core/tongtong_space/french_data.json?t=' + Date.now());
-            frenchData = await resp2.json();
-        } catch(e2) {
-            document.getElementById('overviewGrid').innerHTML = '<div class="loading">❌ 无法加载学习数据，请确保在服务器上访问</div>';
-            return;
+        if (window.supabase) {
+            supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+            console.log('✅ Supabase initialized');
         }
+    } catch(e) {
+        console.warn('Supabase init failed:', e);
     }
+
+    // Load all data in parallel
+    await Promise.all([
+        loadFrenchData(),
+        loadSupabaseData()
+    ]);
 
     if (!frenchData || !frenchData.notebook) {
-        document.getElementById('overviewGrid').innerHTML = '<div class="loading">❌ 数据格式错误</div>';
+        document.getElementById('overviewGrid').innerHTML = '<div class="loading">❌ 无法加载学习数据</div>';
         return;
     }
-
-    // Auto check-in today if completed
-    autoCheckinToday();
 
     // Render all sections
     renderOverview();
@@ -283,24 +296,90 @@ async function init() {
     renderWordList();
 }
 
-// ==================== CHECKIN LOGIC ====================
-function dateKey(d) {
-    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
-}
-
-function autoCheckinToday() {
-    const ds = frenchData.daily_stats;
-    if (ds && ds.completed) {
-        const today = dateKey(new Date());
-        if (!checkinData[today]) {
-            checkinData[today] = { checked: true, words: ds.words ? ds.words.length : 0, stars: ds.rewarded_stars || 0 };
-            saveCheckin();
+async function loadFrenchData() {
+    try {
+        const resp = await fetch(DATA_URL + '?t=' + Date.now());
+        frenchData = await resp.json();
+    } catch(e) {
+        try {
+            const resp2 = await fetch('http://192.168.32.70:3333/core/tongtong_space/french_data.json?t=' + Date.now());
+            frenchData = await resp2.json();
+        } catch(e2) {
+            console.error('Failed to load french_data.json');
         }
     }
 }
 
-function saveCheckin() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(checkinData));
+async function loadSupabaseData() {
+    if (!supabaseClient) {
+        updateStatus(false, 'Supabase 未连接');
+        return;
+    }
+
+    try {
+        // Get profile ID
+        const { data: profileData, error: profileErr } = await supabaseClient
+            .from('french_profiles')
+            .select('id, stars, last_milestone')
+            .eq('user_name', 'tongtong')
+            .single();
+
+        if (profileErr) throw profileErr;
+        profileId = profileData.id;
+
+        // Load session history (last 90 days)
+        const since = new Date();
+        since.setDate(since.getDate() - 90);
+        const sinceDate = dateKey(since);
+
+        const { data: sessions, error: sessionErr } = await supabaseClient
+            .from('daily_sessions')
+            .select('date, completed, words_today, stars_earned')
+            .eq('profile_id', profileId)
+            .gte('date', sinceDate)
+            .order('date', { ascending: false });
+
+        if (sessionErr) throw sessionErr;
+        sessionHistory = sessions || [];
+
+        // If french_data.json didn't load, try to build from Supabase
+        if (!frenchData || !frenchData.notebook) {
+            const { data: nbData, error: nbErr } = await supabaseClient
+                .from('french_notebook')
+                .select('word, level, next_review, error_days')
+                .eq('profile_id', profileId);
+
+            if (!nbErr && nbData && nbData.length > 0) {
+                frenchData = {
+                    stars: profileData.stars || 4700,
+                    last_milestone: profileData.last_milestone || 4000,
+                    notebook: nbData.map(item => ({
+                        word: item.word,
+                        lvl: item.level || 0,
+                        next: item.next_review,
+                        err_days: item.error_days || 0
+                    })),
+                    daily_stats: { date: dateKey(new Date()), completed: false, words: [] }
+                };
+            }
+        }
+
+        updateStatus(true, `云端数据已加载 (${sessionHistory.length} 条记录)`);
+        console.log(`✅ Supabase loaded: ${sessionHistory.length} sessions`);
+
+    } catch(e) {
+        console.error('Supabase load failed:', e);
+        updateStatus(false, '云端连接失败，使用本地数据');
+    }
+}
+
+function updateStatus(online, msg) {
+    const bar = document.getElementById('statusBar');
+    bar.innerHTML = `<span class="dot ${online ? 'online' : 'offline'}"></span> ${msg}`;
+}
+
+function dateKey(d) {
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
 }
 
 // ==================== SECTIONS ====================
@@ -335,7 +414,7 @@ function renderOverview() {
         if (w.next && w.next <= today) reviewDue++;
     });
 
-    // Streak
+    // Streak from Supabase session history
     const streak = calcStreak();
 
     // Overview grid
@@ -362,16 +441,25 @@ function renderOverview() {
 }
 
 function calcStreak() {
+    // Build a set of completed dates from session history
+    const completedDates = new Set();
+    sessionHistory.forEach(s => {
+        if (s.completed) completedDates.add(s.date);
+    });
+
     let streak = 0;
     const d = new Date();
-    // If today is not checked, start from yesterday
+    d.setHours(0,0,0,0);
     const todayKey = dateKey(d);
-    if (!checkinData[todayKey]) {
+
+    // If today is not completed, start from yesterday
+    if (!completedDates.has(todayKey)) {
         d.setDate(d.getDate() - 1);
     }
+
     for (let i = 0; i < 365; i++) {
         const key = dateKey(d);
-        if (checkinData[key] && checkinData[key].checked) {
+        if (completedDates.has(key)) {
             streak++;
             d.setDate(d.getDate() - 1);
         } else {
@@ -385,11 +473,15 @@ function renderWeeklyChart() {
     const container = document.getElementById('weeklyChart');
     const days = ['一','二','三','四','五','六','日'];
     const now = new Date();
-    const dayOfWeek = now.getDay(); // 0=Sun
-    // Find Monday of this week
+    const dayOfWeek = now.getDay();
     const monday = new Date(now);
     const diff = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
     monday.setDate(monday.getDate() - diff);
+    monday.setHours(0,0,0,0);
+
+    // Build date -> session map
+    const sessionMap = {};
+    sessionHistory.forEach(s => { sessionMap[s.date] = s; });
 
     let maxWords = 1;
     const weekData = [];
@@ -397,8 +489,8 @@ function renderWeeklyChart() {
         const d = new Date(monday);
         d.setDate(d.getDate() + i);
         const key = dateKey(d);
-        const data = checkinData[key];
-        const words = data ? (data.words || 0) : 0;
+        const session = sessionMap[key];
+        const words = session && session.words_today ? session.words_today.length : 0;
         weekData.push({ day: days[i], date: d, words, key, isFuture: d > now });
         if (words > maxWords) maxWords = words;
     }
@@ -435,20 +527,28 @@ function renderRecentActivity() {
     const container = document.getElementById('recentActivity');
     const now = new Date();
     let html = '';
+
+    // Build date -> session map
+    const sessionMap = {};
+    sessionHistory.forEach(s => { sessionMap[s.date] = s; });
+
     for (let i = 0; i < 14; i++) {
         const d = new Date(now);
         d.setDate(d.getDate() - i);
+        d.setHours(0,0,0,0);
         const key = dateKey(d);
-        const data = checkinData[key];
+        const session = sessionMap[key];
         const isToday = i === 0;
         const dateStr = isToday ? '今天' : d.toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' });
 
-        if (data && data.checked) {
+        if (session && session.completed) {
+            const wordCount = session.words_today ? session.words_today.length : 0;
+            const stars = session.stars_earned || 0;
             html += `<div class="activity-item">
                 <div class="activity-icon done">✅</div>
                 <div class="activity-info">
                     <div class="activity-date">${dateStr} - 打卡完成</div>
-                    <div class="activity-detail">学习了 ${data.words || 0} 个单词${data.stars ? '，获得 ' + data.stars + ' ⭐' : ''}</div>
+                    <div class="activity-detail">学习了 ${wordCount} 个单词${stars ? '，获得 ' + stars + ' ⭐' : ''}</div>
                 </div>
             </div>`;
         } else if (!isToday) {
@@ -482,7 +582,10 @@ function renderCalendar() {
     const today = new Date();
     today.setHours(0,0,0,0);
 
-    // Monday = 0 offset
+    // Build date -> session map for this month
+    const sessionMap = {};
+    sessionHistory.forEach(s => { sessionMap[s.date] = s; });
+
     let startOffset = firstDay.getDay() - 1;
     if (startOffset < 0) startOffset = 6;
 
@@ -497,21 +600,25 @@ function renderCalendar() {
     for (let d = 1; d <= lastDay.getDate(); d++) {
         const date = new Date(currentCalYear, currentCalMonth, d);
         const key = dateKey(date);
-        const data = checkinData[key];
+        const session = sessionMap[key];
         const isToday = date.getTime() === today.getTime();
         const isFuture = date > today;
-        const isChecked = data && data.checked;
+        const isChecked = session && session.completed;
 
-        if (isChecked) { monthChecked++; monthTotalWords += (data.words || 0); }
+        if (isChecked) {
+            monthChecked++;
+            monthTotalWords += (session.words_today ? session.words_today.length : 0);
+        }
 
         let cls = 'cal-day';
         if (isToday) cls += ' today';
         if (isChecked) cls += ' checked';
         if (isFuture) cls += ' future';
 
+        const wordCount = session && session.words_today ? session.words_today.length : 0;
         html += `<div class="${cls}">
             ${d}
-            ${isChecked ? `<span class="word-count">${data.words || 0}</span>` : ''}
+            ${isChecked ? `<span class="word-count">${wordCount}</span>` : ''}
         </div>`;
     }
     container.innerHTML = html;
@@ -533,19 +640,16 @@ function renderWordList() {
     const today = dateKey(new Date());
     let filtered = [...nb];
 
-    // Apply filter
     if (currentFilter === 'new') filtered = filtered.filter(w => (w.lvl||0) <= 2);
     else if (currentFilter === 'progress') filtered = filtered.filter(w => (w.lvl||0) >= 3 && (w.lvl||0) <= 5);
     else if (currentFilter === 'mastered') filtered = filtered.filter(w => (w.lvl||0) >= 6);
     else if (currentFilter === 'review') filtered = filtered.filter(w => w.next && w.next <= today);
 
-    // Apply search
     const search = document.getElementById('wordSearch').value.toLowerCase().trim();
     if (search) {
         filtered = filtered.filter(w => w.word.toLowerCase().includes(search));
     }
 
-    // Sort: lvl ascending, then by next review date
     filtered.sort((a, b) => {
         if ((a.lvl||0) !== (b.lvl||0)) return (a.lvl||0) - (b.lvl||0);
         return (a.next||'').localeCompare(b.next||'');
@@ -554,7 +658,7 @@ function renderWordList() {
     const tbody = document.getElementById('wordTableBody');
     tbody.innerHTML = filtered.slice(0, 100).map(w => {
         const lvl = w.lvl || 0;
-        const mastery = lvl; // 0-7 dots
+        const mastery = lvl;
         const dots = Array.from({length: 8}, (_, i) =>
             `<span class="mastery-dot ${i < mastery ? 'filled' : 'empty'}"></span>`
         ).join('');
