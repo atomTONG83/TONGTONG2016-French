@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>📊 学习统计 - Tongtong Space</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap');
+        :root {
+            --bg: #030712; --primary: #0ea5e9; --secondary: #818cf8; --accent: #fbbf24;
+            --success: #22c55e; --danger: #ef4444; --glass: rgba(15, 23, 42, 0.6);
+            --border: rgba(56, 189, 248, 0.2); --text: #f8fafc; --muted: #64748b;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; min-height: 100vh; overflow-x: hidden; }
+        .bg-grid { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: linear-gradient(rgba(14, 165, 233, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(14, 165, 233, 0.05) 1px, transparent 1px); background-size: 50px 50px; z-index: -1; }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+
+        /* Header */
+        header { text-align: center; margin-bottom: 30px; }
+        .date-badge { font-family: 'Orbitron'; font-size: 0.65rem; color: var(--primary); border: 1px solid var(--primary); padding: 4px 15px; display: inline-block; margin-bottom: 10px; }
+        h1 { font-family: 'Orbitron'; font-weight: 900; font-size: 1.8rem; letter-spacing: 2px; text-shadow: 0 0 20px rgba(14, 165, 233, 0.5); margin-bottom: 5px; }
+        .subtitle { font-size: 0.9rem; color: var(--muted); letter-spacing: 3px; }
+
+        /* Navigation */
+        .nav-bar { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; }
+        .nav-btn { background: var(--glass); border: 1px solid var(--border); color: var(--muted); padding: 8px 20px; border-radius: 25px; cursor: pointer; font-family: 'Rajdhani'; font-size: 0.9rem; font-weight: 700; transition: 0.3s; }
+        .nav-btn:hover, .nav-btn.active { background: rgba(14, 165, 233, 0.2); border-color: var(--primary); color: var(--primary); }
+        .nav-back { background: transparent; border: 1px solid rgba(100, 116, 139, 0.3); color: var(--muted); padding: 8px 15px; border-radius: 25px; cursor: pointer; font-family: 'Rajdhani'; font-size: 0.85rem; font-weight: 700; transition: 0.3s; text-decoration: none; display: inline-flex; align-items: center; }
+        .nav-back:hover { border-color: var(--primary); color: var(--primary); }
+
+        /* Section */
+        .section { display: none; }
+        .section.active { display: block; }
+        .section-title { font-size: 0.85rem; font-weight: 700; letter-spacing: 4px; color: var(--primary); border-left: 3px solid var(--primary); padding-left: 12px; margin: 30px 0 15px; text-transform: uppercase; }
+
+        /* Glass Card */
+        .card { background: var(--glass); border: 1px solid var(--border); border-radius: 15px; padding: 20px; backdrop-filter: blur(10px); margin-bottom: 15px; }
+
+        /* Overview Stats */
+        .overview-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 20px; }
+        .overview-item { background: var(--glass); border: 1px solid var(--border); border-radius: 12px; padding: 18px 15px; text-align: center; backdrop-filter: blur(10px); }
+        .overview-item .num { font-family: 'Orbitron'; font-size: 1.8rem; font-weight: 900; color: var(--primary); text-shadow: 0 0 15px rgba(14, 165, 233, 0.4); }
+        .overview-item .num.accent { color: var(--accent); text-shadow: 0 0 15px rgba(251, 191, 36, 0.4); }
+        .overview-item .num.success { color: var(--success); text-shadow: 0 0 15px rgba(34, 197, 94, 0.4); }
+        .overview-item .label { font-size: 0.8rem; color: var(--muted); margin-top: 5px; letter-spacing: 1px; }
+
+        /* Calendar */
+        .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .calendar-header h3 { font-family: 'Orbitron'; font-size: 1rem; color: var(--primary); }
+        .cal-nav { background: var(--glass); border: 1px solid var(--border); color: var(--primary); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+        .cal-nav:hover { background: rgba(14, 165, 233, 0.3); }
+        .cal-weekdays { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 6px; }
+        .cal-weekdays span { text-align: center; font-size: 0.7rem; color: var(--muted); font-weight: 700; padding: 5px 0; }
+        .cal-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+        .cal-day { aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 8px; font-size: 0.85rem; font-weight: 700; position: relative; border: 1px solid transparent; transition: 0.2s; }
+        .cal-day.empty { opacity: 0; }
+        .cal-day.today { border-color: var(--primary); box-shadow: 0 0 10px rgba(14, 165, 233, 0.3); }
+        .cal-day.checked { background: rgba(34, 197, 94, 0.25); border-color: var(--success); color: var(--success); }
+        .cal-day.checked::after { content: '✓'; position: absolute; bottom: 2px; font-size: 0.55rem; color: var(--success); }
+        .cal-day.future { opacity: 0.3; }
+        .cal-day .word-count { font-size: 0.5rem; color: var(--muted); margin-top: 1px; }
+        .cal-day.checked .word-count { color: rgba(34, 197, 94, 0.7); }
+
+        /* Streak */
+        .streak-card { background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(14, 165, 233, 0.1)); border: 1px solid rgba(251, 191, 36, 0.3); text-align: center; padding: 25px; }
+        .streak-num { font-family: 'Orbitron'; font-size: 3rem; font-weight: 900; color: var(--accent); text-shadow: 0 0 25px rgba(251, 191, 36, 0.5); }
+        .streak-label { font-size: 1rem; color: var(--muted); margin-top: 5px; }
+
+        /* Level Distribution */
+        .level-bar-container { margin-bottom: 10px; }
+        .level-bar-header { display: flex; justify-content: space-between; margin-bottom: 4px; }
+        .level-bar-header .lvl { font-family: 'Orbitron'; font-size: 0.8rem; color: var(--primary); }
+        .level-bar-header .count { font-size: 0.8rem; color: var(--muted); }
+        .level-bar-track { height: 10px; background: rgba(14, 165, 233, 0.1); border-radius: 5px; overflow: hidden; }
+        .level-bar-fill { height: 100%; border-radius: 5px; transition: width 0.8s ease; }
+        .lvl-0 .level-bar-fill { background: linear-gradient(90deg, #ef4444, #f97316); }
+        .lvl-1 .level-bar-fill { background: linear-gradient(90deg, #f97316, #eab308); }
+        .lvl-2 .level-bar-fill { background: linear-gradient(90deg, #eab308, #84cc16); }
+        .lvl-3 .level-bar-fill { background: linear-gradient(90deg, #84cc16, #22c55e); }
+        .lvl-4 .level-bar-fill { background: linear-gradient(90deg, #22c55e, #0ea5e9); }
+        .lvl-5 .level-bar-fill { background: linear-gradient(90deg, #0ea5e9, #818cf8); }
+        .lvl-6 .level-bar-fill { background: linear-gradient(90deg, #818cf8, #a855f7); }
+        .lvl-7 .level-bar-fill { background: linear-gradient(90deg, #a855f7, #ec4899); }
+
+        /* Word List */
+        .word-list-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        .word-list-table th { text-align: left; padding: 8px 10px; color: var(--muted); font-size: 0.75rem; letter-spacing: 1px; border-bottom: 1px solid var(--border); font-weight: 700; }
+        .word-list-table td { padding: 8px 10px; border-bottom: 1px solid rgba(56, 189, 248, 0.08); }
+        .word-list-table tr:hover td { background: rgba(14, 165, 233, 0.05); }
+        .lvl-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: 700; font-family: 'Orbitron'; }
+        .lvl-badge-0 { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+        .lvl-badge-1 { background: rgba(249, 115, 22, 0.2); color: #f97316; }
+        .lvl-badge-2 { background: rgba(234, 179, 8, 0.2); color: #eab308; }
+        .lvl-badge-3 { background: rgba(132, 204, 22, 0.2); color: #84cc16; }
+        .lvl-badge-4 { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
+        .lvl-badge-5 { background: rgba(14, 165, 233, 0.2); color: #0ea5e9; }
+        .lvl-badge-6 { background: rgba(129, 140, 248, 0.2); color: #818cf8; }
+        .lvl-badge-7 { background: rgba(168, 85, 247, 0.2); color: #a855f7; }
+        .mastery-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 3px; }
+        .mastery-dot.filled { background: var(--accent); }
+        .mastery-dot.empty { background: rgba(251, 191, 36, 0.2); }
+
+        /* Recent Activity */
+        .activity-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(56, 189, 248, 0.08); }
+        .activity-item:last-child { border-bottom: none; }
+        .activity-icon { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+        .activity-icon.done { background: rgba(34, 197, 94, 0.2); }
+        .activity-icon.miss { background: rgba(239, 68, 68, 0.15); }
+        .activity-info { flex: 1; }
+        .activity-date { font-size: 0.85rem; font-weight: 700; }
+        .activity-detail { font-size: 0.75rem; color: var(--muted); }
+
+        /* Weekly Chart */
+        .weekly-chart { display: flex; align-items: flex-end; gap: 8px; height: 120px; padding: 10px 0; }
+        .week-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        .week-bar-wrap { width: 100%; flex: 1; display: flex; align-items: flex-end; justify-content: center; }
+        .week-bar { width: 70%; min-width: 15px; border-radius: 4px 4px 0 0; transition: height 0.5s; }
+        .week-bar.has-data { background: linear-gradient(180deg, var(--success), rgba(34, 197, 94, 0.4)); }
+        .week-bar.no-data { background: rgba(100, 116, 139, 0.15); height: 5px !important; }
+        .week-label { font-size: 0.65rem; color: var(--muted); font-weight: 700; }
+        .week-val { font-size: 0.65rem; color: var(--text); font-weight: 700; }
+
+        /* Filter */
+        .filter-bar { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
+        .filter-btn { background: var(--glass); border: 1px solid var(--border); color: var(--muted); padding: 5px 14px; border-radius: 15px; cursor: pointer; font-size: 0.8rem; font-weight: 700; transition: 0.3s; }
+        .filter-btn:hover, .filter-btn.active { background: rgba(14, 165, 233, 0.2); border-color: var(--primary); color: var(--primary); }
+
+        /* Search */
+        .search-box { width: 100%; background: var(--glass); border: 1px solid var(--border); color: var(--text); padding: 10px 15px; border-radius: 10px; font-size: 0.9rem; font-family: 'Rajdhani'; margin-bottom: 15px; outline: none; }
+        .search-box::placeholder { color: var(--muted); }
+        .search-box:focus { border-color: var(--primary); }
+
+        /* Loading */
+        .loading { text-align: center; padding: 40px; color: var(--muted); }
+        .loading-spinner { display: inline-block; width: 30px; height: 30px; border: 3px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            h1 { font-size: 1.3rem; }
+            .overview-grid { grid-template-columns: repeat(2, 1fr); }
+            .overview-item .num { font-size: 1.4rem; }
+            .streak-num { font-size: 2.2rem; }
+            .container { padding: 12px; }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    <div class="container">
+        <header>
+            <div class="date-badge" id="dateBadge"></div>
+            <h1>📊 学习统计</h1>
+            <div class="subtitle">STUDY STATISTICS</div>
+        </header>
+
+        <nav class="nav-bar">
+            <a class="nav-back" href="index.html">← 返回首页</a>
+            <button class="nav-btn active" onclick="showSection('overview')">总览</button>
+            <button class="nav-btn" onclick="showSection('calendar')">打卡</button>
+            <button class="nav-btn" onclick="showSection('words')">单词</button>
+        </nav>
+
+        <!-- OVERVIEW -->
+        <div class="section active" id="sec-overview">
+            <div class="overview-grid" id="overviewGrid">
+                <div class="loading"><div class="loading-spinner"></div></div>
+            </div>
+
+            <div class="card streak-card" id="streakCard">
+                <div class="streak-num" id="streakNum">0</div>
+                <div class="streak-label">🔥 连续打卡天数</div>
+            </div>
+
+            <div class="section-title">本周学习量</div>
+            <div class="card">
+                <div class="weekly-chart" id="weeklyChart"></div>
+            </div>
+
+            <div class="section-title">等级分布</div>
+            <div class="card" id="levelDistCard"></div>
+
+            <div class="section-title">最近活动</div>
+            <div class="card" id="recentActivity"></div>
+        </div>
+
+        <!-- CALENDAR -->
+        <div class="section" id="sec-calendar">
+            <div class="card">
+                <div class="calendar-header">
+                    <button class="cal-nav" onclick="changeMonth(-1)">◀</button>
+                    <h3 id="calMonthTitle"></h3>
+                    <button class="cal-nav" onclick="changeMonth(1)">▶</button>
+                </div>
+                <div class="cal-weekdays">
+                    <span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span>
+                </div>
+                <div class="cal-days" id="calDays"></div>
+            </div>
+
+            <div class="section-title">月度统计</div>
+            <div class="overview-grid" id="monthlyStats"></div>
+        </div>
+
+        <!-- WORDS -->
+        <div class="section" id="sec-words">
+            <input class="search-box" type="text" id="wordSearch" placeholder="🔍 搜索单词..." oninput="filterWords()">
+
+            <div class="filter-bar" id="filterBar">
+                <button class="filter-btn active" onclick="setFilter('all')">全部</button>
+                <button class="filter-btn" onclick="setFilter('new')">未掌握 (Lvl 0-2)</button>
+                <button class="filter-btn" onclick="setFilter('progress')">学习中 (Lvl 3-5)</button>
+                <button class="filter-btn" onclick="setFilter('mastered')">已掌握 (Lvl 6-7)</button>
+                <button class="filter-btn" onclick="setFilter('review')">今天需复习</button>
+            </div>
+
+            <div class="card" style="overflow-x:auto;">
+                <table class="word-list-table">
+                    <thead>
+                        <tr><th>单词</th><th>等级</th><th>掌握</th><th>下次复习</th><th>错误天数</th></tr>
+                    </thead>
+                    <tbody id="wordTableBody"></tbody>
+                </table>
+            </div>
+            <div style="text-align:center; margin-top:10px;">
+                <span id="wordCountLabel" style="font-size:0.8rem; color:var(--muted);"></span>
+            </div>
+        </div>
+    </div>
+
+<script>
+// ==================== DATA ====================
+const STORAGE_KEY = 'tongtong_checkin';
+const DATA_URL = './french_data.json';
+let frenchData = null;
+let checkinData = {};
+let currentCalYear, currentCalMonth;
+let currentFilter = 'all';
+
+// ==================== INIT ====================
+async function init() {
+    // Set date badge
+    const now = new Date();
+    document.getElementById('dateBadge').textContent = now.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
+
+    // Load checkin data from localStorage
+    try { checkinData = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) { checkinData = {}; }
+
+    // Load french data
+    try {
+        const resp = await fetch(DATA_URL + '?t=' + Date.now());
+        frenchData = await resp.json();
+    } catch(e) {
+        // Try local server
+        try {
+            const resp2 = await fetch('http://192.168.32.70:3333/core/tongtong_space/french_data.json?t=' + Date.now());
+            frenchData = await resp2.json();
+        } catch(e2) {
+            document.getElementById('overviewGrid').innerHTML = '<div class="loading">❌ 无法加载学习数据，请确保在服务器上访问</div>';
+            return;
+        }
+    }
+
+    if (!frenchData || !frenchData.notebook) {
+        document.getElementById('overviewGrid').innerHTML = '<div class="loading">❌ 数据格式错误</div>';
+        return;
+    }
+
+    // Auto check-in today if completed
+    autoCheckinToday();
+
+    // Render all sections
+    renderOverview();
+    currentCalYear = now.getFullYear();
+    currentCalMonth = now.getMonth();
+    renderCalendar();
+    renderWordList();
+}
+
+// ==================== CHECKIN LOGIC ====================
+function dateKey(d) {
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+
+function autoCheckinToday() {
+    const ds = frenchData.daily_stats;
+    if (ds && ds.completed) {
+        const today = dateKey(new Date());
+        if (!checkinData[today]) {
+            checkinData[today] = { checked: true, words: ds.words ? ds.words.length : 0, stars: ds.rewarded_stars || 0 };
+            saveCheckin();
+        }
+    }
+}
+
+function saveCheckin() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(checkinData));
+}
+
+// ==================== SECTIONS ====================
+function showSection(name) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById('sec-' + name).classList.add('active');
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+}
+
+// ==================== OVERVIEW ====================
+function renderOverview() {
+    const nb = frenchData.notebook || [];
+    const stars = frenchData.stars || 0;
+    const trophies = Math.floor(stars / 1000);
+    const ds = frenchData.daily_stats || {};
+
+    // Count levels
+    const levelCounts = {};
+    for (let i = 0; i <= 7; i++) levelCounts[i] = 0;
+    let masteredCount = 0;
+    nb.forEach(w => {
+        const lvl = w.lvl || 0;
+        levelCounts[lvl] = (levelCounts[lvl] || 0) + 1;
+        if (lvl >= 6) masteredCount++;
+    });
+
+    // Review due count
+    const today = dateKey(new Date());
+    let reviewDue = 0;
+    nb.forEach(w => {
+        if (w.next && w.next <= today) reviewDue++;
+    });
+
+    // Streak
+    const streak = calcStreak();
+
+    // Overview grid
+    document.getElementById('overviewGrid').innerHTML = `
+        <div class="overview-item"><div class="num">${nb.length}</div><div class="label">总单词数</div></div>
+        <div class="overview-item"><div class="num accent">${stars}</div><div class="label">⭐ 星星</div></div>
+        <div class="overview-item"><div class="num">${trophies}</div><div class="label">🏆 奖杯</div></div>
+        <div class="overview-item"><div class="num success">${masteredCount}</div><div class="label">已掌握</div></div>
+        <div class="overview-item"><div class="num">${reviewDue}</div><div class="label">待复习</div></div>
+        <div class="overview-item"><div class="num accent">${ds.words ? ds.words.length : 0}</div><div class="label">今日新词</div></div>
+    `;
+
+    // Streak
+    document.getElementById('streakNum').textContent = streak;
+
+    // Weekly chart
+    renderWeeklyChart();
+
+    // Level distribution
+    renderLevelDist(levelCounts, nb.length);
+
+    // Recent activity
+    renderRecentActivity();
+}
+
+function calcStreak() {
+    let streak = 0;
+    const d = new Date();
+    // If today is not checked, start from yesterday
+    const todayKey = dateKey(d);
+    if (!checkinData[todayKey]) {
+        d.setDate(d.getDate() - 1);
+    }
+    for (let i = 0; i < 365; i++) {
+        const key = dateKey(d);
+        if (checkinData[key] && checkinData[key].checked) {
+            streak++;
+            d.setDate(d.getDate() - 1);
+        } else {
+            break;
+        }
+    }
+    return streak;
+}
+
+function renderWeeklyChart() {
+    const container = document.getElementById('weeklyChart');
+    const days = ['一','二','三','四','五','六','日'];
+    const now = new Date();
+    const dayOfWeek = now.getDay(); // 0=Sun
+    // Find Monday of this week
+    const monday = new Date(now);
+    const diff = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+    monday.setDate(monday.getDate() - diff);
+
+    let maxWords = 1;
+    const weekData = [];
+    for (let i = 0; i < 7; i++) {
+        const d = new Date(monday);
+        d.setDate(d.getDate() + i);
+        const key = dateKey(d);
+        const data = checkinData[key];
+        const words = data ? (data.words || 0) : 0;
+        weekData.push({ day: days[i], date: d, words, key, isFuture: d > now });
+        if (words > maxWords) maxWords = words;
+    }
+
+    container.innerHTML = weekData.map(w => {
+        const h = w.isFuture ? 5 : Math.max(5, (w.words / maxWords) * 100);
+        const cls = (w.words > 0 && !w.isFuture) ? 'has-data' : 'no-data';
+        return `<div class="week-col">
+            <div class="week-val">${w.words || ''}</div>
+            <div class="week-bar-wrap"><div class="week-bar ${cls}" style="height:${h}%"></div></div>
+            <div class="week-label">${w.day}</div>
+        </div>`;
+    }).join('');
+}
+
+function renderLevelDist(levelCounts, total) {
+    const container = document.getElementById('levelDistCard');
+    let html = '';
+    for (let i = 0; i <= 7; i++) {
+        const count = levelCounts[i] || 0;
+        const pct = total > 0 ? (count / total * 100) : 0;
+        html += `<div class="level-bar-container lvl-${i}">
+            <div class="level-bar-header">
+                <span class="lvl">Lvl ${i}</span>
+                <span class="count">${count} 词 (${pct.toFixed(0)}%)</span>
+            </div>
+            <div class="level-bar-track"><div class="level-bar-fill" style="width:${pct}%"></div></div>
+        </div>`;
+    }
+    container.innerHTML = html;
+}
+
+function renderRecentActivity() {
+    const container = document.getElementById('recentActivity');
+    const now = new Date();
+    let html = '';
+    for (let i = 0; i < 14; i++) {
+        const d = new Date(now);
+        d.setDate(d.getDate() - i);
+        const key = dateKey(d);
+        const data = checkinData[key];
+        const isToday = i === 0;
+        const dateStr = isToday ? '今天' : d.toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' });
+
+        if (data && data.checked) {
+            html += `<div class="activity-item">
+                <div class="activity-icon done">✅</div>
+                <div class="activity-info">
+                    <div class="activity-date">${dateStr} - 打卡完成</div>
+                    <div class="activity-detail">学习了 ${data.words || 0} 个单词${data.stars ? '，获得 ' + data.stars + ' ⭐' : ''}</div>
+                </div>
+            </div>`;
+        } else if (!isToday) {
+            html += `<div class="activity-item">
+                <div class="activity-icon miss">💤</div>
+                <div class="activity-info">
+                    <div class="activity-date">${dateStr} - 未打卡</div>
+                    <div class="activity-detail">今天没有学习记录</div>
+                </div>
+            </div>`;
+        }
+    }
+    container.innerHTML = html;
+}
+
+// ==================== CALENDAR ====================
+function changeMonth(delta) {
+    currentCalMonth += delta;
+    if (currentCalMonth > 11) { currentCalMonth = 0; currentCalYear++; }
+    if (currentCalMonth < 0) { currentCalMonth = 11; currentCalYear--; }
+    renderCalendar();
+}
+
+function renderCalendar() {
+    const monthNames = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+    document.getElementById('calMonthTitle').textContent = `${currentCalYear}年 ${monthNames[currentCalMonth]}`;
+
+    const container = document.getElementById('calDays');
+    const firstDay = new Date(currentCalYear, currentCalMonth, 1);
+    const lastDay = new Date(currentCalYear, currentCalMonth + 1, 0);
+    const today = new Date();
+    today.setHours(0,0,0,0);
+
+    // Monday = 0 offset
+    let startOffset = firstDay.getDay() - 1;
+    if (startOffset < 0) startOffset = 6;
+
+    let html = '';
+    for (let i = 0; i < startOffset; i++) {
+        html += '<div class="cal-day empty"></div>';
+    }
+
+    let monthChecked = 0;
+    let monthTotalWords = 0;
+
+    for (let d = 1; d <= lastDay.getDate(); d++) {
+        const date = new Date(currentCalYear, currentCalMonth, d);
+        const key = dateKey(date);
+        const data = checkinData[key];
+        const isToday = date.getTime() === today.getTime();
+        const isFuture = date > today;
+        const isChecked = data && data.checked;
+
+        if (isChecked) { monthChecked++; monthTotalWords += (data.words || 0); }
+
+        let cls = 'cal-day';
+        if (isToday) cls += ' today';
+        if (isChecked) cls += ' checked';
+        if (isFuture) cls += ' future';
+
+        html += `<div class="${cls}">
+            ${d}
+            ${isChecked ? `<span class="word-count">${data.words || 0}</span>` : ''}
+        </div>`;
+    }
+    container.innerHTML = html;
+
+    // Monthly stats
+    const totalDays = lastDay.getDate();
+    const rate = totalDays > 0 ? (monthChecked / totalDays * 100) : 0;
+    document.getElementById('monthlyStats').innerHTML = `
+        <div class="overview-item"><div class="num success">${monthChecked}</div><div class="label">打卡天数</div></div>
+        <div class="overview-item"><div class="num">${totalDays - monthChecked}</div><div class="label">未打卡</div></div>
+        <div class="overview-item"><div class="num accent">${rate.toFixed(0)}%</div><div class="label">打卡率</div></div>
+        <div class="overview-item"><div class="num">${monthTotalWords}</div><div class="label">学习单词</div></div>
+    `;
+}
+
+// ==================== WORD LIST ====================
+function renderWordList() {
+    const nb = frenchData.notebook || [];
+    const today = dateKey(new Date());
+    let filtered = [...nb];
+
+    // Apply filter
+    if (currentFilter === 'new') filtered = filtered.filter(w => (w.lvl||0) <= 2);
+    else if (currentFilter === 'progress') filtered = filtered.filter(w => (w.lvl||0) >= 3 && (w.lvl||0) <= 5);
+    else if (currentFilter === 'mastered') filtered = filtered.filter(w => (w.lvl||0) >= 6);
+    else if (currentFilter === 'review') filtered = filtered.filter(w => w.next && w.next <= today);
+
+    // Apply search
+    const search = document.getElementById('wordSearch').value.toLowerCase().trim();
+    if (search) {
+        filtered = filtered.filter(w => w.word.toLowerCase().includes(search));
+    }
+
+    // Sort: lvl ascending, then by next review date
+    filtered.sort((a, b) => {
+        if ((a.lvl||0) !== (b.lvl||0)) return (a.lvl||0) - (b.lvl||0);
+        return (a.next||'').localeCompare(b.next||'');
+    });
+
+    const tbody = document.getElementById('wordTableBody');
+    tbody.innerHTML = filtered.slice(0, 100).map(w => {
+        const lvl = w.lvl || 0;
+        const mastery = lvl; // 0-7 dots
+        const dots = Array.from({length: 8}, (_, i) =>
+            `<span class="mastery-dot ${i < mastery ? 'filled' : 'empty'}"></span>`
+        ).join('');
+        const isDue = w.next && w.next <= today;
+        const nextStr = isDue ? `<span style="color:var(--accent)">${w.next} ⚡</span>` : (w.next || '-');
+
+        return `<tr>
+            <td><strong>${w.word}</strong></td>
+            <td><span class="lvl-badge lvl-badge-${lvl}">Lvl ${lvl}</span></td>
+            <td>${dots}</td>
+            <td style="font-size:0.8rem">${nextStr}</td>
+            <td style="color:${(w.err_days||0) > 0 ? 'var(--danger)' : 'var(--muted)'}">${w.err_days || 0}</td>
+        </tr>`;
+    }).join('');
+
+    document.getElementById('wordCountLabel').textContent = `显示 ${Math.min(filtered.length, 100)} / ${filtered.length} 个单词`;
+}
+
+function filterWords() { renderWordList(); }
+
+function setFilter(f) {
+    currentFilter = f;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+    renderWordList();
+}
+
+// ==================== START ====================
+init();
+</script>
+</body>
+</html>
