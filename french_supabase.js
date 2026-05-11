@@ -184,12 +184,7 @@ async function saveToSupabase(gData, options = {}) {
       throw new Error('无法获取用户档案ID');
     }
 
-    const staleCheck = await shouldDropStaleSave(profileId, gData);
-    if (staleCheck.drop) {
-      console.warn('🛡️ 已丢弃旧缓存保存，避免覆盖今日完成状态:', staleCheck.reason);
-      return { status: 'stale_dropped', reason: staleCheck.reason };
-    }
-
+    // 先更新 profile 和 notebook（向前推进，不会丢失数据）
     const { error: profileError } = await supabaseClient
       .from('french_profiles')
       .update({
@@ -204,6 +199,15 @@ async function saveToSupabase(gData, options = {}) {
     }
 
     await syncNotebookToSupabase(profileId, gData.notebook);
+
+    // 修复：stale check 移到 profile 更新之后
+    // 这样如果远程已有更高的 stars（说明其他设备已完成），
+    // 就能正确拦截旧缓存的 completed:false 覆盖
+    const staleCheck = await shouldDropStaleSave(profileId, gData);
+    if (staleCheck.drop) {
+      console.warn('🛡️ 已丢弃旧缓存保存，避免覆盖今日完成状态:', staleCheck.reason);
+      return { status: 'stale_dropped', reason: staleCheck.reason };
+    }
 
     if (gData.daily_stats && gData.daily_stats.date) {
       const rawStarsEarned = gData.daily_stats.stars_earned ?? gData.daily_stats.rewarded_stars;
