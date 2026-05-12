@@ -283,6 +283,13 @@
                             第一拍重音
                         </label>
 
+                        <label for="metro-sound">音色</label>
+                        <select id="metro-sound" class="meter-select" aria-label="节拍器音色">
+                            <option value="mechanical" selected>机械木声</option>
+                            <option value="soft">柔和木声</option>
+                            <option value="electronic">电子滴答</option>
+                        </select>
+
                         <label for="metro-volume">音量</label>
                         <input id="metro-volume" class="volume-slider" type="range" min="0" max="1" value="0.55" step="0.05" aria-label="节拍器音量">
                     </div>
@@ -645,6 +652,7 @@
             scheduleAheadSeconds: 0.1,
             volume: 0.55,
             accent: true,
+            sound: 'mechanical',
             taps: []
         };
 
@@ -653,6 +661,7 @@
         const tempoInput = document.getElementById('tempo-input');
         const meterSelect = document.getElementById('meter-select');
         const accentToggle = document.getElementById('accent-toggle');
+        const soundSelect = document.getElementById('metro-sound');
         const volumeSlider = document.getElementById('metro-volume');
         const beatStrip = document.getElementById('beat-strip');
         const metroToggle = document.getElementById('metro-toggle');
@@ -704,7 +713,18 @@
             return metronome.audioCtx;
         }
 
-        function scheduleClick(time, beatIndex) {
+        function makeNoiseBuffer(audioCtx, durationSeconds) {
+            const length = Math.max(1, Math.floor(audioCtx.sampleRate * durationSeconds));
+            const buffer = audioCtx.createBuffer(1, length, audioCtx.sampleRate);
+            const data = buffer.getChannelData(0);
+            for (let i = 0; i < length; i++) {
+                const decay = Math.pow(1 - i / length, 3.2);
+                data[i] = (Math.random() * 2 - 1) * decay;
+            }
+            return buffer;
+        }
+
+        function scheduleElectronicClick(time, beatIndex) {
             const audioCtx = metronome.audioCtx;
             const isAccent = beatIndex === 0 && metronome.accent;
             const oscillator = audioCtx.createOscillator();
@@ -720,6 +740,59 @@
             gain.connect(audioCtx.destination);
             oscillator.start(time);
             oscillator.stop(time + 0.06);
+        }
+
+        function scheduleMechanicalClick(time, beatIndex) {
+            const audioCtx = metronome.audioCtx;
+            const isAccent = beatIndex === 0 && metronome.accent;
+            const isSoft = metronome.sound === 'soft';
+            const volume = metronome.volume * (isAccent ? 1 : 0.72) * (isSoft ? 0.72 : 1);
+
+            const noise = audioCtx.createBufferSource();
+            const clickFilter = audioCtx.createBiquadFilter();
+            const clickGain = audioCtx.createGain();
+
+            noise.buffer = makeNoiseBuffer(audioCtx, isSoft ? 0.026 : 0.018);
+            clickFilter.type = 'bandpass';
+            clickFilter.frequency.setValueAtTime(isAccent ? 2100 : 1650, time);
+            clickFilter.Q.setValueAtTime(isSoft ? 3.2 : 5.5, time);
+            clickGain.gain.setValueAtTime(0.0001, time);
+            clickGain.gain.exponentialRampToValueAtTime(Math.max(0.0001, volume * 0.95), time + 0.002);
+            clickGain.gain.exponentialRampToValueAtTime(0.0001, time + (isSoft ? 0.055 : 0.035));
+
+            noise.connect(clickFilter);
+            clickFilter.connect(clickGain);
+            clickGain.connect(audioCtx.destination);
+            noise.start(time);
+            noise.stop(time + (isSoft ? 0.06 : 0.04));
+
+            const body = audioCtx.createOscillator();
+            const bodyFilter = audioCtx.createBiquadFilter();
+            const bodyGain = audioCtx.createGain();
+
+            body.type = 'triangle';
+            body.frequency.setValueAtTime(isAccent ? 720 : 560, time);
+            bodyFilter.type = 'bandpass';
+            bodyFilter.frequency.setValueAtTime(isAccent ? 860 : 680, time);
+            bodyFilter.Q.setValueAtTime(isSoft ? 7 : 10, time);
+            bodyGain.gain.setValueAtTime(0.0001, time);
+            bodyGain.gain.exponentialRampToValueAtTime(Math.max(0.0001, volume * 0.28), time + 0.004);
+            bodyGain.gain.exponentialRampToValueAtTime(0.0001, time + (isSoft ? 0.11 : 0.075));
+
+            body.connect(bodyFilter);
+            bodyFilter.connect(bodyGain);
+            bodyGain.connect(audioCtx.destination);
+            body.start(time);
+            body.stop(time + (isSoft ? 0.12 : 0.085));
+        }
+
+        function scheduleClick(time, beatIndex) {
+            const audioCtx = metronome.audioCtx;
+            if (metronome.sound === 'electronic') {
+                scheduleElectronicClick(time, beatIndex);
+            } else {
+                scheduleMechanicalClick(time, beatIndex);
+            }
 
             const delay = Math.max(0, (time - audioCtx.currentTime) * 1000);
             window.setTimeout(function() {
@@ -793,6 +866,9 @@
         });
         accentToggle.addEventListener('change', function(e) {
             metronome.accent = e.target.checked;
+        });
+        soundSelect.addEventListener('change', function(e) {
+            metronome.sound = e.target.value;
         });
         volumeSlider.addEventListener('input', function(e) {
             metronome.volume = Number(e.target.value);
