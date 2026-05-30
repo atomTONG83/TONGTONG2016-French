@@ -1,215 +1,155 @@
 {
-  "stars": 4700,
+  "stars": 4900,
   "last_milestone": 4000,
   "notebook": [
     {
-      "word": "abondant",
-      "lvl": 3,
-      "next": "2026-05-14",
-      "err_days": 0
-    },
-    {
-      "word": "accueillir",
-      "lvl": 5,
-      "next": "2026-06-06",
-      "err_days": 0
-    },
-    {
-      "word": "admirer",
-      "lvl": 3,
-      "next": "2026-05-14",
-      "err_days": 0
-    },
-    {
-      "word": "affection",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "agréable",
-      "lvl": 3,
-      "next": "2026-05-14",
-      "err_days": 0
-    },
-    {
-      "word": "Ami",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "amitié",
-      "lvl": 2,
-      "next": "2026-05-11",
-      "err_days": 0
-    },
-    {
-      "word": "amour",
-      "lvl": 1,
+      "word": "qualité",
+      "lvl": 0,
       "next": "2026-05-30",
+      "err_days": 1
+    },
+    {
+      "word": "fidèle",
+      "lvl": 5,
+      "next": "2026-06-26",
       "err_days": 0
     },
     {
-      "word": "Analyse",
+      "word": "journaliste",
+      "lvl": 1,
+      "next": "2026-05-31",
+      "err_days": 0
+    },
+    {
+      "word": "réfléchir",
       "lvl": 5,
       "next": "2026-06-06",
       "err_days": 0
     },
     {
-      "word": "analyser",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "ancien",
-      "lvl": 2,
-      "next": "2026-05-11",
-      "err_days": 0
-    },
-    {
-      "word": "apprécier",
+      "word": "Biotechnologie",
       "lvl": 5,
-      "next": "2026-06-06",
+      "next": "2026-06-21",
       "err_days": 0
     },
     {
-      "word": "arbre",
+      "word": "Sédiment",
+      "lvl": 3,
+      "next": "2026-06-03",
+      "err_days": 0
+    },
+    {
+      "word": "joyeux",
       "lvl": 2,
-      "next": "2026-05-11",
+      "next": "2026-06-02",
       "err_days": 0
     },
     {
-      "word": "Architecture",
+      "word": "natation",
+      "lvl": 2,
+      "next": "2026-06-02",
+      "err_days": 0
+    },
+    {
+      "word": "ambition",
+      "lvl": 0,
+      "next": "2026-05-30",
+      "err_days": 1
+    },
+    {
+      "word": "habileté",
+      "lvl": 0,
+      "next": "2026-05-30",
+      "err_days": 1
+    },
+    {
+      "word": "veste",
+      "lvl": 1,
+      "next": "2026-05-31",
+      "err_days": 0
+    },
+    {
+      "word": "Isolant",
       "lvl": 6,
       "next": "2026-07-06",
-      "err_days": 0
-    },
-    {
-      "word": "Argumentation",
-      "lvl": 5,
-      "next": "2026-06-06",
       "err_days": 0
     },
     {
       "word": "artiste",
       "lvl": 2,
-      "next": "2026-05-11",
+      "next": "2026-05-31",
       "err_days": 0
     },
     {
-      "word": "Astronomie",
+      "word": "manière",
+      "lvl": 4,
+      "next": "2026-05-30",
+      "err_days": 0
+    },
+    {
+      "word": "trente",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "conseil",
       "lvl": 5,
-      "next": "2026-06-06",
+      "next": "2026-06-21",
       "err_days": 0
     },
     {
-      "word": "athlétisme",
-      "lvl": 3,
-      "next": "2026-05-14",
-      "err_days": 0
+      "word": "chaleureux",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
     },
     {
-      "word": "Atmosphère",
+      "word": "mille",
       "lvl": 6,
       "next": "2026-07-06",
       "err_days": 0
     },
     {
-      "word": "attentif",
-      "lvl": 1,
-      "next": "2026-05-30",
-      "err_days": 0
-    },
-    {
-      "word": "aventure",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "batterie",
+      "word": "entreprise",
       "lvl": 2,
-      "next": "2026-05-11",
+      "next": "2026-05-31",
       "err_days": 0
     },
     {
-      "word": "bénéfice",
+      "word": "agréable",
       "lvl": 1,
-      "next": "2026-05-30",
+      "next": "2026-05-31",
       "err_days": 0
     },
     {
-      "word": "bibliothèque",
-      "lvl": 3,
-      "next": "2026-05-14",
-      "err_days": 0
-    },
-    {
-      "word": "Bienveillance",
-      "lvl": 5,
-      "next": "2026-06-06",
-      "err_days": 0
-    },
-    {
-      "word": "biologie",
-      "lvl": 1,
-      "next": "2026-05-30",
-      "err_days": 0
-    },
-    {
-      "word": "Biotechnologie",
+      "word": "Ami",
       "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "botte",
-      "lvl": 3,
-      "next": "2026-05-14",
-      "err_days": 0
-    },
-    {
-      "word": "boucherie",
-      "lvl": 5,
-      "next": "2026-06-06",
-      "err_days": 0
-    },
-    {
-      "word": "brave",
-      "lvl": 3,
-      "next": "2026-05-14",
-      "err_days": 0
-    },
-    {
-      "word": "cahier",
-      "lvl": 6,
-      "next": "2026-07-06",
-      "err_days": 0
-    },
-    {
-      "word": "Caméléon",
-      "lvl": 6,
-      "next": "2026-07-06",
-      "err_days": 0
-    },
-    {
-      "word": "cartable",
-      "lvl": 6,
-      "next": "2026-07-06",
+      "next": "2026-05-29",
       "err_days": 0
     },
     {
       "word": "ceinture",
-      "lvl": 1,
-      "next": "2026-05-30",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "collaborer",
+      "lvl": 3,
+      "next": "2026-06-03",
       "err_days": 0
     },
     {
-      "word": "célébrer",
-      "lvl": 2,
-      "next": "2026-05-11",
+      "word": "diplôme",
+      "lvl": 5,
+      "next": "2026-06-26",
+      "err_days": 0
+    },
+    {
+      "word": "affection",
+      "lvl": 1,
+      "next": "2026-05-31",
       "err_days": 0
     },
     {
@@ -219,15 +159,447 @@
       "err_days": 0
     },
     {
-      "word": "chaleureux",
-      "lvl": 4,
-      "next": "2026-05-22",
+      "word": "ancien",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "délicat",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "court",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "cochon",
+      "lvl": 1,
+      "next": "2026-05-31",
       "err_days": 0
     },
     {
-      "word": "changement",
+      "word": "bière",
+      "lvl": 2,
+      "next": "2026-06-02",
+      "err_days": 0
+    },
+    {
+      "word": "fraternité",
+      "lvl": 1,
+      "next": "2026-05-31",
+      "err_days": 0
+    },
+    {
+      "word": "biologie",
+      "lvl": 0,
+      "next": "2026-05-30",
+      "err_days": 1
+    },
+    {
+      "word": "défendre",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "raison",
+      "lvl": 5,
+      "next": "2026-06-06",
+      "err_days": 0
+    },
+    {
+      "word": "prudence",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "tolérant",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "brave",
+      "lvl": 2,
+      "next": "2026-05-31",
+      "err_days": 0
+    },
+    {
+      "word": "sérieux",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "respect",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "Analyse",
+      "lvl": 5,
+      "next": "2026-06-06",
+      "err_days": 0
+    },
+    {
+      "word": "amitié",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "important",
+      "lvl": 5,
+      "next": "2026-06-06",
+      "err_days": 0
+    },
+    {
+      "word": "Honnêteté",
+      "lvl": 5,
+      "next": "2026-06-06",
+      "err_days": 0
+    },
+    {
+      "word": "plaine",
+      "lvl": 5,
+      "next": "2026-06-21",
+      "err_days": 0
+    },
+    {
+      "word": "Architecture",
+      "lvl": 6,
+      "next": "2026-07-06",
+      "err_days": 0
+    },
+    {
+      "word": "salle de bain",
       "lvl": 3,
-      "next": "2026-05-14",
+      "next": "2026-06-03",
+      "err_days": 0
+    },
+    {
+      "word": "joli",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "milliard",
+      "lvl": 5,
+      "next": "2026-06-06",
+      "err_days": 0
+    },
+    {
+      "word": "célébrer",
+      "lvl": 2,
+      "next": "2026-05-31",
+      "err_days": 0
+    },
+    {
+      "word": "violet",
+      "lvl": 5,
+      "next": "2026-06-26",
+      "err_days": 0
+    },
+    {
+      "word": "saison",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "utile",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "énergie",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "Créativité",
+      "lvl": 5,
+      "next": "2026-06-06",
+      "err_days": 0
+    },
+    {
+      "word": "pensée",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "Condensation",
+      "lvl": 5,
+      "next": "2026-06-26",
+      "err_days": 0
+    },
+    {
+      "word": "choisir",
+      "lvl": 4,
+      "next": "2026-06-11",
+      "err_days": 0
+    },
+    {
+      "word": "Résistance",
+      "lvl": 5,
+      "next": "2026-06-21",
+      "err_days": 0
+    },
+    {
+      "word": "volontaire",
+      "lvl": 0,
+      "next": "2026-05-30",
+      "err_days": 1
+    },
+    {
+      "word": "victoire",
+      "lvl": 1,
+      "next": "2026-05-30",
+      "err_days": 0
+    },
+    {
+      "word": "arbre",
+      "lvl": 0,
+      "next": "2026-05-30",
+      "err_days": 1
+    },
+    {
+      "word": "forêt",
+      "lvl": 5,
+      "next": "2026-06-21",
+      "err_days": 0
+    },
+    {
+      "word": "doute",
+      "lvl": 0,
+      "next": "2026-05-30",
+      "err_days": 1
+    },
+    {
+      "word": "zèle",
+      "lvl": 1,
+      "next": "2026-05-31",
+      "err_days": 0
+    },
+    {
+      "word": "attentif",
+      "lvl": 2,
+      "next": "2026-05-30",
+      "err_days": 0
+    },
+    {
+      "word": "objectif",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "bénéfice",
+      "lvl": 1,
+      "next": "2026-05-30",
+      "err_days": 0
+    },
+    {
+      "word": "développer",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "éléphant",
+      "lvl": 1,
+      "next": "2026-05-31",
+      "err_days": 0
+    },
+    {
+      "word": "océan",
+      "lvl": 1,
+      "next": "2026-05-30",
+      "err_days": 0
+    },
+    {
+      "word": "batterie",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "vivant",
+      "lvl": 2,
+      "next": "2026-06-02",
+      "err_days": 0
+    },
+    {
+      "word": "examiner",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "souvenir",
+      "lvl": 1,
+      "next": "2026-05-31",
+      "err_days": 0
+    },
+    {
+      "word": "expérience",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "Lune",
+      "lvl": 4,
+      "next": "2026-05-29",
+      "err_days": 0
+    },
+    {
+      "word": "Astronomie",
+      "lvl": 5,
+      "next": "2026-06-06",
+      "err_days": 0
+    },
+    {
+      "word": "million",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "pacifique",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "Persévérance",
+      "lvl": 0,
+      "next": "2026-05-30",
+      "err_days": 1
+    },
+    {
+      "word": "perspicace",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "accueillir",
+      "lvl": 5,
+      "next": "2026-06-06",
+      "err_days": 0
+    },
+    {
+      "word": "expliquer",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "équipe",
+      "lvl": 0,
+      "next": "2026-05-30",
+      "err_days": 1
+    },
+    {
+      "word": "Vertèbre",
+      "lvl": 5,
+      "next": "2026-06-06",
+      "err_days": 0
+    },
+    {
+      "word": "discuter",
+      "lvl": 1,
+      "next": "2026-05-31",
+      "err_days": 0
+    },
+    {
+      "word": "Globalisation",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "travail",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "émotion",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "Perspective",
+      "lvl": 5,
+      "next": "2026-06-21",
+      "err_days": 0
+    },
+    {
+      "word": "Électricité",
+      "lvl": 5,
+      "next": "2026-06-06",
+      "err_days": 0
+    },
+    {
+      "word": "harmonie",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "lion",
+      "lvl": 2,
+      "next": "2026-05-31",
+      "err_days": 0
+    },
+    {
+      "word": "ensoleillé",
+      "lvl": 1,
+      "next": "2026-05-30",
+      "err_days": 0
+    },
+    {
+      "word": "mode",
+      "lvl": 4,
+      "next": "2026-06-06",
+      "err_days": 0
+    },
+    {
+      "word": "sculpture",
+      "lvl": 1,
+      "next": "2026-05-31",
+      "err_days": 0
+    },
+    {
+      "word": "langue",
+      "lvl": 0,
+      "next": "2026-05-30",
+      "err_days": 1
+    },
+    {
+      "word": "faible",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "enthousiasme",
+      "lvl": 1,
+      "next": "2026-05-31",
       "err_days": 0
     },
     {
@@ -237,63 +609,195 @@
       "err_days": 0
     },
     {
-      "word": "chef-d'œuvre",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "Chien",
+      "word": "Maison",
       "lvl": 5,
       "next": "2026-06-06",
       "err_days": 0
     },
     {
-      "word": "choisir",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "Climax",
-      "lvl": 5,
-      "next": "2026-06-06",
-      "err_days": 0
-    },
-    {
-      "word": "collaborer",
-      "lvl": 3,
-      "next": "2026-05-14",
-      "err_days": 0
-    },
-    {
-      "word": "comprendre",
-      "lvl": 2,
-      "next": "2026-05-11",
-      "err_days": 0
-    },
-    {
-      "word": "Condensation",
+      "word": "grenouille",
       "lvl": 4,
-      "next": "2026-05-22",
+      "next": "2026-06-04",
       "err_days": 0
     },
     {
-      "word": "confiance",
+      "word": "Écosystème",
+      "lvl": 5,
+      "next": "2026-06-06",
+      "err_days": 0
+    },
+    {
+      "word": "Friction",
       "lvl": 1,
-      "next": "2026-05-09",
+      "next": "2026-05-31",
       "err_days": 0
     },
     {
-      "word": "Conscience",
+      "word": "créatif",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "préparer",
+      "lvl": 2,
+      "next": "2026-05-31",
+      "err_days": 0
+    },
+    {
+      "word": "s'épanouir",
+      "lvl": 5,
+      "next": "2026-06-06",
+      "err_days": 0
+    },
+    {
+      "word": "courage",
+      "lvl": 2,
+      "next": "2026-05-31",
+      "err_days": 0
+    },
+    {
+      "word": "coussin",
+      "lvl": 1,
+      "next": "2026-05-31",
+      "err_days": 0
+    },
+    {
+      "word": "découvrir",
+      "lvl": 5,
+      "next": "2026-06-26",
+      "err_days": 0
+    },
+    {
+      "word": "Fraternité",
+      "lvl": 5,
+      "next": "2026-06-06",
+      "err_days": 0
+    },
+    {
+      "word": "valoir",
+      "lvl": 0,
+      "next": "2026-05-30",
+      "err_days": 1
+    },
+    {
+      "word": "variété",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "cartable",
       "lvl": 6,
       "next": "2026-07-06",
       "err_days": 0
     },
     {
-      "word": "conseil",
+      "word": "patience",
+      "lvl": 2,
+      "next": "2026-06-02",
+      "err_days": 0
+    },
+    {
+      "word": "organiser",
+      "lvl": 1,
+      "next": "2026-05-31",
+      "err_days": 0
+    },
+    {
+      "word": "équilibre",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "magnifique",
       "lvl": 4,
-      "next": "2026-05-22",
+      "next": "2026-05-30",
+      "err_days": 0
+    },
+    {
+      "word": "Équilibre",
+      "lvl": 6,
+      "next": "2026-07-06",
+      "err_days": 0
+    },
+    {
+      "word": "site web",
+      "lvl": 2,
+      "next": "2026-06-02",
+      "err_days": 0
+    },
+    {
+      "word": "encourager",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "fier",
+      "lvl": 0,
+      "next": "2026-05-30",
+      "err_days": 1
+    },
+    {
+      "word": "Générosité",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "Jardin",
+      "lvl": 5,
+      "next": "2026-06-21",
+      "err_days": 0
+    },
+    {
+      "word": "vigoureux",
+      "lvl": 2,
+      "next": "2026-05-31",
+      "err_days": 0
+    },
+    {
+      "word": "majorité",
+      "lvl": 1,
+      "next": "2026-05-31",
+      "err_days": 0
+    },
+    {
+      "word": "changement",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "gentillesse",
+      "lvl": 0,
+      "next": "2026-05-30",
+      "err_days": 1
+    },
+    {
+      "word": "Mutation",
+      "lvl": 1,
+      "next": "2026-05-31",
+      "err_days": 0
+    },
+    {
+      "word": "diligent",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "sagesse",
+      "lvl": 1,
+      "next": "2026-05-31",
+      "err_days": 0
+    },
+    {
+      "word": "Démocratie",
+      "lvl": 4,
+      "next": "2026-06-11",
       "err_days": 0
     },
     {
@@ -303,31 +807,61 @@
       "err_days": 0
     },
     {
-      "word": "Continent",
+      "word": "intéressant",
+      "lvl": 1,
+      "next": "2026-05-31",
+      "err_days": 0
+    },
+    {
+      "word": "apprécier",
+      "lvl": 5,
+      "next": "2026-06-06",
+      "err_days": 0
+    },
+    {
+      "word": "Protagoniste",
+      "lvl": 5,
+      "next": "2026-06-06",
+      "err_days": 0
+    },
+    {
+      "word": "Chien",
+      "lvl": 5,
+      "next": "2026-06-06",
+      "err_days": 0
+    },
+    {
+      "word": "mémoire",
+      "lvl": 0,
+      "next": "2026-05-30",
+      "err_days": 1
+    },
+    {
+      "word": "Symphonie",
+      "lvl": 5,
+      "next": "2026-06-21",
+      "err_days": 0
+    },
+    {
+      "word": "Volcan",
+      "lvl": 5,
+      "next": "2026-06-26",
+      "err_days": 0
+    },
+    {
+      "word": "Conscience",
       "lvl": 6,
       "next": "2026-07-06",
       "err_days": 0
     },
     {
-      "word": "courage",
-      "lvl": 2,
-      "next": "2026-05-11",
+      "word": "stylo",
+      "lvl": 5,
+      "next": "2026-06-06",
       "err_days": 0
     },
     {
-      "word": "coussin",
-      "lvl": 3,
-      "next": "2026-05-14",
-      "err_days": 0
-    },
-    {
-      "word": "créatif",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "Créativité",
+      "word": "Vidéo",
       "lvl": 5,
       "next": "2026-06-06",
       "err_days": 0
@@ -339,340 +873,22 @@
       "err_days": 0
     },
     {
-      "word": "découverte",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "découvrir",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "défendre",
-      "lvl": 2,
-      "next": "2026-05-11",
-      "err_days": 0
-    },
-    {
-      "word": "Démocratie",
-      "lvl": 2,
-      "next": "2026-05-11",
-      "err_days": 0
-    },
-    {
-      "word": "Désert",
-      "lvl": 5,
-      "next": "2026-06-06",
-      "err_days": 0
-    },
-    {
-      "word": "Détermination",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "développer",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "difficile",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "diligent",
-      "lvl": 2,
-      "next": "2026-05-14",
-      "err_days": 0
-    },
-    {
-      "word": "diplôme",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "discuter",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "doute",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "échange",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "École",
-      "lvl": 3,
-      "next": "2026-05-14",
-      "err_days": 0
-    },
-    {
-      "word": "Écosystème",
-      "lvl": 5,
-      "next": "2026-06-06",
-      "err_days": 0
-    },
-    {
-      "word": "effort",
-      "lvl": 3,
-      "next": "2026-05-14",
-      "err_days": 0
-    },
-    {
-      "word": "Électricité",
-      "lvl": 5,
-      "next": "2026-06-06",
-      "err_days": 0
-    },
-    {
-      "word": "élégant",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "email",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "émerveillement",
-      "lvl": 6,
-      "next": "2026-07-06",
-      "err_days": 0
-    },
-    {
-      "word": "émotion",
-      "lvl": 2,
-      "next": "2026-05-14",
-      "err_days": 0
-    },
-    {
-      "word": "Empathie",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "encourager",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "énergie",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "enthousiasme",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "entreprise",
-      "lvl": 3,
-      "next": "2026-05-14",
-      "err_days": 0
-    },
-    {
-      "word": "équilibre",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "Équilibre",
-      "lvl": 6,
-      "next": "2026-07-06",
-      "err_days": 0
-    },
-    {
-      "word": "équipe",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "équitation",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "espoir",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "estimer",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "étang",
-      "lvl": 3,
-      "next": "2026-05-14",
-      "err_days": 0
-    },
-    {
-      "word": "étonnant",
-      "lvl": 2,
-      "next": "2026-05-11",
-      "err_days": 0
-    },
-    {
-      "word": "étranger",
-      "lvl": 5,
-      "next": "2026-06-06",
-      "err_days": 0
-    },
-    {
-      "word": "examen",
-      "lvl": 3,
-      "next": "2026-05-14",
-      "err_days": 0
-    },
-    {
-      "word": "expérience",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "expliquer",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "explorer",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "faible",
-      "lvl": 2,
-      "next": "2026-05-11",
-      "err_days": 0
-    },
-    {
-      "word": "fidèle",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "fier",
-      "lvl": 3,
-      "next": "2026-05-14",
-      "err_days": 0
-    },
-    {
-      "word": "Fleur",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "forêt",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "fragile",
-      "lvl": 3,
-      "next": "2026-05-14",
-      "err_days": 0
-    },
-    {
-      "word": "Fraternité",
-      "lvl": 5,
-      "next": "2026-06-06",
-      "err_days": 0
-    },
-    {
-      "word": "Friction",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
       "word": "Frontière",
       "lvl": 5,
       "next": "2026-06-06",
       "err_days": 0
     },
     {
+      "word": "Préhistoire",
+      "lvl": 5,
+      "next": "2026-06-06",
+      "err_days": 0
+    },
+    {
       "word": "généreux",
-      "lvl": 3,
-      "next": "2026-05-14",
-      "err_days": 0
-    },
-    {
-      "word": "Générosité",
-      "lvl": 2,
-      "next": "2026-05-11",
-      "err_days": 0
-    },
-    {
-      "word": "Génétique",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "génial",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "gentillesse",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "Globalisation",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "grenouille",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "harmonie",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
+      "lvl": 0,
+      "next": "2026-05-30",
+      "err_days": 1
     },
     {
       "word": "Harmonie",
@@ -681,19 +897,37 @@
       "err_days": 0
     },
     {
-      "word": "Hippopotame",
-      "lvl": 4,
-      "next": "2026-05-22",
+      "word": "Climax",
+      "lvl": 5,
+      "next": "2026-06-06",
       "err_days": 0
     },
     {
-      "word": "honnête",
-      "lvl": 3,
-      "next": "2026-05-14",
+      "word": "confiance",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "Pingouin",
+      "lvl": 5,
+      "next": "2026-06-06",
       "err_days": 0
     },
     {
-      "word": "Honnêteté",
+      "word": "Bienveillance",
+      "lvl": 5,
+      "next": "2026-06-06",
+      "err_days": 0
+    },
+    {
+      "word": "aventure",
+      "lvl": 5,
+      "next": "2026-06-26",
+      "err_days": 0
+    },
+    {
+      "word": "responsable",
       "lvl": 5,
       "next": "2026-06-06",
       "err_days": 0
@@ -701,43 +935,283 @@
     {
       "word": "imagination",
       "lvl": 1,
-      "next": "2026-05-09",
+      "next": "2026-05-30",
       "err_days": 0
+    },
+    {
+      "word": "comprendre",
+      "lvl": 0,
+      "next": "2026-05-30",
+      "err_days": 1
+    },
+    {
+      "word": "patinoire",
+      "lvl": 1,
+      "next": "2026-05-31",
+      "err_days": 0
+    },
+    {
+      "word": "sandale",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "poste",
+      "lvl": 3,
+      "next": "2026-06-05",
+      "err_days": 0
+    },
+    {
+      "word": "musicien",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "amour",
+      "lvl": 1,
+      "next": "2026-05-30",
+      "err_days": 0
+    },
+    {
+      "word": "honnête",
+      "lvl": 5,
+      "next": "2026-06-28",
+      "err_days": 0
+    },
+    {
+      "word": "Vitesse",
+      "lvl": 5,
+      "next": "2026-06-06",
+      "err_days": 0
+    },
+    {
+      "word": "persévérant",
+      "lvl": 5,
+      "next": "2026-06-21",
+      "err_days": 0
+    },
+    {
+      "word": "analyser",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "logique",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "étonnant",
+      "lvl": 2,
+      "next": "2026-06-02",
+      "err_days": 0
+    },
+    {
+      "word": "vouloir",
+      "lvl": 3,
+      "next": "2026-06-03",
+      "err_days": 0
+    },
+    {
+      "word": "Argumentation",
+      "lvl": 5,
+      "next": "2026-06-06",
+      "err_days": 0
+    },
+    {
+      "word": "vérité",
+      "lvl": 4,
+      "next": "2026-06-13",
+      "err_days": 0
+    },
+    {
+      "word": "explorer",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "laboratoire",
+      "lvl": 3,
+      "next": "2026-06-03",
+      "err_days": 0
+    },
+    {
+      "word": "précis",
+      "lvl": 3,
+      "next": "2026-06-03",
+      "err_days": 0
+    },
+    {
+      "word": "espoir",
+      "lvl": 1,
+      "next": "2026-05-31",
+      "err_days": 0
+    },
+    {
+      "word": "Patience",
+      "lvl": 4,
+      "next": "2026-05-29",
+      "err_days": 0
+    },
+    {
+      "word": "observateur",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "loyal",
+      "lvl": 2,
+      "next": "2026-05-31",
+      "err_days": 0
+    },
+    {
+      "word": "élégant",
+      "lvl": 0,
+      "next": "2026-05-30",
+      "err_days": 1
+    },
+    {
+      "word": "réseau",
+      "lvl": 5,
+      "next": "2026-06-06",
+      "err_days": 0
+    },
+    {
+      "word": "bibliothèque",
+      "lvl": 0,
+      "next": "2026-05-30",
+      "err_days": 1
+    },
+    {
+      "word": "vif",
+      "lvl": 3,
+      "next": "2026-06-05",
+      "err_days": 0
+    },
+    {
+      "word": "découverte",
+      "lvl": 0,
+      "next": "2026-05-30",
+      "err_days": 1
+    },
+    {
+      "word": "génial",
+      "lvl": 1,
+      "next": "2026-05-31",
+      "err_days": 0
+    },
+    {
+      "word": "juste",
+      "lvl": 0,
+      "next": "2026-05-30",
+      "err_days": 1
+    },
+    {
+      "word": "naturel",
+      "lvl": 2,
+      "next": "2026-06-02",
+      "err_days": 0
+    },
+    {
+      "word": "liberté",
+      "lvl": 0,
+      "next": "2026-05-30",
+      "err_days": 1
+    },
+    {
+      "word": "Empathie",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "étranger",
+      "lvl": 5,
+      "next": "2026-06-06",
+      "err_days": 0
+    },
+    {
+      "word": "nécessaire",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "Continent",
+      "lvl": 6,
+      "next": "2026-07-06",
+      "err_days": 0
+    },
+    {
+      "word": "Symétrie",
+      "lvl": 5,
+      "next": "2026-06-06",
+      "err_days": 0
+    },
+    {
+      "word": "Génétique",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "ours",
+      "lvl": 0,
+      "next": "2026-05-30",
+      "err_days": 1
+    },
+    {
+      "word": "Sculpture",
+      "lvl": 5,
+      "next": "2026-06-06",
+      "err_days": 0
+    },
+    {
+      "word": "cahier",
+      "lvl": 6,
+      "next": "2026-07-06",
+      "err_days": 0
+    },
+    {
+      "word": "intelligent",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "Robot",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "obstacle",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "mystère",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "Désert",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
     },
     {
       "word": "Imagination",
-      "lvl": 3,
-      "next": "2026-05-14",
-      "err_days": 0
-    },
-    {
-      "word": "important",
-      "lvl": 5,
-      "next": "2026-06-06",
-      "err_days": 0
-    },
-    {
-      "word": "imprévisible",
-      "lvl": 5,
-      "next": "2026-06-06",
-      "err_days": 0
-    },
-    {
-      "word": "imprimante",
       "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "Indépendance",
-      "lvl": 5,
-      "next": "2026-06-06",
-      "err_days": 0
-    },
-    {
-      "word": "ingénieux",
-      "lvl": 6,
-      "next": "2026-07-06",
+      "next": "2026-05-30",
       "err_days": 0
     },
     {
@@ -747,121 +1221,253 @@
       "err_days": 0
     },
     {
-      "word": "intelligent",
-      "lvl": 2,
-      "next": "2026-05-11",
-      "err_days": 0
-    },
-    {
-      "word": "intéressant",
+      "word": "examen",
       "lvl": 1,
-      "next": "2026-05-09",
+      "next": "2026-05-31",
       "err_days": 0
     },
     {
-      "word": "Isolant",
+      "word": "Atmosphère",
       "lvl": 6,
       "next": "2026-07-06",
       "err_days": 0
     },
     {
-      "word": "Jardin",
-      "lvl": 4,
-      "next": "2026-05-22",
+      "word": "source",
+      "lvl": 5,
+      "next": "2026-06-26",
       "err_days": 0
     },
     {
-      "word": "joie",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "joli",
-      "lvl": 2,
-      "next": "2026-05-11",
-      "err_days": 0
-    },
-    {
-      "word": "joyeux",
+      "word": "École",
       "lvl": 3,
-      "next": "2026-05-14",
+      "next": "2026-05-29",
       "err_days": 0
     },
     {
-      "word": "juste",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "langue",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "liberté",
-      "lvl": 2,
-      "next": "2026-05-11",
-      "err_days": 0
-    },
-    {
-      "word": "logique",
-      "lvl": 3,
-      "next": "2026-05-14",
-      "err_days": 0
-    },
-    {
-      "word": "loyal",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "loyauté",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "Lune",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "magnifique",
-      "lvl": 3,
-      "next": "2026-05-14",
-      "err_days": 0
-    },
-    {
-      "word": "Maison",
+      "word": "Portrait",
       "lvl": 5,
       "next": "2026-06-06",
       "err_days": 0
     },
     {
-      "word": "majorité",
+      "word": "solide",
+      "lvl": 5,
+      "next": "2026-06-06",
+      "err_days": 0
+    },
+    {
+      "word": "Détermination",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "Préservation",
+      "lvl": 6,
+      "next": "2026-07-06",
+      "err_days": 0
+    },
+    {
+      "word": "échange",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "fragile",
       "lvl": 2,
-      "next": "2026-05-14",
+      "next": "2026-06-02",
       "err_days": 0
     },
     {
-      "word": "manière",
-      "lvl": 3,
-      "next": "2026-05-14",
+      "word": "ingénieux",
+      "lvl": 6,
+      "next": "2026-07-06",
       "err_days": 0
     },
     {
-      "word": "mémoire",
-      "lvl": 3,
-      "next": "2026-05-14",
+      "word": "abondant",
+      "lvl": 1,
+      "next": "2026-05-31",
+      "err_days": 0
+    },
+    {
+      "word": "pharmacie",
+      "lvl": 1,
+      "next": "2026-05-31",
+      "err_days": 0
+    },
+    {
+      "word": "original",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "talent",
+      "lvl": 1,
+      "next": "2026-05-31",
+      "err_days": 0
+    },
+    {
+      "word": "joie",
+      "lvl": 2,
+      "next": "2026-06-02",
+      "err_days": 0
+    },
+    {
+      "word": "loyauté",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "Prénom",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "modeste",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "équitation",
+      "lvl": 1,
+      "next": "2026-05-31",
+      "err_days": 0
+    },
+    {
+      "word": "estimer",
+      "lvl": 1,
+      "next": "2026-05-30",
+      "err_days": 0
+    },
+    {
+      "word": "étang",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "email",
+      "lvl": 2,
+      "next": "2026-06-02",
+      "err_days": 0
+    },
+    {
+      "word": "difficile",
+      "lvl": 4,
+      "next": "2026-06-04",
+      "err_days": 0
+    },
+    {
+      "word": "botte",
+      "lvl": 0,
+      "next": "2026-05-30",
+      "err_days": 1
+    },
+    {
+      "word": "Renaissance",
+      "lvl": 1,
+      "next": "2026-05-31",
+      "err_days": 0
+    },
+    {
+      "word": "effort",
+      "lvl": 0,
+      "next": "2026-05-30",
+      "err_days": 1
+    },
+    {
+      "word": "Paradoxe",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "imprimante",
+      "lvl": 1,
+      "next": "2026-05-31",
       "err_days": 0
     },
     {
       "word": "Mémoire",
+      "lvl": 5,
+      "next": "2026-06-06",
+      "err_days": 0
+    },
+    {
+      "word": "ruisseau",
+      "lvl": 0,
+      "next": "2026-05-30",
+      "err_days": 1
+    },
+    {
+      "word": "émerveillement",
+      "lvl": 6,
+      "next": "2026-07-06",
+      "err_days": 0
+    },
+    {
+      "word": "Fleur",
+      "lvl": 4,
+      "next": "2026-05-29",
+      "err_days": 0
+    },
+    {
+      "word": "Hippopotame",
+      "lvl": 1,
+      "next": "2026-05-31",
+      "err_days": 0
+    },
+    {
+      "word": "Pollinisation",
+      "lvl": 5,
+      "next": "2026-06-06",
+      "err_days": 0
+    },
+    {
+      "word": "Soleil",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "chef-d'œuvre",
+      "lvl": 0,
+      "next": "2026-05-30",
+      "err_days": 1
+    },
+    {
+      "word": "Indépendance",
+      "lvl": 5,
+      "next": "2026-06-06",
+      "err_days": 0
+    },
+    {
+      "word": "admirer",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
+    },
+    {
+      "word": "Sincérité",
+      "lvl": 0,
+      "next": "2026-05-30",
+      "err_days": 1
+    },
+    {
+      "word": "athlétisme",
+      "lvl": 0,
+      "next": "2026-05-30",
+      "err_days": 1
+    },
+    {
+      "word": "unique",
       "lvl": 5,
       "next": "2026-06-06",
       "err_days": 0
@@ -873,532 +1479,40 @@
       "err_days": 0
     },
     {
-      "word": "mille",
+      "word": "boucherie",
+      "lvl": 5,
+      "next": "2026-06-06",
+      "err_days": 0
+    },
+    {
+      "word": "Caméléon",
       "lvl": 6,
       "next": "2026-07-06",
       "err_days": 0
     },
     {
-      "word": "milliard",
+      "word": "Table",
       "lvl": 5,
-      "next": "2026-06-06",
-      "err_days": 0
-    },
-    {
-      "word": "mode",
-      "lvl": 2,
-      "next": "2026-05-14",
-      "err_days": 0
-    },
-    {
-      "word": "modeste",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "musicien",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "Mutation",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "mystère",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "natation",
-      "lvl": 3,
-      "next": "2026-05-14",
-      "err_days": 0
-    },
-    {
-      "word": "naturel",
-      "lvl": 3,
-      "next": "2026-05-14",
-      "err_days": 0
-    },
-    {
-      "word": "nécessaire",
-      "lvl": 2,
-      "next": "2026-05-11",
-      "err_days": 0
-    },
-    {
-      "word": "obéissant",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "observateur",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "obstacle",
-      "lvl": 2,
-      "next": "2026-05-11",
-      "err_days": 0
-    },
-    {
-      "word": "océan",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "organiser",
-      "lvl": 2,
-      "next": "2026-05-11",
-      "err_days": 0
-    },
-    {
-      "word": "original",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "ours",
-      "lvl": 3,
-      "next": "2026-05-14",
-      "err_days": 0
-    },
-    {
-      "word": "Paradoxe",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "patience",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "Patience",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "patinoire",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "pensée",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "Persévérance",
-      "lvl": 3,
-      "next": "2026-05-14",
-      "err_days": 0
-    },
-    {
-      "word": "persévérant",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "Perspective",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "pharmacie",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "Pingouin",
-      "lvl": 5,
-      "next": "2026-06-06",
-      "err_days": 0
-    },
-    {
-      "word": "plaine",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "Pollinisation",
-      "lvl": 5,
-      "next": "2026-06-06",
-      "err_days": 0
-    },
-    {
-      "word": "Portrait",
-      "lvl": 5,
-      "next": "2026-06-06",
-      "err_days": 0
-    },
-    {
-      "word": "poste",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "précis",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "Préhistoire",
-      "lvl": 5,
-      "next": "2026-06-06",
-      "err_days": 0
-    },
-    {
-      "word": "Prénom",
-      "lvl": 3,
-      "next": "2026-05-14",
-      "err_days": 0
-    },
-    {
-      "word": "préparer",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "Préservation",
-      "lvl": 6,
-      "next": "2026-07-06",
-      "err_days": 0
-    },
-    {
-      "word": "Protagoniste",
-      "lvl": 5,
-      "next": "2026-06-06",
-      "err_days": 0
-    },
-    {
-      "word": "prudence",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "qualité",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "raison",
-      "lvl": 5,
-      "next": "2026-06-06",
-      "err_days": 0
-    },
-    {
-      "word": "réfléchir",
-      "lvl": 5,
-      "next": "2026-06-06",
-      "err_days": 0
-    },
-    {
-      "word": "Renaissance",
-      "lvl": 5,
-      "next": "2026-06-06",
-      "err_days": 0
-    },
-    {
-      "word": "réseau",
-      "lvl": 5,
-      "next": "2026-06-06",
-      "err_days": 0
-    },
-    {
-      "word": "Résistance",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "respect",
-      "lvl": 2,
-      "next": "2026-05-11",
-      "err_days": 0
-    },
-    {
-      "word": "responsable",
-      "lvl": 5,
-      "next": "2026-06-06",
-      "err_days": 0
-    },
-    {
-      "word": "Robot",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "ruisseau",
-      "lvl": 3,
-      "next": "2026-05-14",
-      "err_days": 0
-    },
-    {
-      "word": "s'épanouir",
-      "lvl": 5,
-      "next": "2026-06-06",
-      "err_days": 0
-    },
-    {
-      "word": "sagesse",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "saison",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "salle de bain",
-      "lvl": 3,
-      "next": "2026-05-14",
-      "err_days": 0
-    },
-    {
-      "word": "sandale",
-      "lvl": 2,
-      "next": "2026-05-11",
-      "err_days": 0
-    },
-    {
-      "word": "sculpture",
-      "lvl": 2,
-      "next": "2026-05-14",
-      "err_days": 0
-    },
-    {
-      "word": "Sculpture",
-      "lvl": 5,
-      "next": "2026-06-06",
-      "err_days": 0
-    },
-    {
-      "word": "Sédiment",
-      "lvl": 2,
-      "next": "2026-05-11",
-      "err_days": 0
-    },
-    {
-      "word": "sérieux",
-      "lvl": 2,
-      "next": "2026-05-11",
+      "next": "2026-06-21",
       "err_days": 0
     },
     {
       "word": "sincère",
       "lvl": 3,
-      "next": "2026-05-14",
+      "next": "2026-06-03",
       "err_days": 0
     },
     {
-      "word": "Sincérité",
+      "word": "imprévisible",
       "lvl": 5,
       "next": "2026-06-06",
       "err_days": 0
     },
     {
-      "word": "site web",
-      "lvl": 5,
-      "next": "2026-06-06",
-      "err_days": 0
-    },
-    {
-      "word": "Soleil",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "solide",
-      "lvl": 5,
-      "next": "2026-06-06",
-      "err_days": 0
-    },
-    {
-      "word": "source",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "souvenir",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "stylo",
-      "lvl": 5,
-      "next": "2026-06-06",
-      "err_days": 0
-    },
-    {
-      "word": "Symétrie",
-      "lvl": 5,
-      "next": "2026-06-06",
-      "err_days": 0
-    },
-    {
-      "word": "Symphonie",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "Table",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "talent",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "tolérant",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "travail",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "trente",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "unique",
-      "lvl": 5,
-      "next": "2026-06-06",
-      "err_days": 0
-    },
-    {
-      "word": "utile",
-      "lvl": 3,
-      "next": "2026-05-14",
-      "err_days": 0
-    },
-    {
-      "word": "valoir",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "variété",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "vérité",
-      "lvl": 5,
-      "next": "2026-06-06",
-      "err_days": 0
-    },
-    {
-      "word": "Vertèbre",
-      "lvl": 5,
-      "next": "2026-06-06",
-      "err_days": 0
-    },
-    {
-      "word": "veste",
-      "lvl": 3,
-      "next": "2026-05-14",
-      "err_days": 0
-    },
-    {
-      "word": "victoire",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "Vidéo",
-      "lvl": 5,
-      "next": "2026-06-06",
-      "err_days": 0
-    },
-    {
-      "word": "vif",
-      "lvl": 2,
-      "next": "2026-05-11",
-      "err_days": 0
-    },
-    {
-      "word": "violet",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "Vitesse",
-      "lvl": 5,
-      "next": "2026-06-06",
-      "err_days": 0
-    },
-    {
-      "word": "vivant",
-      "lvl": 2,
-      "next": "2026-05-11",
-      "err_days": 0
-    },
-    {
-      "word": "Volcan",
-      "lvl": 4,
-      "next": "2026-05-22",
-      "err_days": 0
-    },
-    {
-      "word": "vouloir",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
-    },
-    {
-      "word": "zèle",
-      "lvl": 1,
-      "next": "2026-05-09",
-      "err_days": 0
+      "word": "obéissant",
+      "lvl": 0,
+      "next": "2026-05-29",
+      "err_days": 1
     }
   ],
   "daily_stats": {
@@ -1411,8 +1525,111 @@
       "biologie",
       "ceinture"
     ],
-    "rewarded_at": null,
-    "rewarded_stars": 0
+    "review_words": [
+      "Ami",
+      "Désert",
+      "Détermination",
+      "Empathie",
+      "Fleur",
+      "Globalisation",
+      "Générosité",
+      "Génétique",
+      "Imagination",
+      "Lune",
+      "Paradoxe",
+      "Patience",
+      "Persévérance",
+      "Prénom",
+      "Robot",
+      "Sincérité",
+      "Soleil",
+      "admirer",
+      "ambition",
+      "amitié",
+      "analyser",
+      "ancien",
+      "arbre",
+      "athlétisme",
+      "batterie",
+      "bibliothèque",
+      "botte",
+      "chaleureux",
+      "changement",
+      "chef-d'œuvre",
+      "comprendre",
+      "confiance",
+      "court",
+      "créatif",
+      "diligent",
+      "doute",
+      "découverte",
+      "défendre",
+      "délicat",
+      "développer",
+      "effort",
+      "encourager",
+      "ensoleillé",
+      "estimer",
+      "examiner",
+      "expliquer",
+      "explorer",
+      "expérience",
+      "faible",
+      "fier",
+      "gentillesse",
+      "généreux",
+      "habileté",
+      "harmonie",
+      "imagination",
+      "intelligent",
+      "joli",
+      "juste",
+      "langue",
+      "liberté",
+      "logique",
+      "loyauté",
+      "magnifique",
+      "manière",
+      "million",
+      "modeste",
+      "musicien",
+      "mystère",
+      "mémoire",
+      "nécessaire",
+      "objectif",
+      "observateur",
+      "obstacle",
+      "obéissant",
+      "océan",
+      "original",
+      "ours",
+      "pacifique",
+      "pensée",
+      "perspicace",
+      "prudence",
+      "qualité",
+      "respect",
+      "ruisseau",
+      "saison",
+      "sandale",
+      "sérieux",
+      "tolérant",
+      "travail",
+      "trente",
+      "utile",
+      "valoir",
+      "variété",
+      "victoire",
+      "volontaire",
+      "École",
+      "échange",
+      "élégant",
+      "émotion",
+      "énergie",
+      "équilibre",
+      "équipe",
+      "étang"
+    ]
   },
   "streak": {
     "current": 2,

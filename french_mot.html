@@ -284,11 +284,11 @@
         const FULL_DB_PATH = "./french_full_db.json";
         
         // 版本信息
-        const APP_VERSION = "4.1.4";
-        const LAST_UPDATE = "2026-05-08";
+        const APP_VERSION = "4.2.0";
+        const LAST_UPDATE = "2026-05-30";
         const VERSION_CHANGES = [
+            "v4.2.0 (2026-05-30): iPad优化 - 每日复习上限15词 + 积压词保护 + 背log分流",
             "v4.1.4 (2026-05-08): Dates locales Paris/iPad et protection anti-suppression du carnet cloud",
-            "v4.1.3 (2026-05-07): Verrou de complétion iPad - l'état terminé du cloud bloque les anciens caches incomplets",
             "v4.1.2 (2026-05-07): Correction iPad - nouveaux mots réellement nouveaux et liste de révision complète",
             "v4.1.1 (2026-05-07): Version web prioritaire, Supabase devient la source active pour tongtong2016.com",
             "v4.1.0 (2026-05-06): Protection de la source french_data.json, sauvegarde locale contrôlée, liste de révision quotidienne figée",
@@ -939,29 +939,58 @@
             }
         }
 
+        // 🆕 v4.2.0 (2026-05-30): iPad优化 - 每日复习上限 + 积压词保护
+        const MAX_DAILY_REVIEW = 15;
+        const MAX_ERR_DAYS = 3; // 错过3次复习的词，踢回词库
+
         function buildDailyReviewWords(today, dailyWords) {
             const dailySet = new Set(dailyWords || []);
-            return (gData.notebook || [])
+            // 🆕 积压词降级保护：连续错过3次的词踢回词库（重置为未学习）
+            let purgedCount = 0;
+            const allDue = (gData.notebook || [])
                 .filter(function(n) {
-                    return n.next <= today && !dailySet.has(n.word);
+                    if (n.next <= today && !dailySet.has(n.word)) {
+                        // 检查是否需要踢回词库
+                        if ((n.err_days || 0) >= MAX_ERR_DAYS && (n.lvl || 0) <= 2) {
+                            n.lvl = 0;
+                            n.err_days = 0;
+                            n.next = today; // 今天重新学
+                            purgedCount++;
+                        }
+                        return true;
+                    }
+                    return false;
                 })
                 .sort(function(a, b) {
-                    if ((a.next || '') !== (b.next || '')) return (a.next || '').localeCompare(b.next || '');
                     if ((b.err_days || 0) !== (a.err_days || 0)) return (b.err_days || 0) - (a.err_days || 0);
+                    if ((a.next || '') !== (b.next || '')) return (a.next || '').localeCompare(b.next || '');
                     return (a.lvl || 0) - (b.lvl || 0);
-                })
-                .map(function(n) { return n.word; });
+                });
+            if (purgedCount > 0) console.log(`🔄 ${purgedCount} 个词因错过过多被踢回词库重新学习`);
+            // 每日复习上限：挑最急的15个
+            const todayReview = allDue.slice(0, MAX_DAILY_REVIEW).map(function(n) { return n.word; });
+            // 剩余的进入backlog
+            const spillover = allDue.slice(MAX_DAILY_REVIEW).map(function(n) { return n.word; });
+            if (spillover.length > 0 && gData.daily_stats) {
+                gData.daily_stats.backlog_review = spillover; // 替换而非追加（每日重新计算）
+                console.log(`📦 复习词分流: 今日 ${todayReview.length} 个, backlog ${spillover.length} 个`);
+            }
+            return todayReview;
         }
 
         function ensureDailyReviewWords(today) {
             let changed = false;
             if (!gData.daily_stats) {
-                gData.daily_stats = { date: today, completed: false, words: [], review_words: [] };
+                gData.daily_stats = { date: today, completed: false, words: [], review_words: [], backlog_review: [] };
                 changed = true;
             }
             if (gData.daily_stats.date !== today) return changed;
             if (!Array.isArray(gData.daily_stats.words)) {
                 gData.daily_stats.words = [];
+                changed = true;
+            }
+            if (!Array.isArray(gData.daily_stats.backlog_review)) {
+                gData.daily_stats.backlog_review = [];
                 changed = true;
             }
             const expectedReviewWords = buildDailyReviewWords(today, gData.daily_stats.words);
@@ -971,7 +1000,7 @@
             if (!sameReviewWords && !gData.daily_stats.completed) {
                 gData.daily_stats.review_words = expectedReviewWords;
                 changed = true;
-                console.log("🔧 今日复习清单已修复:", expectedReviewWords.length, "个词");
+                console.log("🔧 今日复习清单已修复:", expectedReviewWords.length, "个词, backlog:", gData.daily_stats.backlog_review.length);
             }
             return changed;
         }
@@ -2103,7 +2132,7 @@
         window.onload = init;
     </script>
     <div style="text-align: center; padding: 30px 20px; margin-top: 50px; border-top: 1px solid #ddd; color: #94a3b8; font-size: 0.75em;">
-        <span style="color: #38bdf8; font-weight: bold;">v4.1.4</span> · 2026-05-08 · 本地日期与云端保护
+        <span style="color: #38bdf8; font-weight: bold;">v4.2.0</span> · 2026-05-30 · iPad优化：每日复习上限+积压保护
     </div>
 </body>
 </html>
