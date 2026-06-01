@@ -131,7 +131,7 @@
     {
       "word": "ceinture",
       "lvl": 0,
-      "next": "2026-05-31",
+      "next": "2026-06-01",
       "err_days": 1
     },
     {
@@ -197,7 +197,7 @@
     {
       "word": "biologie",
       "lvl": 0,
-      "next": "2026-05-31",
+      "next": "2026-06-01",
       "err_days": 1
     },
     {
@@ -395,7 +395,7 @@
     {
       "word": "attentif",
       "lvl": 2,
-      "next": "2026-05-31",
+      "next": "2026-06-01",
       "err_days": 0
     },
     {
@@ -407,7 +407,7 @@
     {
       "word": "bénéfice",
       "lvl": 1,
-      "next": "2026-05-31",
+      "next": "2026-06-01",
       "err_days": 0
     },
     {
@@ -971,7 +971,7 @@
     {
       "word": "amour",
       "lvl": 1,
-      "next": "2026-05-31",
+      "next": "2026-06-01",
       "err_days": 0
     },
     {
@@ -1516,7 +1516,7 @@
     }
   ],
   "daily_stats": {
-    "date": "2026-05-31",
+    "date": "2026-06-01",
     "completed": false,
     "words": [
       "amour",
