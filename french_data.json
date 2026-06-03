@@ -17,7 +17,7 @@
     {
       "word": "journaliste",
       "lvl": 1,
-      "next": "2026-05-31",
+      "next": "2026-06-03",
       "err_days": 0
     },
     {
@@ -65,7 +65,7 @@
     {
       "word": "veste",
       "lvl": 1,
-      "next": "2026-05-31",
+      "next": "2026-06-03",
       "err_days": 0
     },
     {
@@ -119,7 +119,7 @@
     {
       "word": "agréable",
       "lvl": 1,
-      "next": "2026-05-31",
+      "next": "2026-06-03",
       "err_days": 0
     },
     {
@@ -149,7 +149,7 @@
     {
       "word": "affection",
       "lvl": 1,
-      "next": "2026-05-31",
+      "next": "2026-06-03",
       "err_days": 0
     },
     {
@@ -179,7 +179,7 @@
     {
       "word": "cochon",
       "lvl": 1,
-      "next": "2026-05-31",
+      "next": "2026-06-03",
       "err_days": 0
     },
     {
@@ -1516,14 +1516,14 @@
     }
   ],
   "daily_stats": {
-    "date": "2026-06-01",
+    "date": "2026-06-03",
     "completed": false,
     "words": [
-      "amour",
-      "attentif",
-      "bénéfice",
-      "biologie",
-      "ceinture"
+      "journaliste",
+      "veste",
+      "agréable",
+      "affection",
+      "cochon"
     ],
     "rewarded_at": null,
     "rewarded_stars": 0
