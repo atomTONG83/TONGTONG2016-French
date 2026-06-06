@@ -809,6 +809,11 @@
                     (gData.daily_stats.date === today && (!gData.daily_stats.words || gData.daily_stats.words.length === 0))) {
                     await generateDailyWords(today);
                 }
+                
+                // 🔧 关键修复：先恢复会话状态（sessionMastery），再生成复习清单
+                // 否则 buildDailyReviewWords 看不到已掌握的单词，导致复习数量永远不减少
+                loadSession();
+                
                 const repairedDailyWords = completedDayLocked ? false : repairDailyWordsIfNeeded(today);
                 const repairedReviewWords = completedDayLocked ? false : ensureDailyReviewWords(today);
                 if (repairedDailyWords || repairedReviewWords) {
@@ -826,11 +831,8 @@
                     gTodayWords = [];
                 }
 
-                // 数据源确定后再恢复会话状态。首次进入 init 时的 loadSession 只能看到默认 gData，
-                // 会漏掉“今日已完成”等依赖 daily_stats 的恢复逻辑。
-                loadSession();
                 
-                // 🔧 iPAD FIX: Ensure sessionMastery has today's words if completed
+                // 🔧 iPad Fix: Today is marked completed
                 // 修改：只有当单词已经在生词本中且今天已真正完成学习时才设置sessionMastery
                 if (gData.daily_stats.date === today && gData.daily_stats.completed === true) {
                     console.log('📱 iPad Fix: Today is marked completed, checking sessionMastery');
