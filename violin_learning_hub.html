@@ -346,42 +346,6 @@
             </div>
         </div>
 
-        <!-- 下次演出通知 -->
-        <div class="lesson-card orchestra">
-            <div class="lesson-header">
-                <span class="lesson-date">🎪 下次演出 / Prochain Concert</span>
-                <span class="status-tag status-orchestra">5 月 31 日 周日</span>
-            </div>
-            
-            <div class="info-box">
-                <h4>📍 地点 / Lieu</h4>
-                <p><strong>16 区政府 / Mairie du 16ème</strong></p>
-            </div>
-            
-            <div class="info-box">
-                <h4>📅 时间 / Horaire</h4>
-                <p><strong>2026 年 5 月 31 日 周日 下午</strong></p>
-            </div>
-            
-            <div class="section">
-                <h3>🎼 演出曲目 / Répertoire</h3>
-                <ul>
-                    <li><strong>《茉莉花》</strong></li>
-                    <li><strong>《Never Back Down》</strong></li>
-                </ul>
-            </div>
-            
-            <div class="homework-box">
-                <h3>🎯 准备要点</h3>
-                <ul>
-                    <li>✅ 跟伴奏练熟《Never Back Down》</li>
-                    <li>✅ 注意长音拍子拉满</li>
-                    <li>✅ 控制速度，听其他声部旋律</li>
-                    <li>✅ 复习《茉莉花》</li>
-                </ul>
-            </div>
-        </div>
-        
         <!-- 图片查看器 -->
         <div id="image-viewer" style="display: none; margin-top: 20px; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--card-bg);">
             <div style="background: var(--card-bg); padding: 10px 15px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
@@ -1057,17 +1021,17 @@
             const viewer = document.getElementById('image-viewer');
             const img = document.getElementById('image-element');
             const titleEl = document.getElementById('image-title');
-            currentImagePage = 1;
             
-            // 根据标题判断使用哪组图片
-            if (title.includes('敢问路在何方')) {
-                currentImageFiles = ganwenluFiles;
+            // 直接使用传入的 src 参数
+            if (src && src.length > 0) {
+                currentImageFiles = [src];
                 totalImagePages = 1;
             } else {
                 currentImageFiles = defaultImageFiles;
                 totalImagePages = 2;
             }
             
+            currentImagePage = 1;
             img.src = currentImageFiles[0];
             titleEl.textContent = '🎼 ' + title;
             viewer.style.display = 'block';
