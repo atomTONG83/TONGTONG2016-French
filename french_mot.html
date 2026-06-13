@@ -1011,11 +1011,17 @@
             if (gData.daily_stats && gData.daily_stats.date === today && gData.daily_stats.completed === true) {
                 return [];
             }
-            // 🆕 v4.2.1 修复：每次都动态重新计算，排除已掌握的词，数量才会真正减少
+            // ✅ v4.2.2 修复：使用启动时冻结的 review_words 清单，不再从全部到期词中重新计算
+            if (gData.daily_stats && Array.isArray(gData.daily_stats.review_words)) {
+                return gData.daily_stats.review_words.filter(function(w) {
+                    return (sessionMastery[w] || 0) < MASTERY_GOAL;
+                });
+            }
             const computed = buildDailyReviewWords(today, (gData.daily_stats && gData.daily_stats.words) || []);
-            // 同步回 gData.daily_stats.review_words 以保持数据一致
             if (gData.daily_stats) gData.daily_stats.review_words = computed;
-            return computed;
+            return computed.filter(function(w) {
+                return (sessionMastery[w] || 0) < MASTERY_GOAL;
+            });
         }
 
         function applyCompletedDayLock(today, reason) {
