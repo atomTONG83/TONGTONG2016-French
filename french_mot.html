@@ -890,33 +890,54 @@
                 return !gData.notebook.some(function(n) { return n.word === v.word; }); 
             });
             
-            // 如果未学习池不足5个，考虑"踢回词库"的单词
+            // 🆕 v4.2.3 修复：未学习池为空时，回收已掌握的高等级词作为"复习新词"
+            // 解决"全部词都学过 → 每天自动选已添加词 → 显示Ajouté"的死循环
             if (unlearnedPool.length < 5) {
-                console.log(`⚠️ 未学习池仅剩 ${unlearnedPool.length} 个单词，将考虑所有未掌握单词`);
-                // 扩大选择范围到所有未掌握单词（包括已在生词本但未掌握）
-                unlearnedPool = currentDB.filter(function(v) { 
+                console.log(`⚠️ 未学习池仅剩 ${unlearnedPool.length} 个单词，尝试回收已掌握的高等级词`);
+                // 回收策略：已掌握(lvl>=3)且近期正确率高的高等级词，重置后作为新词出现
+                const notebookWords = new Set(gData.notebook.map(function(n) { return n.word; }));
+                let recycledPool = currentDB.filter(function(v) {
                     const n = gData.notebook.find(function(e) { return e.word === v.word; });
-                    // 选择：1) 不在生词本 或 2) 在生词本但未掌握(等级<7)
-                    return !n || (n.lvl || 0) < 7;
+                    return n && (n.lvl || 0) >= 3; // 只回收 lvl >= 3 的词
+                }).map(function(v) {
+                    // 重置该词：从生词本移除，降级为未学习状态
+                    const nbEntry = gData.notebook.find(function(e) { return e.word === v.word; });
+                    if (nbEntry) {
+                        nbEntry.lvl = 0;
+                        nbEntry.next = today;
+                        nbEntry.err_days = 0;
+                    }
+                    return v;
                 });
+                
+                // 合并未学习池和回收池
+                const recycledWords = recycledPool.filter(function(v) { 
+                    return !unlearnedPool.some(function(u) { return u.word === v.word; }); 
+                });
+                unlearnedPool = unlearnedPool.concat(recycledWords);
+                console.log(`♻️ 回收了 ${recycledWords.length} 个已掌握词作为新词`);
             }
             
-            // 如果还是不足，使用整个词库（最后的手段）
+            // 如果还是不足，使用整个词库（最后的手段，但排除今日已在生词本且刚添加的词）
             if (unlearnedPool.length < 5) {
-                console.log(`⚠️ 词库资源紧张，使用全库`);
-                unlearnedPool = currentDB.slice();
+                console.log(`⚠️ 词库资源极度紧张，使用全库（跳过刚添加的词）`);
+                unlearnedPool = currentDB.filter(function(v) {
+                    // 排除：已在生词本中且 next==today 的词（避免重复）
+                    const n = gData.notebook.find(function(e) { return e.word === v.word; });
+                    return !n || n.next !== today;
+                });
             }
             
             // 2. 根据日期种子选择5个单词
             newDaily = seededDailySelection(unlearnedPool, today, 5);
             
-            // 检查有多少个单词已经在生词本中（应该是0，除非是上面放宽条件的情况）
+            // 检查有多少个单词已经在生词本中（应该是0）
             const alreadyInNotebook = newDaily.filter(function(word) {
                 return gData.notebook.some(function(n) { return n.word === word; });
             }).length;
             
             if (alreadyInNotebook > 0) {
-                console.log(`⚠️ 注意：${alreadyInNotebook} 个当日新词已在生词本中，用户将看到"已添加"状态`);
+                console.log(`⚠️ 注意：${alreadyInNotebook} 个当日新词已在生词本中`);
             }
             
             gData.daily_stats = {
@@ -1141,9 +1162,15 @@
             var wordsListEl = document.getElementById('ui-words-list');
             if (wordsListEl) {
                 if (gTodayWords && Array.isArray(gTodayWords)) {
+                    var allDailyAlreadyAdded = gTodayWords.every(function(w) {
+                        return w && w.word && gData.notebook.some(function(n) { return n.word === w.word; });
+                    });
                     wordsListEl.innerHTML = gTodayWords.map(function(w) {
                         if (!w || !w.word) return '';
                         var isAdded = gData.notebook.some(function(n) { return n.word === w.word; });
+                        if (allDailyAlreadyAdded) {
+                            return '<div class="daily-item"><div class="mot">' + w.word + '</div><div class="definition">' + (w.definition || w.def || '') + '</div><div class="exemple">"' + (w.example || w.ex || '') + '"</div><div style="margin-top:10px"><button class="action-btn" onclick="speak(\'' + w.word.replace(/'/g, "\\'") + '\')">Ecouter</button> <span style="color:#2ecc71;font-size:0.9em;">✅ 直接在答题区练习</span></div></div>';
+                        }
                         return '<div class="daily-item"><div class="mot">' + w.word + '</div><div class="definition">' + (w.definition || w.def || '') + '</div><div class="exemple">"' + (w.example || w.ex || '') + '"</div><div style="margin-top:10px"><button class="action-btn" onclick="speak(\'' + w.word.replace(/'/g, "\\'") + '\')">Ecouter</button> <button class="action-btn" style="background:' + (isAdded ? '#ccc' : 'var(--p)') + '" onclick="addWord(\'' + w.word.replace(/'/g, "\\'") + '\')">' + (isAdded ? 'Ajouté' : 'Ajouter') + '</button></div></div>';
                     }).join('');
                 } else {
