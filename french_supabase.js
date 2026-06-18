@@ -298,7 +298,8 @@ async function loadFromSupabase() {
         date: today,
         completed: false,
         words: [],
-        review_words: []
+        review_words: [],
+        completed_review_words: []  // 🆕 v4.3.0: 持久化已完成复习词，防止页面刷新后重复出现
       }
     };
     
@@ -308,7 +309,8 @@ async function loadFromSupabase() {
         date: sessionRes.data.date || today,
         completed: sessionRes.data.completed || false,
         words: sessionRes.data.words_today || [],
-        review_words: [],
+        review_words: [],  // 从 notebook 动态计算，不存储在 daily_sessions
+        completed_review_words: sessionRes.data.completed_review_words || [],  // 🆕 恢复已完成复习词
         stars_earned: sessionRes.data.stars_earned || 0
       };
       console.log(`📅 恢复当日学习记录: ${cloudData.daily_stats.words.length} 个单词，完成状态: ${cloudData.daily_stats.completed}`);

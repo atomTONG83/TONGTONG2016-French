@@ -288,6 +288,7 @@
         const LAST_UPDATE = "2026-05-30";
         const VERSION_CHANGES = [
             "v4.2.0 (2026-05-30): iPad优化 - 每日复习上限15词 + 积压词保护 + 背log分流",
+            "v4.3.0 (2026-06-18): 修复复习词永远15个不减少 - 增加completed_review_words持久化记录，排除已掌握复习词",
             "v4.1.4 (2026-05-08): Dates locales Paris/iPad et protection anti-suppression du carnet cloud",
             "v4.1.2 (2026-05-07): Correction iPad - nouveaux mots réellement nouveaux et liste de révision complète",
             "v4.1.1 (2026-05-07): Version web prioritaire, Supabase devient la source active pour tongtong2016.com",
@@ -968,12 +969,18 @@
 
         function buildDailyReviewWords(today, dailyWords) {
             const dailySet = new Set(dailyWords || []);
-            // 🆕 v4.2.1 修复：跳过sessionMastery已达标(>=2)的词，否则复习数量永远不减少
+            // 🆕 v4.3.0 修复：排除已掌握的词 + 排除已完成复习的词
+            const completedReview = (gData.daily_stats && Array.isArray(gData.daily_stats.completed_review_words))
+                ? new Set(gData.daily_stats.completed_review_words) : new Set();
             const allDue = (gData.notebook || [])
                 .filter(function(n) {
                     if (n.next <= today && !dailySet.has(n.word)) {
                         // 跳过本次练习中已掌握的词
                         if ((sessionMastery[n.word] || 0) >= MASTERY_GOAL) {
+                            return false;
+                        }
+                        // 跳过已完成复习的词（持久化记录，防止页面刷新后重复出现）
+                        if (completedReview.has(n.word)) {
                             return false;
                         }
                         // 积压词降级保护：连续错过3次的词踢回词库
@@ -1032,12 +1039,16 @@
             if (gData.daily_stats && gData.daily_stats.date === today && gData.daily_stats.completed === true) {
                 return [];
             }
-            // ✅ v4.2.2 修复：使用启动时冻结的 review_words 清单，不再从全部到期词中重新计算
+            // ✅ v4.3.0 修复：使用 review_words + 排除已掌握的词
+            // sessionMastery 在页面刷新时从 localStorage 恢复，已完成的词会被过滤掉
             if (gData.daily_stats && Array.isArray(gData.daily_stats.review_words)) {
-                return gData.daily_stats.review_words.filter(function(w) {
+                const remaining = gData.daily_stats.review_words.filter(function(w) {
                     return (sessionMastery[w] || 0) < MASTERY_GOAL;
                 });
+                // 如果所有复习词都已完成，返回空数组（防止重新计算）
+                return remaining;
             }
+            // 降级：首次加载时从云端数据计算
             const computed = buildDailyReviewWords(today, (gData.daily_stats && gData.daily_stats.words) || []);
             if (gData.daily_stats) gData.daily_stats.review_words = computed;
             return computed.filter(function(w) {
@@ -1666,6 +1677,21 @@
                     feedbackEl.style.color = "var(--s)";
                 }
                 sessionMastery[w] = (sessionMastery[w] || 0) + 1;
+                
+                // 🆕 v4.3.0 修复：当复习词被掌握时，记录到 completed_review_words（持久化，防止页面刷新后重复出现）
+                if (sessionMastery[w] >= MASTERY_GOAL) {
+                    const isReviewWord = (gData.daily_stats && Array.isArray(gData.daily_stats.review_words) &&
+                                          gData.daily_stats.review_words.includes(w));
+                    const isNewWord = (gData.daily_stats && Array.isArray(gData.daily_stats.words) &&
+                                       gData.daily_stats.words.includes(w));
+                    if (isReviewWord && !isNewWord) {
+                        if (!gData.daily_stats.completed_review_words) gData.daily_stats.completed_review_words = [];
+                        if (!gData.daily_stats.completed_review_words.includes(w)) {
+                            gData.daily_stats.completed_review_words.push(w);
+                            console.log('📝 复习词已完成并记录:', w);
+                        }
+                    }
+                }
                 
                 // 移除每题奖励，确保每日总量100
                 // if (!gData.stars) gData.stars = 0;
