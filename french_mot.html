@@ -123,8 +123,8 @@
     <!-- Supabase 客户端库 -->
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <!-- 法语学习 Supabase 集成 -->
-    <script src="./config.js?v=4.3.2"></script>
-    <script src="./french_supabase.js?v=4.3.2"></script>
+    <script src="./config.js?v=4.3.3"></script>
+    <script src="./french_supabase.js?v=4.3.3"></script>
     <!-- 诊断工具 -->
     <script src="./french_diagnostic.js"></script>
 </head>
@@ -287,9 +287,10 @@
         const FULL_DB_PATH = "./french_full_db.json";
         
         // 版本信息
-        const APP_VERSION = "4.3.2";
+        const APP_VERSION = "4.3.3";
         const LAST_UPDATE = "2026-06-20";
         const VERSION_CHANGES = [
+            "v4.3.3 (2026-06-20): 今日新词按钮按 added_words 判断，点击 Ajouter 后才显示 Ajouté",
             "v4.3.2 (2026-06-20): 分离今日必做复习与积压复习，修复 backlog 抢占普通复习模式",
             "v4.3.1 (2026-06-20): 恢复今日单词 Ajouté/Ajouter 按钮显示，保留答题区练习提示",
             "v4.2.0 (2026-05-30): iPad优化 - 每日复习上限15词 + 积压词保护 + 背log分流",
@@ -457,6 +458,9 @@
             }
             if (normalized.daily_stats.review_words && !Array.isArray(normalized.daily_stats.review_words)) {
                 normalized.daily_stats.review_words = [];
+            }
+            if (!Array.isArray(normalized.daily_stats.added_words)) {
+                normalized.daily_stats.added_words = [];
             }
             if (typeof normalized.daily_stats.completed === 'string') {
                 normalized.daily_stats.completed = normalized.daily_stats.completed === 'true';
@@ -627,6 +631,7 @@
                 date: today,
                 completed: false,
                 words: repairedDaily,
+                added_words: [],
                 review_words: buildDailyReviewWords(today, repairedDaily),
                 rewarded_at: null,
                 rewarded_stars: 0
@@ -950,6 +955,7 @@
                 date: today,
                 completed: false,
                 words: newDaily,
+                added_words: [],
                 review_words: buildDailyReviewWords(today, newDaily)
             };
             sessionMastery = {};
@@ -1082,6 +1088,34 @@
             return computed.filter(function(w) {
                 return (sessionMastery[w] || 0) < MASTERY_GOAL;
             });
+        }
+
+        function getDailyAddedWords() {
+            if (!gData.daily_stats || !Array.isArray(gData.daily_stats.added_words)) {
+                return [];
+            }
+            return gData.daily_stats.added_words;
+        }
+
+        function isDailyWord(word) {
+            return !!(gData.daily_stats && Array.isArray(gData.daily_stats.words) && gData.daily_stats.words.includes(word));
+        }
+
+        function isDailyWordAdded(word) {
+            if (gData.daily_stats && gData.daily_stats.completed === true && isDailyWord(word)) {
+                return true;
+            }
+            return getDailyAddedWords().includes(word);
+        }
+
+        function markDailyWordAdded(word) {
+            if (!gData.daily_stats || !isDailyWord(word)) return;
+            if (!Array.isArray(gData.daily_stats.added_words)) {
+                gData.daily_stats.added_words = [];
+            }
+            if (!gData.daily_stats.added_words.includes(word)) {
+                gData.daily_stats.added_words.push(word);
+            }
         }
 
         function applyCompletedDayLock(today, reason) {
@@ -1223,7 +1257,7 @@
                 if (gTodayWords && Array.isArray(gTodayWords)) {
                     wordsListEl.innerHTML = gTodayWords.map(function(w) {
                         if (!w || !w.word) return '';
-                        var isAdded = gData.notebook.some(function(n) { return n.word === w.word; });
+                        var isAdded = isDailyWordAdded(w.word);
                         var escapedWord = w.word.replace(/'/g, "\\'");
                         var addButton = '<button class="action-btn" style="background:' + (isAdded ? '#95a5a6' : 'var(--p)') + '" onclick="addWord(\'' + escapedWord + '\')">' + (isAdded ? 'Ajouté' : 'Ajouter') + '</button>';
                         var practiceHint = isAdded ? ' <span style="color:#2ecc71;font-size:0.9em;">✅ 直接在答题区练习</span>' : '';
@@ -1573,30 +1607,42 @@
         }
         
         function addWord(w) {
-            if (!gData.notebook.some(function(n) { return n.word === w; })) { 
-                gData.notebook.push({ 
-                    word: w, 
-                    lvl: 0, 
-                    next: todayIso(), 
-                    err_days: 0 
-                }); 
-                
-                // 🔧 关键修复：当添加新词时，重置sessionMastery为0，确保可以练习
+            const alreadyInNotebook = gData.notebook.some(function(n) { return n.word === w; });
+            const dailyWord = isDailyWord(w);
+            const alreadyAddedToday = isDailyWordAdded(w);
+
+            if (!alreadyInNotebook || (dailyWord && !alreadyAddedToday)) {
+                if (!alreadyInNotebook) {
+                    gData.notebook.push({
+                        word: w,
+                        lvl: 0,
+                        next: todayIso(),
+                        err_days: 0
+                    });
+                } else {
+                    const existing = gData.notebook.find(function(n) { return n.word === w; });
+                    if (existing) {
+                        existing.lvl = 0;
+                        existing.next = todayIso();
+                        existing.err_days = 0;
+                    }
+                }
+
+                markDailyWordAdded(w);
                 sessionMastery[w] = 0;
-                console.log(`📝 ${w} 加入生词本，sessionMastery重置为0`);
+                console.log(`📝 ${w} 加入今日练习，sessionMastery重置为0`);
                 saveSession(); // 保存会话状态
-                
-                // 显示提示：添加的单词将在复习模式中出现
+
                 setTimeout(function() {
                     const toast = document.createElement('div');
                     toast.style.cssText = 'position:fixed; top:20px; left:50%; transform:translateX(-50%); background:var(--p); color:white; padding:10px 20px; border-radius:20px; z-index:1000; font-size:0.9em; box-shadow:0 3px 10px rgba(0,0,0,0.2);';
-                    toast.innerHTML = '📝 Mot ajouté ! Il apparaîtra dans les <strong>révisions</strong> demain.';
+                    toast.innerHTML = '📝 Mot ajouté ! Il est prêt dans les <strong>nouveaux mots</strong>.';
                     document.body.appendChild(toast);
                     setTimeout(function() {
                         document.body.removeChild(toast);
                     }, 3000);
                 }, 100);
-                
+
                 speak("Ajoute");
                 refreshUI();
                 // 立即保存到云端
@@ -1605,7 +1651,7 @@
                 speak("Deja la"); 
             }
         }
-        
+
         function setQuizMode(m) { 
             gGameMode = m; 
             var modeN = document.getElementById('mode-n');
@@ -1621,7 +1667,7 @@
             
             if (gGameMode === 'new') {
                 pool = gTodayWords.filter(function(w) { 
-                    return gData.notebook.some(function(n) { return n.word === w.word; }) && (sessionMastery[w.word] || 0) < MASTERY_GOAL;
+                    return isDailyWordAdded(w.word) && (sessionMastery[w.word] || 0) < MASTERY_GOAL;
                 });
             } else {
                 const currentDB = getCurrentDB();
@@ -1651,7 +1697,7 @@
             if (pool.length < 1) { 
                 var isNew = gGameMode === 'new';
                 var msg = isNew
-                    ? (gData.notebook.filter(function(n) { return gTodayWords.some(function(tw) { return tw.word === n.word; }); }).length < 5 ? "Ajoute les 5 mots du jour pour commencer !" : "Nouveaux mots maitrises !")
+                    ? (gTodayWords.filter(function(tw) { return tw && isDailyWordAdded(tw.word); }).length < gTodayWords.length ? "Ajoute les 5 mots du jour pour commencer !" : "Nouveaux mots maitrises !")
                     : (gBacklogModeActive ? "Rattrapage termine !" : "Revisions du jour terminees !");
                 if (optionsEl) optionsEl.innerHTML = '<p style="padding:20px; color:var(--p); font-weight:bold; text-align:center;">' + msg + '</p>';
                 if (wordEl) wordEl.innerText = "Salut !";
@@ -2245,7 +2291,7 @@
         window.onload = init;
     </script>
     <div style="text-align: center; padding: 30px 20px; margin-top: 50px; border-top: 1px solid #ddd; color: #94a3b8; font-size: 0.75em;">
-        <span style="color: #38bdf8; font-weight: bold;">v4.3.2</span> · 2026-06-20 · 今日复习与积压复习分离
+        <span style="color: #38bdf8; font-weight: bold;">v4.3.3</span> · 2026-06-20 · 点击 Ajouter 后才显示 Ajouté
     </div>
 </body>
 </html>

@@ -1,5 +1,5 @@
 window.TongtongConfig = Object.freeze({
-  appVersion: '4.3.2',
+  appVersion: '4.3.3',
   lastUpdate: '2026-06-20',
   logLevel: 'silent',
   network: {
