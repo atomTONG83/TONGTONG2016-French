@@ -123,8 +123,8 @@
     <!-- Supabase 客户端库 -->
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <!-- 法语学习 Supabase 集成 -->
-    <script src="./config.js?v=4.3.1"></script>
-    <script src="./french_supabase.js?v=4.3.1"></script>
+    <script src="./config.js?v=4.3.2"></script>
+    <script src="./french_supabase.js?v=4.3.2"></script>
     <!-- 诊断工具 -->
     <script src="./french_diagnostic.js"></script>
 </head>
@@ -154,6 +154,7 @@
             </div>
             <div class="progress-container"><div class="bar bar-new" id="bar-n"></div><div class="bar bar-rev" id="bar-r"></div></div>
             <div id="ui-completion-status" style="text-align:center; margin-top:5px; font-weight:bold; font-size:0.9em;"></div>
+            <div id="ui-review-detail" style="text-align:center; margin-top:4px; color:#64748b; font-size:0.78em;"></div>
             <button id="end-session-btn" class="action-btn" style="width:100%; margin-top:10px; background-color:var(--p);" onclick="checkReviewBeforeEnd()">Terminer la séance</button>
         </div>
 
@@ -245,6 +246,8 @@
         let gSaveInFlight = false;
         let gSaveAgain = false;
         let gPendingSource = null;
+        let gBacklogModeActive = false;
+        let gBacklogBatchWords = [];
         let API = "";
         
         // ===== DATABASE =====
@@ -284,9 +287,10 @@
         const FULL_DB_PATH = "./french_full_db.json";
         
         // 版本信息
-        const APP_VERSION = "4.3.1";
+        const APP_VERSION = "4.3.2";
         const LAST_UPDATE = "2026-06-20";
         const VERSION_CHANGES = [
+            "v4.3.2 (2026-06-20): 分离今日必做复习与积压复习，修复 backlog 抢占普通复习模式",
             "v4.3.1 (2026-06-20): 恢复今日单词 Ajouté/Ajouter 按钮显示，保留答题区练习提示",
             "v4.2.0 (2026-05-30): iPad优化 - 每日复习上限15词 + 积压词保护 + 背log分流",
             "v4.3.0 (2026-06-18): 修复复习词永远15个不减少 - 增加completed_review_words持久化记录，排除已掌握复习词",
@@ -968,23 +972,19 @@
         const MAX_DAILY_REVIEW = 15;
         const MAX_ERR_DAYS = 3; // 错过3次复习的词，踢回词库
 
-        function buildDailyReviewWords(today, dailyWords) {
+        function collectDueReviewEntries(today, dailyWords) {
             const dailySet = new Set(dailyWords || []);
-            // 🆕 v4.3.0 修复：排除已掌握的词 + 排除已完成复习的词
             const completedReview = (gData.daily_stats && Array.isArray(gData.daily_stats.completed_review_words))
                 ? new Set(gData.daily_stats.completed_review_words) : new Set();
-            const allDue = (gData.notebook || [])
+            return (gData.notebook || [])
                 .filter(function(n) {
                     if (n.next <= today && !dailySet.has(n.word)) {
-                        // 跳过本次练习中已掌握的词
                         if ((sessionMastery[n.word] || 0) >= MASTERY_GOAL) {
                             return false;
                         }
-                        // 跳过已完成复习的词（持久化记录，防止页面刷新后重复出现）
                         if (completedReview.has(n.word)) {
                             return false;
                         }
-                        // 积压词降级保护：连续错过3次的词踢回词库
                         if ((n.err_days || 0) >= MAX_ERR_DAYS && (n.lvl || 0) <= 2) {
                             n.lvl = 0;
                             n.err_days = 0;
@@ -999,14 +999,41 @@
                     if ((a.next || '') !== (b.next || '')) return (a.next || '').localeCompare(b.next || '');
                     return (a.lvl || 0) - (b.lvl || 0);
                 });
+        }
+
+        function buildDailyReviewWords(today, dailyWords) {
+            const allDue = collectDueReviewEntries(today, dailyWords);
             // 每日复习上限：挑最急的15个
             const todayReview = allDue.slice(0, MAX_DAILY_REVIEW).map(function(n) { return n.word; });
             const spillover = allDue.slice(MAX_DAILY_REVIEW).map(function(n) { return n.word; });
             if (gData.daily_stats) {
+                gData.daily_stats.due_review_total = allDue.length;
+                gData.daily_stats.review_batch_limit = MAX_DAILY_REVIEW;
                 gData.daily_stats.backlog_review = spillover;
                 console.log(`📦 复习词: 今日 ${todayReview.length} 个, backlog ${spillover.length} 个`);
             }
             return todayReview;
+        }
+
+        function getBacklogWords(today) {
+            if (!gData.daily_stats || gData.daily_stats.completed === true) {
+                return [];
+            }
+            const mandatory = new Set(Array.isArray(gData.daily_stats.review_words) ? gData.daily_stats.review_words : []);
+            const storedBacklog = Array.isArray(gData.daily_stats.backlog_review) ? gData.daily_stats.backlog_review : [];
+            const candidates = storedBacklog.length > 0
+                ? storedBacklog
+                : collectDueReviewEntries(today, gData.daily_stats.words || [])
+                    .map(function(n) { return n.word; })
+                    .filter(function(word) { return !mandatory.has(word); });
+
+            const seen = new Set();
+            return candidates.filter(function(word) {
+                if (!word || seen.has(word) || mandatory.has(word)) return false;
+                seen.add(word);
+                const n = (gData.notebook || []).find(function(item) { return item.word === word; });
+                return n && n.next <= today && (sessionMastery[word] || 0) < MASTERY_GOAL;
+            });
         }
 
         function ensureDailyReviewWords(today) {
@@ -1111,6 +1138,7 @@
             var barRevEl = document.getElementById('bar-r');
             var progressTextEl = document.getElementById('ui-progress');
             var completionStatusEl = document.getElementById('ui-completion-status');
+            var reviewDetailEl = document.getElementById('ui-review-detail');
             
             // 🔧 FIX FOR iPAD: If data says completed, force show completed
             var today = todayIso();
@@ -1135,6 +1163,20 @@
                 progressTextEl.textContent = Math.round((newProgress + reviewProgress) / 2) + '%';
             }
             
+            if (reviewDetailEl) {
+                const backlogCount = shouldShowCompleted ? 0 : getBacklogWords(today).length;
+                const dueTotal = (gData.daily_stats && typeof gData.daily_stats.due_review_total === 'number')
+                    ? gData.daily_stats.due_review_total
+                    : (reviewStatus.total + backlogCount);
+                if (shouldShowCompleted) {
+                    reviewDetailEl.textContent = "Objectif du jour terminé";
+                } else if (dueTotal > reviewStatus.total) {
+                    reviewDetailEl.textContent = "Révisions du jour: " + reviewStatus.mastered + "/" + reviewStatus.total + " · Rattrapage: " + backlogCount + " mot(s)";
+                } else {
+                    reviewDetailEl.textContent = "Révisions du jour: " + reviewStatus.mastered + "/" + reviewStatus.total;
+                }
+            }
+
             // 更新完成状态文本
             if (completionStatusEl) {
                 if (shouldShowCompleted) {
@@ -1148,13 +1190,13 @@
                     completionStatusEl.textContent = "✅ Bravo ! Tous les mots du jour et révisions terminés !";
                     completionStatusEl.style.color = '#2ecc71';
                 } else if (newProgress === 100 && reviewProgress < 100) {
-                    completionStatusEl.textContent = "⚠️ Nouveaux mots terminés. Révisions restantes: " + (reviewStatus.total - reviewStatus.mastered) + "/" + reviewStatus.total;
+                    completionStatusEl.textContent = "⚠️ Nouveaux mots terminés. Révisions du jour restantes: " + (reviewStatus.total - reviewStatus.mastered) + "/" + reviewStatus.total;
                     completionStatusEl.style.color = '#f39c12';
                 } else if (newProgress < 100 && reviewProgress === 100) {
                     completionStatusEl.textContent = "ℹ️ Révisions terminées. Nouveaux mots restants: " + (todayWords.length - masteredToday) + "/" + todayWords.length;
                     completionStatusEl.style.color = '#3498db';
                 } else {
-                    completionStatusEl.textContent = "📚 En cours: Nouveaux " + masteredToday + "/" + todayWords.length + " | Révisions " + reviewStatus.mastered + "/" + reviewStatus.total;
+                    completionStatusEl.textContent = "📚 En cours: Nouveaux " + masteredToday + "/" + todayWords.length + " | Révisions du jour " + reviewStatus.mastered + "/" + reviewStatus.total;
                     completionStatusEl.style.color = '#666';
                 }
             }
@@ -1578,11 +1620,10 @@
                 });
             } else {
                 const currentDB = getCurrentDB();
-                // 🆕 检查是否有积压还清模式
-                if (gData.daily_stats.backlog_review && gData.daily_stats.backlog_review.length > 0) {
-                    // 积压还清模式：使用指定的积压单词
+                if (gBacklogModeActive && gBacklogBatchWords.length > 0) {
+                    // 积压还清模式：只使用用户主动选择的当前批次
                     pool = currentDB.filter(function(v) { 
-                        return gData.daily_stats.backlog_review.includes(v.word) && 
+                        return gBacklogBatchWords.includes(v.word) &&
                                (sessionMastery[v.word] || 0) < MASTERY_GOAL;
                     });
                 } else {
@@ -1604,7 +1645,9 @@
             
             if (pool.length < 1) { 
                 var isNew = gGameMode === 'new';
-                var msg = isNew ? (gData.notebook.filter(function(n) { return gTodayWords.some(function(tw) { return tw.word === n.word; }); }).length < 5 ? "Ajoute les 5 mots du jour pour commencer !" : "Nouveaux mots maitrises !") : "Revisions terminees !";
+                var msg = isNew
+                    ? (gData.notebook.filter(function(n) { return gTodayWords.some(function(tw) { return tw.word === n.word; }); }).length < 5 ? "Ajoute les 5 mots du jour pour commencer !" : "Nouveaux mots maitrises !")
+                    : (gBacklogModeActive ? "Rattrapage termine !" : "Revisions du jour terminees !");
                 if (optionsEl) optionsEl.innerHTML = '<p style="padding:20px; color:var(--p); font-weight:bold; text-align:center;">' + msg + '</p>';
                 if (wordEl) wordEl.innerText = "Salut !";
                 if (masteryEl) masteryEl.innerHTML = "";
@@ -1701,6 +1744,9 @@
                     let d = new Date();
                     d.setDate(d.getDate() + INTERVALS[n.lvl]);
                     n.next = dateIsoLocal(d);
+                    if (gBacklogModeActive && gBacklogBatchWords.includes(w) && gData.daily_stats && Array.isArray(gData.daily_stats.backlog_review)) {
+                        gData.daily_stats.backlog_review = gData.daily_stats.backlog_review.filter(function(word) { return word !== w; });
+                    }
                     
                     // 掌握单词时的轻量庆祝
                     if (feedbackEl) {
@@ -1821,6 +1867,7 @@
             
             // 如果掌握了所有今日新词 AND 完成了所有待复习旧词，且尚未标记为完成，且日期是今天
             if (masteredToday >= todayWords.length && reviewStatus.completed && isToday && !gData.daily_stats.completed) {
+                var backlogAfterGoal = getBacklogWords(today).length;
                 // 🆕 关键修复：将 sessionMastery 同步到 gData.notebook
                 // 确保服务器保存的 notebook 中 lvl 正确更新
                 todayWords.forEach(function(tw) {
@@ -1849,21 +1896,23 @@
                 
                 setTimeout(function() { 
                     var streakMsg = (gData.streak && gData.streak.current > 1) ? "\n🔥 Série de " + gData.streak.current + " jours !" : "";
-                    document.getElementById('rew-val').innerText = "🎉 Magnifique !\nTu as maîtrisé tous les mots du jour et terminé toutes les révisions !\n+100 étoiles !" + streakMsg; 
+                    var backlogMsg = backlogAfterGoal > 0 ? "\n🧹 Rattrapage optionnel: " + backlogAfterGoal + " mot(s)." : "";
+                    document.getElementById('rew-val').innerText = "🎉 Magnifique !\nTu as maîtrisé tous les mots du jour et terminé les révisions du jour !\n+100 étoiles !" + streakMsg + backlogMsg; 
                     openModal('rewardModal'); 
                     speak("Félicitations"); 
                     saveData(); // 立即同步数据
                 }, 500);
             }
-            // 🆕 检查积压还清是否完成
-            if (gData.daily_stats.backlog_review && gData.daily_stats.backlog_review.length > 0) {
-                var backlogCompleted = gData.daily_stats.backlog_review.every(function(w) {
+            // 🆕 检查当前积压批次是否完成。backlog_review 是积压池，不直接作为当前批次。
+            if (gBacklogModeActive && gBacklogBatchWords.length > 0) {
+                var backlogCompleted = gBacklogBatchWords.every(function(w) {
                     return (sessionMastery[w] || 0) >= MASTERY_GOAL;
                 });
                 if (backlogCompleted) {
                     // 积压还清完成，给额外奖励
                     gData.stars += 20; // 额外奖励20星星
-                    gData.daily_stats.backlog_review = []; // 清空积压列表
+                    gBacklogModeActive = false;
+                    gBacklogBatchWords = [];
                     setTimeout(function() {
                         document.getElementById('rew-val').innerText = "🧹 Rattrapage terminé !\nTu as terminé tous les mots en retard !\n+20 étoiles bonus !";
                         openModal('rewardModal');
@@ -1903,15 +1952,17 @@
                 return;
             }
             if (!reviewStatus.completed) {
-                document.getElementById('rew-val').innerText = "⚠️ Attention !\nIl reste " + (reviewStatus.total - reviewStatus.mastered) + " mot(s) à réviser.\nTermine toutes les révisions pour obtenir tes 100 étoiles !";
+                document.getElementById('rew-val').innerText = "⚠️ Attention !\nIl reste " + (reviewStatus.total - reviewStatus.mastered) + " mot(s) dans les révisions du jour.\nTermine cette série pour obtenir tes 100 étoiles !";
                 openModal('rewardModal');
                 speak("Révisions manquantes");
                 return;
             }
-            // 如果新词和复习都已完成，则显示成功消息（但不自动给星星，由checkDailyCompletion处理）
-            document.getElementById('rew-val').innerText = "🎉 Félicitations !\nTu as terminé tous les nouveaux mots et toutes les révisions du jour.\nTu as gagné 100 étoiles !";
-            openModal('rewardModal');
-            speak("Bravo");
+            checkDailyCompletion();
+            if (!gData.daily_stats.completed) {
+                document.getElementById('rew-val').innerText = "🎉 Félicitations !\nTu as terminé tous les nouveaux mots et les révisions du jour.";
+                openModal('rewardModal');
+                speak("Bravo");
+            }
         }
         
         function openNotebook() {
@@ -1980,10 +2031,8 @@
             
             if (!backlogBtn || !backlogCount) return;
             
-            // 计算积压单词（今天之前到期的）
-            const backlog = gData.notebook.filter(function(n) {
-                return n.next < today;
-            });
+            // 积压池 = 今日必做批次之外仍然到期的词。不要用它抢占普通复习模式。
+            const backlog = getBacklogWords(today);
             
             backlogCount.innerText = backlog.length;
             backlogBtn.style.display = backlog.length > 0 ? 'block' : 'none';
@@ -1993,29 +2042,26 @@
         function startBacklogReview() {
             const today = todayIso();
             
-            // 获取积压单词（今天之前到期的）
-            const backlog = gData.notebook.filter(function(n) {
-                return n.next < today;
-            });
+            const backlogWords = getBacklogWords(today);
             
-            if (backlog.length === 0) {
+            if (backlogWords.length === 0) {
                 alert('🎉 没有积压单词！');
                 return;
             }
             
             // 随机选10个（或全部如果不足10个）
-            const shuffled = backlog.sort(function() { return 0.5 - Math.random(); });
+            const shuffled = backlogWords.slice().sort(function() { return 0.5 - Math.random(); });
             const selected = shuffled.slice(0, Math.min(10, shuffled.length));
             
-            // 设置到今日复习列表
-            gData.daily_stats.backlog_review = selected.map(function(n) { return n.word; });
+            gBacklogModeActive = true;
+            gBacklogBatchWords = selected;
             
             closeModal('nbModal');
             
             // 切换到复习模式
             setQuizMode('rev');
             
-            document.getElementById('rew-val').innerText = "🧹 Mode Rattrapage !\nTu vas réviser " + selected.length + " mot(s) en retard.\nBon courage !";
+            document.getElementById('rew-val').innerText = "🧹 Mode Rattrapage !\nTu vas réviser " + selected.length + " mot(s) en retard.\nIl restera " + Math.max(0, backlogWords.length - selected.length) + " mot(s) dans le rattrapage.";
             openModal('rewardModal');
             speak("Rattrapage");
         }
@@ -2194,7 +2240,7 @@
         window.onload = init;
     </script>
     <div style="text-align: center; padding: 30px 20px; margin-top: 50px; border-top: 1px solid #ddd; color: #94a3b8; font-size: 0.75em;">
-        <span style="color: #38bdf8; font-weight: bold;">v4.3.1</span> · 2026-06-20 · 恢复 Ajouté/Ajouter 按钮显示
+        <span style="color: #38bdf8; font-weight: bold;">v4.3.2</span> · 2026-06-20 · 今日复习与积压复习分离
     </div>
 </body>
 </html>
