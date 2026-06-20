@@ -1,6 +1,6 @@
 window.TongtongConfig = Object.freeze({
-  appVersion: '4.3.0',
-  lastUpdate: '2026-06-18',
+  appVersion: '4.3.1',
+  lastUpdate: '2026-06-20',
   logLevel: 'silent',
   network: {
     macIp: '192.168.32.70',

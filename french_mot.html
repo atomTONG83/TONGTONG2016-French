@@ -123,8 +123,8 @@
     <!-- Supabase 客户端库 -->
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <!-- 法语学习 Supabase 集成 -->
-    <script src="./config.js?v=4.1.4"></script>
-    <script src="./french_supabase.js?v=4.1.4"></script>
+    <script src="./config.js?v=4.3.1"></script>
+    <script src="./french_supabase.js?v=4.3.1"></script>
     <!-- 诊断工具 -->
     <script src="./french_diagnostic.js"></script>
 </head>
@@ -284,9 +284,10 @@
         const FULL_DB_PATH = "./french_full_db.json";
         
         // 版本信息
-        const APP_VERSION = "4.2.1";
-        const LAST_UPDATE = "2026-05-30";
+        const APP_VERSION = "4.3.1";
+        const LAST_UPDATE = "2026-06-20";
         const VERSION_CHANGES = [
+            "v4.3.1 (2026-06-20): 恢复今日单词 Ajouté/Ajouter 按钮显示，保留答题区练习提示",
             "v4.2.0 (2026-05-30): iPad优化 - 每日复习上限15词 + 积压词保护 + 背log分流",
             "v4.3.0 (2026-06-18): 修复复习词永远15个不减少 - 增加completed_review_words持久化记录，排除已掌握复习词",
             "v4.1.4 (2026-05-08): Dates locales Paris/iPad et protection anti-suppression du carnet cloud",
@@ -1173,16 +1174,13 @@
             var wordsListEl = document.getElementById('ui-words-list');
             if (wordsListEl) {
                 if (gTodayWords && Array.isArray(gTodayWords)) {
-                    var allDailyAlreadyAdded = gTodayWords.every(function(w) {
-                        return w && w.word && gData.notebook.some(function(n) { return n.word === w.word; });
-                    });
                     wordsListEl.innerHTML = gTodayWords.map(function(w) {
                         if (!w || !w.word) return '';
                         var isAdded = gData.notebook.some(function(n) { return n.word === w.word; });
-                        if (allDailyAlreadyAdded) {
-                            return '<div class="daily-item"><div class="mot">' + w.word + '</div><div class="definition">' + (w.definition || w.def || '') + '</div><div class="exemple">"' + (w.example || w.ex || '') + '"</div><div style="margin-top:10px"><button class="action-btn" onclick="speak(\'' + w.word.replace(/'/g, "\\'") + '\')">Ecouter</button> <span style="color:#2ecc71;font-size:0.9em;">✅ 直接在答题区练习</span></div></div>';
-                        }
-                        return '<div class="daily-item"><div class="mot">' + w.word + '</div><div class="definition">' + (w.definition || w.def || '') + '</div><div class="exemple">"' + (w.example || w.ex || '') + '"</div><div style="margin-top:10px"><button class="action-btn" onclick="speak(\'' + w.word.replace(/'/g, "\\'") + '\')">Ecouter</button> <button class="action-btn" style="background:' + (isAdded ? '#ccc' : 'var(--p)') + '" onclick="addWord(\'' + w.word.replace(/'/g, "\\'") + '\')">' + (isAdded ? 'Ajouté' : 'Ajouter') + '</button></div></div>';
+                        var escapedWord = w.word.replace(/'/g, "\\'");
+                        var addButton = '<button class="action-btn" style="background:' + (isAdded ? '#95a5a6' : 'var(--p)') + '" onclick="addWord(\'' + escapedWord + '\')">' + (isAdded ? 'Ajouté' : 'Ajouter') + '</button>';
+                        var practiceHint = isAdded ? ' <span style="color:#2ecc71;font-size:0.9em;">✅ 直接在答题区练习</span>' : '';
+                        return '<div class="daily-item"><div class="mot">' + w.word + '</div><div class="definition">' + (w.definition || w.def || '') + '</div><div class="exemple">"' + (w.example || w.ex || '') + '"</div><div style="margin-top:10px"><button class="action-btn" onclick="speak(\'' + escapedWord + '\')">Ecouter</button> ' + addButton + practiceHint + '</div></div>';
                     }).join('');
                 } else {
                     wordsListEl.innerHTML = '<p style="padding:20px; color:#999; text-align:center;">Aucun mot à apprendre aujourd\'hui.</p>';
@@ -2196,7 +2194,7 @@
         window.onload = init;
     </script>
     <div style="text-align: center; padding: 30px 20px; margin-top: 50px; border-top: 1px solid #ddd; color: #94a3b8; font-size: 0.75em;">
-        <span style="color: #38bdf8; font-weight: bold;">v4.2.1</span> · 2026-05-30 · 修复复习数量不减少的bug
+        <span style="color: #38bdf8; font-weight: bold;">v4.3.1</span> · 2026-06-20 · 恢复 Ajouté/Ajouter 按钮显示
     </div>
 </body>
 </html>
