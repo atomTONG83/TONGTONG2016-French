@@ -1016,7 +1016,7 @@
         }
 
         function getBacklogWords(today) {
-            if (!gData.daily_stats || gData.daily_stats.completed === true) {
+            if (!gData.daily_stats) {
                 return [];
             }
             const mandatory = new Set(Array.isArray(gData.daily_stats.review_words) ? gData.daily_stats.review_words : []);
@@ -1164,12 +1164,14 @@
             }
             
             if (reviewDetailEl) {
-                const backlogCount = shouldShowCompleted ? 0 : getBacklogWords(today).length;
+                const backlogCount = getBacklogWords(today).length;
                 const dueTotal = (gData.daily_stats && typeof gData.daily_stats.due_review_total === 'number')
                     ? gData.daily_stats.due_review_total
                     : (reviewStatus.total + backlogCount);
                 if (shouldShowCompleted) {
-                    reviewDetailEl.textContent = "Objectif du jour terminé";
+                    reviewDetailEl.textContent = backlogCount > 0
+                        ? "Objectif du jour terminé · Rattrapage optionnel: " + backlogCount + " mot(s)"
+                        : "Objectif du jour terminé";
                 } else if (dueTotal > reviewStatus.total) {
                     reviewDetailEl.textContent = "Révisions du jour: " + reviewStatus.mastered + "/" + reviewStatus.total + " · Rattrapage: " + backlogCount + " mot(s)";
                 } else {
@@ -1181,7 +1183,10 @@
             if (completionStatusEl) {
                 if (shouldShowCompleted) {
                     // 🔧 FORCE SHOW COMPLETED FOR iPAD
-                    completionStatusEl.textContent = "✅ Bravo ! Tous les mots du jour et révisions terminés !";
+                    const optionalBacklog = getBacklogWords(today).length;
+                    completionStatusEl.textContent = optionalBacklog > 0
+                        ? "✅ Bravo ! Objectif du jour terminé. Rattrapage optionnel disponible."
+                        : "✅ Bravo ! Tous les mots du jour et révisions terminés !";
                     completionStatusEl.style.color = '#2ecc71';
                 } else if (todayWords.length === 0 && reviewStatus.total === 0) {
                     completionStatusEl.textContent = "✅ Aucun mot à apprendre aujourd'hui. Repose-toi !";
