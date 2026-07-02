@@ -1,0 +1,2287 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>童童暑假复习巩固营 · CM1→CM2 · L'île aux Coquelicots</title>
+<meta name="description" content="童童 CM1→CM2 暑假30天复习巩固学习平台 — 法语·数学·科学·历史地理·英语">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌺</text></svg>">
+<style>
+/* ==== style.css ==== */
+/* ===== 童童暑假复习巩固营 · Design System ===== */
+:root{
+  --coq:#E8503A; --coq-d:#C93A26; --coq-l:#FDEAE6;
+  --sky:#3D8BFD; --sky-l:#E7F0FF;
+  --leaf:#2E8B62; --leaf-l:#E3F4EC;
+  --sun:#FFB53D; --sun-l:#FFF3DC;
+  --viol:#8B5CF6; --viol-l:#F0EAFE;
+  --ink:#2B2320; --ink2:#6B5F58; --line:#EFE4D8;
+  --bg:#FFF8EE; --card:#FFFFFF;
+  --ok:#27AE60; --bad:#E74C3C;
+  --r:18px; --sh:0 4px 16px rgba(90,60,30,.08), 0 1px 3px rgba(90,60,30,.06);
+  --fs:16px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{font-size:var(--fs)}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Nunito","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,-apple-system,"Segoe UI",sans-serif;
+  line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh}
+button{font-family:inherit}
+#app{max-width:900px;margin:0 auto;padding:12px 14px 90px}
+.hidden{display:none!important}
+
+/* header */
+.topbar{display:flex;align-items:center;gap:10px;padding:10px 2px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer}
+.logo .pop{font-size:1.9rem;filter:drop-shadow(0 2px 2px rgba(0,0,0,.12))}
+.logo b{font-size:1.12rem;line-height:1.15;display:block}
+.logo small{color:var(--ink2);font-size:.74rem;display:block}
+.topbtns{margin-left:auto;display:flex;gap:8px}
+.iconbtn{border:2px solid var(--line);background:var(--card);border-radius:12px;min-width:42px;height:42px;
+  font-size:1.05rem;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0 10px;
+  transition:.15s;color:var(--ink)}
+.iconbtn:hover{border-color:var(--coq);transform:translateY(-1px)}
+.iconbtn.act{background:var(--coq);border-color:var(--coq);color:#fff}
+
+/* cards & layout */
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:18px;margin:12px 0;border:1px solid rgba(0,0,0,.02)}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.grow{flex:1 1 180px}
+h2.sec{font-size:1.05rem;margin:20px 4px 6px;display:flex;align-items:center;gap:8px}
+.muted{color:var(--ink2)}
+.small{font-size:.85rem}
+.center{text-align:center}
+
+/* hero stats */
+.hero{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.stat{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:12px 8px;text-align:center}
+.stat .n{font-size:1.45rem;font-weight:800;line-height:1.1}
+.stat .l{font-size:.72rem;color:var(--ink2);margin-top:2px}
+.levelbar{height:10px;background:var(--sun-l);border-radius:99px;overflow:hidden;margin-top:6px}
+.levelbar i{display:block;height:100%;background:linear-gradient(90deg,var(--sun),var(--coq));border-radius:99px;transition:width .6s}
+
+/* today card */
+.today{background:linear-gradient(135deg,#FF8A65 0%,var(--coq) 60%,#C62F55 100%);color:#fff;position:relative;overflow:hidden}
+.today .deco{position:absolute;right:-18px;top:-18px;font-size:6.2rem;opacity:.18;transform:rotate(12deg)}
+.today h3{margin:0 0 4px;font-size:1.25rem}
+.today .sub{opacity:.92;font-size:.9rem}
+.bigbtn{display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--coq-d);font-weight:800;
+  border:none;border-radius:14px;padding:13px 26px;font-size:1.05rem;cursor:pointer;margin-top:14px;
+  box-shadow:0 4px 12px rgba(0,0,0,.18);transition:.15s}
+.bigbtn:hover{transform:translateY(-2px) scale(1.02)}
+.bigbtn.alt{background:var(--coq);color:#fff}
+.bigbtn:disabled{opacity:.55;cursor:not-allowed;transform:none}
+
+/* adventure map */
+.map{position:relative;padding:6px 0 2px}
+.weekband{margin:14px 0 6px;display:flex;align-items:center;gap:8px;font-weight:800;font-size:.95rem}
+.weekband .tag{font-size:.72rem;color:#fff;border-radius:99px;padding:2px 10px}
+.isles{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+@media(max-width:560px){.isles{grid-template-columns:repeat(4,1fr)}}
+.isle{position:relative;aspect-ratio:1;border-radius:16px;border:2px solid var(--line);background:var(--card);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:.15s;padding:2px}
+.isle:hover{transform:translateY(-2px)}
+.isle .d{font-size:.68rem;color:var(--ink2)}
+.isle .ic{font-size:1.35rem;line-height:1.2}
+.isle .st{font-size:.6rem;letter-spacing:1px;color:var(--sun);height:.9em}
+.isle.done{border-color:var(--leaf);background:var(--leaf-l)}
+.isle.next{border-color:var(--coq);background:var(--coq-l);animation:pulse 1.8s infinite}
+.isle.lock{opacity:.45;cursor:not-allowed;filter:grayscale(.5)}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(232,80,58,.35)}50%{box-shadow:0 0 0 8px rgba(232,80,58,0)}}
+
+/* session */
+.sess-top{display:flex;align-items:center;gap:10px;margin:8px 0}
+.pbar{flex:1;height:14px;background:#F3E8DA;border-radius:99px;overflow:hidden}
+.pbar i{display:block;height:100%;background:linear-gradient(90deg,var(--sun),var(--coq));transition:width .35s;border-radius:99px}
+.quit{border:none;background:none;font-size:1.2rem;cursor:pointer;color:var(--ink2)}
+.blockchip{display:inline-flex;align-items:center;gap:6px;border-radius:99px;padding:4px 12px;font-size:.8rem;font-weight:700;color:#fff}
+.qcard{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:20px;margin:10px 0;animation:slidein .3s}
+@keyframes slidein{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:none}}
+.qtext{font-size:1.16rem;font-weight:700;margin:6px 0 4px;line-height:1.5}
+.qtext .blank{display:inline-block;min-width:56px;border-bottom:3px solid var(--sky);color:var(--sky);text-align:center;font-weight:800}
+.qzh{color:var(--ink2);font-size:.86rem;margin-bottom:8px}
+.opts{display:grid;gap:10px;margin-top:14px}
+.opts.two{grid-template-columns:1fr 1fr}
+@media(max-width:480px){.opts.two{grid-template-columns:1fr}}
+.opt{border:2px solid var(--line);background:#fff;border-radius:14px;padding:13px 16px;font-size:1.02rem;text-align:left;
+  cursor:pointer;transition:.13s;font-weight:600;color:var(--ink)}
+.opt:hover{border-color:var(--sky);background:var(--sky-l)}
+.opt.sel{border-color:var(--sky);background:var(--sky-l)}
+.opt.ok{border-color:var(--ok);background:#E9F9EF;animation:pop .3s}
+.opt.bad{border-color:var(--bad);background:#FDEDEB;animation:shake .35s}
+.opt:disabled{cursor:default;opacity:.75}
+.opt.ok:disabled,.opt.bad:disabled{opacity:1}
+@keyframes pop{50%{transform:scale(1.045)}}
+@keyframes shake{20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+
+/* text input */
+.inpwrap{margin-top:14px}
+.tinp{width:100%;border:2px solid var(--line);border-radius:14px;padding:13px 16px;font-size:1.1rem;font-family:inherit;font-weight:600}
+.tinp:focus{outline:none;border-color:var(--sky)}
+.tinp.ok{border-color:var(--ok);background:#E9F9EF}
+.tinp.bad{border-color:var(--bad);background:#FDEDEB;animation:shake .35s}
+.accbar{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.acc{border:1.5px solid var(--line);background:#fff;border-radius:10px;min-width:38px;height:38px;font-size:1.02rem;cursor:pointer}
+.acc:hover{background:var(--sky-l);border-color:var(--sky)}
+.multiwrap{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+.multiwrap .mf{flex:1 1 130px}
+.multiwrap label{font-size:.8rem;color:var(--ink2);font-weight:700;display:block;margin-bottom:4px}
+
+/* match */
+.matchgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.mitem{border:2px solid var(--line);background:#fff;border-radius:12px;padding:11px 12px;cursor:pointer;font-weight:600;
+  text-align:center;transition:.13s;font-size:.98rem;color:var(--ink)}
+.mitem.sel{border-color:var(--sky);background:var(--sky-l);transform:scale(1.03)}
+.mitem.paired{cursor:default;color:#fff;border-color:transparent}
+.mitem.bad{animation:shake .35s;border-color:var(--bad)}
+
+/* order */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{border:2px solid var(--line);background:#fff;border-radius:12px;padding:10px 13px;cursor:pointer;font-weight:600;font-size:.95rem;transition:.13s;color:var(--ink)}
+.chip:hover{border-color:var(--viol);background:var(--viol-l)}
+.chip.used{opacity:.35;cursor:default}
+.orderzone{min-height:52px;border:2px dashed var(--line);border-radius:12px;margin-top:12px;padding:8px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.ochip{background:var(--viol-l);border:2px solid var(--viol);border-radius:10px;padding:7px 11px;font-weight:700;font-size:.9rem;cursor:pointer}
+.ozhint{color:var(--ink2);font-size:.85rem;padding:4px 8px}
+
+/* dictée */
+.speakbtn{display:inline-flex;align-items:center;gap:8px;border:2px solid var(--sky);background:var(--sky-l);color:var(--sky);
+  border-radius:14px;padding:11px 20px;font-size:1rem;font-weight:800;cursor:pointer;margin:6px 6px 0 0}
+.speakbtn:hover{background:var(--sky);color:#fff}
+.memoline{font-size:1.2rem;font-weight:800;letter-spacing:.4px;background:var(--sun-l);border-radius:12px;padding:12px 16px;margin-top:10px;text-align:center}
+
+/* feedback */
+.fb{border-radius:14px;padding:13px 16px;margin-top:14px;font-size:.95rem;animation:slidein .25s}
+.fb.good{background:#E9F9EF;border:2px solid #b7e6c6}
+.fb.hint{background:var(--sun-l);border:2px solid #f2d9a4}
+.fb.bad{background:#FDEDEB;border:2px solid #f3c1ba}
+.fb b.res{display:block;font-size:1.02rem;margin-bottom:3px}
+.nextbtn{display:block;width:100%;margin-top:14px;border:none;border-radius:14px;background:var(--ink);color:#fff;
+  font-size:1.05rem;font-weight:800;padding:14px;cursor:pointer;transition:.15s}
+.nextbtn:hover{transform:translateY(-1px);background:#000}
+.checkbtn{background:var(--sky)}
+.checkbtn:hover{background:#2b6fd8}
+
+/* lesson card */
+.lesson{background:linear-gradient(135deg,#FFFBF2,#FFF3E0);border:2px solid #F5E3C2}
+.lesson h3{margin:2px 0 8px;font-size:1.15rem}
+.lesson .rule{background:#fff;border-radius:12px;padding:12px 14px;margin:9px 0;border-left:5px solid var(--sun)}
+.lesson .rule b.fr{color:var(--coq-d)}
+.lesson .memo{background:var(--coq-l);border-left-color:var(--coq);font-weight:600}
+.lesson .ex{color:var(--ink2);font-size:.92rem;margin-top:3px}
+.lesson table{border-collapse:collapse;width:100%;margin:8px 0;background:#fff;border-radius:10px;overflow:hidden;font-size:.95rem}
+.lesson th,.lesson td{border:1px solid var(--line);padding:7px 10px;text-align:center}
+.lesson th{background:var(--sun-l)}
+
+/* results */
+.scorewrap{text-align:center;padding:10px 0}
+.scircle{width:150px;height:150px;margin:8px auto;position:relative}
+.scircle svg{transform:rotate(-90deg)}
+.scircle .val{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.scircle .val b{font-size:2.2rem;line-height:1}
+.stars{font-size:2.1rem;letter-spacing:6px;margin:4px 0}
+.gain{display:inline-block;background:var(--sun-l);border-radius:99px;padding:5px 16px;font-weight:800;color:#B07A1E;margin:4px}
+.breakdown{display:grid;gap:8px;margin-top:8px}
+.bd{display:flex;align-items:center;gap:10px;background:#FDFAF4;border-radius:12px;padding:9px 12px;font-size:.92rem}
+.bd .bar{flex:1;height:9px;background:#eee4d6;border-radius:99px;overflow:hidden}
+.bd .bar i{display:block;height:100%;border-radius:99px}
+.recap{font-size:.9rem}
+.recap .wrongitem{background:#FFF6F4;border-radius:10px;padding:8px 12px;margin:6px 0;border-left:4px solid var(--coq)}
+
+/* badges */
+.badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.badge{background:var(--card);border-radius:16px;box-shadow:var(--sh);padding:14px 10px;text-align:center;transition:.2s}
+.badge .bic{font-size:2.3rem;line-height:1.2;display:block}
+.badge.off{filter:grayscale(1);opacity:.45}
+.badge b{font-size:.85rem;display:block;margin-top:4px}
+.badge small{color:var(--ink2);font-size:.7rem;display:block;line-height:1.3;margin-top:2px}
+.badge.new{animation:pop .5s;box-shadow:0 0 0 3px var(--sun)}
+
+/* mission */
+.mission{background:linear-gradient(135deg,#EFFBF4,#DFF5E9);border:2px solid #BFE8D2}
+.mission h3{margin:0 0 6px}
+.mission li{margin:6px 0}
+
+/* parent */
+.pin{display:flex;gap:10px;justify-content:center;margin:16px 0}
+.pin input{width:150px;text-align:center;font-size:1.5rem;letter-spacing:8px;border:2px solid var(--line);border-radius:14px;padding:10px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
+.tab{border:2px solid var(--line);background:#fff;border-radius:99px;padding:7px 16px;font-weight:700;font-size:.88rem;cursor:pointer;color:var(--ink)}
+.tab.act{background:var(--ink);border-color:var(--ink);color:#fff}
+.cal{display:grid;grid-template-columns:repeat(10,1fr);gap:5px}
+@media(max-width:560px){.cal{grid-template-columns:repeat(6,1fr)}}
+.cd{aspect-ratio:1;border-radius:8px;background:#F3EADD;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.72rem;color:var(--ink2)}
+.cd b{font-size:.82rem;color:var(--ink)}
+.comprow{display:flex;align-items:center;gap:9px;padding:7px 0;border-bottom:1px dashed var(--line);font-size:.88rem}
+.comprow .nm{flex:1 1 200px}
+.comprow .bar{flex:1 1 120px;height:10px;background:#efe6d8;border-radius:99px;overflow:hidden}
+.comprow .bar i{display:block;height:100%;border-radius:99px}
+.gpill{font-size:.68rem;font-weight:800;border-radius:99px;padding:2px 8px;color:#fff;min-width:34px;text-align:center}
+.logitem{background:#FDFAF4;border-radius:10px;padding:9px 12px;margin:7px 0;font-size:.88rem}
+.logitem .g{color:var(--bad);font-weight:700}
+.logitem .a{color:var(--ok);font-weight:700}
+
+/* confetti */
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:99;overflow:hidden}
+.cf{position:absolute;top:-14px;width:10px;height:14px;border-radius:2px;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(105vh) rotate(720deg);opacity:.2}}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:var(--ink);color:#fff;border-radius:99px;
+  padding:11px 22px;font-weight:700;z-index:100;box-shadow:0 6px 20px rgba(0,0,0,.25);animation:slidein .3s;font-size:.92rem;max-width:88vw;text-align:center}
+
+/* diploma */
+.diploma{border:6px double var(--coq);border-radius:14px;padding:30px 22px;text-align:center;background:#FFFDF6}
+.diploma h1{color:var(--coq-d);margin:4px 0;font-size:1.6rem}
+.diploma .nm{font-size:1.8rem;font-weight:900;margin:10px 0;color:var(--ink)}
+@media print{
+  body *{visibility:hidden}
+  .diploma,.diploma *{visibility:visible}
+  .diploma{position:fixed;inset:14px;border-color:#C93A26}
+}
+
+/* settings */
+.setrow{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px dashed var(--line);flex-wrap:wrap}
+.setrow .lbl{flex:1;font-weight:700;min-width:150px}
+.setrow .lbl small{display:block;font-weight:400;color:var(--ink2)}
+.sbtn{border:2px solid var(--line);background:#fff;border-radius:12px;padding:9px 16px;font-weight:700;cursor:pointer;font-size:.9rem;color:var(--ink)}
+.sbtn:hover{border-color:var(--sky)}
+.sbtn.warn{color:var(--bad);border-color:#f3c1ba}
+
+footer{margin-top:26px;text-align:center;color:var(--ink2);font-size:.75rem;padding-bottom:10px}
+
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+"use strict";
+/* ==== i18n.js ==== */
+/* ===== 双语 UI 文案 ===== */
+const I18N = {
+zh: {
+  appTitle: "童童暑假复习巩固营", appSub: "CM1 → CM2 · 虞美人岛 30 天冒险",
+  streak: "连胜", stars: "星星", xp: "经验", level: "等级", days: "完成天数",
+  todayTitle: "第 {d} 天", start: "开始今日冒险", replay: "再练一次", cont: "继续",
+  allDone: "30 天冒险全部完成!", seeDiploma: "查看结业证书", doneToday: "今天已完成 ✓ 明天见!",
+  mapTitle: "冒险地图", badgesTitle: "勋章册", lockedDay: "先完成前一天再来!",
+  warmup: "热身", core: "核心课", defi: "大挑战", lesson: "小课堂", mission: "动手任务", reviewBlock: "复习闯关",
+  check: "确认", next: "继续 →", finish: "看成绩 🎉", skip: "跳过",
+  correct: "答对啦!", correctHalf: "重试成功!", wrong: "正确答案", hintTitle: "提示",
+  tryAgain: "再试一次!", listen: "听一听 🔊", listenSlow: "慢速 🐢", memoShow: "记住这句话!",
+  memoGone: "开始默写吧!", inputPh: "在这里输入…", validate: "检查答案",
+  matchHint: "点左边一个,再点右边和它配对的", orderHint: "按正确顺序点击下面的卡片",
+  undo: "撤销", clickOrder: "点击排序 ↓",
+  score: "今日得分", perfect: "完美!太棒了!", great: "非常好!", good: "不错,继续加油!", meh: "没关系,明天会更好!",
+  gainXp: "+{n} XP", newBadge: "新勋章!", breakdown: "各环节表现", wrongRecap: "今日错题回顾",
+  yourAnswer: "你的答案", rightAnswer: "正确答案", noWrong: "零错题,全对通关! 🏆",
+  tomorrow: "明日预告", backHome: "回到岛屿地图",
+  missionDone: "我完成啦!", missionDoneOk: "任务完成!+30 XP 🎉", missionTip: "完成后请家长确认哦",
+  parent: "家长面板", pinTitle: "请输入家长PIN码", pinBtn: "进入", pinBad: "PIN不对哦",
+  pOverview: "总览", pComps: "知识点掌握", pLog: "错题日志", pData: "数据",
+  pCalendar: "30天成绩日历", pTime: "累计学习", pAvg: "平均分", pStreakMax: "最长连胜",
+  pMastery: "掌握度(以年度考试评级为起点,随每日答题更新)", pNoLog: "还没有错题记录",
+  pExport: "导出学习数据(JSON)", pImport: "导入数据", pReport: "生成本周小结", pCopied: "已复制,可以粘贴发给家人",
+  pWeekReport: "周报", pMin: "分钟", pDay: "第{d}天",
+  settings: "设置", sLang: "界面语言", sSound: "音效", sVoice: "法语朗读测试", sVoiceBtn: "测试 🔊",
+  sPin: "修改家长PIN", sPinNew: "新PIN(4位数字)", sReset: "重置全部进度", sResetWarn: "会清空所有记录!确定?",
+  sResetBtn: "重置", saved: "已保存", on: "开", off: "关",
+  diploma: "结业证书", print: "打印证书 🖨️", diplomaTitle: "结业证书 · Diplôme",
+  diplomaBody: "已完成虞美人岛 30 天暑假复习巩固营,以出色的坚持与努力巩固了 CM1 全部知识,准备好迎接 CM2 啦!",
+  diplomaStars: "共收集 {s} 颗星星 · 称号:{t}",
+  week: "第{n}周", finalWeek: "决战",
+  subjects: { francais: "法语", maths: "数学", monde: "科学·历史·地理", anglais: "英语", mix: "综合" },
+  grades: { A: "已掌握", ECA: "习得中", F: "不稳固", I: "不足" },
+  q_vf: ["对 ✓", "错 ✗"],
+  close: "关闭", of: "/", timeSpent: "用时",
+  ttsNo: "此浏览器不支持法语朗读,已切换为「看-记-写」模式",
+  install: "由 Claude 为童童定制 · 数据保存在本设备",
+},
+fr: {
+  appTitle: "Camp d'été de Tongtong", appSub: "CM1 → CM2 · L'île aux Coquelicots, 30 jours",
+  streak: "Série", stars: "Étoiles", xp: "XP", level: "Niveau", days: "Jours finis",
+  todayTitle: "Jour {d}", start: "C'est parti !", replay: "Rejouer", cont: "Continuer",
+  allDone: "Aventure de 30 jours terminée !", seeDiploma: "Voir mon diplôme", doneToday: "Fini pour aujourd'hui ✓ À demain !",
+  mapTitle: "Carte de l'aventure", badgesTitle: "Mes badges", lockedDay: "Termine d'abord le jour précédent !",
+  warmup: "Échauffement", core: "Leçon", defi: "Grand défi", lesson: "Mini-leçon", mission: "Mission", reviewBlock: "Révisions",
+  check: "Valider", next: "Suite →", finish: "Mon score 🎉", skip: "Passer",
+  correct: "Bravo !", correctHalf: "Bien rattrapé !", wrong: "La bonne réponse",
+  hintTitle: "Indice", tryAgain: "Essaie encore !", listen: "Écouter 🔊", listenSlow: "Lentement 🐢",
+  memoShow: "Mémorise cette phrase !", memoGone: "Écris-la de mémoire !", inputPh: "Écris ici…", validate: "Vérifier",
+  matchHint: "Clique à gauche, puis sur sa paire à droite", orderHint: "Clique les cartes dans le bon ordre",
+  undo: "Annuler", clickOrder: "Clique pour ranger ↓",
+  score: "Score du jour", perfect: "Parfait ! Extraordinaire !", great: "Très bien !", good: "Bien, continue !", meh: "Pas grave, demain sera mieux !",
+  gainXp: "+{n} XP", newBadge: "Nouveau badge !", breakdown: "Par étape", wrongRecap: "Mes erreurs du jour",
+  yourAnswer: "Ta réponse", rightAnswer: "Bonne réponse", noWrong: "Zéro erreur, sans faute ! 🏆",
+  tomorrow: "Demain", backHome: "Retour à la carte",
+  missionDone: "Mission accomplie !", missionDoneOk: "Mission validée ! +30 XP 🎉", missionTip: "Demande à tes parents de vérifier",
+  parent: "Espace parents", pinTitle: "Code PIN parents", pinBtn: "Entrer", pinBad: "Mauvais PIN",
+  pOverview: "Vue d'ensemble", pComps: "Compétences", pLog: "Journal d'erreurs", pData: "Données",
+  pCalendar: "Calendrier des 30 jours", pTime: "Temps total", pAvg: "Moyenne", pStreakMax: "Meilleure série",
+  pMastery: "Maîtrise (départ = évaluations de l'année, mise à jour chaque jour)", pNoLog: "Aucune erreur enregistrée",
+  pExport: "Exporter les données (JSON)", pImport: "Importer", pReport: "Résumé de la semaine", pCopied: "Copié !",
+  pWeekReport: "Rapport", pMin: "min", pDay: "Jour {d}",
+  settings: "Réglages", sLang: "Langue", sSound: "Sons", sVoice: "Test de la voix française", sVoiceBtn: "Tester 🔊",
+  sPin: "Changer le PIN", sPinNew: "Nouveau PIN (4 chiffres)", sReset: "Tout réinitialiser", sResetWarn: "Tout sera effacé ! Sûr ?",
+  sResetBtn: "Réinitialiser", saved: "Enregistré", on: "ON", off: "OFF",
+  diploma: "Diplôme", print: "Imprimer 🖨️", diplomaTitle: "Diplôme du Camp d'été",
+  diplomaBody: "a terminé les 30 jours du camp de révision de l'île aux Coquelicots, a consolidé tout le programme de CM1 et est prêt(e) pour le CM2 !",
+  diplomaStars: "{s} étoiles récoltées · Titre : {t}",
+  week: "Semaine {n}", finalWeek: "Finale",
+  subjects: { francais: "Français", maths: "Maths", monde: "Sciences · Histoire · Géo", anglais: "Anglais", mix: "Mixte" },
+  grades: { A: "Acquis", ECA: "En cours", F: "Fragile", I: "Insuffisant" },
+  q_vf: ["Vrai ✓", "Faux ✗"],
+  close: "Fermer", of: "/", timeSpent: "Durée",
+  ttsNo: "Pas de voix française : mode « lis-retiens-écris »",
+  install: "Créé par Claude pour Tongtong · Données locales",
+},
+};
+const LEVELS = [
+  { xp: 0, zh: "种子", fr: "Graine", ic: "🌱" },
+  { xp: 300, zh: "嫩芽", fr: "Pousse", ic: "🌿" },
+  { xp: 750, zh: "花苞", fr: "Bouton", ic: "🪴" },
+  { xp: 1300, zh: "花朵", fr: "Fleur", ic: "🌸" },
+  { xp: 2000, zh: "虞美人骑士", fr: "Chevalier Coquelicot", ic: "🌺" },
+  { xp: 2800, zh: "金色虞美人", fr: "Coquelicot d'Or", ic: "👑" },
+];
+
+/* ==== banks_fr.js ==== */
+/* ===== 题库:法语 ===== */
+/* 便捷构造器 */
+const qcm = (id, q, opts, a, exp, x) => Object.assign({ id, type: "qcm", q, opts, a, exp }, x);
+const vf = (id, q, a, exp, x) => Object.assign({ id, type: "vf", q, opts: null, a, exp }, x);
+const inp = (id, q, acc, exp, x) => Object.assign({ id, type: "input", q, acc, exp }, x);
+const BANKS = {};
+
+/* ---------- 同音词 ou / où (ECA) ---------- */
+BANKS.fr_hom_ou = { items: [
+  qcm("ou1", "Tu veux du jus ___ de l'eau ?", ["ou", "où"], 0, "可以换成 « ou bien »(或者)→ ou,不带重音。"),
+  qcm("ou2", "La ville ___ j'habite est jolie.", ["ou", "où"], 1, "表示地点(在哪里)→ où,带重音符 ù。"),
+  qcm("ou3", "___ as-tu mis tes chaussures ?", ["Ou", "Où"], 1, "问「在哪里」→ Où。别忘了大写也要带重音!"),
+  qcm("ou4", "Préfères-tu le foot ___ la danse ?", ["ou", "où"], 0, "= ou bien(或者)→ ou。"),
+  qcm("ou5", "Le jardin ___ nous jouons est grand.", ["ou", "où"], 1, "地点(我们玩耍的地方)→ où。"),
+  qcm("ou6", "Tu viens samedi ___ dimanche ?", ["ou", "où"], 0, "二选一(或者)→ ou。"),
+  qcm("ou7", "C'est la boîte ___ je range mes billes.", ["ou", "où"], 1, "地点 → où。"),
+  qcm("ou8", "Je ne sais pas ___ il est parti.", ["ou", "où"], 1, "去了哪里 → où。"),
+  qcm("ou9", "Fromage ___ dessert, il faut choisir !", ["ou", "où"], 0, "或者 → ou。"),
+  qcm("ou10", "Le jour ___ je suis né, il neigeait.", ["ou", "où"], 1, "où 也可以表示时间(那一天)→ où。"),
+  inp("ou11", "Complète : « Tu veux jouer dedans ___ dehors ? »", ["ou"], "或者 → ou(无重音)。", { qzh: "填 ou 还是 où?" }),
+  inp("ou12", "Complète : « Dis-moi ___ tu as caché le trésor ! »", ["où"], "在哪里 → où。⚠️ 别忘了 ù 上的重音!", { qzh: "填 ou 还是 où?注意重音!" }),
+  inp("ou13", "Complète : « La forêt ___ vivent les loups est sombre. »", ["où"], "地点 → où,带重音。"),
+  inp("ou14", "Complète : « Un croissant ___ un pain au chocolat ? »", ["ou"], "或者 → ou。"),
+  vf("ou15", "Dans « Où vas-tu ? », le mot « où » indique un lieu.", true, "对!où(带重音)= 哪里/地点。"),
+  vf("ou16", "On peut remplacer « ou » (sans accent) par « ou bien ».", true, "小窍门:能换成 ou bien 就写 ou,不能换就写 où。"),
+  qcm("ou17", "Choisis la phrase correcte :", ["Le pays ou je rêve d'aller.", "Le pays où je rêve d'aller."], 1, "梦想去的地方(地点)→ où。"),
+  qcm("ou18", "Choisis la phrase correcte :", ["Tu préfères l'été où l'hiver ?", "Tu préfères l'été ou l'hiver ?"], 1, "二选一 → ou,不带重音。"),
+]};
+
+/* ---------- 同音词 leur / leurs (F 薄弱) ---------- */
+BANKS.fr_hom_leur = { items: [
+  qcm("lr1", "Je ___ donne un bonbon.", ["leur", "leurs"], 0, "动词前面的 leur(=给他们)永远不变,没有 s!"),
+  qcm("lr2", "Ils rangent ___ cartables.", ["leur", "leurs"], 1, "cartables 复数 → leurs(他们的书包们)。"),
+  qcm("lr3", "Elle ___ parle doucement.", ["leur", "leurs"], 0, "parle 是动词 → 前面用 leur,不变。"),
+  qcm("lr4", "___ maison est très grande.", ["Leur", "Leurs"], 0, "maison 单数 → leur。"),
+  qcm("lr5", "Les oiseaux nourrissent ___ petits.", ["leur", "leurs"], 1, "petits 复数 → leurs。"),
+  qcm("lr6", "Le maître ___ explique la leçon.", ["leur", "leurs"], 0, "explique 动词 → leur 不变。"),
+  qcm("lr7", "Ils mettent ___ manteau. (chacun un seul !)", ["leur", "leurs"], 0, "每人一件 → manteau 单数 → leur。"),
+  qcm("lr8", "Elles prêtent ___ crayons à Tom.", ["leur", "leurs"], 1, "crayons 复数 → leurs。"),
+  qcm("lr9", "Je ___ ai dit bonjour.", ["leur", "leurs"], 0, "ai dit 动词 → leur 永远不带 s。"),
+  qcm("lr10", "___ parents sont venus à l'école.", ["Leur", "Leurs"], 1, "parents 复数 → leurs。"),
+  qcm("lr11", "Le clown ___ fait des grimaces.", ["leur", "leurs"], 0, "fait 动词 → leur。"),
+  qcm("lr12", "Les élèves ouvrent ___ livre de maths. (un seul livre chacun)", ["leur", "leurs"], 0, "每人一本 → 单数 → leur。"),
+  inp("lr13", "Complète : « Papa ___ raconte une histoire. »", ["leur"], "raconte 是动词 → leur 不变。", { qzh: "leur 还是 leurs?" }),
+  inp("lr14", "Complète : « Les chats lèchent ___ pattes. »", ["leurs"], "pattes 复数 → leurs。"),
+  inp("lr15", "Complète : « ___ chien s'appelle Filou. » (un seul chien)", ["leur", "Leur"], "chien 单数 → Leur。"),
+  inp("lr16", "Complète : « Je ___ souhaite un bon anniversaire. »", ["leur"], "souhaite 动词 → leur。"),
+  vf("lr17", "Devant un verbe, « leur » ne prend jamais de s.", true, "规则记牢:leur + 动词 → 永不加 s!"),
+  vf("lr18", "Dans « leurs jouets », on écrit leurs avec un s car jouets est au pluriel.", true, "limiter名词复数 → leurs。"),
+  qcm("lr19", "Choisis la phrase correcte :", ["Je leurs téléphone ce soir.", "Je leur téléphone ce soir."], 1, "téléphone 动词 → leur 不变。leurs+动词 = ❌"),
+  qcm("lr20", "Choisis la phrase correcte :", ["Ils adorent leurs grands-parents.", "Ils adorent leur grands-parents."], 0, "grands-parents 复数 → leurs。"),
+]};
+
+/* ---------- 形容词性数配合 (F 薄弱) ---------- */
+BANKS.fr_acc_adj = { items: [
+  inp("aj1", "Accorde : une porte (clos) → une porte ___", ["close"], "clos → close(阴性加 e,s→se)。这是你试卷上的订正词哦!"),
+  inp("aj2", "Accorde : des mains (humide) → des mains ___", ["humides"], "humide 已有 e,复数只加 s → humides。"),
+  inp("aj3", "Accorde : des résultats (satisfaisant) → des résultats ___", ["satisfaisants"], "阳性复数 → satisfaisants,加 s。"),
+  inp("aj4", "Accorde : une robe (blanc) → une robe ___", ["blanche"], "blanc → blanche(特殊变化 c→che)。"),
+  inp("aj5", "Accorde : une fille (heureux) → une fille ___", ["heureuse"], "-eux → -euse:heureuse。"),
+  inp("aj6", "Accorde : une maîtresse (gentil) → une maîtresse ___", ["gentille"], "gentil → gentille(双写 l + e)。"),
+  inp("aj7", "Accorde : des châteaux (beau) → de ___ châteaux", ["beaux"], "beau → beaux(x 结尾)。"),
+  inp("aj8", "Accorde : une histoire (long) → une histoire ___", ["longue"], "long → longue(加 u 保持 g 的音)。"),
+  inp("aj9", "Accorde : une pomme (doux) → une pomme ___", ["douce"], "doux → douce(x→ce)。"),
+  inp("aj10", "Accorde : une boisson (frais) → une boisson ___", ["fraîche"], "frais → fraîche(î 上有小帽子 ^)。"),
+  inp("aj11", "Accorde : des chaussettes (sec) → des chaussettes ___", ["sèches"], "sec → sèche(è)→ 复数 sèches。"),
+  inp("aj12", "Accorde : une voix (bas) → une voix ___", ["basse"], "bas → basse(双写 s + e)。"),
+  inp("aj13", "Accorde : une veste (cher) → une veste ___", ["chère"], "cher → chère(è + e)。"),
+  inp("aj14", "Accorde : une valise (léger) → une valise ___", ["légère"], "léger → légère(è + e)。"),
+  inp("aj15", "Accorde : des tortues (curieux) → des tortues ___", ["curieuses"], "-eux → -euses(阴性复数)。"),
+  inp("aj16", "Accorde : une championne (sportif) → une championne ___", ["sportive"], "-if → -ive:sportive。"),
+  qcm("aj17", "Des fleurs (bleu) :", ["bleus", "bleues", "bleue", "bleu"], 1, "fleurs 阴性复数 → bleues(e + s)。"),
+  qcm("aj18", "Des ballons (orange) :", ["oranges", "orange"], 1, "orange 来自水果名,永不变!des ballons orange。"),
+  qcm("aj19", "Des bottes (marron) :", ["marrons", "marron"], 1, "marron(栗子)也是不变形容词!"),
+  qcm("aj20", "Une tarte (délicieux) :", ["délicieuse", "délicieux", "délicieuses"], 0, "tarte 阴性单数 → délicieuse。"),
+  qcm("aj21", "De (nouveau) baskets :", ["nouveaux", "nouvelles", "nouveau"], 1, "baskets(篮球鞋)阴性复数 → nouvelles。"),
+  qcm("aj22", "Une (gros) tempête :", ["gros", "grosse", "grosses"], 1, "tempête 阴性单数 → grosse(双写 s)。"),
+  qcm("aj23", "Trouve l'erreur : « Les feuilles verte tombent. »", ["verte → vertes", "feuilles → feuille", "tombent → tombe"], 0, "feuilles 复数 → 形容词也要复数:vertes。"),
+  qcm("aj24", "Trouve l'erreur : « Ma petite frère est drôle. »", ["petite → petit", "drôle → drôles", "est → sont"], 0, "frère 阳性 → petit(不加 e)。"),
+  vf("aj25", "L'adjectif s'accorde toujours avec le nom qu'il décrit.", true, "对!性(masculin/féminin)和数(singulier/pluriel)都要一致。"),
+  vf("aj26", "Dans « des chansons joyeux », l'accord est correct.", false, "chansons 阴性复数 → joyeuses。"),
+]};
+
+/* ---------- 名词组 GN 整体配合 (ECA) ---------- */
+BANKS.fr_acc_gn = { items: [
+  inp("gn1", "Mets au pluriel : « le chat noir » → les ___ ___", ["chats noirs"], "GN 里所有词一起变:les chats noirs。"),
+  inp("gn2", "Mets au pluriel : « un cheval rapide » → des ___ ___", ["chevaux rapides"], "cheval → chevaux(-al→-aux)+ rapides。"),
+  inp("gn3", "Mets au pluriel : « le beau bateau » → les ___ ___", ["beaux bateaux"], "beau→beaux,bateau→bateaux(x)。"),
+  inp("gn4", "Mets au féminin : « un ami adorable » → une ___ ___", ["amie adorable"], "ami→amie;adorable 已有 e 不变。"),
+  inp("gn5", "Mets au pluriel : « la grande maison » → les ___ ___", ["grandes maisons"], "全部加 s:grandes maisons。"),
+  inp("gn6", "Mets au féminin : « un chanteur célèbre » → une ___ ___", ["chanteuse célèbre"], "chanteur→chanteuse。"),
+  qcm("gn7", "Choisis le GN correct :", ["des histoires drôle", "des histoires drôles", "des histoire drôles"], 1, "des + 复数名词 + 复数形容词。"),
+  qcm("gn8", "Choisis le GN correct :", ["une aventure dangereuse", "une aventure dangereux", "un aventure dangereuse"], 0, "aventure 阴性 → une … dangereuse。"),
+  qcm("gn9", "Choisis le GN correct :", ["les animals sauvages", "les animaux sauvage", "les animaux sauvages"], 2, "animal→animaux + sauvages。"),
+  qcm("gn10", "Trouve l'erreur : « mes chère amies »", ["chère → chères", "amies → amie", "mes → ma"], 0, "amies 复数 → chères。"),
+  qcm("gn11", "Trouve l'erreur : « des joli papillons bleus »", ["joli → jolis", "papillons → papillon", "bleus → bleu"], 0, "papillons 复数 → jolis。"),
+  vf("gn12", "Dans un GN, le déterminant, le nom et l'adjectif s'accordent ensemble.", true, "对!整个名词组要「手拉手」一起变。"),
+  inp("gn13", "Mets au pluriel : « un journal régional » → des ___ ___", ["journaux régionaux"], "-al→-aux 两个词都变:journaux régionaux。"),
+  qcm("gn14", "Choisis le GN correct :", ["ces nouvelles élèves brillantes", "ces nouvelle élèves brillantes", "ces nouvelles élèves brillante"], 0, "élèves(女生们)→ 全复数阴性。"),
+]};
+
+/* ---------- 名词复数(维持 A) ---------- */
+BANKS.fr_acc_nom = { items: [
+  inp("nm1", "Pluriel : un cheveu → des ___", ["cheveux"], "-eu → -eux:cheveux。"),
+  inp("nm2", "Pluriel : un bijou → des ___", ["bijoux"], "7个 -ou 加 x 的词之一:bijoux!"),
+  inp("nm3", "Pluriel : un chou → des ___", ["choux"], "bijou, caillou, chou, genou, hibou, joujou, pou → x!"),
+  inp("nm4", "Pluriel : un journal → des ___", ["journaux"], "-al → -aux。"),
+  inp("nm5", "Pluriel : un animal → des ___", ["animaux"], "-al → -aux。"),
+  inp("nm6", "Pluriel : un œil → des ___", ["yeux"], "完全不规则:œil → yeux!"),
+  inp("nm7", "Pluriel : un caillou → des ___", ["cailloux"], "-ou 七兄弟之一 → x。"),
+  inp("nm8", "Pluriel : un pneu → des ___", ["pneus"], "⚠️ 例外!pneu → pneus(s,不是x)。"),
+  inp("nm9", "Pluriel : un travail → des ___", ["travaux"], "travail → travaux。"),
+  qcm("nm10", "Le pluriel de « un nez » :", ["des nez", "des nezs", "des neux"], 0, "以 -z 结尾的词复数不变。"),
+  qcm("nm11", "Le pluriel de « une souris » :", ["des souris", "des souries", "des sourises"], 0, "以 -s 结尾复数不变。"),
+  qcm("nm12", "Le pluriel de « un festival » :", ["des festivaux", "des festivals"], 1, "⚠️ 例外!festival → festivals。"),
+]};
+
+/* ---------- Imparfait 生成器 ---------- */
+const IMP_END = ["ais", "ais", "ait", "ions", "iez", "aient"];
+const IMP_PRON = ["je", "tu", "il", "nous", "vous", "elles"];
+const IMP_PRON2 = ["je", "tu", "elle", "nous", "vous", "ils"];
+/* soft=true: -ger 动词,在 a 开头词尾前保留 e */
+const V1 = [
+  { inf: "chanter", st: "chant" }, { inf: "jouer", st: "jou" }, { inf: "danser", st: "dans" },
+  { inf: "regarder", st: "regard" }, { inf: "manger", st: "mang", soft: true }, { inf: "nager", st: "nag", soft: true },
+  { inf: "dessiner", st: "dessin" }, { inf: "parler", st: "parl" }, { inf: "habiter", st: "habit" },
+  { inf: "commencer", st: "commen", ced: true }, { inf: "lancer", st: "lan", ced: true }, { inf: "travailler", st: "travaill" },
+];
+const V2 = [
+  { inf: "finir", st: "finiss" }, { inf: "choisir", st: "choisiss" }, { inf: "grandir", st: "grandiss" },
+  { inf: "rougir", st: "rougiss" }, { inf: "réussir", st: "réussiss" }, { inf: "remplir", st: "rempliss" },
+];
+const V3 = [
+  { inf: "faire", st: "fais" }, { inf: "aller", st: "all" }, { inf: "dire", st: "dis" },
+  { inf: "voir", st: "voy" }, { inf: "venir", st: "ven" }, { inf: "prendre", st: "pren" },
+  { inf: "vouloir", st: "voul" }, { inf: "pouvoir", st: "pouv" }, { inf: "boire", st: "buv" },
+  { inf: "écrire", st: "écriv" }, { inf: "lire", st: "lis" }, { inf: "partir", st: "part" },
+  { inf: "être", st: "ét" }, { inf: "avoir", st: "av" },
+];
+function conjImp(v, pi) {
+  let st = v.st;
+  const end = IMP_END[pi];
+  if (v.soft && end[0] === "a") st = st + "e";       // mangeais
+  if (v.ced && end[0] === "a") st = st + "ç";        // commençais
+  if (v.ced && end[0] === "i") st = st + "c";        // commencions
+  let pron = (Math.random() < .5 ? IMP_PRON : IMP_PRON2)[pi];
+  let form = st + end;
+  if (pron === "je" && /^[aeéiouh]/.test(form)) pron = "j'";
+  return { pron, form };
+}
+function genImp(pool, label) {
+  const v = pick(pool);
+  const pi = rndi(0, 5);
+  const { pron, form } = conjImp(v, pi);
+  const sep = pron.endsWith("'") ? "" : " ";
+  if (Math.random() < 0.5) {
+    const wrongs = new Set();
+    while (wrongs.size < 2) {
+      const w = pick([v.st + pick(IMP_END.filter((e) => e !== IMP_END[pi])), v.st + (IMP_END[pi] === "ait" ? "aient" : "ait"), v.st + "e" + IMP_END[pi]]);
+      if (w !== form) wrongs.add(w);
+    }
+    const opts = shuffle([form, ...wrongs]);
+    return { type: "qcm", q: `Imparfait : ${pron}${sep}___ (${v.inf})`, opts, a: opts.indexOf(form), exp: `${v.inf} → ${pron}${sep}${form}。词尾:-ais, -ais, -ait, -ions, -iez, -aient。` };
+  }
+  return { type: "input", q: `Écris à l'imparfait : ${pron}${sep}___ (${v.inf})`, acc: [form], exp: `${pron}${sep}${form}(${label})`, qzh: "写出 imparfait 变位" };
+}
+BANKS.fr_imp_1 = { gen: () => genImp(V1, "1er groupe") };
+BANKS.fr_imp_2 = { gen: () => genImp(V2, "2e groupe:-issais 系列") };
+BANKS.fr_imp_3 = { gen: () => genImp(V3, "3e groupe") };
+
+/* ---------- 辨认 imparfait (A 维持) ---------- */
+BANKS.fr_imp_rec = { items: [
+  qcm("ir1", "Quelle phrase est à l'imparfait ?", ["Nous mangions des crêpes.", "Nous mangeons des crêpes.", "Nous mangerons des crêpes."], 0, "mangions:-ions 是 imparfait 词尾。"),
+  qcm("ir2", "Quelle phrase est à l'imparfait ?", ["Il chante une chanson.", "Il chantait une chanson.", "Il chantera une chanson."], 1, "chantait:-ait → imparfait。"),
+  qcm("ir3", "Quelle phrase est à l'imparfait ?", ["Vous finissiez vos devoirs.", "Vous finissez vos devoirs.", "Vous finirez vos devoirs."], 0, "finissiez:-iez + 词干 finiss → imparfait。"),
+  vf("ir4", "« Les Vikings naviguaient sur les mers. » est à l'imparfait.", true, "naviguaient:-aient → imparfait,常用于描写过去。"),
+  vf("ir5", "« Je regarde la télé. » est à l'imparfait.", false, "regarde 是现在时 présent。"),
+  qcm("ir6", "L'imparfait sert à…", ["décrire ou raconter une habitude du passé", "parler du futur", "donner un ordre"], 0, "imparfait 用来描写过去的场景或习惯。"),
+  qcm("ir7", "Trouve le verbe à l'imparfait :", ["nous jouons", "nous jouions", "nous jouerons"], 1, "jouions = jou + ions。现在时是 jouons。"),
+  vf("ir8", "« Elles étaient contentes. » est à l'imparfait.", true, "étaient = être 的 imparfait。"),
+  qcm("ir9", "Trouve le verbe à l'imparfait :", ["tu prenais", "tu prends", "tu prendras"], 0, "prenais:-ais → imparfait。"),
+  vf("ir10", "« Nous allions à la plage chaque été. » exprime une habitude du passé.", true, "allions + chaque été = 过去的习惯,imparfait 的典型用法。"),
+]};
+
+/* ---------- COD / COI (ECA) ---------- */
+BANKS.fr_cod_coi = { items: [
+  qcm("cc1", "« Léo mange une pomme. » — « une pomme » est…", ["COD", "COI"], 0, "mange quoi ? une pomme → 直接宾语 COD(无介词)。"),
+  qcm("cc2", "« Elle téléphone à sa grand-mère. » — « à sa grand-mère » est…", ["COD", "COI"], 1, "téléphone à qui ? → 有介词 à → COI。"),
+  qcm("cc3", "« Nous regardons un film. » — « un film » est…", ["COD", "COI"], 0, "regardons quoi ? → COD。"),
+  qcm("cc4", "« Tom parle de ses vacances. » — « de ses vacances » est…", ["COD", "COI"], 1, "parle de quoi ? → 介词 de → COI。"),
+  qcm("cc5", "« Le chien obéit à son maître. » — « à son maître » est…", ["COD", "COI"], 1, "obéit à qui ? → COI。"),
+  qcm("cc6", "« J'écris une lettre. » — « une lettre » est…", ["COD", "COI"], 0, "écris quoi ? → COD。"),
+  qcm("cc7", "Trouve le COD : « Mia dessine un dragon vert. »", ["Mia", "un dragon vert", "dessine"], 1, "dessine quoi ? un dragon vert。"),
+  qcm("cc8", "Trouve le COI : « Il pense à ses amis. »", ["Il", "pense", "à ses amis"], 2, "pense à qui ? à ses amis。"),
+  qcm("cc9", "Trouve le COD : « Les enfants construisent une cabane. »", ["une cabane", "Les enfants", "construisent"], 0, "construisent quoi ? une cabane。"),
+  qcm("cc10", "Trouve le COI : « Elle sourit à son bébé. »", ["Elle", "à son bébé", "sourit"], 1, "sourit à qui ? à son bébé。"),
+  vf("cc11", "Le COD répond à la question « quoi ? » ou « qui ? » sans préposition.", true, "COD = 动词+quoi/qui,中间没有介词。"),
+  vf("cc12", "Le COI est introduit par une préposition comme « à » ou « de ».", true, "COI 前面有 à 或 de。"),
+  qcm("cc13", "« Je te prête mon vélo. » — « mon vélo » est…", ["COD", "COI"], 0, "prête quoi ? mon vélo → COD。"),
+  qcm("cc14", "« Nous jouons aux cartes. » — « aux cartes » est…", ["COD", "COI"], 1, "jouons à quoi ? aux(=à+les)cartes → COI。"),
+  qcm("cc15", "Quelle phrase contient un COD ?", ["Luna attrape le ballon.", "Luna rêve de la mer.", "Luna sourit."], 0, "attrape quoi ? le ballon → COD。"),
+  qcm("cc16", "Quelle phrase contient un COI ?", ["Il lit un livre.", "Il ressemble à son papa.", "Il dort."], 1, "ressemble à qui ? → COI。"),
+  qcm("cc17", "« La sorcière prépare une potion magique. » Le COD est…", ["La sorcière", "une potion magique", "prépare"], 1, "prépare quoi ? une potion magique。"),
+  qcm("cc18", "« Le chevalier se bat contre le dragon et parle à la princesse. » Le COI est…", ["le dragon", "à la princesse", "le chevalier"], 1, "parle à qui ? à la princesse → COI。"),
+]};
+
+/* ---------- 同义词 (ECA) ---------- */
+BANKS.fr_syn = { items: [
+  qcm("sy1", "Un synonyme de « fort » :", ["puissant", "faible", "petit", "fatigué"], 0, "fort = puissant(强壮的)。试卷上考过哦!"),
+  qcm("sy2", "Un synonyme de « jouer » (un rôle) :", ["interpréter", "chanter", "écouter", "effacer"], 0, "jouer un rôle = interpréter(扮演)。"),
+  qcm("sy3", "Un synonyme de « maître » :", ["professeur", "élève", "papa", "copain"], 0, "maître = professeur/enseignant。"),
+  qcm("sy4", "Un synonyme de « vieux » :", ["âgé", "jeune", "neuf", "moderne"], 0, "vieux = âgé(年老的)。"),
+  qcm("sy5", "Un synonyme de « content » :", ["joyeux", "triste", "fâché", "malade"], 0, "content = joyeux/heureux。"),
+  qcm("sy6", "Un synonyme de « joli » :", ["beau", "laid", "sale", "gros"], 0, "joli = beau。"),
+  qcm("sy7", "Un synonyme de « bavarder » :", ["discuter", "manger", "courir", "dormir"], 0, "bavarder = discuter/parler(聊天)。"),
+  qcm("sy8", "Un synonyme de « effrayé » :", ["apeuré", "courageux", "content", "calme"], 0, "effrayé = apeuré(害怕的)。"),
+  qcm("sy9", "Un synonyme de « drôle » :", ["amusant", "ennuyeux", "sérieux", "triste"], 0, "drôle = amusant/rigolo。"),
+  qcm("sy10", "Un synonyme de « gentil » :", ["aimable", "méchant", "cruel", "dur"], 0, "gentil = aimable。"),
+  qcm("sy11", "Un synonyme de « immense » :", ["gigantesque", "minuscule", "moyen", "étroit"], 0, "immense = gigantesque/énorme(巨大)。"),
+  qcm("sy12", "Un synonyme de « regarder » :", ["observer", "écouter", "toucher", "sentir"], 0, "regarder = observer。"),
+  qcm("sy13", "Un synonyme de « crier » :", ["hurler", "chuchoter", "se taire", "rire"], 0, "crier = hurler(大喊)。"),
+  qcm("sy14", "Un synonyme de « calme » :", ["tranquille", "agité", "bruyant", "rapide"], 0, "calme = tranquille。"),
+  { id: "sy15", type: "match", q: "Associe chaque mot à son synonyme :", pairs: [["maison", "demeure"], ["rapide", "vif"], ["aimer", "adorer"], ["fatigué", "épuisé"]], exp: "maison=demeure · rapide=vif · aimer=adorer · fatigué=épuisé" },
+  { id: "sy16", type: "match", q: "Associe chaque mot à son synonyme :", pairs: [["magnifique", "splendide"], ["copain", "ami"], ["voiture", "automobile"], ["peur", "frayeur"]], exp: "都是同义词搭档!" },
+  { id: "sy17", type: "match", q: "Associe chaque mot à son synonyme :", pairs: [["parler", "discuter"], ["casser", "briser"], ["bizarre", "étrange"], ["docteur", "médecin"]], exp: "parler=discuter · casser=briser · bizarre=étrange · docteur=médecin" },
+  vf("sy18", "Des synonymes sont des mots qui veulent dire presque la même chose.", true, "对!意思相同或相近的词。"),
+  vf("sy19", "« grand » et « petit » sont des synonymes.", false, "它们意思相反 → antonymes!"),
+  qcm("sy20", "Remplace « fort » : « Un vent fort souffle. »", ["violent", "musclé", "poli"], 0, "vent fort = vent violent(风很猛烈;musclé 只能形容肌肉!)。"),
+  qcm("sy21", "Remplace « jouer » : « L'actrice joue Cendrillon. »", ["interprète", "gagne", "fabrique"], 0, "演员扮演角色 → interprète。"),
+  qcm("sy22", "Le mot étiquette des synonymes est :", ["des mots de sens proche", "des mots de sens contraire", "des mots qui riment"], 0, "synonymes = 意思相近的词。"),
+]};
+
+/* ---------- 反义词 (ECA) ---------- */
+BANKS.fr_ant = { items: [
+  qcm("an1", "Le contraire de « monter » :", ["descendre", "grimper", "sauter", "voler"], 0, "monter ↔ descendre。"),
+  qcm("an2", "Le contraire de « allumer » :", ["éteindre", "briller", "chauffer", "éclairer"], 0, "allumer ↔ éteindre。"),
+  qcm("an3", "Le contraire de « propre » :", ["sale", "net", "brillant", "lavé"], 0, "propre ↔ sale。"),
+  qcm("an4", "Le contraire de « courageux » :", ["peureux", "fort", "audacieux", "malin"], 0, "courageux ↔ peureux。"),
+  qcm("an5", "Le contraire de « toujours » :", ["jamais", "souvent", "parfois", "encore"], 0, "toujours ↔ jamais。"),
+  qcm("an6", "Le contraire de « léger » :", ["lourd", "fin", "doux", "mou"], 0, "léger ↔ lourd。"),
+  qcm("an7", "Le contraire de « facile » :", ["difficile", "simple", "rapide", "amusant"], 0, "facile ↔ difficile。"),
+  qcm("an8", "Le contraire de « le début » :", ["la fin", "le milieu", "la suite", "l'histoire"], 0, "début ↔ fin。"),
+  qcm("an9", "Le contraire de « vide » :", ["plein", "creux", "ouvert", "grand"], 0, "vide ↔ plein。"),
+  qcm("an10", "Le contraire de « intérieur » :", ["extérieur", "dedans", "milieu", "centre"], 0, "intérieur ↔ extérieur。"),
+  { id: "an11", type: "match", q: "Associe chaque mot à son contraire :", pairs: [["jour", "nuit"], ["rire", "pleurer"], ["chaud", "froid"], ["gentil", "méchant"]], exp: "都是反义词搭档!" },
+  { id: "an12", type: "match", q: "Associe chaque mot à son contraire :", pairs: [["ouvrir", "fermer"], ["gagner", "perdre"], ["rapide", "lent"], ["fort", "faible"]], exp: "ouvrir↔fermer · gagner↔perdre · rapide↔lent · fort↔faible" },
+  vf("an13", "Des antonymes sont des mots de sens contraire.", true, "antonymes = 反义词。"),
+  vf("an14", "« joyeux » et « triste » sont des antonymes.", true, "开心 ↔ 伤心,相反!"),
+  qcm("an15", "« fort / puissant » et « fort / faible » :", ["synonymes / antonymes", "antonymes / synonymes", "les deux synonymes"], 0, "puissant 同义,faible 反义。"),
+  qcm("an16", "Avec le préfixe, le contraire de « possible » :", ["impossible", "dépossible", "repossible"], 0, "加前缀 im- → impossible。"),
+  qcm("an17", "Avec le préfixe, le contraire de « heureux » :", ["malheureux", "inheureux", "désheureux"], 0, "mal- + heureux → malheureux。"),
+  qcm("an18", "Avec le préfixe, le contraire de « visible » :", ["invisible", "malvisible", "révisible"], 0, "in- + visible → invisible。"),
+]};
+
+/* ---------- 形容词功能 épithète/attribut (A) ---------- */
+BANKS.fr_adj_fonc = { items: [
+  qcm("af1", "« Le chat noir dort. » — « noir » est…", ["épithète", "attribut du sujet"], 0, "直接贴在名词旁边 → épithète(定语)。"),
+  qcm("af2", "« Le chat est noir. » — « noir » est…", ["épithète", "attribut du sujet"], 1, "通过动词 être 连接 → attribut(表语)。"),
+  qcm("af3", "« La mer semble calme. » — « calme » est…", ["épithète", "attribut du sujet"], 1, "semble(似乎)是系动词 → attribut。"),
+  qcm("af4", "« Une immense vague arrive. » — « immense » est…", ["épithète", "attribut du sujet"], 0, "贴着名词 vague → épithète。"),
+  qcm("af5", "« Les gâteaux paraissent délicieux. » — « délicieux » est…", ["épithète", "attribut du sujet"], 1, "paraissent → attribut。"),
+  qcm("af6", "« Ce vieux château est hanté ! » — « vieux » est…", ["épithète", "attribut du sujet"], 0, "vieux 贴着 château → épithète(hanté 才是 attribut)。"),
+  qcm("af7", "Trouve l'adjectif : « Le petit robot répare la fusée. »", ["petit", "robot", "répare", "fusée"], 0, "petit 描写 robot → 形容词。"),
+  qcm("af8", "Trouve l'adjectif : « Cette potion devient verte. »", ["potion", "devient", "verte", "cette"], 2, "verte 通过 devient 描写 potion。"),
+  vf("af9", "L'attribut du sujet est relié au sujet par un verbe comme être, sembler, devenir.", true, "系动词:être, paraître, sembler, devenir, rester…"),
+  vf("af10", "Dans « une histoire passionnante », l'adjectif est attribut.", false, "贴着名词 → épithète!"),
+  qcm("af11", "Quelle phrase contient un attribut du sujet ?", ["Le dragon reste furieux.", "Le dragon furieux s'envole.", "Le furieux dragon dort."], 0, "reste + furieux → attribut。"),
+  qcm("af12", "« Les coquelicots sont rouges. » — « rouges » est…", ["épithète", "attribut du sujet"], 1, "sont(être)→ attribut,并与 coquelicots 配合加 s。"),
+]};
+
+/* ---------- 主语与动词 (A) ---------- */
+BANKS.fr_sujet = { items: [
+  qcm("su1", "Trouve le sujet : « Les pirates cherchent le trésor. »", ["Les pirates", "cherchent", "le trésor"], 0, "谁在找?Les pirates → 主语。"),
+  qcm("su2", "Trouve le sujet : « Demain, Julie ira à la piscine. »", ["Demain", "Julie", "la piscine"], 1, "谁去游泳?Julie。主语不一定在句首!"),
+  qcm("su3", "Trouve le verbe conjugué : « Le magicien transforme la citrouille. »", ["magicien", "transforme", "citrouille"], 1, "动作词=动词:transforme。"),
+  qcm("su4", "Nature du sujet : « Elles adorent les fraises. »", ["pronom personnel", "groupe nominal", "nom propre"], 0, "Elles = 人称代词。"),
+  qcm("su5", "Nature du sujet : « Mon petit frère rigole. »", ["pronom personnel", "groupe nominal", "verbe à l'infinitif"], 1, "Mon petit frère = 名词组 GN。"),
+  qcm("su6", "Nature du sujet : « Paris est la capitale de la France. »", ["nom propre", "pronom", "GN avec adjectif"], 0, "Paris = 专有名词。"),
+  qcm("su7", "Nature du sujet : « Nager est excellent pour la santé. »", ["verbe à l'infinitif", "pronom", "nom propre"], 0, "Nager(游泳)= 动词原形作主语!"),
+  qcm("su8", "Trouve le sujet : « Au fond du jardin poussent des tomates. »", ["Au fond du jardin", "des tomates", "poussent"], 1, "谁在生长?des tomates(主语倒装在后面)!"),
+  vf("su9", "Le verbe s'accorde toujours avec son sujet.", true, "主语单数→动词单数;主语复数→动词复数。"),
+  qcm("su10", "Choisis le bon verbe : « Les élèves ___ en récréation. »", ["joue", "jouent"], 1, "Les élèves 复数 → jouent。"),
+  qcm("su11", "Choisis le bon verbe : « Ma copine et moi ___ un gâteau. »", ["préparons", "prépare", "préparez"], 0, "ma copine et moi = nous → préparons。"),
+  qcm("su12", "Trouve le verbe conjugué : « Soudain, l'orage éclata dans la nuit. »", ["Soudain", "éclata", "la nuit"], 1, "éclata(爆发)是变位动词。"),
+]};
+
+/* ---------- 阅读理解 ---------- */
+const LECT1 = "Zim est un petit dragon très bizarre : il a peur de l'eau ! Quand il pleut, il se cache sous son aile. Un matin, son amie Loulou la grenouille lui dit : « Viens à la rivière, je vais t'apprendre à nager ! » Zim tremble, mais il accepte. D'abord, il trempe une patte, puis deux. L'eau est fraîche et douce. À midi, Zim sait flotter. Le soir, il plonge du haut d'un rocher en criant : « Je suis le roi de la rivière ! »";
+const LECT2 = "Il y a plus de 500 ans, un Allemand nommé Gutenberg invente une machine extraordinaire : l'imprimerie. Avant, les livres étaient copiés à la main par des moines ; il fallait parfois des années pour un seul livre ! Grâce aux lettres en métal que l'on peut déplacer, on imprime maintenant des centaines de pages par jour. Les livres deviennent moins chers, et beaucoup plus de gens apprennent à lire. C'est une révolution qui change l'Europe entière.";
+BANKS.fr_lecture = { items: [
+  qcm("le1", "Pourquoi Zim est-il un dragon bizarre ?", ["Il a peur de l'eau.", "Il ne sait pas voler.", "Il déteste les grenouilles."], 0, "第一句就说了:il a peur de l'eau!", { ctx: LECT1 }),
+  qcm("le2", "Qui apprend à nager à Zim ?", ["Sa maman", "Loulou la grenouille", "Un poisson"], 1, "son amie Loulou la grenouille。", { ctx: LECT1 }),
+  qcm("le3", "Que fait Zim en premier ?", ["Il plonge du rocher.", "Il trempe une patte.", "Il boit l'eau."], 1, "D'abord = 首先 → il trempe une patte。", { ctx: LECT1 }),
+  qcm("le4", "À la fin, que crie Zim ?", ["« Je suis le roi de la rivière ! »", "« J'ai froid ! »", "« Au secours ! »"], 0, "结尾:Je suis le roi de la rivière !", { ctx: LECT1 }),
+  qcm("le5", "Ce texte est plutôt…", ["une histoire (un récit)", "une recette", "un documentaire"], 0, "有人物和情节 → récit(故事)。", { ctx: LECT1 }),
+  qcm("le6", "Qu'invente Gutenberg ?", ["l'imprimerie", "la télévision", "le papier"], 0, "Gutenberg invente l'imprimerie(印刷术)。", { ctx: LECT2 }),
+  qcm("le7", "Avant l'imprimerie, qui copiait les livres ?", ["des moines", "des robots", "des rois"], 0, "copiés à la main par des moines(修道士)。", { ctx: LECT2 }),
+  qcm("le8", "Grâce à l'imprimerie, les livres deviennent…", ["moins chers", "plus lourds", "interdits"], 0, "moins chers → 更多人能读书。", { ctx: LECT2 }),
+  qcm("le9", "Ce texte est plutôt…", ["un documentaire", "un conte de fées", "une chanson"], 0, "讲真实历史 → documentaire(纪实文)。", { ctx: LECT2 }),
+  qcm("le10", "Gutenberg vivait il y a environ…", ["500 ans", "50 ans", "5000 ans"], 0, "Il y a plus de 500 ans(约五百多年前,文艺复兴时期)。", { ctx: LECT2 }),
+]};
+
+/* ---------- 听写 dictée ---------- */
+const DICTEES = [
+  ["di1", "Les fleurs blanches poussent dans le jardin.", "注意:fleurs blanches 阴性复数配合。"],
+  ["di2", "Je leur donne leurs cahiers.", "leur+动词不变;leurs cahiers 复数。"],
+  ["di3", "Où vas-tu quand il pleut ?", "Où 带重音(哪里)。"],
+  ["di4", "Tu veux du pain ou du chocolat ?", "ou = 或者,无重音。"],
+  ["di5", "Nous mangions des crêpes chez nos grands-parents.", "mangions:g后面直接i,不加e。"],
+  ["di6", "Ils faisaient un château de sable.", "faire → fais + aient。"],
+  ["di7", "Ma sœur est très gentille.", "gentille:双l+e。"],
+  ["di8", "Les chevaux galopaient dans les champs.", "cheval→chevaux;galopaient 复数。"],
+  ["di9", "Elle voyait la mer par la fenêtre.", "voir → voy + ait。"],
+  ["di10", "Les petites filles chantaient une jolie chanson.", "GN 全体配合:les petites filles。"],
+  ["di11", "Leur maison est près de l'école.", "maison 单数 → leur。"],
+  ["di12", "Vous finissiez vos devoirs avant le dîner.", "finir → finissiez(2e groupe)。"],
+  ["di13", "Le soleil brillait et les oiseaux chantaient.", "两个 imparfait:brillait / chantaient。"],
+  ["di14", "Mes cheveux sont longs et bruns.", "cheveu→cheveux;longs/bruns 复数。"],
+];
+BANKS.fr_dictee = { items: DICTEES.map(([id, s, exp]) => ({ id, type: "dictee", q: "", say: s, acc: [s], exp })) };
+
+/* ---------- 闪卡生成器(热身用) ---------- */
+const FLASH_POOL = [
+  { q: "Synonyme de « fort » ?", opts: ["puissant", "faible"], a: 0 },
+  { q: "Synonyme de « joli » ?", opts: ["beau", "laid"], a: 0 },
+  { q: "Contraire de « chaud » ?", opts: ["froid", "tiède"], a: 0 },
+  { q: "Contraire de « ouvrir » ?", opts: ["fermer", "casser"], a: 0 },
+  { q: "Pluriel de « cheval » ?", opts: ["chevaux", "chevals"], a: 0 },
+  { q: "Pluriel de « bijou » ?", opts: ["bijoux", "bijous"], a: 0 },
+  { q: "« Je ___ parle. »", opts: ["leur", "leurs"], a: 0 },
+  { q: "« La ville ___ j'habite »", opts: ["où", "ou"], a: 0 },
+  { q: "« Thé ___ café ? »", opts: ["ou", "où"], a: 0 },
+  { q: "Une fleur (bleu) ?", opts: ["bleue", "bleu"], a: 0 },
+  { q: "Imparfait : « il (être) » ?", opts: ["était", "étais"], a: 0 },
+  { q: "Imparfait : « nous (faire) » ?", opts: ["faisions", "faisons"], a: 0 },
+  { q: "Synonyme de « vieux » ?", opts: ["âgé", "neuf"], a: 0 },
+  { q: "Contraire de « toujours » ?", opts: ["jamais", "souvent"], a: 0 },
+  { q: "« Ils rangent ___ jouets. »", opts: ["leurs", "leur"], a: 0 },
+  { q: "Pluriel de « œil » ?", opts: ["yeux", "œils"], a: 0 },
+  { q: "Imparfait : « tu (avoir) » ?", opts: ["avais", "avait"], a: 0 },
+  { q: "Synonyme de « drôle » ?", opts: ["amusant", "triste"], a: 0 },
+];
+BANKS.fr_flash = { noReview: true, gen: () => { const f = pick(FLASH_POOL); const order = shuffle([0, 1]); return { type: "qcm", q: "⚡ " + f.q, opts: order.map((i) => f.opts[i]), a: order.indexOf(f.a), exp: f.opts[f.a] }; } };
+
+/* ==== banks_maths.js ==== */
+/* ===== 题库:数学(参数化生成器,每次数字不同) ===== */
+const frNum = (x) => String(x).replace(".", ",");
+
+/* ---------- 心算:两倍/一半/三倍/三分之一/四倍/四分之一 (A 维持) ---------- */
+BANKS.ma_mental = { noReview: true, gen: () => {
+  const kind = pick(["double", "moitie", "triple", "tiers", "quadruple", "quart"]);
+  let n, ans, q;
+  switch (kind) {
+    case "double": n = rndi(13, 480); ans = n * 2; q = `Le double de ${n} ?`; break;
+    case "moitie": ans = rndi(7, 240); n = ans * 2; q = `La moitié de ${n} ?`; break;
+    case "triple": n = rndi(4, 60); ans = n * 3; q = `Le triple de ${n} ?`; break;
+    case "tiers": ans = rndi(3, 50); n = ans * 3; q = `Le tiers de ${n} ?`; break;
+    case "quadruple": n = rndi(3, 50); ans = n * 4; q = `Le quadruple de ${n} ?`; break;
+    default: ans = rndi(3, 50); n = ans * 4; q = `Le quart de ${n} ?`; break;
+  }
+  return { type: "input", q: "🧠 " + q, acc: [String(ans)], num: true, exp: q.replace(" ?", "") + " = " + ans, qzh: { double: "两倍", moitie: "一半", triple: "三倍", tiers: "三分之一", quadruple: "四倍", quart: "四分之一" }[kind] };
+} };
+
+/* ---------- 十进分数 ↔ 小数 (A/ECA) ---------- */
+BANKS.ma_frac_dec = { gen: () => {
+  const mode = rndi(0, 3);
+  if (mode === 0) { // fraction → décimal
+    const den = pick([10, 100]);
+    const num = den === 10 ? rndi(11, 99) : rndi(101, 999);
+    const ans = num / den;
+    return { type: "input", q: `Écris en nombre décimal : <b>${num}/${den}</b>`, acc: [frNum(ans)], num: true, exp: `${num}/${den} = ${frNum(ans)}(除以 ${den},逗号左移)。`, qzh: "写成小数(用逗号)" };
+  }
+  if (mode === 1) { // décimal → fraction
+    const den = pick([10, 100]);
+    const num = den === 10 ? rndi(11, 99) : rndi(101, 999);
+    const dec = frNum(num / den);
+    const opts = shuffle([`${num}/${den}`, `${num}/${den === 10 ? 100 : 10}`, `${num * 10}/${den}`]);
+    return { type: "qcm", q: `${dec} en fraction décimale :`, opts, a: opts.indexOf(`${num}/${den}`), exp: `${dec} = ${num}/${den}` };
+  }
+  if (mode === 2) { // lecture
+    const u = rndi(1, 9); let d = rndi(1, 9); if (d === u) d = (d % 9) + 1;
+    const words = ["", "un", "deux", "trois", "quatre", "cinq", "six", "sept", "huit", "neuf"];
+    const q = `« ${words[u]} unités et ${words[d]} dixièmes » s'écrit :`;
+    const good = `${u},${d}`;
+    const opts = shuffle([good, `${d},${u}`, `${u},0${d}`]);
+    return { type: "qcm", q, opts, a: opts.indexOf(good), exp: `${words[u]} unités et ${words[d]} dixièmes = ${good}`, qzh: "几个整数单位和几个十分位" };
+  }
+  const a2 = rndi(1, 9), b2 = rndi(0, 9), c2 = rndi(1, 9); // centièmes
+  const val = (a2 + b2 / 10 + c2 / 100).toFixed(2);
+  return { type: "input", q: `${a2} + ${b2}/10 + ${c2}/100 = ? (nombre décimal)`, acc: [frNum(val)], num: true, exp: `= ${frNum(val)}`, qzh: "算出小数(用逗号)" };
+} };
+
+/* ---------- 分解十进分数 (ECA 薄弱) ---------- */
+BANKS.ma_frac_decomp = { gen: () => {
+  const mode = rndi(0, 2);
+  if (mode === 0) {
+    const e = rndi(2, 9); let d = rndi(1, 9); if (d === e) d = (d % 9) + 1;
+    const num = e * 10 + d;
+    const good = `${e} + ${d}/10`;
+    const opts = shuffle([good, `${d} + ${e}/10`, `${e} + ${d}/100`]);
+    return { type: "qcm", q: `Décompose : <b>${num}/10</b> =`, opts, a: opts.indexOf(good), exp: `${num}/10 = ${e * 10}/10 + ${d}/10 = ${good}`, qzh: "分解十进分数" };
+  }
+  if (mode === 1) {
+    const e = rndi(1, 9), d = rndi(1, 9), c = rndi(1, 9);
+    const num = e * 100 + d * 10 + c;
+    return { type: "multi", q: `Complète : <b>${num}/100</b> = ▢ + ▢/10 + ▢/100`, fields: [{ label: "▢ (unités)", a: String(e), num: true }, { label: "▢/10", a: String(d), num: true }, { label: "▢/100", a: String(c), num: true }], exp: `${num}/100 = ${e} + ${d}/10 + ${c}/100`, qzh: "填三个空" };
+  }
+  const e = rndi(1, 9), d = rndi(1, 9);
+  const val = frNum(e + d / 10);
+  return { type: "input", q: `${val} = ${e} + ▢/10 · Que vaut ▢ ?`, acc: [String(d)], num: true, exp: `${val} = ${e} + ${d}/10`, qzh: "十分位上是几?" };
+} };
+
+/* ---------- 数轴 droite graduée (A 维持) ---------- */
+BANKS.ma_droite = { gen: () => {
+  const base = rndi(0, 7);                     // 整数起点
+  const marks = [];                            // 4 个字母点,十分位
+  const used = new Set();
+  while (marks.length < 4) { const d = rndi(1, 19); if (!used.has(d)) { used.add(d); marks.push(d); } }
+  marks.sort((a, b) => a - b);
+  const letters = ["A", "B", "C", "D"];
+  const idx = rndi(0, 3);
+  const val = frNum(base + marks[idx] / 10);
+  const line = { min: base, max: base + 2, ticks: 10, points: marks.map((m, i) => ({ v: base + m / 10, label: letters[i] })) };
+  if (Math.random() < 0.5)
+    return { type: "qcm", q: `Quelle lettre est placée sur <b>${val}</b> ?`, opts: letters, a: idx, line, exp: `${letters[idx]} = ${val}(每小格 = 1/10)`, qzh: "看数轴选字母" };
+  return { type: "qcm", q: `Quel nombre correspond à la lettre <b>${letters[idx]}</b> ?`, opts: shuffleWith(marks.map((m) => frNum(base + m / 10)), idx), a: -1, line, _fix: { vals: marks.map((m) => frNum(base + m / 10)), idx }, exp: `${letters[idx]} = ${val}`, qzh: "字母对应哪个数?" };
+} };
+/* 洗牌但记录正确项位置 */
+function shuffleWith(arr, goodIdx) { return arr; } // 占位,由下方 normalizeDroite 处理
+/* 修正 ma_droite 第二种模式的选项与答案 */
+const _origDroiteGen = BANKS.ma_droite.gen;
+BANKS.ma_droite.gen = () => {
+  const it = _origDroiteGen();
+  if (it._fix) {
+    const { vals, idx } = it._fix;
+    const good = vals[idx];
+    const opts = shuffle([...new Set(vals)]);
+    it.opts = opts; it.a = opts.indexOf(good);
+    delete it._fix;
+  }
+  return it;
+};
+
+/* ---------- 比较小数 (A 维持) ---------- */
+BANKS.ma_compare = { gen: () => {
+  const e = rndi(1, 9);
+  let x, y;
+  if (Math.random() < 0.55) { // 经典陷阱:3,5 vs 3,45
+    const d1 = rndi(1, 9); let d2 = rndi(10, 99);
+    x = `${e},${d1}`; y = `${e},${String(d2).padStart(2, "0")}`;
+  } else {
+    x = `${e},${rndi(1, 9)}`; y = `${rndi(1, 9)},${rndi(1, 9)}`;
+  }
+  const vx = parseFloat(x.replace(",", ".")), vy = parseFloat(y.replace(",", "."));
+  if (vx === vy) return BANKS.ma_compare.gen();
+  const good = vx > vy ? ">" : "<";
+  return { type: "qcm", q: `Compare : <b>${x}</b> ▢ <b>${y}</b>`, opts: ["<", ">", "="], a: good === "<" ? 0 : 1, exp: `${x} ${good} ${y}。比较小数:先看整数部分,再一位一位比小数(3,5 = 3,50)。`, qzh: "填 < > 还是 =" };
+} };
+
+/* ---------- 长度换算 (ECA 薄弱) ---------- */
+const LG_UNITS = [["km", 1e6], ["m", 1e3], ["dm", 100], ["cm", 10], ["mm", 1]];
+BANKS.ma_conv_long = { gen: () => {
+  const mode = rndi(0, 2);
+  if (mode === 2) {
+    const objs = [["une fourmi", "mm"], ["un crayon", "cm"], ["une porte", "m"], ["la distance entre deux villes", "km"], ["un cahier", "cm"], ["un terrain de foot", "m"]];
+    const [obj, u] = pick(objs);
+    const opts = shuffle(["mm", "cm", "m", "km"]);
+    return { type: "qcm", q: `Quelle unité pour mesurer ${obj} ?`, opts, a: opts.indexOf(u), exp: `${obj} → ${u}`, qzh: "选合适的单位" };
+  }
+  const pairs = [["km", "m", 1000], ["m", "cm", 100], ["m", "dm", 10], ["cm", "mm", 10], ["dm", "cm", 10]];
+  const [big, small, f] = pick(pairs);
+  if (mode === 0) { const n = rndi(2, 45); return { type: "input", q: `${n} ${big} = ▢ ${small}`, acc: [String(n * f)], num: true, exp: `${n} ${big} = ${n * f} ${small}(×${f})`, qzh: "单位换算" }; }
+  const n = rndi(2, 9) * f;
+  return { type: "input", q: `${n} ${small} = ▢ ${big}`, acc: [String(n / f)], num: true, exp: `${n} ${small} = ${n / f} ${big}(÷${f})`, qzh: "单位换算" };
+} };
+
+/* ---------- 质量换算 (A 维持) ---------- */
+BANKS.ma_conv_masse = { gen: () => {
+  const mode = rndi(0, 2);
+  if (mode === 2) {
+    const list = [["une lettre", "g"], ["un cartable", "kg"], ["un comprimé de vitamine", "mg"], ["une pomme", "g"], ["un vélo", "kg"], ["un éléphant", "kg"]];
+    const [obj, u] = pick(list);
+    const opts = shuffle(["mg", "g", "kg"]);
+    return { type: "qcm", q: `Quelle unité pour la masse de « ${obj} » ?`, opts, a: opts.indexOf(u), exp: `${obj} → ${u}`, qzh: "选合适的单位" };
+  }
+  const pairs = [["kg", "g", 1000], ["g", "mg", 1000], ["t", "kg", 1000]];
+  const [big, small, f] = pick(pairs);
+  if (mode === 0) { const n = rndi(2, 30); return { type: "input", q: `${n} ${big} = ▢ ${small}`, acc: [String(n * f)], num: true, exp: `${n} ${big} = ${n * f} ${small}(×${f})` }; }
+  const n = rndi(2, 9) * f;
+  return { type: "input", q: `${n} ${small} = ▢ ${big}`, acc: [String(n / f)], num: true, exp: `${n} ${small} = ${n / f} ${big}(÷${f})` };
+} };
+
+/* ---------- 竖式除法 (A 维持) ---------- */
+BANKS.ma_division = { gen: () => {
+  const d = rndi(3, 9);
+  const q0 = rndi(24, 165);
+  const r = rndi(0, d - 1);
+  const n = q0 * d + r;
+  return { type: "multi", q: `Pose et calcule : <b>${n} ÷ ${d}</b>`, fields: [{ label: "Quotient 商", a: String(q0), num: true }, { label: "Reste 余数", a: String(r), num: true }], exp: `${n} ÷ ${d} → quotient ${q0}, reste ${r}(检验:${q0} × ${d} + ${r} = ${n})`, qzh: "在草稿纸上列竖式" };
+} };
+
+/* ---------- 角 (A 维持) ---------- */
+BANKS.ma_angles = { gen: () => {
+  const kind = pick(["droit", "aigu", "obtus"]);
+  const deg = kind === "droit" ? 90 : kind === "aigu" ? rndi(20, 70) : rndi(110, 160);
+  const opts = shuffle(["droit", "aigu", "obtus"]);
+  return { type: "qcm", q: "Cet angle est…", opts: opts.map((o) => "angle " + o), a: opts.indexOf(kind), angle: deg, exp: { droit: "= 90°,直角(用 équerre 检查)", aigu: "< 90°,锐角(比直角尖)", obtus: "> 90°,钝角(比直角开)" }[kind], qzh: "看图判断角的种类" };
+} };
+
+/* ---------- 圆的词汇 + 半径直径 (A 维持) ---------- */
+BANKS.ma_cercle = { items: [
+  qcm("ce1", "Le segment qui va du centre à un point du cercle :", ["le rayon", "le diamètre", "la corde"], 0, "rayon = 半径(centre → 圆上一点)。", { circle: "rayon" }),
+  qcm("ce2", "Le segment qui traverse le cercle en passant par le centre :", ["le diamètre", "le rayon", "la corde"], 0, "diamètre = 直径(过圆心,= 2 × rayon)。", { circle: "diametre" }),
+  qcm("ce3", "Un segment qui relie deux points du cercle SANS passer par le centre :", ["une corde", "un rayon", "un diamètre"], 0, "corde = 弦。", { circle: "corde" }),
+  qcm("ce4", "Le point au milieu du cercle :", ["le centre", "le rayon", "la corde"], 0, "centre = 圆心。", { circle: "centre" }),
+  vf("ce5", "Le diamètre est deux fois plus long que le rayon.", true, "diamètre = 2 × rayon。"),
+  vf("ce6", "Une corde passe toujours par le centre.", false, "过圆心的弦才叫 diamètre,普通 corde 不过圆心。"),
+] };
+/* 生成器部分:半径↔直径计算 */
+BANKS.ma_cercle_calc = { gen: () => {
+  if (Math.random() < 0.5) { const r = rndi(2, 12) + (Math.random() < .4 ? 0.5 : 0); return { type: "input", q: `Le rayon d'un cercle mesure <b>${frNum(r)} cm</b>. Son diamètre ?`, acc: [frNum(r * 2)], num: true, exp: `diamètre = 2 × rayon = ${frNum(r * 2)} cm`, qzh: "求直径(cm)" }; }
+  const d0 = rndi(2, 12) * 2 + (Math.random() < .4 ? 1 : 0);
+  return { type: "input", q: `Le diamètre d'un cercle mesure <b>${frNum(d0)} cm</b>. Son rayon ?`, acc: [frNum(d0 / 2)], num: true, exp: `rayon = diamètre ÷ 2 = ${frNum(d0 / 2)} cm`, qzh: "求半径(cm)" };
+} };
+
+/* ---------- 圆规作图专项 (I 级 · 最薄弱) ---------- */
+BANKS.ma_compas = { items: [
+  { id: "cp1", type: "order", q: "Range les étapes pour tracer un cercle de rayon 4 cm :", seq: ["Je place la pointe sèche sur le centre", "J'écarte le compas de 4 cm avec la règle", "Je fais tourner le compas sans changer l'écartement", "Je vérifie mon cercle et je repasse au crayon"], exp: "先定圆心 → 再量开度(半径)→ 旋转画圆 → 检查。", qzh: "圆规画圆四步曲" },
+  qcm("cp2", "La pointe sèche du compas se place…", ["sur le centre du cercle", "sur le bord du cercle", "n'importe où"], 0, "尖脚扎在圆心上,永远不动!"),
+  qcm("cp3", "L'écartement du compas correspond au…", ["rayon", "diamètre", "centre"], 0, "圆规张开的距离 = 半径 rayon!要点记牢。"),
+  qcm("cp4", "Pour tracer un cercle de diamètre 10 cm, j'écarte mon compas de…", ["5 cm", "10 cm", "20 cm"], 0, "écartement = rayon = diamètre ÷ 2 = 5 cm。"),
+  vf("cp5", "Pendant que je trace, je peux changer l'écartement du compas.", false, "绝对不行!开度变了圆就歪了。"),
+  { id: "cp6", type: "order", q: "Range les étapes pour tracer une rosace (玫瑰花窗) :", seq: ["Je trace un cercle et je garde le même écartement", "Je place la pointe sur un point du cercle", "Je trace un arc qui coupe le cercle", "Je déplace la pointe sur chaque nouveau point et je recommence"], exp: "玫瑰花窗:保持同样开度,沿着圆上的交点依次画弧。", qzh: "画玫瑰花窗的步骤" },
+  qcm("cp7", "Pour reporter une longueur avec le compas, je…", ["prends l'écartement sur la règle puis je le reporte", "dessine à main levée", "plie ma feuille"], 0, "圆规还能「搬运长度」:量好开度,搬到别处。"),
+  vf("cp8", "Tous les points d'un cercle sont à la même distance du centre.", true, "圆的定义:到圆心距离相等的点 → 这个距离就是半径。"),
+  qcm("cp9", "Ma main doit tenir le compas…", ["par la tête (le haut), en le faisant pivoter", "par les deux branches, très fort", "par la mine"], 0, "捏住顶部小头轻轻旋转,不要抓两条腿!"),
+  { id: "cp10", type: "order", q: "Pour tracer un cercle de centre O passant par le point A :", seq: ["Je place la pointe sèche sur O", "J'écarte le compas jusqu'à A", "Je trace le cercle sans changer l'écartement"], exp: "过点 A 的圆:开度 = OA。", qzh: "过一点画圆" },
+  qcm("cp11", "Si mon trait de compas dérape, c'est souvent parce que…", ["j'appuie trop fort ou l'écartement a bougé", "le papier est trop blanc", "le cercle est trop rond"], 0, "轻轻转、检查螺丝是否松了。"),
+  vf("cp12", "Pour un cercle de rayon 6 cm, le diamètre mesurera 12 cm.", true, "12 = 2 × 6。"),
+  qcm("cp13", "Quel outil pour vérifier l'écartement du compas ?", ["la règle graduée", "la gomme", "le taille-crayon"], 0, "用直尺量开度:pointe sèche 对准 0。"),
+  qcm("cp14", "Premier geste avant de tracer un cercle de rayon donné :", ["régler l'écartement sur la règle", "tourner le compas", "tracer le diamètre"], 0, "先在直尺上调好开度(= 半径)!"),
+]};
+
+/* ---------- CM2 预备:大数(百万) ---------- */
+const NUM_WORDS = (n) => { /* 简版:仅用于选项呈现,不做完整法语数字拼写 */ return n.toLocaleString("fr-FR"); };
+BANKS.ma_cm2_grands = { gen: () => {
+  const mode = rndi(0, 2);
+  if (mode === 0) {
+    const n = rndi(100, 999) * 1000 + rndi(0, 999);
+    const good = n.toLocaleString("fr-FR");
+    const opts = shuffle([good, (n + rndi(1, 9) * 1000).toLocaleString("fr-FR"), (n * 10).toLocaleString("fr-FR")]);
+    const words = frenchNumberWords(n);
+    return { type: "qcm", q: `Écris en chiffres : « ${words} »`, opts, a: opts.indexOf(good), exp: `${words} = ${good}`, qzh: "CM2预备:大数读写" };
+  }
+  if (mode === 1) {
+    const m = rndi(1, 9), k = rndi(100, 999), u = rndi(100, 999);
+    const n = m * 1e6 + k * 1000 + u;
+    return { type: "input", q: `${m} million${m > 1 ? "s" : ""} + ${k} milliers + ${u} unités = ▢`, acc: [String(n), n.toLocaleString("fr-FR")], num: true, exp: `= ${n.toLocaleString("fr-FR")}`, qzh: "CM2预备:按位组数(可以不打空格)" };
+  }
+  const a1 = rndi(100000, 9999999), b1 = rndi(100000, 9999999);
+  if (a1 === b1) return BANKS.ma_cm2_grands.gen();
+  const good = a1 > b1 ? ">" : "<";
+  return { type: "qcm", q: `Compare : <b>${a1.toLocaleString("fr-FR")}</b> ▢ <b>${b1.toLocaleString("fr-FR")}</b>`, opts: ["<", ">"], a: good === "<" ? 0 : 1, exp: `位数相同先比最高位。答案:${good}`, qzh: "CM2预备:比大小" };
+} };
+function frenchNumberWords(n) {
+  const units = ["", "un", "deux", "trois", "quatre", "cinq", "six", "sept", "huit", "neuf", "dix", "onze", "douze", "treize", "quatorze", "quinze", "seize"];
+  const tens = { 10: "dix", 20: "vingt", 30: "trente", 40: "quarante", 50: "cinquante", 60: "soixante", 70: "soixante-dix", 80: "quatre-vingts", 90: "quatre-vingt-dix" };
+  function below100(x) {
+    if (x <= 16) return units[x];
+    if (x < 20) return "dix-" + units[x - 10];
+    const t = Math.floor(x / 10) * 10, r = x % 10;
+    if (t === 70) return r === 1 ? "soixante-et-onze" : "soixante-" + below100(10 + r);
+    if (t === 90) return "quatre-vingt-" + below100(10 + r);
+    if (r === 0) return tens[t];
+    if (t === 80) return "quatre-vingt-" + units[r];
+    return tens[t] + (r === 1 ? "-et-un" : "-" + units[r]);
+  }
+  function below1000(x) {
+    const h = Math.floor(x / 100), r = x % 100;
+    let s = "";
+    if (h === 1) s = "cent"; else if (h > 1) s = units[h] + "-cent" + (r === 0 ? "s" : "");
+    if (r) s += (s ? "-" : "") + below100(r);
+    return s || "zéro";
+  }
+  const mil = Math.floor(n / 1000), rest = n % 1000;
+  let s = "";
+  /* vingt/cent 后面还有数词(mille)时不加 s:quatre-vingt-mille, deux-cent-mille */
+  if (mil === 1) s = "mille"; else if (mil > 1) s = below1000(mil).replace(/(vingt|cent)s$/, "$1") + "-mille";
+  if (rest) s += (s ? "-" : "") + below1000(rest);
+  return s;
+}
+
+/* ---------- CM2 预备:简单分数 ---------- */
+BANKS.ma_cm2_frac = { gen: () => {
+  const mode = rndi(0, 2);
+  if (mode === 0) {
+    const den = pick([2, 4, 3]), mult = rndi(2, 8);
+    const n = den * mult;
+    const label = den === 2 ? "la moitié" : den === 3 ? "le tiers" : "le quart";
+    return { type: "input", q: `Combien vaut <b>1/${den}</b> de ${n} ? (${label})`, acc: [String(n / den)], num: true, exp: `1/${den} de ${n} = ${n} ÷ ${den} = ${n / den}`, qzh: "CM2预备:求几分之一" };
+  }
+  if (mode === 1) {
+    const pairsEq = [["1/2", "2/4"], ["1/2", "5/10"], ["1/4", "25/100"], ["3/4", "75/100"], ["1/2", "50/100"], ["2/2", "1"]];
+    const [x, y] = pick(pairsEq);
+    const isEq = Math.random() < 0.6;
+    if (isEq) return { type: "vf", q: `${x} = ${y} ?`, a: true, exp: `${x} = ${y},等值分数!`, qzh: "CM2预备:等值分数" };
+    const wrong = pick(["1/3", "2/3", "4/5"]);
+    return { type: "vf", q: `${x} = ${wrong} ?`, a: false, exp: `${x} ≠ ${wrong}。`, qzh: "CM2预备:等值分数" };
+  }
+  const num = rndi(1, 3);
+  const pts = shuffle([{ v: num / 4, good: true }, { v: clamp(num / 4 + 0.25, 0.05, 0.95), good: false }, { v: clamp(num / 4 - 0.25, 0.05, 0.95), good: false }]);
+  const letters = ["A", "B", "C"];
+  const gi = pts.findIndex((p) => p.good);
+  return { type: "qcm", q: `Sur la droite de 0 à 1, quelle lettre est sur <b>${num}/4</b> ?`, opts: letters, a: gi, line: { min: 0, max: 1, ticks: 4, points: pts.map((p, i) => ({ v: p.v, label: letters[i] })) }, exp: `${num}/4 = ${frNum(num / 4)}`, qzh: "CM2预备:数轴上的分数" };
+} };
+
+/* ---------- 小问题 problèmes (综合应用) ---------- */
+const PROB_TPL = [
+  () => { const p = rndi(3, 9), n = rndi(3, 8); return [`Un livre coûte ${p} €. Combien coûtent ${n} livres ?`, p * n, "€", `${n} × ${p} = ${p * n} €`]; },
+  () => { const t = rndi(35, 95) * 2; return [`Papa coupe une baguette de ${t} cm en deux morceaux égaux. Longueur d'un morceau ?`, t / 2, "cm", `${t} ÷ 2 = ${t / 2} cm`]; },
+  () => { const n = rndi(4, 9), per = rndi(6, 12); return [`Il y a ${n} boîtes de ${per} chocolats. Combien de chocolats en tout ?`, n * per, "chocolats", `${n} × ${per} = ${n * per}`]; },
+  () => { const tot = rndi(5, 12) * 4; return [`${tot} élèves se rangent en 4 équipes égales. Combien par équipe ?`, tot / 4, "élèves", `${tot} ÷ 4 = ${tot / 4}`]; },
+  () => { const a = rndi(150, 480), b = rndi(120, 400); return [`Tongtong a ${a + b} images. Elle en donne ${b}. Combien lui en reste-t-il ?`, a, "images", `${a + b} − ${b} = ${a}`]; },
+  () => { const km = rndi(2, 6); return [`Une fourmi géante parcourt ${km} km. Combien de mètres ?`, km * 1000, "m", `${km} km = ${km * 1000} m`]; },
+  () => { const d = rndi(3, 8); return [`Le rayon d'une roue est ${d} cm. Son diamètre ?`, d * 2, "cm", `2 × ${d} = ${d * 2} cm`]; },
+  () => { const n = rndi(24, 60) * 2; return [`Un gâteau de ${n} fraises est partagé en deux. La moitié ?`, n / 2, "fraises", `${n} ÷ 2 = ${n / 2}`]; },
+];
+BANKS.ma_prob = { gen: () => { const [q, ans, unit, exp] = pick(PROB_TPL)(); return { type: "input", q: "🧩 " + q, acc: [String(ans)], num: true, exp: exp + (unit ? " (" + unit + ")" : ""), qzh: "读题,算一算(只填数字)" }; } };
+
+/* ---------- 英语快闪(热身用) ---------- */
+const EN_FLASH_POOL = [
+  { q: "🇬🇧 « an apple » signifie…", opts: ["une pomme", "un abricot"], a: 0 },
+  { q: "🇬🇧 « bread » signifie…", opts: ["du pain", "du lait"], a: 0 },
+  { q: "🇬🇧 She ___ a cat.", opts: ["has", "have"], a: 0 },
+  { q: "🇬🇧 I ___ two brothers.", opts: ["have", "has"], a: 0 },
+  { q: "🇬🇧 ___ you like cheese?", opts: ["Do", "Does"], a: 0 },
+  { q: "🇬🇧 ___ he play football?", opts: ["Does", "Do"], a: 0 },
+  { q: "🇬🇧 « cheese » signifie…", opts: ["du fromage", "du chocolat"], a: 0 },
+  { q: "🇬🇧 « chicken » signifie…", opts: ["du poulet", "du poisson"], a: 0 },
+];
+BANKS.en_flash = { noReview: true, gen: () => { const f = pick(EN_FLASH_POOL); const order = shuffle([0, 1]); return { type: "qcm", q: "⚡ " + f.q, opts: order.map((i) => f.opts[i]), a: order.indexOf(f.a), exp: f.opts[f.a] }; } };
+
+/* ==== banks_monde_en.js ==== */
+/* ===== 题库:科学·历史·地理 + 英语 ===== */
+
+/* ---------- 水的三态 (ECA) ---------- */
+BANKS.mo_eau_etats = { items: [
+  qcm("ee1", "L'eau solide, c'est…", ["la glace", "la vapeur", "la pluie"], 0, "固态 = glace(冰)。"),
+  qcm("ee2", "L'eau à l'état gazeux, c'est…", ["la vapeur d'eau", "la neige", "la rosée"], 0, "气态 = vapeur d'eau(水蒸气),看不见哦!"),
+  qcm("ee3", "Quand la glace fond, elle devient…", ["de l'eau liquide", "de la vapeur", "du sel"], 0, "fusion(融化):固态→液态。"),
+  qcm("ee4", "Le passage de l'eau liquide à la vapeur s'appelle…", ["l'évaporation", "la fusion", "la solidification"], 0, "évaporation(蒸发):液态→气态。"),
+  qcm("ee5", "Le passage de l'eau liquide à la glace s'appelle…", ["la solidification", "la condensation", "l'évaporation"], 0, "solidification(凝固):液态→固态,0 °C 以下。"),
+  qcm("ee6", "La vapeur qui redevient de l'eau liquide : c'est…", ["la condensation", "l'évaporation", "la fusion"], 0, "condensation(凝结):气态→液态,比如玻璃上的小水珠。"),
+  qcm("ee7", "À quelle température l'eau gèle-t-elle ?", ["0 °C", "100 °C", "50 °C"], 0, "0 °C 结冰,100 °C 沸腾。"),
+  qcm("ee8", "À quelle température l'eau bout-elle ?", ["100 °C", "0 °C", "37 °C"], 0, "100 °C = ébullition(沸腾)。"),
+  vf("ee9", "La buée sur la vitre froide, c'est de la condensation.", true, "热蒸气遇到冷玻璃 → 凝结成小水珠。"),
+  vf("ee10", "La neige et la glace sont de l'eau à l'état solide.", true, "都是固态的水。"),
+  { id: "ee11", type: "match", q: "Associe chaque état à un exemple :", pairs: [["solide", "un glaçon"], ["liquide", "la pluie"], ["gazeux", "la vapeur"]], exp: "固态=冰块 · 液态=雨 · 气态=水蒸气" },
+  qcm("ee12", "Un glaçon oublié au soleil…", ["fond", "s'évapore directement", "grossit"], 0, "阳光下冰块融化(fusion)。"),
+  { id: "ee13", type: "match", q: "Associe chaque changement d'état :", pairs: [["fusion", "glace → eau"], ["évaporation", "eau → vapeur"], ["solidification", "eau → glace"], ["condensation", "vapeur → eau"]], exp: "四大变化要分清!" },
+  vf("ee14", "La vapeur d'eau est visible comme un nuage blanc.", false, "真正的水蒸气是看不见的!看见的白雾是小水滴。"),
+]};
+
+/* ---------- 水循环 (F 薄弱 · 重点) ---------- */
+BANKS.mo_eau_cycle = { items: [
+  { id: "cy1", type: "order", q: "Range les étapes du cycle de l'eau :", seq: ["Le soleil chauffe la mer : évaporation", "La vapeur monte et forme les nuages : condensation", "Les gouttes tombent : précipitations", "L'eau ruisselle et retourne à la mer : ruissellement"], exp: "蒸发 → 凝结成云 → 降水 → 径流回大海,循环往复!", qzh: "水循环四步排序", cycle: true },
+  qcm("cy2", "Qui est le « moteur » du cycle de l'eau ?", ["le soleil", "la lune", "le vent"], 0, "太阳加热海水,启动整个循环!", { cycle: true }),
+  qcm("cy3", "Les nuages se forment par…", ["condensation de la vapeur", "évaporation de la pluie", "fusion de la glace"], 0, "水蒸气升高变冷 → 凝结成小水滴 = 云。", { cycle: true }),
+  qcm("cy4", "La pluie, la neige et la grêle sont des…", ["précipitations", "évaporations", "condensations"], 0, "précipitations = 降水(雨/雪/冰雹)。"),
+  qcm("cy5", "L'eau qui coule sur le sol vers les rivières, c'est le…", ["ruissellement", "l'évaporation", "la condensation"], 0, "ruissellement = 径流。"),
+  qcm("cy6", "L'eau qui s'enfonce dans le sol forme…", ["les nappes souterraines", "les nuages", "les vagues"], 0, "infiltration → 地下水层 nappes souterraines。"),
+  vf("cy7", "Le cycle de l'eau recommence sans cesse.", true, "所以叫「循环」cycle,水永远在旅行!"),
+  vf("cy8", "Dans le cycle de l'eau, l'eau disparaît pour toujours.", false, "水不会消失,只是变换状态和位置。"),
+  qcm("cy9", "Ordre correct du voyage d'une goutte :", ["mer → nuage → pluie → rivière → mer", "nuage → mer → pluie → rivière", "pluie → nuage → mer → rivière"], 0, "从海出发,上天变云,落下成雨,流回大海。"),
+  qcm("cy10", "L'évaporation transforme l'eau de mer en…", ["vapeur d'eau", "glace", "sel"], 0, "液态 → 气态(盐留在海里!)。"),
+  { id: "cy11", type: "order", q: "Range le voyage de la goutte Plic :", seq: ["Plic se repose dans l'océan", "Le soleil la transforme en vapeur", "Elle devient un nuage avec ses copines", "Elle tombe en pluie sur la montagne", "Elle glisse dans une rivière vers la mer"], exp: "小水滴 Plic 的旅行 = 水循环!", qzh: "小水滴的旅行排序" },
+  qcm("cy12", "Sur un schéma du cycle de l'eau, la flèche qui monte de la mer représente…", ["l'évaporation", "les précipitations", "le ruissellement"], 0, "向上的箭头 = 蒸发。", { cycle: true }),
+  vf("cy13", "La grêle fait partie des précipitations.", true, "雨、雪、冰雹都算降水。"),
+  qcm("cy14", "L'eau des nappes souterraines provient de…", ["l'infiltration de l'eau dans le sol", "la fumée des usines", "des étoiles"], 0, "雨水渗入土壤 = infiltration。"),
+]};
+
+/* ---------- 文艺复兴:印刷术·科学·探险家 (ECA) ---------- */
+BANKS.mo_renaissance = { items: [
+  qcm("re1", "Qui a inventé l'imprimerie vers 1450 ?", ["Gutenberg", "Napoléon", "Louis XIV"], 0, "Gutenberg(德国人)发明活字印刷术。"),
+  qcm("re2", "Avant l'imprimerie, les livres étaient…", ["copiés à la main", "imprimés par des robots", "inexistants"], 0, "修道士手抄,一本要好几年!"),
+  qcm("re3", "Grâce à l'imprimerie, les idées…", ["circulent beaucoup plus vite", "disparaissent", "restent secrètes"], 0, "书变便宜 → 思想传播 → 大时代!"),
+  qcm("re4", "Christophe Colomb arrive en Amérique en…", ["1492", "1789", "2000"], 0, "1492,哥伦布到达美洲。"),
+  qcm("re5", "Magellan est célèbre pour…", ["le premier tour du monde en bateau", "l'invention du train", "la découverte de la Lune"], 0, "麦哲伦船队完成首次环球航行。"),
+  qcm("re6", "Copernic a montré que…", ["la Terre tourne autour du Soleil", "le Soleil tourne autour de la Terre", "la Terre est plate"], 0, "哥白尼:日心说!"),
+  qcm("re7", "Cette période de grandes découvertes s'appelle…", ["la Renaissance", "la Préhistoire", "le Moyen Âge"], 0, "Renaissance = 文艺复兴(「重生」)。"),
+  qcm("re8", "Léonard de Vinci était…", ["peintre et inventeur", "seulement roi", "footballeur"], 0, "达·芬奇:画家+发明家,画了《蒙娜丽莎》。"),
+  vf("re9", "La Renaissance vient après le Moyen Âge.", true, "中世纪 → 文艺复兴 → 近代。"),
+  vf("re10", "Les caravelles étaient les bateaux des grands explorateurs.", true, "caravelle = 轻快帆船。"),
+  { id: "re11", type: "match", q: "Associe chaque personnage à son exploit :", pairs: [["Gutenberg", "l'imprimerie"], ["Colomb", "l'Amérique"], ["Magellan", "le tour du monde"], ["Copernic", "la Terre tourne"]], exp: "四位文艺复兴明星!" },
+  qcm("re12", "Pourquoi les explorateurs partaient-ils en mer ?", ["chercher des routes vers les épices et l'or", "faire du tourisme", "fuir l'école"], 0, "为了香料、黄金和新航路。"),
+  vf("re13", "Avec l'imprimerie, les livres sont devenus moins chers.", true, "印得快 → 便宜 → 更多人读书。"),
+  qcm("re14", "L'imprimerie de Gutenberg utilise…", ["des lettres en métal mobiles", "des écrans tactiles", "des plumes magiques"], 0, "活字 = 可移动的金属字母。"),
+]};
+
+/* ---------- 火山 (A 维持·趣味) ---------- */
+BANKS.mo_volcans = { items: [
+  qcm("vo1", "La roche fondue sous le volcan s'appelle…", ["le magma", "la lave", "le sable"], 0, "地下叫 magma,喷出来才叫 lave!"),
+  qcm("vo2", "Quand le magma sort du volcan, il devient…", ["de la lave", "de l'eau", "du magma froid"], 0, "喷出地表 = lave(熔岩)。"),
+  qcm("vo3", "Le sommet du volcan par où sort la lave :", ["le cratère", "la cheminée", "la racine"], 0, "cratère = 火山口。"),
+  qcm("vo4", "Le conduit par lequel monte le magma :", ["la cheminée", "le cratère", "l'escalier"], 0, "cheminée = 火山通道。"),
+  vf("vo5", "Une éruption peut projeter des cendres et des bombes volcaniques.", true, "还有火山灰和「火山弹」!"),
+  qcm("vo6", "Un volcan qui ne s'est pas réveillé depuis très longtemps est…", ["endormi", "en colère", "en éruption"], 0, "volcan endormi = 沉睡的火山(永远不再喷发的叫 éteint 熄灭)。"),
+  { id: "vo7", type: "order", q: "Range les étapes d'une éruption :", seq: ["Le magma s'accumule dans le réservoir", "La pression augmente", "Le magma monte par la cheminée", "La lave jaillit du cratère"], exp: "岩浆聚集 → 压力增大 → 上升 → 喷发!", qzh: "火山喷发四步" },
+  vf("vo8", "La lave refroidie devient de la roche.", true, "冷却的熔岩变成火山岩。"),
+]};
+
+/* ---------- 法国地貌 (A 维持) ---------- */
+BANKS.mo_paysages = { items: [
+  qcm("pa1", "Un paysage avec des immeubles et beaucoup d'habitants :", ["urbain", "rural", "montagnard"], 0, "urbain = 城市景观。"),
+  qcm("pa2", "Un paysage de campagne avec des champs :", ["rural", "urbain", "littoral"], 0, "rural = 乡村。"),
+  qcm("pa3", "Un paysage au bord de la mer :", ["littoral", "fluvial", "montagnard"], 0, "littoral = 海岸。"),
+  qcm("pa4", "Un paysage le long d'un fleuve :", ["fluvial", "littoral", "urbain"], 0, "fluvial = 河流沿岸。"),
+  qcm("pa5", "Un paysage avec des sommets et des vallées :", ["montagnard", "rural", "urbain"], 0, "montagnard = 山地。"),
+  { id: "pa6", type: "match", q: "Associe chaque lieu à son paysage :", pairs: [["Paris", "urbain"], ["les Alpes", "montagnard"], ["la plage de Nice", "littoral"], ["les champs de blé", "rural"]], exp: "巴黎=城市 · 阿尔卑斯=山地 · 尼斯海滩=海岸 · 麦田=乡村" },
+  vf("pa7", "La Loire est un fleuve de France.", true, "卢瓦尔河,法国最长的河流!"),
+  qcm("pa8", "Quel paysage pour un port de pêche breton ?", ["littoral", "montagnard", "urbain"], 0, "布列塔尼渔港在海边 → littoral。"),
+]};
+
+/* ---------- 英语:食物 (ECA) ---------- */
+BANKS.en_food = { items: [
+  qcm("ef1", "🇬🇧 « I eat an apple. » — apple =", ["une pomme", "une poire", "un pain"], 0, "apple = pomme = 苹果", { say: "I eat an apple.", en: true }),
+  qcm("ef2", "🇬🇧 « bread » =", ["du pain", "du beurre", "du lait"], 0, "bread = pain = 面包", { say: "bread", en: true }),
+  qcm("ef3", "🇬🇧 « milk » =", ["du lait", "de l'eau", "du jus"], 0, "milk = lait = 牛奶", { say: "milk", en: true }),
+  qcm("ef4", "🇬🇧 « cheese » =", ["du fromage", "du chocolat", "de la viande"], 0, "cheese = fromage = 奶酪", { say: "cheese", en: true }),
+  qcm("ef5", "🇬🇧 « chicken » =", ["du poulet", "du poisson", "du bœuf"], 0, "chicken = poulet = 鸡肉", { say: "chicken", en: true }),
+  qcm("ef6", "🇬🇧 « fish » =", ["du poisson", "des frites", "du riz"], 0, "fish = poisson = 鱼", { say: "fish", en: true }),
+  qcm("ef7", "🇬🇧 « strawberry » =", ["une fraise", "une framboise", "une cerise"], 0, "strawberry = fraise = 草莓", { say: "strawberry", en: true }),
+  qcm("ef8", "🇬🇧 « egg » =", ["un œuf", "un gâteau", "un bonbon"], 0, "egg = œuf = 鸡蛋", { say: "egg", en: true }),
+  qcm("ef9", "🇬🇧 Comment dit-on « du riz » ?", ["rice", "race", "rise"], 0, "riz = rice", { en: true }),
+  qcm("ef10", "🇬🇧 Comment dit-on « une orange » ?", ["an orange", "a orange", "the oranges"], 0, "元音开头用 an:an orange。", { en: true }),
+  { id: "ef11", type: "match", q: "🇬🇧 Associe :", pairs: [["cake", "un gâteau"], ["water", "de l'eau"], ["butter", "du beurre"], ["jam", "de la confiture"]], exp: "cake=gâteau · water=eau · butter=beurre · jam=confiture" },
+  { id: "ef12", type: "match", q: "🇬🇧 Associe :", pairs: [["carrot", "une carotte"], ["potato", "une pomme de terre"], ["tomato", "une tomate"], ["banana", "une banane"]], exp: "四个好朋友蔬果!" },
+  inp("ef13", "🇬🇧 Écris en anglais : « une pomme » = an ___", ["apple"], "apple!", { loose: true }),
+  inp("ef14", "🇬🇧 Écris en anglais : « du lait » = ___", ["milk"], "milk!", { loose: true }),
+  qcm("ef15", "🇬🇧 « I like ice cream. » signifie…", ["J'aime la glace.", "Je déteste la glace.", "Je mange du riz."], 0, "like = aimer,ice cream = glace。", { say: "I like ice cream.", en: true }),
+  qcm("ef16", "🇬🇧 « breakfast » est…", ["le petit-déjeuner", "le dîner", "le goûter"], 0, "breakfast = 早餐。", { say: "breakfast", en: true }),
+]};
+
+/* ---------- 英语:have / has (ECA) ---------- */
+BANKS.en_havehas = { items: [
+  qcm("eh1", "🇬🇧 I ___ a dog.", ["have", "has"], 0, "I/you/we/they → have。"),
+  qcm("eh2", "🇬🇧 She ___ a cat.", ["has", "have"], 0, "he/she/it → has。"),
+  qcm("eh3", "🇬🇧 He ___ two sisters.", ["has", "have"], 0, "he → has。"),
+  qcm("eh4", "🇬🇧 We ___ a big garden.", ["have", "has"], 0, "we → have。"),
+  qcm("eh5", "🇬🇧 My brother ___ a blue bike.", ["has", "have"], 0, "my brother = he → has。"),
+  qcm("eh6", "🇬🇧 They ___ many toys.", ["have", "has"], 0, "they → have。"),
+  qcm("eh7", "🇬🇧 The cat ___ green eyes.", ["has", "have"], 0, "the cat = it → has。"),
+  qcm("eh8", "🇬🇧 You ___ a nice smile!", ["have", "has"], 0, "you → have。"),
+  inp("eh9", "🇬🇧 Complète : « My friends ___ a treehouse. »", ["have"], "my friends = they → have。", { loose: true }),
+  inp("eh10", "🇬🇧 Complète : « Tongtong ___ a red schoolbag. »", ["has"], "Tongtong = she → has。", { loose: true }),
+  vf("eh11", "🇬🇧 On dit « She have a book ».", false, "she → has!"),
+  vf("eh12", "🇬🇧 « I have breakfast at 8. » est correct.", true, "have breakfast = 吃早餐,固定说法。"),
+  { id: "eh13", type: "match", q: "🇬🇧 Associe :", pairs: [["I", "have"], ["she", "has"], ["they", "have"], ["it", "has"]], exp: "he/she/it → has,其他 → have。" },
+  qcm("eh14", "🇬🇧 « Il a un chapeau » se dit…", ["He has a hat.", "He have a hat.", "He is a hat."], 0, "he → has。"),
+]};
+
+/* ---------- 英语:do / does 疑问句 (ECA) ---------- */
+BANKS.en_dodoes = { items: [
+  qcm("ed1", "🇬🇧 ___ you like pizza?", ["Do", "Does"], 0, "you → Do。"),
+  qcm("ed2", "🇬🇧 ___ she play tennis?", ["Does", "Do"], 0, "she → Does。"),
+  qcm("ed3", "🇬🇧 ___ they speak English?", ["Do", "Does"], 0, "they → Do。"),
+  qcm("ed4", "🇬🇧 ___ he like carrots?", ["Does", "Do"], 0, "he → Does。"),
+  qcm("ed5", "🇬🇧 ___ your sister dance?", ["Does", "Do"], 0, "your sister = she → Does。"),
+  qcm("ed6", "🇬🇧 ___ we have school today?", ["Do", "Does"], 0, "we → Do。"),
+  qcm("ed7", "🇬🇧 Réponse à « Do you like cheese? » :", ["Yes, I do.", "Yes, I does.", "Yes, I like."], 0, "Yes, I do. / No, I don't."),
+  qcm("ed8", "🇬🇧 Réponse à « Does he play football? » :", ["Yes, he does.", "Yes, he do.", "Yes, he plays yes."], 0, "Yes, he does. / No, he doesn't."),
+  vf("ed9", "🇬🇧 « Does they like milk? » est correct.", false, "they → Do they like milk?"),
+  vf("ed10", "🇬🇧 Avec « does », le verbe reste sans -s : « Does she play? »", true, "does 已经带 s,动词还原形!"),
+  inp("ed11", "🇬🇧 Complète : « ___ your parents work on Sunday? »", ["do"], "your parents = they → Do。", { loose: true }),
+  inp("ed12", "🇬🇧 Complète : « ___ it rain in London? »", ["does"], "it → Does。", { loose: true }),
+  { id: "ed13", type: "match", q: "🇬🇧 Associe :", pairs: [["Do", "you / we / they"], ["Does", "he / she / it"]], exp: "Do ↔ 你们我们他们 · Does ↔ 他她它" },
+  qcm("ed14", "🇬🇧 « Est-ce que tu aimes le chocolat ? » se dit…", ["Do you like chocolate?", "Does you like chocolate?", "Like you chocolate?"], 0, "you → Do you like…?"),
+]};
+
+/* ---------- 英语:综合趣味 ---------- */
+BANKS.en_mix = { items: [
+  qcm("em1", "🇬🇧 « What's your favourite food? » demande…", ["ton plat préféré", "ton animal préféré", "ta couleur préférée"], 0, "favourite food = 最喜欢的食物。", { say: "What's your favourite food?", en: true }),
+  qcm("em2", "🇬🇧 « I'm hungry! » signifie…", ["J'ai faim !", "J'ai soif !", "Je suis fatigué !"], 0, "hungry = 饿;thirsty = 渴。", { say: "I'm hungry!", en: true }),
+  qcm("em3", "🇬🇧 « I'm thirsty » signifie…", ["j'ai soif", "j'ai faim", "j'ai froid"], 0, "thirsty = 口渴。", { say: "I'm thirsty.", en: true }),
+  qcm("em4", "🇬🇧 Compte : « seventeen » =", ["17", "7", "70"], 0, "seventeen = 17(seven+teen)。", { say: "seventeen", en: true }),
+  qcm("em5", "🇬🇧 « Tuesday » est…", ["mardi", "jeudi", "dimanche"], 0, "Tuesday = mardi。", { say: "Tuesday", en: true }),
+  qcm("em6", "🇬🇧 « She has lunch at noon. » — lunch =", ["le déjeuner", "le petit-déjeuner", "le dîner"], 0, "lunch = 午餐;noon = 中午。", { say: "She has lunch at noon.", en: true }),
+  inp("em7", "🇬🇧 Écris le nombre : « twenty » = ▢", ["20"], "twenty = 20", { num: true }),
+  qcm("em8", "🇬🇧 « Do you want some water? — Yes, please! »", ["Oui, s'il te plaît !", "Non merci !", "Peut-être !"], 0, "Yes, please! = 好的,请!", { say: "Do you want some water? Yes, please!", en: true }),
+  { id: "em9", type: "match", q: "🇬🇧 Associe :", pairs: [["Monday", "lundi"], ["Friday", "vendredi"], ["Saturday", "samedi"], ["Sunday", "dimanche"]], exp: "星期词汇!" },
+  qcm("em10", "🇬🇧 « I don't like fish. » signifie…", ["Je n'aime pas le poisson.", "J'adore le poisson.", "Je mange du poisson."], 0, "don't like = 不喜欢。", { say: "I don't like fish.", en: true }),
+]};
+
+/* ==== curriculum.js ==== */
+/* ===== 知识点注册表 · 30天课表 · 小课堂 ===== */
+
+/* 知识点:g0 = 学年考试评级(掌握度起点) */
+const COMPS = {
+  fr_hom_ou:   { s: "francais", zh: "同音词 ou / où", fr: "Homophones ou / où", g0: "ECA" },
+  fr_hom_leur: { s: "francais", zh: "同音词 leur / leurs", fr: "Homophones leur / leurs", g0: "F" },
+  fr_acc_adj:  { s: "francais", zh: "形容词性数配合", fr: "Accord de l'adjectif", g0: "F" },
+  fr_acc_gn:   { s: "francais", zh: "名词组整体配合", fr: "Accords dans le GN", g0: "ECA" },
+  fr_acc_nom:  { s: "francais", zh: "名词复数", fr: "Pluriel des noms", g0: "A" },
+  fr_imp_1:    { s: "francais", zh: "imparfait 第一组动词", fr: "Imparfait — 1er groupe", g0: "ECA" },
+  fr_imp_2:    { s: "francais", zh: "imparfait 第二组动词", fr: "Imparfait — 2e groupe", g0: "A" },
+  fr_imp_3:    { s: "francais", zh: "imparfait 第三组动词", fr: "Imparfait — 3e groupe", g0: "ECA" },
+  fr_imp_rec:  { s: "francais", zh: "辨认 imparfait", fr: "Reconnaître l'imparfait", g0: "A" },
+  fr_cod_coi:  { s: "francais", zh: "直接/间接宾语 COD·COI", fr: "COD et COI", g0: "ECA" },
+  fr_syn:      { s: "francais", zh: "同义词", fr: "Synonymes", g0: "ECA" },
+  fr_ant:      { s: "francais", zh: "反义词", fr: "Antonymes", g0: "ECA" },
+  fr_adj_fonc: { s: "francais", zh: "定语/表语", fr: "Épithète / attribut", g0: "A" },
+  fr_sujet:    { s: "francais", zh: "主语与动词", fr: "Sujet et verbe", g0: "A" },
+  fr_lecture:  { s: "francais", zh: "阅读理解", fr: "Lecture — compréhension", g0: "A" },
+  fr_dictee:   { s: "francais", zh: "听写", fr: "Dictée", g0: "ECA" },
+  fr_flash:    { s: "francais", zh: "词汇闪卡", fr: "Flash vocabulaire", g0: "A" },
+  ma_mental:   { s: "maths", zh: "心算(倍数与几分之一)", fr: "Calcul mental", g0: "A" },
+  ma_frac_dec: { s: "maths", zh: "十进分数↔小数", fr: "Fractions décimales ↔ décimaux", g0: "A" },
+  ma_frac_decomp: { s: "maths", zh: "分解十进分数", fr: "Décomposer les fractions décimales", g0: "ECA" },
+  ma_droite:   { s: "maths", zh: "数轴定位", fr: "Droite graduée", g0: "A" },
+  ma_compare:  { s: "maths", zh: "比较小数", fr: "Comparer les décimaux", g0: "A" },
+  ma_conv_long:{ s: "maths", zh: "长度单位换算", fr: "Conversions de longueurs", g0: "ECA" },
+  ma_conv_masse:{ s: "maths", zh: "质量单位换算", fr: "Conversions de masses", g0: "A" },
+  ma_division: { s: "maths", zh: "竖式除法", fr: "Division posée", g0: "A" },
+  ma_angles:   { s: "maths", zh: "角的种类", fr: "Les angles", g0: "A" },
+  ma_cercle:   { s: "maths", zh: "圆的词汇", fr: "Vocabulaire du cercle", g0: "A" },
+  ma_cercle_calc: { s: "maths", zh: "半径与直径", fr: "Rayon et diamètre", g0: "A" },
+  ma_compas:   { s: "maths", zh: "圆规作图 ⭐重点", fr: "Constructions au compas ⭐", g0: "I" },
+  ma_cm2_grands: { s: "maths", zh: "CM2预备:大数", fr: "CM2 : les grands nombres", g0: "ECA" },
+  ma_cm2_frac: { s: "maths", zh: "CM2预备:简单分数", fr: "CM2 : fractions simples", g0: "ECA" },
+  ma_prob:     { s: "maths", zh: "解决小问题", fr: "Petits problèmes", g0: "ECA" },
+  mo_eau_etats:{ s: "monde", zh: "水的三态", fr: "Les états de l'eau", g0: "ECA" },
+  mo_eau_cycle:{ s: "monde", zh: "水循环 ⭐重点", fr: "Le cycle de l'eau ⭐", g0: "F" },
+  mo_renaissance:{ s: "monde", zh: "文艺复兴与探险家", fr: "Renaissance et explorateurs", g0: "ECA" },
+  mo_volcans:  { s: "monde", zh: "火山", fr: "Les volcans", g0: "A" },
+  mo_paysages: { s: "monde", zh: "法国地貌", fr: "Paysages de France", g0: "A" },
+  en_food:     { s: "anglais", zh: "食物词汇", fr: "Food — la nourriture", g0: "ECA" },
+  en_havehas:  { s: "anglais", zh: "have / has", fr: "Have / has", g0: "ECA" },
+  en_dodoes:   { s: "anglais", zh: "do / does 疑问句", fr: "Questions avec do / does", g0: "ECA" },
+  en_mix:      { s: "anglais", zh: "英语综合", fr: "Anglais — révisions", g0: "ECA" },
+  en_flash:    { s: "anglais", zh: "英语闪卡", fr: "Flash anglais", g0: "A" },
+};
+
+/* 周主题 */
+const WEEKS = [
+  { n: 1, zh: "拼写侦探周", fr: "Détectives de l'orthographe", ic: "🕵️", color: "#E8503A" },
+  { n: 2, zh: "变位骑士周", fr: "Chevaliers de la conjugaison", ic: "⚔️", color: "#3D8BFD" },
+  { n: 3, zh: "句子建筑师周", fr: "Architectes des phrases", ic: "🏗️", color: "#2E8B62" },
+  { n: 4, zh: "词汇魔法师周", fr: "Magiciens des mots", ic: "🧙", color: "#8B5CF6" },
+  { n: 5, zh: "大闯关", fr: "Le Grand Défi", ic: "🏁", color: "#FFB53D" },
+];
+
+/* 30 天课表 */
+const PLAN = [
+  { day: 1, w: 1, ic: "🔍", t: { zh: "ou 还是 où?", fr: "ou / où" }, blocks: [{ kind: "core", comp: "fr_hom_ou", lesson: "L_ou", n: 8 }, { kind: "core", comp: "ma_mental", n: 6 }] },
+  { day: 2, w: 1, ic: "🕵️", t: { zh: "leur / leurs 大搜查", fr: "leur / leurs" }, blocks: [{ kind: "core", comp: "fr_hom_leur", lesson: "L_leur", n: 8 }, { kind: "core", comp: "ma_frac_dec", n: 6 }] },
+  { day: 3, w: 1, ic: "🔢", t: { zh: "拆解十进分数", fr: "Fractions décimales" }, blocks: [{ kind: "core", comp: "ma_frac_decomp", lesson: "L_fracdecomp", n: 8 }, { kind: "core", comp: "fr_hom_leur", n: 5 }] },
+  { day: 4, w: 1, ic: "🧩", t: { zh: "形容词要配合!", fr: "Accord de l'adjectif" }, blocks: [{ kind: "core", comp: "fr_acc_adj", lesson: "L_accadj", n: 8 }, { kind: "core", comp: "mo_eau_etats", lesson: "L_etats", n: 6 }] },
+  { day: 5, w: 1, ic: "🎯", t: { zh: "形容词进阶+数轴", fr: "Adjectifs + droite graduée" }, blocks: [{ kind: "core", comp: "fr_acc_adj", n: 6 }, { kind: "core", comp: "ma_droite", n: 6 }] },
+  { day: 6, w: 1, ic: "🍎", t: { zh: "英语美食日+听写", fr: "Food + dictée" }, blocks: [{ kind: "core", comp: "en_food", lesson: "L_food", n: 8 }, { kind: "core", comp: "fr_dictee", n: 3 }] },
+  { day: 7, w: 1, ic: "🏆", t: { zh: "侦探周挑战", fr: "Défi des détectives" }, blocks: [{ kind: "review", comps: ["fr_hom_ou", "fr_hom_leur", "fr_acc_adj", "ma_frac_decomp", "en_food", "mo_eau_etats"], n: 10 }, { kind: "mission", mission: "detective" }] },
+  { day: 8, w: 2, ic: "📜", t: { zh: "imparfait 第一组", fr: "Imparfait 1er groupe" }, blocks: [{ kind: "core", comp: "fr_imp_1", lesson: "L_imp1", n: 8 }, { kind: "core", comp: "ma_conv_long", lesson: "L_convlong", n: 6 }] },
+  { day: 9, w: 2, ic: "🧭", t: { zh: "圆规大作战 I", fr: "Le compas, mon ami" }, blocks: [{ kind: "core", comp: "ma_compas", lesson: "L_compas", n: 8 }, { kind: "core", comp: "fr_imp_rec", n: 5 }] },
+  { day: 10, w: 2, ic: "⚔️", t: { zh: "imparfait 第三组", fr: "Imparfait 3e groupe" }, blocks: [{ kind: "core", comp: "fr_imp_3", lesson: "L_imp3", n: 8 }, { kind: "core", comp: "ma_compare", n: 6 }] },
+  { day: 11, w: 2, ic: "🖨️", t: { zh: "古腾堡与探险家", fr: "Gutenberg et les explorateurs" }, blocks: [{ kind: "core", comp: "mo_renaissance", lesson: "L_renaissance", n: 8 }, { kind: "core", comp: "fr_imp_3", n: 5 }] },
+  { day: 12, w: 2, ic: "🌸", t: { zh: "圆规大作战 II·玫瑰花窗", fr: "La rosace au compas" }, blocks: [{ kind: "core", comp: "ma_compas", lesson: "L_compas2", n: 6 }, { kind: "core", comp: "fr_imp_2", n: 6 }, { kind: "mission", mission: "rosace" }] },
+  { day: 13, w: 2, ic: "🐱", t: { zh: "have 还是 has?", fr: "Have / has" }, blocks: [{ kind: "core", comp: "en_havehas", lesson: "L_havehas", n: 8 }, { kind: "core", comp: "fr_dictee", n: 3 }] },
+  { day: 14, w: 2, ic: "🌋", t: { zh: "骑士周挑战+火山", fr: "Défi des chevaliers + volcans" }, blocks: [{ kind: "review", comps: ["fr_imp_1", "fr_imp_3", "ma_compas", "mo_renaissance", "en_havehas", "ma_conv_long"], n: 10 }, { kind: "core", comp: "mo_volcans", n: 6 }] },
+  { day: 15, w: 3, ic: "🎯", t: { zh: "COD 与 COI", fr: "COD et COI" }, blocks: [{ kind: "core", comp: "fr_cod_coi", lesson: "L_codcoi", n: 8 }, { kind: "core", comp: "ma_conv_masse", n: 6 }] },
+  { day: 16, w: 3, ic: "📏", t: { zh: "长度换算训练营", fr: "Conversions de longueurs" }, blocks: [{ kind: "core", comp: "ma_conv_long", n: 8 }, { kind: "core", comp: "fr_cod_coi", n: 5 }] },
+  { day: 17, w: 3, ic: "🧱", t: { zh: "名词组齐步走", fr: "Accords dans le GN" }, blocks: [{ kind: "core", comp: "fr_acc_gn", lesson: "L_accgn", n: 8 }, { kind: "core", comp: "mo_eau_etats", n: 5 }] },
+  { day: 18, w: 3, ic: "💧", t: { zh: "水循环大冒险", fr: "Le cycle de l'eau" }, blocks: [{ kind: "core", comp: "mo_eau_cycle", lesson: "L_cycle", n: 9 }, { kind: "core", comp: "ma_division", n: 5 }, { kind: "mission", mission: "eau" }] },
+  { day: 19, w: 3, ic: "🔎", t: { zh: "主语·动词·形容词功能", fr: "Sujet, verbe, adjectif" }, blocks: [{ kind: "core", comp: "fr_sujet", n: 6 }, { kind: "core", comp: "fr_adj_fonc", n: 6 }] },
+  { day: 20, w: 3, ic: "❓", t: { zh: "Do you...? Does she...?", fr: "Do / does" }, blocks: [{ kind: "core", comp: "en_dodoes", lesson: "L_dodoes", n: 8 }, { kind: "core", comp: "fr_dictee", n: 3 }] },
+  { day: 21, w: 3, ic: "⭕", t: { zh: "建筑师周挑战+圆", fr: "Défi des architectes + cercle" }, blocks: [{ kind: "review", comps: ["fr_cod_coi", "fr_acc_gn", "mo_eau_cycle", "ma_conv_long", "en_dodoes", "ma_division"], n: 10 }, { kind: "core", comp: "ma_cercle", n: 6 }] },
+  { day: 22, w: 4, ic: "✨", t: { zh: "同义词魔法", fr: "Les synonymes" }, blocks: [{ kind: "core", comp: "fr_syn", lesson: "L_syn", n: 8 }, { kind: "core", comp: "ma_frac_dec", n: 6 }] },
+  { day: 23, w: 4, ic: "🔄", t: { zh: "反义词镜子", fr: "Les antonymes" }, blocks: [{ kind: "core", comp: "fr_ant", lesson: "L_ant", n: 8 }, { kind: "core", comp: "ma_prob", n: 6 }] },
+  { day: 24, w: 4, ic: "➗", t: { zh: "除法+半径直径", fr: "Division + rayon/diamètre" }, blocks: [{ kind: "core", comp: "ma_division", n: 7 }, { kind: "core", comp: "ma_cercle_calc", n: 5 }] },
+  { day: 25, w: 4, ic: "📖", t: { zh: "阅读小侦探", fr: "Lecture : Zim et Gutenberg" }, blocks: [{ kind: "core", comp: "fr_lecture", n: 8 }, { kind: "core", comp: "ma_droite", n: 5 }] },
+  { day: 26, w: 4, ic: "🚀", t: { zh: "CM2预备:百万大数", fr: "CM2 : les grands nombres" }, blocks: [{ kind: "core", comp: "ma_cm2_grands", lesson: "L_cm2grands", n: 8 }, { kind: "review", comps: ["fr_hom_ou", "fr_hom_leur"], n: 5 }] },
+  { day: 27, w: 4, ic: "🍰", t: { zh: "CM2预备:分数蛋糕", fr: "CM2 : fractions simples" }, blocks: [{ kind: "core", comp: "ma_cm2_frac", lesson: "L_cm2frac", n: 7 }, { kind: "core", comp: "en_mix", n: 6 }] },
+  { day: 28, w: 4, ic: "🧙", t: { zh: "魔法师周挑战+听写", fr: "Défi des magiciens + dictée" }, blocks: [{ kind: "review", comps: ["fr_syn", "fr_ant", "ma_division", "ma_cm2_grands", "ma_cm2_frac", "en_mix", "fr_lecture"], n: 10 }, { kind: "core", comp: "fr_dictee", n: 3 }] },
+  { day: 29, w: 5, ic: "🏁", t: { zh: "大闯关 I:法语+世界", fr: "Grand Défi I" }, blocks: [{ kind: "review", comps: ["fr_hom_ou", "fr_hom_leur", "fr_acc_adj", "fr_acc_gn", "fr_imp_1", "fr_imp_3", "fr_cod_coi", "fr_syn", "fr_ant", "mo_eau_cycle", "mo_eau_etats", "mo_renaissance"], n: 12 }, { kind: "core", comp: "mo_paysages", n: 5 }] },
+  { day: 30, w: 5, ic: "👑", t: { zh: "大闯关 II:数学+英语", fr: "Grand Défi II" }, blocks: [{ kind: "review", comps: ["ma_frac_decomp", "ma_conv_long", "ma_compas", "ma_division", "ma_compare", "ma_cm2_grands", "ma_cm2_frac"], n: 12 }, { kind: "review", comps: ["en_food", "en_havehas", "en_dodoes", "en_mix"], n: 6 }] },
+];
+
+/* 动手任务 */
+const MISSIONS = {
+  detective: {
+    ic: "🕵️", key: "detective",
+    t: { zh: "侦探任务:形容词大搜查", fr: "Mission : la chasse aux adjectifs" },
+    steps: {
+      zh: ["在家里选 5 样东西(比如:la table, les chaussures…)", "大声用法语说出它们+一个配合正确的形容词(la table ronde !)", "把最好玩的 2 个写在纸上,检查性数配合"],
+      fr: ["Choisis 5 objets de la maison", "Dis-les à voix haute avec un adjectif bien accordé (la table ronde !)", "Écris les 2 plus drôles et vérifie les accords"],
+    },
+  },
+  rosace: {
+    ic: "🌸", key: "compas",
+    t: { zh: "圆规任务:画一朵玫瑰花窗", fr: "Mission : trace une rosace" },
+    steps: {
+      zh: ["拿出真的圆规和一张白纸", "画一个半径 4 cm 的圆(尖脚固定,轻轻转)", "保持开度不变,沿圆上的点画 6 条弧线,变成玫瑰花窗", "涂上颜色,贴在冰箱上!"],
+      fr: ["Prends ton compas et une feuille", "Trace un cercle de rayon 4 cm", "Garde le même écartement et trace 6 arcs : une rosace !", "Colorie-la et affiche-la !"],
+    },
+  },
+  eau: {
+    ic: "🧪", key: "eau",
+    t: { zh: "科学任务:小小蒸发实验", fr: "Mission : l'expérience de l'évaporation" },
+    steps: {
+      zh: ["在杯子里倒半杯水,用笔在水位处做记号", "放在窗台阳光下", "每天观察:水位下降了吗?水去哪儿了?(蒸发!)", "两天后把发现讲给爸爸妈妈听"],
+      fr: ["Remplis un verre à moitié et marque le niveau", "Pose-le au soleil", "Observe chaque jour : où va l'eau ? (évaporation !)", "Explique ta découverte à tes parents"],
+    },
+  },
+};
+
+/* 小课堂(中法双语) */
+const LESSONS = {
+  L_ou: { t: { zh: "ou 还是 où?一秒判断!", fr: "ou / où : l'astuce magique" }, rules: [
+    { fr: "Fromage <b>ou</b> dessert ?", zh: "能换成 « ou bien »(或者)→ 写 ou,不带重音", frn: "ou = ou bien (choix)" },
+    { fr: "La ville <b>où</b> j'habite.", zh: "表示地点或时间(哪里/那时)→ 写 où,带重音 ù", frn: "où = lieu ou moment" },
+  ], memo: { zh: "🎩 口诀:能说「或者」就是 ou;问「在哪」就是 où(戴帽子的 ù 在指路!)", fr: "🎩 Si je peux dire « ou bien » → ou. Sinon → où !" } },
+  L_leur: { t: { zh: "leur / leurs:看后面的词!", fr: "leur / leurs : regarde le mot d'après !" }, rules: [
+    { fr: "Je <b>leur</b> parle. (leur + verbe)", zh: "leur 在动词前 = 「对他们」→ 永远不加 s!", frn: "Devant un verbe : jamais de s" },
+    { fr: "<b>leur</b> maison / <b>leurs</b> cahiers", zh: "leur + 单数名词;leurs + 复数名词", frn: "Devant un nom : accord avec le nom" },
+  ], memo: { zh: "🔑 口诀:动词前 leur 光溜溜(没s);名词复数才穿 s 外套!", fr: "🔑 leur + verbe = tout nu (pas de s) !" } },
+  L_fracdecomp: { t: { zh: "拆开十进分数,像拆积木!", fr: "Décomposer, c'est comme des Lego !" }, rules: [
+    { fr: "<b>47/10</b> = 40/10 + 7/10 = <b>4 + 7/10</b>", zh: "47 个十分之一 = 4 个整 + 7 个十分之一", frn: "47 dixièmes = 4 unités et 7 dixièmes" },
+    { fr: "<b>236/100</b> = 2 + 3/10 + 6/100", zh: "236 个百分之一 = 2 整 + 3 个 1/10 + 6 个 1/100", frn: "2 unités, 3 dixièmes, 6 centièmes" },
+  ], memo: { zh: "🧱 先抓出整数,再数十分位、百分位!", fr: "🧱 D'abord les unités, puis dixièmes, puis centièmes !" } },
+  L_accadj: { t: { zh: "形容词是名词的影子", fr: "L'adjectif suit le nom comme son ombre" }, rules: [
+    { fr: "un mur <b>blanc</b> → une porte <b>blanche</b>", zh: "阴性:一般加 e(有的变形:blanc→blanche, heureux→heureuse)", frn: "féminin : + e (ou forme spéciale)" },
+    { fr: "des murs <b>blancs</b> → des portes <b>blanches</b>", zh: "复数:再加 s(beau→beaux 用 x)", frn: "pluriel : + s (ou x)" },
+    { fr: "des ballons <b>orange</b> 🍊", zh: "小心!orange、marron 来自水果,永不变!", frn: "orange, marron : invariables !" },
+  ], memo: { zh: "👥 名词变,形容词跟着变 — 像影子一样寸步不离!", fr: "👥 Le nom change → l'adjectif change aussi !" } },
+  L_etats: { t: { zh: "水的三张面孔", fr: "Les trois visages de l'eau" }, rules: [
+    { fr: "solide 🧊 · liquide 💧 · gazeux ☁️", zh: "固态(冰)· 液态(水)· 气态(水蒸气,看不见!)", frn: "La vapeur est invisible !" },
+    { fr: "fusion / solidification / évaporation / condensation", zh: "融化(冰→水)· 凝固(水→冰)· 蒸发(水→气)· 凝结(气→水)", frn: "4 changements d'état" },
+  ], memo: { zh: "🌡️ 0°C 结冰,100°C 沸腾 — 温度是水的魔法棒!", fr: "🌡️ 0 °C : glace · 100 °C : ébullition !" } },
+  L_food: { t: { zh: "英语美食车", fr: "Le food-truck anglais" }, rules: [
+    { fr: "bread 🍞 · milk 🥛 · cheese 🧀 · chicken 🍗 · fish 🐟", zh: "面包 · 牛奶 · 奶酪 · 鸡肉 · 鱼", frn: "5 mots à retenir" },
+    { fr: "I like… / I don't like…", zh: "我喜欢…… / 我不喜欢……", frn: "pour dire ses goûts" },
+  ], memo: { zh: "🍎 An apple a day…每天记 5 个美食单词!", fr: "🍎 An apple a day keeps the doctor away!" } },
+  L_imp1: { t: { zh: "imparfait:过去的照片", fr: "L'imparfait : la photo du passé" }, rules: [
+    { fr: "je chant<b>ais</b>, tu chant<b>ais</b>, il chant<b>ait</b>", zh: "词尾家族:-ais, -ais, -ait, -ions, -iez, -aient", frn: "les 6 terminaisons magiques" },
+    { fr: "nous mang<b>i</b>ons (pas de e !) · je mang<b>e</b>ais", zh: "-ger 动词:a 前留 e(mangeais),i 前不要 e(mangions)", frn: "manger : e devant a, pas devant i" },
+  ], memo: { zh: "📸 imparfait = 给过去拍照:描写场景和习惯", fr: "📸 L'imparfait décrit le passé : décor et habitudes" } },
+  L_convlong: { t: { zh: "长度换算电梯", fr: "L'ascenseur des longueurs" }, rules: [
+    { fr: "km → m : × 1000 · m → cm : × 100 · cm → mm : × 10", zh: "从大单位到小单位:乘(数字变大)", frn: "grande → petite unité : ×" },
+    { fr: "500 cm = 5 m (÷ 100)", zh: "从小单位到大单位:除(数字变小)", frn: "petite → grande unité : ÷" },
+  ], memo: { zh: "🛗 单位电梯:km-hm-dam-m-dm-cm-mm,下一层×10!", fr: "🛗 km · hm · dam · m · dm · cm · mm : chaque étage ×10 !" } },
+  L_compas: { t: { zh: "圆规:你的新朋友", fr: "Le compas : ton nouvel ami" }, rules: [
+    { fr: "1️⃣ règle → j'écarte le compas du <b>rayon</b>", zh: "第一步:在直尺上把圆规张开到半径长度", frn: "écartement = rayon" },
+    { fr: "2️⃣ pointe sèche sur le <b>centre</b>", zh: "第二步:尖脚扎在圆心,像跳舞的支点", frn: "la pointe ne bouge plus" },
+    { fr: "3️⃣ je <b>tourne</b> sans changer l'écartement", zh: "第三步:捏住顶部轻轻转一圈,开度不许变!", frn: "tenir par la tête, tourner doucement" },
+  ], memo: { zh: "🧭 记住:开度 = 半径!要画直径 10 cm 的圆,就张开 5 cm。", fr: "🧭 Écartement = rayon ! Diamètre 10 cm → écarte de 5 cm." } },
+  L_imp3: { t: { zh: "第三组动词:变身高手", fr: "3e groupe : les transformistes" }, rules: [
+    { fr: "faire → je fais<b>ais</b> · voir → je voy<b>ais</b>", zh: "词干会变身:fais-, voy-, ven-, pren-, buv-…", frn: "radical spécial + terminaisons normales" },
+    { fr: "être → j'ét<b>ais</b> · avoir → j'av<b>ais</b>", zh: "être/avoir 也是老朋友:ét- / av-", frn: "étais, avais : très fréquents !" },
+  ], memo: { zh: "⚔️ 窍门:词干 = nous 现在时去掉 -ons(nous faisons → fais-)", fr: "⚔️ Radical = « nous » au présent sans -ons (faisons → fais-)" } },
+  L_renaissance: { t: { zh: "文艺复兴:世界醒来了", fr: "La Renaissance : le monde se réveille" }, rules: [
+    { fr: "Gutenberg ≈ 1450 : l'<b>imprimerie</b>", zh: "古腾堡发明印刷术,书变便宜,思想飞速传播", frn: "les livres pour tous !" },
+    { fr: "1492 : Colomb → Amérique · Magellan → tour du monde", zh: "探险家们:哥伦布到美洲,麦哲伦环球航行", frn: "les grandes découvertes" },
+    { fr: "Copernic : la Terre tourne autour du Soleil ☀️", zh: "哥白尼的日心说 + 达·芬奇的发明与名画", frn: "science et art fleurissent" },
+  ], memo: { zh: "🖨️ 一台印刷机 + 几艘帆船 = 改变整个欧洲!", fr: "🖨️ Une machine + des caravelles = l'Europe change !" } },
+  L_compas2: { t: { zh: "玫瑰花窗的秘密", fr: "Le secret de la rosace" }, rules: [
+    { fr: "même écartement du début à la fin !", zh: "从头到尾保持同样的开度(= 圆的半径)", frn: "ne change jamais l'écartement" },
+    { fr: "pointe sur le cercle → arc → nouveau point → arc…", zh: "尖脚放在圆上一点画弧,弧和圆的交点就是下一站,正好转 6 次!", frn: "6 pétales exactement" },
+  ], memo: { zh: "🌸 圆规会画花:半径不变,六步成花!", fr: "🌸 Même rayon + 6 arcs = une fleur parfaite !" } },
+  L_havehas: { t: { zh: "have / has:看主角是谁", fr: "Have / has : qui parle ?" }, rules: [
+    { fr: "I / you / we / they → <b>have</b>", zh: "我/你/我们/他们 → have", frn: "" },
+    { fr: "he / she / it → <b>has</b>", zh: "他/她/它(还有 my brother, the cat…)→ has", frn: "3e personne du singulier" },
+  ], memo: { zh: "🐱 口诀:他她它,has has has!", fr: "🐱 he, she, it → has !" } },
+  L_codcoi: { t: { zh: "COD 和 COI:问一问就知道", fr: "COD / COI : pose la question !" }, rules: [
+    { fr: "Léo mange <b>quoi ?</b> une pomme → COD", zh: "动词后直接问 quoi?/qui? 没有介词 → COD(直接宾语)", frn: "pas de préposition" },
+    { fr: "Elle parle <b>à qui ?</b> à sa mamie → COI", zh: "要用 à qui?/de quoi? 有介词 à/de → COI(间接宾语)", frn: "avec à ou de" },
+  ], memo: { zh: "🎯 小侦探提问法:直接答 = COD;要过 à/de 这座桥 = COI", fr: "🎯 Direct = COD · avec le pont « à / de » = COI" } },
+  L_accgn: { t: { zh: "名词组齐步走", fr: "Le GN marche au pas" }, rules: [
+    { fr: "<b>le</b> chat <b>noir</b> → <b>les</b> chats <b>noirs</b>", zh: "冠词、名词、形容词手拉手一起变", frn: "tout le GN s'accorde" },
+    { fr: "un chev<b>al</b> → des chev<b>aux</b>", zh: "特殊复数也要带上形容词:des chevaux rapides", frn: "-al → -aux" },
+  ], memo: { zh: "🚂 名词组是小火车:火车头(冠词)变了,全部车厢跟着变!", fr: "🚂 Le GN est un train : tout change ensemble !" } },
+  L_cycle: { t: { zh: "水的环球旅行", fr: "Le grand voyage de l'eau" }, rules: [
+    { fr: "1. évaporation ☀️ : la mer → la vapeur", zh: "太阳加热海水 → 蒸发成水蒸气(看不见)", frn: "le soleil est le moteur" },
+    { fr: "2. condensation ☁️ : la vapeur → les nuages", zh: "水蒸气升高变冷 → 凝结成云", frn: "en altitude, il fait froid" },
+    { fr: "3. précipitations 🌧️ : pluie, neige, grêle", zh: "云太重了 → 降水(雨/雪/冰雹)", frn: "l'eau retombe" },
+    { fr: "4. ruissellement 🏞️ + infiltration : retour à la mer", zh: "地表径流回大海,一部分渗入地下(地下水)", frn: "et ça recommence !" },
+  ], memo: { zh: "💧 口诀:蒸发-凝结-降水-径流,水滴永远在旅行!", fr: "💧 Évaporation → condensation → précipitations → ruissellement !" }, cycle: true },
+  L_dodoes: { t: { zh: "提问神器 do / does", fr: "Do / does : la machine à questions" }, rules: [
+    { fr: "<b>Do</b> you like…? / <b>Do</b> they play…?", zh: "I/you/we/they 的问题用 Do", frn: "" },
+    { fr: "<b>Does</b> she like…? (verbe sans -s !)", zh: "he/she/it 用 Does,后面动词还原形", frn: "does = déjà le -s" },
+  ], memo: { zh: "❓ Does 已经带了 s,动词就不用再穿 s 啦!", fr: "❓ Avec does, le verbe enlève son -s !" } },
+  L_syn: { t: { zh: "同义词:意思双胞胎", fr: "Synonymes : les jumeaux du sens" }, rules: [
+    { fr: "fort = puissant · joli = beau · maître = professeur", zh: "意思相同或非常接近的词", frn: "sens identique ou proche" },
+    { fr: "L'actrice <b>joue</b> → <b>interprète</b> Cendrillon", zh: "换同义词让作文更漂亮,注意语境要合适!", frn: "choisis selon le contexte" },
+  ], memo: { zh: "✨ 同义词 = 双胞胎:长得不一样,意思一个样!", fr: "✨ Mots différents, sens jumeaux !" } },
+  L_ant: { t: { zh: "反义词:照镜子", fr: "Antonymes : le miroir" }, rules: [
+    { fr: "grand ↔ petit · monter ↔ descendre", zh: "意思完全相反的词", frn: "sens contraire" },
+    { fr: "possible → <b>im</b>possible · heureux → <b>mal</b>heureux", zh: "加前缀 in-/im-/mal-/dé- 可以造反义词!", frn: "les préfixes magiques" },
+  ], memo: { zh: "🪞 反义词是镜子里的世界,一切都反过来!", fr: "🪞 Le monde à l'envers !" } },
+  L_cm2grands: { t: { zh: "CM2 预告:百万俱乐部", fr: "CM2 : le club des millions" }, rules: [
+    { fr: "1 000 000 = un million", zh: "CM2 要认识百万!数字 3 个 3 个分组读", frn: "classes : millions / milliers / unités" },
+    { fr: "2 345 678 → 2 millions 345 milliers 678 unités", zh: "先分组,再一组一组读", frn: "sépare par classes de 3 chiffres" },
+  ], memo: { zh: "🚀 大数不可怕:三个一组,从右往左切!", fr: "🚀 Groupe par 3 depuis la droite !" } },
+  L_cm2frac: { t: { zh: "CM2 预告:分数蛋糕店", fr: "CM2 : la pâtisserie des fractions" }, rules: [
+    { fr: "1/2 de 12 = 12 ÷ 2 = 6", zh: "求几分之一:除一下就好!", frn: "prendre 1/2 = diviser par 2" },
+    { fr: "1/2 = 2/4 = 5/10 = 50/100", zh: "等值分数:样子不同,大小相同", frn: "fractions égales" },
+  ], memo: { zh: "🍰 分蛋糕:分母是刀数,分子是你拿几块!", fr: "🍰 Le dénominateur coupe, le numérateur prend !" } },
+};
+
+/* ==== engine.js ==== */
+/* ===== 核心引擎:状态·出题·评分·间隔复习·勋章·语音 ===== */
+
+/* ---- 工具 ---- */
+const $id = (i) => document.getElementById(i);
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const rndi = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+function shuffle(arr) { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[a[i], a[j]] = [a[j], a[i]]; } return a; }
+const todayStr = () => { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); };
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+/* 答案比对:去首尾空格,压缩空格;重音敏感(拼写训练需要) */
+const normAns = (s) => String(s).trim().replace(/\s+/g, " ").replace(/’/g, "'").toLowerCase();
+/* 宽松比对(英语/无重音要求时) */
+const normLoose = (s) => normAns(s).normalize("NFD").replace(/[̀-ͯ]/g, "");
+/* 数字解析:接受法式逗号、空格/不换行空格分组 */
+const parseNum = (s) => parseFloat(String(s).replace(/[\s  ]/g, "").replace(",", "."));
+
+/* ---- 状态 ---- */
+const STORE_KEY = "tt_camp_2026";
+const DEFAULT_STATE = () => ({
+  ver: 1, lang: "zh", sound: true, pin: "2016", firstOpen: todayStr(),
+  xp: 0, days: {}, compStats: {}, usedIds: {}, badges: [], missions: {},
+  streak: 0, maxStreak: 0, lastDoneDate: null, totalTime: 0,
+});
+let S = DEFAULT_STATE();
+function save() { try { localStorage.setItem(STORE_KEY, JSON.stringify(S)); } catch (e) { console.warn(e); } }
+function load() {
+  try { const raw = localStorage.getItem(STORE_KEY); if (raw) S = Object.assign(DEFAULT_STATE(), JSON.parse(raw)); } catch (e) { S = DEFAULT_STATE(); }
+}
+const t = (key, vars) => {
+  let s = key.split(".").reduce((o, k) => (o || {})[k], I18N[S.lang]);
+  if (s === undefined) s = key;
+  if (vars) for (const k in vars) s = s.replace("{" + k + "}", vars[k]);
+  return s;
+};
+
+/* ---- 掌握度模型 ---- */
+const GRADE_VAL = { A: 88, ECA: 62, F: 38, I: 15 };
+function compStat(cid) {
+  if (!S.compStats[cid]) {
+    const c = COMPS[cid] || {};
+    S.compStats[cid] = { m: GRADE_VAL[c.g0 || "ECA"], seen: 0, ok: 0, ko: 0, lastKoDay: 0 };
+  }
+  return S.compStats[cid];
+}
+function recordAnswer(cid, credit, day) {
+  const st = compStat(cid);
+  st.seen++;
+  if (credit >= 1) st.ok++; else if (credit <= 0) { st.ko++; st.lastKoDay = day; } else st.ok += 0.5;
+  st.m = clamp(Math.round(st.m * 0.78 + credit * 100 * 0.22), 2, 100);
+}
+
+/* ---- 题目选取 ---- */
+function takeFromBank(cid, n) {
+  const bank = BANKS[cid];
+  if (!bank) return [];
+  const out = [];
+  if (bank.gen) { for (let i = 0; i < n; i++) { const it = bank.gen(); it.comp = cid; it.uid = cid + "_g" + Math.random().toString(36).slice(2, 8); out.push(it); } return out; }
+  if (!S.usedIds[cid]) S.usedIds[cid] = [];
+  let fresh = bank.items.filter((it) => !S.usedIds[cid].includes(it.id));
+  if (fresh.length < n) { S.usedIds[cid] = []; fresh = bank.items.slice(); }
+  const chosen = shuffle(fresh).slice(0, n);
+  chosen.forEach((it) => { S.usedIds[cid].push(it.id); });
+  return chosen.map((it) => { const c = Object.assign({}, it); c.comp = cid; c.uid = it.id; return c; });
+}
+/* 热身:心算 + 闪卡 + 自适应弱点 */
+function buildWarmup(day) {
+  const items = [];
+  const weak = Object.keys(S.compStats).filter((c) => S.compStats[c].seen >= 2 && S.compStats[c].m < 62 && BANKS[c]);
+  const weakPick = shuffle(weak).slice(0, 2);
+  weakPick.forEach((c) => { items.push(...takeFromBank(c, 1)); });
+  const gens = ["ma_mental", "fr_flash", "ma_mental", "fr_flash", "ma_mental", "en_flash"];
+  let gi = 0;
+  while (items.length < 6 && gi < 12) { items.push(...takeFromBank(gens[gi % gens.length], 1)); gi++; }
+  return shuffle(items).slice(0, 6);
+}
+/* 大挑战:间隔复习 — 优先近期错的 + 掌握度低的旧知识点 */
+function buildDefi(day, excludeComps) {
+  const past = new Set();
+  PLAN.forEach((p) => { if (p.day <= day) p.blocks.forEach((b) => { if (b.comp && BANKS[b.comp] && !BANKS[b.comp].noReview) past.add(b.comp); }); });
+  excludeComps.forEach((c) => past.delete(c));
+  let pool = [...past];
+  if (!pool.length) pool = [...excludeComps];
+  const weighted = pool.map((c) => { const st = compStat(c); let w = 105 - st.m; if (st.lastKoDay && day - st.lastKoDay <= 3) w += 45; return { c, w: Math.max(w, 6) }; });
+  const chosen = [];
+  const target = Math.min(6, Math.max(3, pool.length));
+  for (let i = 0; i < target && weighted.length; i++) {
+    const tot = weighted.reduce((s, x) => s + x.w, 0);
+    let r = Math.random() * tot, idx = 0;
+    for (let j = 0; j < weighted.length; j++) { r -= weighted[j].w; if (r <= 0) { idx = j; break; } }
+    chosen.push(weighted.splice(idx, 1)[0].c);
+  }
+  const items = [];
+  chosen.forEach((c) => items.push(...takeFromBank(c, 1)));
+  while (items.length < 6) items.push(...takeFromBank(pick(["ma_mental", "fr_flash"]), 1));
+  return items.slice(0, 6);
+}
+/* 组装一天的课程 */
+function buildSession(day) {
+  const plan = PLAN.find((p) => p.day === day);
+  const blocks = [];
+  const coreComps = [];
+  blocks.push({ kind: "warmup", label: t("warmup"), ic: "🔥", color: "var(--sun)", items: buildWarmup(day) });
+  plan.blocks.forEach((b) => {
+    if (b.kind === "core") {
+      coreComps.push(b.comp);
+      blocks.push({ kind: "core", comp: b.comp, lesson: b.lesson, label: t("core") + " · " + subjName(COMPS[b.comp].s), ic: SUBJ[COMPS[b.comp].s].ic, color: SUBJ[COMPS[b.comp].s].c, items: takeFromBank(b.comp, b.n || 7) });
+    } else if (b.kind === "review") {
+      const items = [];
+      const comps = shuffle(b.comps.filter((c) => BANKS[c]));
+      let i = 0;
+      while (items.length < b.n && i < b.n * 3) { items.push(...takeFromBank(comps[i % comps.length], 1)); i++; }
+      blocks.push({ kind: "core", review: true, label: t("reviewBlock"), ic: "🎲", color: "var(--sun)", items: shuffle(items).slice(0, b.n) });
+    } else if (b.kind === "mission") {
+      blocks.push({ kind: "mission", mission: b.mission, label: t("mission"), ic: "🛠️", color: "var(--leaf)", items: [] });
+    }
+  });
+  blocks.push({ kind: "defi", label: t("defi"), ic: "🏆", color: "var(--viol)", items: buildDefi(day, coreComps) });
+  return { day, plan, blocks };
+}
+
+/* ---- 答案判定 ---- */
+function checkAnswer(item, given) {
+  switch (item.type) {
+    case "qcm": return given === item.a;
+    case "vf": return given === item.a;
+    case "input": case "dictee": {
+      const accepted = item.acc || [];
+      if (item.num) { const g = parseNum(given); return accepted.some((x) => Math.abs(parseNum(x) - g) < 1e-9); }
+      let norm = item.loose ? normLoose : normAns;
+      if (item.type === "dictee") { const base = norm; norm = (s) => base(s).replace(/[.,;:!?…«»"]/g, " ").replace(/\s+/g, " ").trim(); }
+      const g = norm(given);
+      return accepted.some((x) => norm(x) === g);
+    }
+    case "multi": return item.fields.every((f, i) => f.num ? Math.abs(parseNum(given[i]) - parseNum(f.a)) < 1e-9 : normAns(given[i]) === normAns(f.a));
+    case "order": return given.join("|") === item.seq.map((x, i) => i).join("|");
+    default: return false;
+  }
+}
+
+/* ---- 每日完成 ---- */
+function finishDay(day, result) {
+  const dstr = todayStr();
+  const prev = S.days[day];
+  const isReplay = !!(prev && prev.done);
+  const score = result.score;
+  const stars = score >= 90 ? 3 : score >= 75 ? 2 : score >= 60 ? 1 : 0;
+  let xpGain = isReplay ? Math.round(score * 0.2) : score;
+  if (!isReplay) {
+    if (stars === 3) xpGain += 20;
+    if (score === 100) xpGain += 15;
+  }
+  S.xp += xpGain;
+  if (!isReplay) {
+    S.days[day] = { best: score, stars, date: dstr, time: result.time, wrong: result.wrong.slice(0, 40), done: true, plays: 1 };
+    if (S.lastDoneDate) {
+      const diff = Math.round((new Date(dstr) - new Date(S.lastDoneDate)) / 864e5);
+      S.streak = diff === 1 ? S.streak + 1 : diff === 0 ? S.streak : 1;
+    } else S.streak = 1;
+    S.maxStreak = Math.max(S.maxStreak, S.streak);
+    S.lastDoneDate = dstr;
+  } else {
+    prev.plays++;
+    if (score > prev.best) { prev.best = score; prev.stars = Math.max(prev.stars, stars); prev.wrong = result.wrong.slice(0, 40); }
+  }
+  S.totalTime += result.time;
+  const newBadges = checkBadges();
+  save();
+  return { stars, xpGain, newBadges, isReplay };
+}
+
+/* ---- 勋章 ---- */
+function accOf(prefix, minSeen) {
+  let seen = 0, ok = 0;
+  Object.keys(S.compStats).forEach((c) => { if (c.startsWith(prefix)) { seen += S.compStats[c].seen; ok += S.compStats[c].ok; } });
+  return seen >= minSeen ? ok / seen : 0;
+}
+const BADGES = [
+  { id: "premier", ic: "🌅", zh: "第一步", fr: "Premier pas", dzh: "完成第1天", dfr: "Finir le jour 1", test: () => S.days[1] && S.days[1].done },
+  { id: "hom", ic: "🕵️", zh: "同音词猎人", fr: "Chasseur d'homophones", dzh: "同音词正确率≥80%", dfr: "Homophones ≥ 80%", test: () => accOf("fr_hom", 14) >= 0.8 },
+  { id: "acc", ic: "🧩", zh: "配合大师", fr: "Roi des accords", dzh: "性数配合正确率≥80%", dfr: "Accords ≥ 80%", test: () => accOf("fr_acc", 16) >= 0.8 },
+  { id: "conj", ic: "⚔️", zh: "变位骑士", fr: "Chevalier des verbes", dzh: "imparfait正确率≥80%", dfr: "Imparfait ≥ 80%", test: () => accOf("fr_imp", 16) >= 0.8 },
+  { id: "compas", ic: "🧭", zh: "圆规大师", fr: "Maître du compas", dzh: "完成圆规专项+动手任务", dfr: "Leçons compas + mission", test: () => S.missions.compas && compStat("ma_compas").seen >= 8 },
+  { id: "eau", ic: "💧", zh: "水循环科学家", fr: "Docteur de l'eau", dzh: "水知识正确率≥80%", dfr: "Cycle de l'eau ≥ 80%", test: () => accOf("mo_eau", 12) >= 0.8 },
+  { id: "streak7", ic: "🔥", zh: "七日火焰", fr: "Flamme de 7 jours", dzh: "连续学习7天", dfr: "7 jours d'affilée", test: () => S.maxStreak >= 7 },
+  { id: "perfect", ic: "💯", zh: "满分日", fr: "Journée parfaite", dzh: "单日100分", dfr: "Un jour à 100", test: () => Object.values(S.days).some((d) => d.best === 100) },
+  { id: "stars60", ic: "🌟", zh: "星星收藏家", fr: "Collectionneur d'étoiles", dzh: "累计60颗星", dfr: "60 étoiles", test: () => totalStars() >= 60 },
+  { id: "english", ic: "🇬🇧", zh: "英语之星", fr: "Star d'anglais", dzh: "英语正确率≥80%", dfr: "Anglais ≥ 80%", test: () => accOf("en_", 12) >= 0.8 },
+  { id: "cm2", ic: "🎓", zh: "CM2准备就绪", fr: "Prêt pour le CM2", dzh: "完成第26-30天且平均≥75", dfr: "J26–30 finis, moyenne ≥ 75", test: () => [26, 27, 28, 29, 30].every((d) => S.days[d] && S.days[d].done) && [26, 27, 28, 29, 30].reduce((s, d) => s + S.days[d].best, 0) / 5 >= 75 },
+  { id: "marathon", ic: "🏅", zh: "30天马拉松", fr: "Marathon de 30 jours", dzh: "完成全部30天", dfr: "Les 30 jours finis", test: () => doneCount() >= 30 },
+];
+function checkBadges() {
+  const fresh = [];
+  BADGES.forEach((b) => { if (!S.badges.includes(b.id) && b.test()) { S.badges.push(b.id); fresh.push(b); } });
+  return fresh;
+}
+const doneCount = () => Object.values(S.days).filter((d) => d.done).length;
+const totalStars = () => Object.values(S.days).reduce((s, d) => s + (d.stars || 0), 0);
+const curDay = () => { for (let i = 1; i <= 30; i++) if (!S.days[i] || !S.days[i].done) return i; return 31; };
+function levelOf(xp) { let L = LEVELS[0], next = null; for (let i = 0; i < LEVELS.length; i++) { if (xp >= LEVELS[i].xp) L = LEVELS[i]; else { next = LEVELS[i]; break; } } return { L, next }; }
+const subjName = (s) => t("subjects." + s);
+const SUBJ = {
+  francais: { ic: "📕", c: "var(--coq)" }, maths: { ic: "📘", c: "var(--sky)" },
+  monde: { ic: "🌍", c: "var(--leaf)" }, anglais: { ic: "🇬🇧", c: "var(--viol)" }, mix: { ic: "🎲", c: "var(--sun)" },
+};
+
+/* ---- 法语朗读 TTS ---- */
+let voiceFr = null, voiceEn = null;
+function initVoices() {
+  if (!("speechSynthesis" in window)) return;
+  const setv = () => {
+    const vs = speechSynthesis.getVoices();
+    voiceFr = vs.find((v) => v.lang === "fr-FR" && /google|thomas|amelie|audrey/i.test(v.name)) || vs.find((v) => v.lang.startsWith("fr")) || null;
+    voiceEn = vs.find((v) => v.lang.startsWith("en-GB")) || vs.find((v) => v.lang.startsWith("en")) || null;
+  };
+  setv();
+  speechSynthesis.onvoiceschanged = setv;
+}
+function speak(text, opts = {}) {
+  if (!("speechSynthesis" in window)) return false;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  const en = opts.en;
+  u.lang = en ? "en-GB" : "fr-FR";
+  const v = en ? voiceEn : voiceFr;
+  if (v) u.voice = v;
+  u.rate = opts.slow ? 0.62 : 0.86;
+  speechSynthesis.speak(u);
+  return true;
+}
+const hasTTS = () => "speechSynthesis" in window;
+
+/* ---- 音效 (WebAudio,无外部文件) ---- */
+let audioCtx = null;
+function blip(kind) {
+  if (!S.sound) return;
+  try {
+    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+    const seqs = { ok: [[660, 0, .09], [880, .09, .12]], bad: [[220, 0, .18]], fanfare: [[523, 0, .12], [659, .12, .12], [784, .24, .12], [1047, .36, .3]], click: [[500, 0, .05]] };
+    (seqs[kind] || []).forEach(([f, delay, dur]) => {
+      const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+      o.type = kind === "bad" ? "sawtooth" : "sine"; o.frequency.value = f;
+      g.gain.setValueAtTime(0.001, audioCtx.currentTime + delay);
+      g.gain.exponentialRampToValueAtTime(0.18, audioCtx.currentTime + delay + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + delay + dur);
+      o.connect(g); g.connect(audioCtx.destination);
+      o.start(audioCtx.currentTime + delay); o.stop(audioCtx.currentTime + delay + dur + 0.05);
+    });
+  } catch (e) { }
+}
+
+/* ---- 彩带 & toast ---- */
+function confetti(n = 80) {
+  const wrap = document.createElement("div"); wrap.className = "confetti";
+  const cols = ["#E8503A", "#FFB53D", "#3D8BFD", "#2E8B62", "#8B5CF6", "#FF8A65"];
+  for (let i = 0; i < n; i++) {
+    const c = document.createElement("i"); c.className = "cf";
+    c.style.cssText = `left:${Math.random() * 100}vw;background:${pick(cols)};animation-duration:${1.6 + Math.random() * 1.6}s;animation-delay:${Math.random() * .5}s;transform:rotate(${Math.random() * 360}deg)`;
+    wrap.appendChild(c);
+  }
+  document.body.appendChild(wrap);
+  setTimeout(() => wrap.remove(), 3600);
+}
+let toastTimer = null;
+function toast(msg) {
+  document.querySelectorAll(".toast").forEach((x) => x.remove());
+  const d = document.createElement("div"); d.className = "toast"; d.textContent = msg;
+  document.body.appendChild(d);
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => d.remove(), 2600);
+}
+
+/* ---- 导出/导入 ---- */
+function exportData() {
+  const blob = new Blob([JSON.stringify(S, null, 1)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "tongtong_camp_" + todayStr() + ".json";
+  a.click(); URL.revokeObjectURL(a.href);
+}
+function importData(file, cb) {
+  const r = new FileReader();
+  r.onload = () => { try { const d = JSON.parse(r.result); if (!d.days) throw 0; S = Object.assign(DEFAULT_STATE(), d); save(); cb(true); } catch (e) { cb(false); } };
+  r.readAsText(file);
+}
+
+/* ==== parent.js ==== */
+/* ===== 家长监控面板 ===== */
+let pAuth = false, pTab = "over";
+
+function parentView() {
+  if (!pAuth) {
+    app.innerHTML = topbar() + `<div class="card center" style="max-width:420px;margin:40px auto">
+      <div style="font-size:2.6rem">🔐</div><h3>${t("pinTitle")}</h3>
+      <div class="pin"><input id="pinin" type="password" inputmode="numeric" maxlength="4" onkeydown="if(event.key==='Enter')pinTry()"></div>
+      <button class="bigbtn alt" onclick="pinTry()">${t("pinBtn")}</button>
+      <p class="small muted">${S.lang === "zh" ? "默认 2016,可在设置中修改" : "PIN par défaut : 2016"}</p></div>`;
+    setTimeout(() => { const p = $id("pinin"); if (p) p.focus(); }, 50);
+    return;
+  }
+  const tabs = [["over", "📊 " + t("pOverview")], ["comps", "🎯 " + t("pComps")], ["log", "📝 " + t("pLog")], ["data", "💾 " + t("pData")]];
+  let body = "";
+  if (pTab === "over") body = pOverview();
+  else if (pTab === "comps") body = pComps();
+  else if (pTab === "log") body = pLog();
+  else body = pData();
+  app.innerHTML = topbar() + `<h2 class="sec">👨‍👩‍👧 ${t("parent")}</h2>
+    <div class="tabs">${tabs.map(([k, l]) => `<button class="tab ${pTab === k ? "act" : ""}" onclick="pTab='${k}';render()">${l}</button>`).join("")}</div>
+    ${body}
+    <button class="nextbtn" onclick="pAuth=false;go('home')" style="margin-top:14px">🏝️ ${t("backHome")}</button>`;
+}
+function pinTry() {
+  const v = $id("pinin").value;
+  if (v === S.pin) { pAuth = true; blip("ok"); render(); } else { blip("bad"); toast(t("pinBad")); $id("pinin").value = ""; }
+}
+
+/* ---- 总览 ---- */
+function pOverview() {
+  const done = Object.entries(S.days).filter(([, d]) => d.done);
+  const avg = done.length ? Math.round(done.reduce((s, [, d]) => s + d.best, 0) / done.length) : 0;
+  const mins = Math.round(S.totalTime / 60);
+  const scoreColor = (s) => s >= 90 ? "#2E8B62" : s >= 75 ? "#7fb069" : s >= 60 ? "#FFB53D" : "#E8503A";
+  let cal = "";
+  for (let d = 1; d <= 30; d++) {
+    const st = S.days[d];
+    cal += st && st.done
+      ? `<div class="cd" style="background:${scoreColor(st.best)};color:#fff" title="J${d} · ${st.date} · ${st.best}/100 · ${Math.round((st.time || 0) / 60)}min"><b style="color:#fff">${st.best}</b><span style="color:#fff;opacity:.85">J${d}</span></div>`
+      : `<div class="cd" title="J${d}">J${d}</div>`;
+  }
+  const weekReport = genReport();
+  return `<div class="hero" style="grid-template-columns:repeat(4,1fr)">
+    <div class="stat"><div class="n">${done.length}/30</div><div class="l">${t("days")}</div></div>
+    <div class="stat"><div class="n">${avg}</div><div class="l">${t("pAvg")}</div></div>
+    <div class="stat"><div class="n">${mins}′</div><div class="l">${t("pTime")}</div></div>
+    <div class="stat"><div class="n">🔥 ${S.maxStreak}</div><div class="l">${t("pStreakMax")}</div></div></div>
+  <h2 class="sec">🗓️ ${t("pCalendar")}</h2><div class="card"><div class="cal">${cal}</div></div>
+  <h2 class="sec">📄 ${t("pWeekReport")}</h2><div class="card"><pre style="white-space:pre-wrap;font-family:inherit;font-size:.88rem;margin:0">${esc(weekReport)}</pre>
+  <button class="sbtn" style="margin-top:10px" onclick="copyReport()">📋 ${t("pReport")}</button></div>`;
+}
+function genReport() {
+  const done = Object.entries(S.days).filter(([, d]) => d.done).sort((a, b) => +a[0] - +b[0]);
+  const last7 = done.slice(-7);
+  if (!last7.length) return S.lang === "zh" ? "还没有学习记录。" : "Pas encore de données.";
+  const avg = Math.round(last7.reduce((s, [, d]) => s + d.best, 0) / last7.length);
+  const mins = Math.round(last7.reduce((s, [, d]) => s + (d.time || 0), 0) / 60);
+  const deltas = Object.keys(S.compStats).filter((c) => COMPS[c] && S.compStats[c].seen >= 3)
+    .map((c) => ({ c, d: S.compStats[c].m - GRADE_VAL[COMPS[c].g0 || "ECA"], m: S.compStats[c].m }));
+  const prog = deltas.filter((x) => x.d > 0).sort((a, b) => b.d - a.d).slice(0, 3);
+  const weak = deltas.sort((a, b) => a.m - b.m).slice(0, 3);
+  const nm = (c) => S.lang === "zh" ? COMPS[c].zh : COMPS[c].fr;
+  if (S.lang === "zh")
+    return `【童童暑期复习周报 · ${todayStr()}】\n最近完成 ${last7.length} 天:平均 ${avg}/100,共 ${mins} 分钟,当前连胜 ${S.streak} 天。\n完成进度:${done.length}/30 天,星星 ${totalStars()} 颗,勋章 ${S.badges.length} 枚。\n进步最大:${prog.length ? prog.map((x) => `${nm(x.c)}(+${x.d})`).join("、") : "继续积累中"}。\n需要关注:${weak.map((x) => `${nm(x.c)}(${x.m}/100)`).join("、")}。`;
+  return `【Rapport hebdo · ${todayStr()}】\n${last7.length} jours : moyenne ${avg}/100, ${mins} min, série ${S.streak}.\nProgression : ${done.length}/30 jours, ${totalStars()} étoiles, ${S.badges.length} badges.\nEn progrès : ${prog.length ? prog.map((x) => `${nm(x.c)} (+${x.d})`).join(", ") : "en cours"}.\nÀ surveiller : ${weak.map((x) => `${nm(x.c)} (${x.m}/100)`).join(", ")}.`;
+}
+function copyReport() {
+  const txt = genReport();
+  (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(() => toast(t("pCopied"))).catch(() => { prompt("Copy:", txt); });
+}
+
+/* ---- 知识点掌握 ---- */
+function pComps() {
+  const gColor = { A: "#2E8B62", ECA: "#FFB53D", F: "#E8503A", I: "#C93A26" };
+  const subjects = ["francais", "maths", "monde", "anglais"];
+  let h = `<div class="card"><p class="small muted" style="margin:0 0 8px">${t("pMastery")}</p>`;
+  subjects.forEach((s) => {
+    const rows = Object.entries(COMPS).filter(([k, c]) => c.s === s && k !== "fr_flash" && k !== "en_flash");
+    h += `<h3 style="margin:14px 0 4px">${SUBJ[s].ic} ${subjName(s)}</h3>`;
+    rows.forEach(([k, c]) => {
+      const st = S.compStats[k];
+      const m = st ? st.m : GRADE_VAL[c.g0 || "ECA"];
+      const base = GRADE_VAL[c.g0 || "ECA"];
+      const delta = st && st.seen ? m - base : 0;
+      const barColor = m >= 80 ? "#2E8B62" : m >= 60 ? "#FFB53D" : "#E8503A";
+      const trend = !st || !st.seen ? "" : delta > 3 ? ` <span style="color:#2E8B62;font-weight:800">↗ +${delta}</span>` : delta < -3 ? ` <span style="color:#E8503A;font-weight:800">↘ ${delta}</span>` : " →";
+      h += `<div class="comprow"><span class="gpill" style="background:${gColor[c.g0]}" title="${S.lang === "zh" ? "学年评级" : "Évaluation"}">${c.g0}</span>
+        <span class="nm">${S.lang === "zh" ? c.zh : c.fr}${trend}</span>
+        <div class="bar"><i style="width:${m}%;background:${barColor}"></i></div><b style="min-width:30px;text-align:right">${m}</b></div>`;
+    });
+  });
+  return h + `</div>`;
+}
+
+/* ---- 错题日志 ---- */
+function pLog() {
+  const entries = [];
+  Object.entries(S.days).forEach(([d, day]) => { (day.wrong || []).forEach((w) => entries.push(Object.assign({ day: +d, date: day.date }, w))); });
+  entries.sort((a, b) => b.day - a.day);
+  if (!entries.length) return `<div class="card center muted">${t("pNoLog")} 🎉</div>`;
+  return `<div class="card">${entries.slice(0, 120).map((e) => `<div class="logitem">
+    <div class="small muted">${t("pDay", { d: e.day })} · ${e.date || ""} · ${COMPS[e.comp] ? (S.lang === "zh" ? COMPS[e.comp].zh : COMPS[e.comp].fr) : e.comp}</div>
+    <div>${esc(e.q)}</div>
+    <div class="small"><span class="g">✗ ${esc(e.given || "—")}</span> → <span class="a">✓ ${esc(e.ans)}</span></div></div>`).join("")}</div>`;
+}
+
+/* ---- 数据 ---- */
+function pData() {
+  return `<div class="card">
+    <div class="setrow"><span class="lbl">📤 ${t("pExport")}<small>JSON</small></span><button class="sbtn" onclick="exportData()">${t("pExport")}</button></div>
+    <div class="setrow"><span class="lbl">📥 ${t("pImport")}<small>${S.lang === "zh" ? "换设备时使用" : "changement d'appareil"}</small></span>
+      <input type="file" id="impfile" accept=".json" class="hidden" onchange="doImport(this)">
+      <button class="sbtn" onclick="$id('impfile').click()">${t("pImport")}</button></div>
+    <p class="small muted">${S.lang === "zh" ? "数据保存在本设备浏览器中(localStorage)。清除浏览器数据前请先导出备份。" : "Données stockées dans ce navigateur (localStorage). Exportez avant de nettoyer le navigateur."}</p></div>`;
+}
+function doImport(inp) {
+  const f = inp.files && inp.files[0];
+  if (!f) return;
+  importData(f, (ok) => { toast(ok ? t("saved") : "❌"); if (ok) render(); });
+}
+
+/* ==== ui.js ==== */
+/* ===== UI 渲染层 ===== */
+const app = $id("app");
+let view = { name: "home" };
+let sess = null;
+
+function go(name, data) { view = Object.assign({ name }, data || {}); render(); window.scrollTo(0, 0); }
+
+/* ---------- SVG 图形 ---------- */
+function svgLine(line) {
+  const W = 340, x0 = 24, x1 = 316, y = 44;
+  const span = line.max - line.min;
+  const X = (v) => x0 + (v - line.min) / span * (x1 - x0);
+  let s = `<svg viewBox="0 0 ${W} 78" style="width:100%;max-width:440px;display:block;margin:10px auto">`;
+  s += `<line x1="${x0 - 8}" y1="${y}" x2="${x1 + 8}" y2="${y}" stroke="#2B2320" stroke-width="2"/>`;
+  const step = 1 / line.ticks;
+  for (let v = line.min; v <= line.max + 1e-9; v += step) {
+    const isInt = Math.abs(v - Math.round(v)) < 1e-9;
+    s += `<line x1="${X(v)}" y1="${y - (isInt ? 10 : 5)}" x2="${X(v)}" y2="${y + (isInt ? 10 : 5)}" stroke="#2B2320" stroke-width="${isInt ? 2 : 1}"/>`;
+    if (isInt) s += `<text x="${X(v)}" y="${y + 26}" text-anchor="middle" font-size="13" font-weight="700" fill="#2B2320">${Math.round(v)}</text>`;
+  }
+  (line.points || []).forEach((p) => {
+    s += `<circle cx="${X(p.v)}" cy="${y}" r="5" fill="#E8503A"/><text x="${X(p.v)}" y="${y - 16}" text-anchor="middle" font-size="14" font-weight="800" fill="#E8503A">${p.label}</text>`;
+  });
+  return s + "</svg>";
+}
+function svgAngle(deg) {
+  const cx = 100, cy = 112, L = 85;
+  const rad = -deg * Math.PI / 180;
+  const x2 = cx + L * Math.cos(rad), y2 = cy + L * Math.sin(rad);
+  let s = `<svg viewBox="0 0 200 140" style="width:200px;max-width:60%;display:block;margin:8px auto">`;
+  s += `<line x1="${cx}" y1="${cy}" x2="${cx + L}" y2="${cy}" stroke="#3D8BFD" stroke-width="3" stroke-linecap="round"/>`;
+  s += `<line x1="${cx}" y1="${cy}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="#3D8BFD" stroke-width="3" stroke-linecap="round"/>`;
+  if (deg === 90) s += `<path d="M ${cx + 16} ${cy} L ${cx + 16} ${cy - 16} L ${cx} ${cy - 16}" fill="none" stroke="#E8503A" stroke-width="2"/>`;
+  else { const a0 = 0, r = 24; const ex = cx + r * Math.cos(rad), ey = cy + r * Math.sin(rad); s += `<path d="M ${cx + r} ${cy} A ${r} ${r} 0 0 0 ${ex.toFixed(1)} ${ey.toFixed(1)}" fill="none" stroke="#E8503A" stroke-width="2"/>`; }
+  s += `<circle cx="${cx}" cy="${cy}" r="4" fill="#2B2320"/>`;
+  return s + "</svg>";
+}
+function svgCircle(mode) {
+  const cx = 110, cy = 82, r = 58;
+  const hl = "#E8503A", base = "#3D8BFD";
+  let s = `<svg viewBox="0 0 220 165" style="width:220px;max-width:70%;display:block;margin:8px auto">`;
+  s += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${base}" stroke-width="3"/>`;
+  s += `<circle cx="${cx}" cy="${cy}" r="${mode === "centre" ? 6 : 3.5}" fill="${mode === "centre" ? hl : "#2B2320"}"/>`;
+  s += `<text x="${cx - 14}" y="${cy - 6}" font-size="12" font-weight="700" fill="#2B2320">O</text>`;
+  if (mode === "rayon") s += `<line x1="${cx}" y1="${cy}" x2="${cx + r}" y2="${cy}" stroke="${hl}" stroke-width="3"/><circle cx="${cx + r}" cy="${cy}" r="4" fill="${hl}"/>`;
+  if (mode === "diametre") s += `<line x1="${cx - r}" y1="${cy}" x2="${cx + r}" y2="${cy}" stroke="${hl}" stroke-width="3"/>`;
+  if (mode === "corde") { const y1 = cy - 34, dx = Math.sqrt(r * r - 34 * 34); s += `<line x1="${cx - dx}" y1="${y1}" x2="${cx + dx}" y2="${y1}" stroke="${hl}" stroke-width="3"/>`; }
+  return s + "</svg>";
+}
+function svgCycle() {
+  return `<svg viewBox="0 0 380 210" style="width:100%;max-width:460px;display:block;margin:10px auto">
+  <rect x="0" y="168" width="380" height="42" rx="6" fill="#BEE3FF"/>
+  <path d="M0 176 Q 20 168 40 176 T 80 176 T 120 176 T 160 176 T 200 176 T 240 176 T 280 176 T 320 176 T 360 176 T 400 176" fill="none" stroke="#3D8BFD" stroke-width="3"/>
+  <polygon points="230,168 300,80 370,168" fill="#B9A48F"/><polygon points="300,80 322,108 278,108" fill="#fff"/>
+  <circle cx="46" cy="40" r="22" fill="#FFB53D"/><g stroke="#FFB53D" stroke-width="3" stroke-linecap="round"><line x1="46" y1="8" x2="46" y2="0"/><line x1="46" y1="72" x2="46" y2="80"/><line x1="14" y1="40" x2="6" y2="40"/><line x1="78" y1="40" x2="86" y2="40"/></g>
+  <g fill="#fff" stroke="#9db8d6" stroke-width="2"><ellipse cx="150" cy="52" rx="34" ry="16"/><ellipse cx="178" cy="44" rx="26" ry="14"/><ellipse cx="124" cy="44" rx="22" ry="12"/></g>
+  <g stroke="#E8503A" stroke-width="3" fill="none" marker-end="url(#ar)"><path d="M70 150 C 76 120 92 92 116 70"/></g>
+  <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#E8503A"/></marker></defs>
+  <path d="M196 66 C 214 84 224 108 228 132" stroke="#3D8BFD" stroke-width="3" fill="none" marker-end="url(#ar2)"/>
+  <defs><marker id="ar2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#3D8BFD"/></marker></defs>
+  <g fill="#3D8BFD"><circle cx="212" cy="96" r="3"/><circle cx="222" cy="116" r="3"/><circle cx="204" cy="120" r="3"/></g>
+  <path d="M300 130 C 290 150 270 162 246 170" stroke="#2E8B62" stroke-width="3" fill="none" marker-end="url(#ar3)"/>
+  <defs><marker id="ar3" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#2E8B62"/></marker></defs>
+  <text x="52" y="112" font-size="12" font-weight="800" fill="#E8503A">1. évaporation</text>
+  <text x="118" y="26" font-size="12" font-weight="800" fill="#5a7ba6">2. condensation</text>
+  <text x="196" y="152" font-size="12" font-weight="800" fill="#3D8BFD" text-anchor="end">3. précipitations</text>
+  <text x="252" y="200" font-size="12" font-weight="800" fill="#2E8B62">4. ruissellement</text>
+  </svg>`;
+}
+function figHTML(item) {
+  let h = "";
+  if (item.ctx) h += `<div class="lesson" style="padding:12px 15px;margin:8px 0;font-size:.95rem;line-height:1.65">📖 ${esc(item.ctx)}</div>`;
+  if (item.line) h += svgLine(item.line);
+  if (item.angle) h += svgAngle(item.angle);
+  if (item.circle) h += svgCircle(item.circle);
+  if (item.cycle) h += svgCycle();
+  return h;
+}
+
+/* ---------- 顶栏 ---------- */
+function topbar(back) {
+  return `<div class="topbar">
+    <div class="logo" onclick="go('home')"><span class="pop">🌺</span><span><b>${t("appTitle")}</b><small>${t("appSub")}</small></span></div>
+    <div class="topbtns">
+      <button class="iconbtn" onclick="toggleLang()" title="${t('sLang')}">${S.lang === "zh" ? "FR" : "中"}</button>
+      <button class="iconbtn" onclick="go('badges')" title="${t('badgesTitle')}">🎖️</button>
+      <button class="iconbtn" onclick="go('parent')" title="${t('parent')}">👨‍👩‍👧</button>
+      <button class="iconbtn" onclick="go('settings')" title="${t('settings')}">⚙️</button>
+    </div></div>`;
+}
+function toggleLang() { S.lang = S.lang === "zh" ? "fr" : "zh"; save(); render(); }
+
+/* ---------- 首页 ---------- */
+function homeView() {
+  const cd = curDay();
+  const { L, next } = levelOf(S.xp);
+  const pct = next ? Math.round((S.xp - L.xp) / (next.xp - L.xp) * 100) : 100;
+  const plan = cd <= 30 ? PLAN.find((p) => p.day === cd) : null;
+  const todayDone = cd <= 30 && S.days[cd] && S.days[cd].done;
+  const doneAlready = S.days[cd] === undefined ? false : true;
+  const lastDoneToday = S.lastDoneDate === todayStr() && !S.days[cd];
+  let todayCard;
+  if (cd > 30) {
+    todayCard = `<div class="card today"><span class="deco">👑</span><h3>🎉 ${t("allDone")}</h3>
+      <div class="sub">${totalStars()} ⭐ · ${S.xp} XP</div>
+      <button class="bigbtn" onclick="go('diploma')">${t("seeDiploma")}</button></div>`;
+  } else {
+    const w = WEEKS[plan.w - 1];
+    const suggestWait = lastDoneToday;
+    todayCard = `<div class="card today"><span class="deco">${plan.ic}</span>
+      <h3>${plan.ic} ${t("todayTitle", { d: cd })} · ${plan.t[S.lang]}</h3>
+      <div class="sub">${w.ic} ${S.lang === "zh" ? w.zh : w.fr} · 15–30 min</div>
+      ${suggestWait ? `<div class="sub" style="margin-top:8px">✅ ${t("doneToday")}</div>` : ""}
+      <button class="bigbtn" onclick="startDay(${cd})">▶ ${t("start")}</button></div>`;
+  }
+  const stats = `<div class="hero">
+    <div class="stat"><div class="n">🔥 ${S.streak}</div><div class="l">${t("streak")}</div></div>
+    <div class="stat"><div class="n">⭐ ${totalStars()}</div><div class="l">${t("stars")}</div></div>
+    <div class="stat"><div class="n">${L.ic} ${S.xp}</div><div class="l">${t("level")} · ${S.lang === "zh" ? L.zh : L.fr}<div class="levelbar"><i style="width:${pct}%"></i></div></div></div>
+    <div class="stat"><div class="n">🗓️ ${doneCount()}<span class="muted" style="font-size:.9rem">/30</span></div><div class="l">${t("days")}</div></div></div>`;
+  let map = `<h2 class="sec">🗺️ ${t("mapTitle")}</h2><div class="map card">`;
+  WEEKS.forEach((w) => {
+    const days = PLAN.filter((p) => p.w === w.n);
+    map += `<div class="weekband"><span class="tag" style="background:${w.color}">${w.ic} ${w.n === 5 ? t("finalWeek") : t("week", { n: w.n })}</span> ${S.lang === "zh" ? w.zh : w.fr}</div><div class="isles">`;
+    days.forEach((p) => {
+      const st = S.days[p.day];
+      const done = st && st.done;
+      const isNext = p.day === cd;
+      const locked = p.day > cd;
+      map += `<div class="isle ${done ? "done" : isNext ? "next" : locked ? "lock" : ""}" onclick="isleClick(${p.day})" title="${p.t[S.lang]}">
+        <span class="d">J${p.day}</span><span class="ic">${done ? "✅" : p.ic}</span>
+        <span class="st">${done ? "★".repeat(st.stars) || "·" : ""}</span></div>`;
+    });
+    map += `</div>`;
+  });
+  map += `</div>`;
+  const badgePeek = S.badges.length ? `<h2 class="sec">🎖️ ${t("badgesTitle")} (${S.badges.length}/${BADGES.length})</h2><div class="badges">${BADGES.filter((b) => S.badges.includes(b.id)).slice(-4).map((b) => badgeHTML(b, true)).join("")}</div>` : "";
+  app.innerHTML = topbar() + stats + todayCard + map + badgePeek + `<footer>🌺 ${t("install")}</footer>`;
+}
+function isleClick(d) {
+  const cd = curDay();
+  if (d > cd) { toast(t("lockedDay")); return; }
+  startDay(d);
+}
+function startDay(d) {
+  sess = buildSession(d);
+  sess.bi = 0; sess.qi = 0; sess.earned = 0; sess.total = 0; sess.wrong = [];
+  sess.t0 = Date.now(); sess.phase = null; sess.tries = 0;
+  sess.perBlock = sess.blocks.map((b) => ({ label: b.label, ic: b.ic, color: b.color, earned: 0, total: b.items.length }));
+  sess.blocks.forEach((b) => { sess.total += b.items.length; });
+  enterBlock();
+}
+
+/* ---------- 课程流程 ---------- */
+function curBlock() { return sess.blocks[sess.bi]; }
+function curItem() { return curBlock().items[sess.qi]; }
+function enterBlock() {
+  const b = curBlock();
+  if (!b) { return showResults(); }
+  if (b.kind === "mission") { sess.phase = "mission"; renderMission(); return; }
+  if (b.items.length === 0) { sess.bi++; return enterBlock(); }
+  if (b.kind === "core" && b.lesson && LESSONS[b.lesson]) { sess.phase = "lesson"; renderLesson(); return; }
+  sess.phase = "q"; sess.qi = 0; renderQuestion();
+}
+function nextQuestion() {
+  sess.qi++;
+  if (sess.qi >= curBlock().items.length) { sess.bi++; sess.qi = 0; enterBlock(); }
+  else renderQuestion();
+}
+function sessHeader() {
+  const answered = sess.blocks.slice(0, sess.bi).reduce((s, b) => s + b.items.length, 0) + sess.qi;
+  const pct = sess.total ? Math.round(answered / sess.total * 100) : 0;
+  const b = curBlock();
+  return `<div class="sess-top">
+    <button class="quit" onclick="quitSession()">✕</button>
+    <div class="pbar"><i style="width:${pct}%"></i></div>
+    <span class="blockchip" style="background:${b.color}">${b.ic} ${b.label}</span></div>`;
+}
+function quitSession() { if (confirm(S.lang === "zh" ? "要退出吗?本次进度不会保存。" : "Quitter ? La séance ne sera pas enregistrée.")) { sess = null; go("home"); } }
+
+function renderLesson() {
+  const b = curBlock();
+  const Ls = LESSONS[b.lesson];
+  let rules = Ls.rules.map((r) => `<div class="rule"><b class="fr">${r.fr}</b><div class="ex">${S.lang === "zh" ? esc(r.zh) : esc(r.frn || r.zh)}</div></div>`).join("");
+  app.innerHTML = sessHeader() + `<div class="card lesson">
+    <h3>💡 ${t("lesson")} · ${Ls.t[S.lang]}</h3>${Ls.cycle ? svgCycle() : ""}${rules}
+    <div class="rule memo">${Ls.memo[S.lang]}</div>
+    <button class="nextbtn" onclick="sess.phase='q';sess.qi=0;renderQuestion()">${t("next")}</button></div>`;
+  window.scrollTo(0, 0);
+}
+function renderMission() {
+  const b = curBlock();
+  const m = MISSIONS[b.mission];
+  const done = S.missions[m.key];
+  app.innerHTML = sessHeader() + `<div class="card mission">
+    <h3>${m.ic} ${t("mission")} · ${m.t[S.lang]}</h3>
+    <ol>${m.steps[S.lang].map((s) => `<li>${esc(s)}</li>`).join("")}</ol>
+    <div class="small muted">🤝 ${t("missionTip")}</div>
+    <div class="row" style="margin-top:12px">
+      <button class="bigbtn alt" ${done ? "disabled" : ""} onclick="missionDone('${m.key}')">${done ? "✅ " : ""}${t("missionDone")}</button>
+      <button class="sbtn" onclick="sess.bi++;enterBlock()">${t("skip")} →</button></div></div>`;
+  window.scrollTo(0, 0);
+}
+function missionDone(key) {
+  if (!S.missions[key]) { S.missions[key] = { done: true, date: todayStr() }; S.xp += 30; save(); blip("fanfare"); confetti(40); toast(t("missionDoneOk")); }
+  sess.bi++; enterBlock();
+}
+
+/* ---------- 题目渲染 ---------- */
+let qstate = null;
+function renderQuestion() {
+  const item = curItem();
+  qstate = { tried: 0, done: false, sel: null, matched: 0, merr: 0, order: [], msel: null };
+  const b = curBlock();
+  let body = "";
+  const qtext = item.q ? `<div class="qtext">${item.q.replace(/___/g, '<span class="blank">___</span>')}</div>` : "";
+  const qzh = S.lang === "zh" && item.qzh ? `<div class="qzh">${esc(item.qzh)}</div>` : "";
+  const sayBtn = item.say && hasTTS() ? `<button class="speakbtn" onclick="speak(${JSON.stringify(item.say).replace(/"/g, "&quot;")},{en:${!!item.en}})">${t("listen")}</button>` : "";
+  switch (item.type) {
+    case "qcm": case "vf": {
+      const opts = item.type === "vf" ? t("q_vf") : item.opts;
+      const two = opts.every((o) => String(o).length <= 14) && opts.length <= 4;
+      body = `<div class="opts ${two ? "two" : ""}">${opts.map((o, i) => `<button class="opt" id="opt${i}" onclick="pickOpt(${i})">${o}</button>`).join("")}</div>`;
+      break;
+    }
+    case "input": {
+      body = inputHTML(item);
+      break;
+    }
+    case "multi": {
+      body = `<div class="multiwrap">${item.fields.map((f, i) => `<div class="mf"><label>${esc(f.label)}</label><input class="tinp" id="mf${i}" inputmode="${f.num ? "decimal" : "text"}" autocomplete="off"></div>`).join("")}</div>
+      <button class="nextbtn checkbtn" onclick="checkMulti()">${t("validate")}</button>`;
+      break;
+    }
+    case "match": {
+      const left = shuffle(item.pairs.map((p, i) => ({ txt: p[0], i })));
+      const right = shuffle(item.pairs.map((p, i) => ({ txt: p[1], i })));
+      qstate.mleft = left; qstate.mright = right;
+      body = `<div class="qzh">${t("matchHint")}</div><div class="matchgrid">
+        <div>${left.map((x, k) => `<div class="mitem" id="ml${k}" data-i="${x.i}" onclick="mLeft(${k})" style="margin-bottom:8px">${esc(x.txt)}</div>`).join("")}</div>
+        <div>${right.map((x, k) => `<div class="mitem" id="mr${k}" data-i="${x.i}" onclick="mRight(${k})" style="margin-bottom:8px">${esc(x.txt)}</div>`).join("")}</div></div>`;
+      break;
+    }
+    case "order": {
+      const idxs = shuffle(item.seq.map((_, i) => i));
+      qstate.avail = idxs;
+      body = `<div class="qzh">${t("orderHint")}</div>
+        <div class="orderzone" id="ozone"><span class="ozhint">${t("clickOrder")}</span></div>
+        <div class="chips" id="chips">${idxs.map((i, k) => `<button class="chip" id="ch${k}" onclick="chipPick(${k},${i})">${esc(item.seq[i])}</button>`).join("")}</div>
+        <div class="row" style="margin-top:10px"><button class="sbtn" onclick="chipUndo()">↩ ${t("undo")}</button></div>
+        <button class="nextbtn checkbtn hidden" id="ordercheck" onclick="checkOrder()">${t("validate")}</button>`;
+      break;
+    }
+    case "dictee": {
+      const tts = hasTTS();
+      body = `<div class="center" style="margin:6px 0">
+        ${tts ? `<button class="speakbtn" onclick="speak(${JSON.stringify(item.say).replace(/"/g, "&quot;")})">${t("listen")}</button>
+        <button class="speakbtn" onclick="speak(${JSON.stringify(item.say).replace(/"/g, "&quot;")},{slow:true})">${t("listenSlow")}</button>`
+          : `<div class="memoline" id="memoline">${esc(item.say)}</div><div class="qzh">${t("memoShow")}</div>`}
+      </div>` + inputHTML(item);
+      if (!tts) setTimeout(() => { const m = $id("memoline"); if (m) { m.textContent = "🙈 " + t("memoGone"); } }, 7000);
+      break;
+    }
+  }
+  app.innerHTML = sessHeader() + `<div class="qcard">${qtext}${qzh}${figHTML(item)}${sayBtn && item.type !== "dictee" ? `<div>${sayBtn}</div>` : ""}${body}<div id="fb"></div></div>`;
+  const inp0 = $id("tin") || $id("mf0");
+  if (inp0) inp0.focus();
+  if (item.type === "dictee" && hasTTS()) setTimeout(() => speak(item.say), 400);
+}
+function inputHTML(item) {
+  const needAcc = !item.num && !item.en && (item.comp || "").startsWith("fr") || item.type === "dictee";
+  const accents = ["é", "è", "ê", "ë", "à", "â", "ç", "î", "ï", "ô", "û", "ù", "œ"];
+  return `<div class="inpwrap">
+    <input class="tinp" id="tin" placeholder="${t("inputPh")}" inputmode="${item.num ? "decimal" : "text"}" autocomplete="off" autocapitalize="off" spellcheck="false" onkeydown="if(event.key==='Enter')checkInput()">
+    ${needAcc ? `<div class="accbar">${accents.map((a) => `<button class="acc" onclick="insAcc('${a}')">${a}</button>`).join("")}</div>` : ""}
+    <button class="nextbtn checkbtn" onclick="checkInput()">${t("validate")}</button></div>`;
+}
+function insAcc(ch) { const i = $id("tin"); if (!i) return; const p = i.selectionStart || i.value.length; i.value = i.value.slice(0, p) + ch + i.value.slice(p); i.focus(); i.setSelectionRange(p + 1, p + 1); }
+
+/* ---- 答题交互 ---- */
+function credit4tries() { return qstate.tried === 1 ? 1 : 0.5; }
+function ansTextOf(item) {
+  switch (item.type) {
+    case "qcm": return String(item.opts[item.a]);
+    case "vf": return t("q_vf")[item.a ? 0 : 1];
+    case "input": case "dictee": return item.acc[0];
+    case "multi": return item.fields.map((f) => f.a).join(" · ");
+    case "order": return item.seq.join(" → ");
+    case "match": return item.pairs.map((p) => p.join("↔")).join(" · ");
+  }
+}
+function plainQ(item) { return (item.q || (item.type === "dictee" ? "Dictée : " + item.say : "")).replace(/<[^>]+>/g, ""); }
+function settle(correct, givenStr) {
+  const item = curItem();
+  qstate.done = true;
+  const credit = correct ? credit4tries() : 0;
+  sess.earned += credit; sess.perBlock[sess.bi].earned += credit;
+  recordAnswer(item.comp, credit, sess.day);
+  if (!correct || credit < 1) {
+    if (!correct) sess.wrong.push({ comp: item.comp, q: plainQ(item), given: String(givenStr).slice(0, 80), ans: ansTextOf(item) });
+  }
+  const fb = $id("fb");
+  const expl = item.exp ? `<div class="small" style="margin-top:4px">${item.exp}</div>` : "";
+  if (correct) { blip("ok"); fb.innerHTML = `<div class="fb good"><b class="res">${credit === 1 ? "🎉 " + t("correct") : "💪 " + t("correctHalf")} +${credit === 1 ? "1" : "0,5"} pt</b>${expl}</div>` + nextBtnHTML(); }
+  else { blip("bad"); fb.innerHTML = `<div class="fb bad"><b class="res">${t("wrong")} : ${esc(ansTextOf(item))}</b>${expl}</div>` + nextBtnHTML(); }
+  const nb = $id("nextbtn"); if (nb) nb.focus();
+}
+function nextBtnHTML() {
+  const last = sess.bi === sess.blocks.length - 1 && sess.qi === curBlock().items.length - 1;
+  return `<button class="nextbtn" id="nextbtn" onclick="nextQuestion()">${last ? t("finish") : t("next")}</button>`;
+}
+function giveHint(msg) {
+  blip("bad");
+  $id("fb").innerHTML = `<div class="fb hint"><b class="res">🔍 ${t("hintTitle")}</b><div class="small">${msg || t("tryAgain")}</div></div>`;
+}
+function pickOpt(i) {
+  if (qstate.done) return;
+  const item = curItem();
+  qstate.tried++;
+  const ok = item.type === "vf" ? (i === 0) === item.a : i === item.a;
+  const btn = $id("opt" + i);
+  if (ok) {
+    btn.classList.add("ok");
+    document.querySelectorAll(".opt").forEach((b) => (b.disabled = true));
+    settle(true, "");
+  } else if (qstate.tried === 1) {
+    btn.classList.add("bad"); btn.disabled = true;
+    giveHint(item.hint || (S.lang === "zh" ? "不是这个,再想想!" : "Pas celle-là, réfléchis encore !"));
+  } else {
+    btn.classList.add("bad");
+    document.querySelectorAll(".opt").forEach((b) => (b.disabled = true));
+    const goodIdx = item.type === "vf" ? (item.a ? 0 : 1) : item.a;
+    const gb = $id("opt" + goodIdx); if (gb) gb.classList.add("ok");
+    settle(false, item.type === "vf" ? t("q_vf")[i] : item.opts[i]);
+  }
+}
+function checkInput() {
+  if (qstate.done) return;
+  const item = curItem();
+  const v = $id("tin").value;
+  if (!v.trim()) return;
+  qstate.tried++;
+  const ok = checkAnswer(item, v);
+  const inp = $id("tin");
+  if (ok) { inp.classList.remove("bad"); inp.classList.add("ok"); inp.disabled = true; settle(true, v); }
+  else if (qstate.tried === 1) { inp.classList.add("bad"); giveHint(item.hint || (item.exp && item.type !== "dictee" ? (S.lang === "zh" ? "检查拼写和重音,再试一次!" : "Vérifie l'orthographe et les accents !") : t("tryAgain"))); setTimeout(() => inp.classList.remove("bad"), 600); }
+  else { inp.classList.add("bad"); inp.disabled = true; settle(false, v); }
+}
+function checkMulti() {
+  if (qstate.done) return;
+  const item = curItem();
+  const vals = item.fields.map((_, i) => $id("mf" + i).value);
+  if (vals.some((v) => !v.trim())) return;
+  qstate.tried++;
+  const ok = checkAnswer(item, vals);
+  if (ok) { item.fields.forEach((_, i) => { const f = $id("mf" + i); f.classList.add("ok"); f.disabled = true; }); settle(true, vals.join(" · ")); }
+  else if (qstate.tried === 1) { item.fields.forEach((f, i) => { const el = $id("mf" + i); const good = f.num ? Math.abs(parseNum(el.value) - parseNum(f.a)) < 1e-9 : normAns(el.value) === normAns(f.a); el.classList.toggle("bad", !good); el.classList.toggle("ok", good); }); giveHint(); }
+  else { item.fields.forEach((_, i) => { $id("mf" + i).disabled = true; }); settle(false, vals.join(" · ")); }
+}
+function mLeft(k) { if (qstate.done) return; const el = $id("ml" + k); if (el.classList.contains("paired")) return; document.querySelectorAll("[id^=ml]").forEach((x) => x.classList.remove("sel")); el.classList.add("sel"); qstate.msel = k; }
+function mRight(k) {
+  if (qstate.done || qstate.msel === null) return;
+  const item = curItem();
+  const l = $id("ml" + qstate.msel), r = $id("mr" + k);
+  if (r.classList.contains("paired")) return;
+  if (l.dataset.i === r.dataset.i) {
+    const colors = ["#2E8B62", "#3D8BFD", "#8B5CF6", "#E8503A", "#B07A1E"];
+    const c = colors[qstate.matched % colors.length];
+    [l, r].forEach((x) => { x.classList.remove("sel"); x.classList.add("paired"); x.style.background = c; x.style.color = "#fff"; });
+    blip("click");
+    qstate.matched++; qstate.msel = null;
+    if (qstate.matched === item.pairs.length) {
+      if (qstate.merr === 0) { qstate.tried = 1; settle(true, ""); }
+      else if (qstate.merr <= 2) { qstate.tried = 2; settle(true, ""); }
+      else settle(false, (S.lang === "zh" ? "配对错误 " : "erreurs : ") + qstate.merr);
+    }
+  } else {
+    qstate.merr++;
+    r.classList.add("bad"); l.classList.add("bad"); blip("bad");
+    setTimeout(() => { r.classList.remove("bad"); l.classList.remove("bad"); l.classList.remove("sel"); }, 450);
+    qstate.msel = null;
+  }
+}
+function chipPick(k, i) {
+  if (qstate.done) return;
+  const ch = $id("ch" + k);
+  if (ch.classList.contains("used")) return;
+  ch.classList.add("used"); ch.disabled = true;
+  qstate.order.push({ k, i });
+  renderOrderZone();
+}
+function chipUndo() {
+  if (qstate.done || !qstate.order.length) return;
+  const last = qstate.order.pop();
+  const ch = $id("ch" + last.k); ch.classList.remove("used"); ch.disabled = false;
+  renderOrderZone();
+}
+function renderOrderZone() {
+  const item = curItem();
+  const z = $id("ozone");
+  z.innerHTML = qstate.order.length ? qstate.order.map((o, n) => `<span class="ochip">${n + 1}. ${esc(item.seq[o.i])}</span>`).join("") : `<span class="ozhint">${t("clickOrder")}</span>`;
+  $id("ordercheck").classList.toggle("hidden", qstate.order.length !== item.seq.length);
+}
+function checkOrder() {
+  if (qstate.done) return;
+  const item = curItem();
+  qstate.tried++;
+  const ok = qstate.order.every((o, n) => o.i === n);
+  if (ok) settle(true, "");
+  else if (qstate.tried === 1) {
+    giveHint(S.lang === "zh" ? "顺序不对,想想哪一步应该在前面?(点撤销重排)" : "Pas le bon ordre… lequel vient en premier ?");
+    while (qstate.order.length) chipUndo();
+  } else settle(false, qstate.order.map((o) => item.seq[o.i]).join(" → "));
+}
+
+/* ---------- 结果页 ---------- */
+function showResults() {
+  const time = Math.round((Date.now() - sess.t0) / 1000);
+  const score = sess.total ? Math.round(sess.earned / sess.total * 100) : 0;
+  const res = finishDay(sess.day, { score, time, wrong: sess.wrong });
+  const msg = score >= 95 ? t("perfect") : score >= 80 ? t("great") : score >= 60 ? t("good") : t("meh");
+  const circ = 2 * Math.PI * 62;
+  const breakdown = sess.perBlock.filter((b) => b.total > 0).map((b) => {
+    const p = Math.round(b.earned / b.total * 100);
+    return `<div class="bd"><span>${b.ic}</span><span style="flex:0 0 auto;min-width:105px">${b.label}</span><div class="bar"><i style="width:${p}%;background:${b.color}"></i></div><b>${p}%</b></div>`;
+  }).join("");
+  const wrongs = sess.wrong.length
+    ? `<h2 class="sec">📝 ${t("wrongRecap")}</h2><div class="card recap">${sess.wrong.map((w) => `<div class="wrongitem"><div>${esc(w.q)}</div><div class="small"><span style="color:var(--bad)">✗ ${esc(w.given || "—")}</span> → <b style="color:var(--ok)">✓ ${esc(w.ans)}</b></div></div>`).join("")}</div>`
+    : `<div class="card center" style="background:var(--leaf-l)">🏆 ${t("noWrong")}</div>`;
+  const badgeHtml = res.newBadges.length ? `<h2 class="sec">🎖️ ${t("newBadge")}</h2><div class="badges">${res.newBadges.map((b) => badgeHTML(b, true, true)).join("")}</div>` : "";
+  const nextPlan = sess.day < 30 ? PLAN.find((p) => p.day === sess.day + 1) : null;
+  const tomorrow = nextPlan ? `<div class="card" style="background:var(--sky-l)"><b>🔭 ${t("tomorrow")}</b> : J${nextPlan.day} · ${nextPlan.ic} ${nextPlan.t[S.lang]}</div>` : "";
+  app.innerHTML = topbar() + `<div class="card scorewrap">
+    <h2 style="margin:4px 0">${t("score")} · ${t("todayTitle", { d: sess.day })}</h2>
+    <div class="scircle"><svg width="150" height="150"><circle cx="75" cy="75" r="62" fill="none" stroke="#F3E8DA" stroke-width="13"/>
+      <circle cx="75" cy="75" r="62" fill="none" stroke="${score >= 75 ? "var(--leaf)" : score >= 60 ? "var(--sun)" : "var(--coq)"}" stroke-width="13" stroke-linecap="round" stroke-dasharray="${circ}" stroke-dashoffset="${circ * (1 - score / 100)}" style="transition:stroke-dashoffset 1.2s ease"/></svg>
+      <div class="val"><b>${score}</b><span class="muted small">/100</span></div></div>
+    <div class="stars">${"⭐".repeat(res.stars)}${"☆".repeat(3 - res.stars)}</div>
+    <div><span class="gain">${t("gainXp", { n: res.xpGain })}</span><span class="gain">⏱ ${Math.max(1, Math.round(time / 60))} ${t("pMin")}</span></div>
+    <p style="font-weight:700;margin:8px 0 2px">${msg}</p></div>
+    <h2 class="sec">📊 ${t("breakdown")}</h2><div class="card breakdown">${breakdown}</div>
+    ${badgeHtml}${wrongs}${tomorrow}
+    <button class="nextbtn" onclick="sess=null;go('home')" style="margin-top:16px">🏝️ ${t("backHome")}</button>`;
+  if (score >= 75) { confetti(score >= 95 ? 130 : 70); blip("fanfare"); }
+  window.scrollTo(0, 0);
+}
+
+/* ---------- 勋章页 ---------- */
+function badgeHTML(b, unlocked, isNew) {
+  return `<div class="badge ${unlocked ? "" : "off"} ${isNew ? "new" : ""}"><span class="bic">${b.ic}</span><b>${S.lang === "zh" ? b.zh : b.fr}</b><small>${S.lang === "zh" ? b.dzh : b.dfr}</small></div>`;
+}
+function badgesView() {
+  app.innerHTML = topbar() + `<h2 class="sec">🎖️ ${t("badgesTitle")} · ${S.badges.length}/${BADGES.length}</h2>
+  <div class="badges">${BADGES.map((b) => badgeHTML(b, S.badges.includes(b.id))).join("")}</div>
+  <button class="nextbtn" onclick="go('home')" style="margin-top:16px">🏝️ ${t("backHome")}</button>`;
+}
+
+/* ---------- 结业证书 ---------- */
+function diplomaView() {
+  const { L } = levelOf(S.xp);
+  app.innerHTML = topbar() + `<div class="diploma card">
+    <div style="font-size:3rem">🌺🏅🌺</div>
+    <h1>${t("diplomaTitle")}</h1>
+    <p class="muted">L'île aux Coquelicots · CM1 → CM2 · ${new Date().getFullYear()}</p>
+    <div class="nm">Tong Jingyi · 童童</div>
+    <p>${t("diplomaBody")}</p>
+    <p><b>${t("diplomaStars", { s: totalStars(), t: (S.lang === "zh" ? L.zh : L.fr) + " " + L.ic })}</b></p>
+    <p class="small muted">${todayStr()}</p></div>
+    <div class="row"><button class="bigbtn alt" onclick="window.print()">${t("print")}</button>
+    <button class="sbtn" onclick="go('home')">🏝️ ${t("backHome")}</button></div>`;
+}
+
+/* ---------- 设置 ---------- */
+function settingsView() {
+  app.innerHTML = topbar() + `<h2 class="sec">⚙️ ${t("settings")}</h2><div class="card">
+    <div class="setrow"><span class="lbl">🌐 ${t("sLang")}</span>
+      <button class="sbtn" onclick="S.lang='zh';save();render()" ${S.lang === "zh" ? 'style="border-color:var(--coq)"' : ""}>中文</button>
+      <button class="sbtn" onclick="S.lang='fr';save();render()" ${S.lang === "fr" ? 'style="border-color:var(--coq)"' : ""}>Français</button></div>
+    <div class="setrow"><span class="lbl">🔔 ${t("sSound")}</span>
+      <button class="sbtn" onclick="S.sound=!S.sound;save();render()">${S.sound ? "🔊 " + t("on") : "🔇 " + t("off")}</button></div>
+    <div class="setrow"><span class="lbl">🗣️ ${t("sVoice")}<small>${hasTTS() ? "Web Speech fr-FR" : t("ttsNo")}</small></span>
+      <button class="sbtn" onclick="speak('Bonjour Tongtong ! Bonnes vacances !')">${t("sVoiceBtn")}</button></div>
+    <div class="setrow"><span class="lbl">🔑 ${t("sPin")}</span>
+      <button class="sbtn" onclick="changePin()">${t("sPin")}</button></div>
+    <div class="setrow"><span class="lbl">🗑️ ${t("sReset")}</span>
+      <button class="sbtn warn" onclick="resetAll()">${t("sResetBtn")}</button></div>
+  </div>
+  <button class="nextbtn" onclick="go('home')" style="margin-top:14px">🏝️ ${t("backHome")}</button>`;
+}
+function changePin() {
+  const cur = prompt(S.lang === "zh" ? "输入当前PIN" : "PIN actuel :");
+  if (cur !== S.pin) { toast(t("pinBad")); return; }
+  const np = prompt(t("sPinNew"));
+  if (np && /^\d{4}$/.test(np)) { S.pin = np; save(); toast(t("saved")); }
+}
+function resetAll() {
+  if (!confirm(t("sResetWarn"))) return;
+  const pinCheck = prompt(S.lang === "zh" ? "输入家长PIN确认重置" : "PIN parents pour confirmer :");
+  if (pinCheck !== S.pin) { toast(t("pinBad")); return; }
+  localStorage.removeItem(STORE_KEY); S = DEFAULT_STATE(); save(); go("home");
+}
+
+/* ---------- 路由 ---------- */
+function render() {
+  switch (view.name) {
+    case "home": return homeView();
+    case "badges": return badgesView();
+    case "diploma": return diplomaView();
+    case "settings": return settingsView();
+    case "parent": return parentView();
+    default: return homeView();
+  }
+}
+
+/* ---------- 启动 ---------- */
+load();
+initVoices();
+render();
+
+</script>
+</body>
+</html>
