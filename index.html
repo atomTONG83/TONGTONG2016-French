@@ -63,7 +63,7 @@
     <div class="bg-grid"></div>
     <div class="container">
         <header>
-            <div class="date-badge">2026年06月13日 // 13 June 2026</div>
+            <div class="date-badge" id="todayBadge">2026年08月28日 // 28 August 2026</div>
             <h1>TONGTONG's SPACE<br><span style="opacity: 0.5; font-size: 1.2rem;">童童空间</span></h1>
         </header>
         <div class="reward-card">
@@ -131,6 +131,31 @@
 
         <footer>V3.8-VIBE-RESTORED | © ATOM TONG 2026 | MISSION_COMMAND</footer>
     </div>
+    <script>
+        (function () {
+            const badge = document.getElementById('todayBadge');
+            if (!badge || typeof Intl === 'undefined') return;
+
+            const now = new Date();
+            const zhParts = new Intl.DateTimeFormat('zh-CN', {
+                timeZone: 'Europe/Paris',
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            }).formatToParts(now).reduce((parts, item) => {
+                if (item.type !== 'literal') parts[item.type] = item.value;
+                return parts;
+            }, {});
+            const enDate = new Intl.DateTimeFormat('en-GB', {
+                timeZone: 'Europe/Paris',
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            }).format(now);
+
+            badge.textContent = `${zhParts.year}年${zhParts.month}月${zhParts.day}日 // ${enDate}`;
+        })();
+    </script>
 </body>
 </html>
     
