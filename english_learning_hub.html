@@ -50,7 +50,13 @@
         ul { margin: 8px 0; padding-left: 20px; }
         li { margin-bottom: 6px; color: #f8fafc; font-size: 1em; }
         
-        .feedback-text { color: #cbd5e1; line-height: 1.7; font-size: 1em; margin-bottom: 15px; }
+        .teacher-feedback { margin-bottom: 18px; border: 1px solid var(--border); border-radius: 8px; background: rgba(2, 6, 23, 0.45); }
+        .teacher-feedback summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 15px; color: #93c5fd; cursor: pointer; font-weight: 700; list-style: none; }
+        .teacher-feedback summary::-webkit-details-marker { display: none; }
+        .teacher-feedback summary::after { content: "+"; color: var(--accent); font-size: 1.25em; line-height: 1; }
+        .teacher-feedback[open] summary::after { content: "−"; }
+        .teacher-feedback summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+        .feedback-text { color: #cbd5e1; line-height: 1.7; font-size: 1em; margin: 0; padding: 2px 15px 16px; }
         
         .topics-tag { display: inline-block; background: rgba(59,130,246,0.1); color: #93c5fd; border: 1px solid rgba(59,130,246,0.25); border-radius: 10px; padding: 3px 12px; font-size: 0.85em; margin: 3px 6px 3px 0; }
         .progress-tag { display: inline-block; background: rgba(16,185,129,0.1); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.25); border-radius: 10px; padding: 3px 12px; font-size: 0.85em; margin: 3px 6px 3px 0; }
@@ -82,9 +88,10 @@
                 <span class="lesson-date">📅 2026-09-03（周四）</span>
                 <span class="status-tag status-pending">HOMEWORK PENDING</span>
             </div>
-            <div class="feedback-text">
-                <strong>教师原话：</strong>"Dear Atom, For homework, please have Jingyi write 3 paragraphs about his trip to China for 2 months this summer. One paragraph should be about Shanghai, one about Guilin and one about Yangshuo. Jingyi did pretty well telling me about his trip but I did have to correct his use of simple present tense verbs when he should have been using simple past tense verbs. He told me that he took a speed rail from Shanghai to Guilin and back and later flew to Yangshuo. He said he ate really good noodle soup and I loved seeing the pictures of him spelunking in the cave and kayaking. I am so glad he got to spend some quality time in nature! Lastly, we played the globe game but only did one photo. I showed him a picture of The Stone Forest with lemurs in Madagascar. He did not get it. This one was tough though."
-            </div>
+            <details class="teacher-feedback">
+                <summary>查看教师原话</summary>
+                <div class="feedback-text">"Dear Atom, For homework, please have Jingyi write 3 paragraphs about his trip to China for 2 months this summer. One paragraph should be about Shanghai, one about Guilin and one about Yangshuo. Jingyi did pretty well telling me about his trip but I did have to correct his use of simple present tense verbs when he should have been using simple past tense verbs. He told me that he took a speed rail from Shanghai to Guilin and back and later flew to Yangshuo. He said he ate really good noodle soup and I loved seeing the pictures of him spelunking in the cave and kayaking. I am so glad he got to spend some quality time in nature! Lastly, we played the globe game but only did one photo. I showed him a picture of The Stone Forest with lemurs in Madagascar. He did not get it. This one was tough though."</div>
+            </details>
             <div class="section">
                 <h3>📖 课堂内容 / Topics Covered</h3>
                 <div>
@@ -135,9 +142,10 @@
                 <span class="lesson-date">📅 2026-06-26（周五）</span>
                 <span class="status-tag status-done">COMPLETED ✅</span>
             </div>
-            <div class="feedback-text">
-                <strong>教师原话：</strong>"Jingyi has been doing very well in class. We talked about Jingyi's big trip to Shanghai this week. He said he is flying there all by himself. Oh my goodness. He's a little adult now. We also reviewed large numbers twice. He has gotten a lot better at reading these more difficult numbers out loud. Then we finished reading the National Geographic book on whales. We also reviewed the names of all the different types of whales, orcas and dolphins mentioned in the book. We worked on reviewing teens versus numerals of 10 again as well since he has really been struggling with these."
-            </div>
+            <details class="teacher-feedback">
+                <summary>查看教师原话</summary>
+                <div class="feedback-text">"Jingyi has been doing very well in class. We talked about Jingyi's big trip to Shanghai this week. He said he is flying there all by himself. Oh my goodness. He's a little adult now. We also reviewed large numbers twice. He has gotten a lot better at reading these more difficult numbers out loud. Then we finished reading the National Geographic book on whales. We also reviewed the names of all the different types of whales, orcas and dolphins mentioned in the book. We worked on reviewing teens versus numerals of 10 again as well since he has really been struggling with these."</div>
+            </details>
             <div class="section">
                 <h3>📖 课堂内容 / Topics Covered</h3>
                 <div>
@@ -167,9 +175,10 @@
                 <span class="lesson-date">📅 2026-02-13（周一）</span>
                 <span class="status-tag status-done">COMPLETED ✅</span>
             </div>
-            <div class="feedback-text">
-                <strong>教师原话：</strong>"Jingyi did great in class on Monday! We talked about what it's like to go to the aquarium and what animals we like to see there. Then we reviewed our map vocab (hemispheres, equator, tropics, etc.). We also finished his writing assignment about tsunamis."
-            </div>
+            <details class="teacher-feedback">
+                <summary>查看教师原话</summary>
+                <div class="feedback-text">"Jingyi did great in class on Monday! We talked about what it's like to go to the aquarium and what animals we like to see there. Then we reviewed our map vocab (hemispheres, equator, tropics, etc.). We also finished his writing assignment about tsunamis."</div>
+            </details>
             <div class="section">
                 <h3>📚 词汇积累 / Vocab</h3>
                 <ul class="vocab-list">
