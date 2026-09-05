@@ -63,12 +63,12 @@
     <div class="bg-grid"></div>
     <div class="container">
         <header>
-            <div class="date-badge" id="todayBadge">2026年08月28日 // 28 August 2026</div>
+            <div class="date-badge" id="todayBadge">2026年09月05日 // 05 September 2026</div>
             <h1>TONGTONG's SPACE<br><span style="opacity: 0.5; font-size: 1.2rem;">童童空间</span></h1>
         </header>
         <div class="reward-card">
             <div class="reward-inner">
-                <div class="reward-value">110.0 <span style="font-size: 1.2rem; vertical-align: middle;">EUR</span></div>
+                <div class="reward-value">115.0 <span style="font-size: 1.2rem; vertical-align: middle;">EUR</span></div>
                 <div style="font-size: 0.6rem; letter-spacing: 2px; color: var(--primary);">CREDIT BALANCE AVAILABLE</div>
             </div>
         </div>
@@ -121,11 +121,11 @@
     </a>
     <a href="english_learning_hub.html" class="action-box">
         <h3>ENGLISH</h3>
-        <p style="font-size: 0.75rem; color: #94a3b8;">2026-06-26：上海之旅、大数字、国家地理鲸鱼绘本。</p>
+        <p style="font-size: 0.75rem; color: #94a3b8;">2026-09-03：暑期中国旅行三段作文，重点使用一般过去时。</p>
     </a>
     <a href="violin_learning_hub.html" class="action-box">
         <h3>VIOLIN</h3>
-        <p style="font-size: 0.75rem; color: #94a3b8;">2026-06-27：小协 No.2 /《Surprise》/《动物狂想曲》，评分 93%。</p>
+        <p style="font-size: 0.75rem; color: #94a3b8;">1. 小《2》P146 → 《Surprise》p18-58；2. 降低弓的音量 +《动物狂欢曲》练习</p>
     </a>
 </div>
 
@@ -138,19 +138,13 @@
 
             const now = new Date();
             const zhParts = new Intl.DateTimeFormat('zh-CN', {
-                timeZone: 'Europe/Paris',
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit'
+                timeZone: 'Europe/Paris', year: 'numeric', month: '2-digit', day: '2-digit'
             }).formatToParts(now).reduce((parts, item) => {
                 if (item.type !== 'literal') parts[item.type] = item.value;
                 return parts;
             }, {});
             const enDate = new Intl.DateTimeFormat('en-GB', {
-                timeZone: 'Europe/Paris',
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric'
+                timeZone: 'Europe/Paris', day: 'numeric', month: 'long', year: 'numeric'
             }).format(now);
 
             badge.textContent = `${zhParts.year}年${zhParts.month}月${zhParts.day}日 // ${enDate}`;
