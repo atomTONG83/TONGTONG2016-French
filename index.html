@@ -1,9 +1,123 @@
-<!doctype html><html lang="zh-CN"><head><meta name="robots" content="noindex,nofollow"><script>window.TONGTONG_PUBLIC_SITE=true;</script><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>童童学习空间 · CM2</title><link rel="stylesheet" href="learning_hub.css?v=20260916"><script src="config.js?v=4.5.0" defer></script><script src="learning_read.js?v=20260916" defer></script><script src="student_hub.js?v=20260916" defer></script></head><body>
-<header><div class="wrap"><div class="top"><div><p class="grade">CM2 · 2026–2027</p><h1>童童学习空间</h1><p class="muted">每天学一点，离目标近一点。<br>Mon espace d’apprentissage</p></div><p id="today-label" class="muted"></p></div><nav aria-label="学习导航"><a class="primary" href="#today">今日学习</a><a class="secondary" href="#subjects">学科与课程</a><a class="secondary" href="#rewards">我的奖励</a></nav></div></header>
-<main class="wrap"><div class="bar"><p id="cloud-status" class="status" role="status">正在读取学习记录…</p><button id="refresh" aria-label="刷新学习记录">↻</button></div>
-<section id="today"><p class="grade">MES MOTS DU JOUR</p><h2>今天，让单词变成自己的</h2><div id="today-progress" aria-live="polite">正在读取今日进度…</div><div class="actions"><a class="primary" href="french_mot.html">开始背单词 →</a><a class="secondary" href="cm2_words.html">CM2 学校词表与听写工坊</a><a class="secondary" href="study_stats.html">单词本与学习日历</a></div></section>
-<section><h2>当前作业与练习</h2><div id="homework-list">正在读取作业记录…</div><p class="muted">学校作业以你的 agenda 和 Ecole Directe 为准。这里没记录，不代表已经完成。</p></section>
-<section id="subjects"><h2>学科与课程</h2><div class="modules">
-<a class="module" href="https://tongtong-private-staging.euripscope.workers.dev/english_learning_hub.html"><h3>英语网课</h3><small>阅读、写作与课堂练习</small></a><a class="module" href="https://tongtong-private-staging.euripscope.workers.dev/violin_learning_hub.html"><h3>小提琴</h3><small>练习、曲谱与节拍器</small></a><a class="module" href="french_grammar.html"><h3>法语语法</h3><small>主语与词性</small></a><a class="module" href="cm2_words.html"><h3>CM2 单词工坊</h3><small>词性、性数、变位与听写</small></a><a class="module" href="school_vocabulary_complete.html"><h3>历史学校词汇</h3><small>保留以前学过的单词</small></a><a class="module" href="french_poetry.html"><h3>法语诗歌</h3><small>阅读与背诵</small></a><a class="module" href="earth_europe_learning_v14.html"><h3>欧洲地理</h3><small>3D 地球与国家</small></a><a class="module" href="chinese_learning.html"><h3>汉语学习</h3><small>课文与朗读</small></a><a class="module" href="exam_hub.html"><h3>复习备考</h3><small>历史已学主题</small></a><a class="module" href="revision/"><h3>CM1 → CM2 巩固</h3><small>暑假 30 天复习营 · 历史资料</small></a></div></section>
-<section id="rewards"><p class="grade">MES RÉUSSITES</p><h2>每一次坚持，都算数</h2><div class="metrics" id="reward-metrics"><p>奖励记录读取中…</p></div><p>完成每日背单词与复习：100 ⭐。每累计 1,000 ⭐ 达成一座奖杯。</p><p id="reward-balance" class="muted"></p><p class="muted">奖杯对应的 5 € 奖励沿用原有家长核算机制；本页面展示记录，不重复发放。</p></section>
-<noscript><p>请启用 JavaScript 读取学习进度。</p><a href="french_mot.html">进入背单词</a></noscript></main><footer><div class="wrap">童童学习空间 · CM2 <span id="records-updated"></span><p><a href="https://tongtong-private-staging.euripscope.workers.dev/parent/">家长空间 · 单独登录</a></p></div></footer></body></html>
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta name="robots" content="noindex,nofollow"><script>window.TONGTONG_PUBLIC_SITE=true;</script><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TONGTONG's SPACE · CM2</title><style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap');
+        :root {
+            --bg: #030712; --primary: #0ea5e9; --secondary: #818cf8; --accent: #fbbf24;
+            --danger: #ef4444; --glass: rgba(15, 23, 42, 0.6); --border: rgba(56, 189, 248, 0.2);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--bg); color: #f8fafc; font-family: 'Rajdhani', sans-serif; min-height: 100vh; overflow-x: hidden; }
+        .bg-grid { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: linear-gradient(rgba(14, 165, 233, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(14, 165, 233, 0.05) 1px, transparent 1px); background-size: 50px 50px; z-index: -1; transform: rotateX(45deg); animation: moveGrid 20s linear infinite; }
+        @keyframes moveGrid { from { background-position: 0 0; } to { background-position: 0 500px; } }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        header { text-align: center; margin-bottom: 30px; }
+        .date-badge { font-family: 'Orbitron'; font-size: 0.65rem; color: var(--primary); border: 1px solid var(--primary); padding: 4px 15px; display: inline-block; margin-bottom: 10px; }
+        h1 { font-family: 'Orbitron'; font-weight: 900; font-size: 1.8rem; letter-spacing: 2px; text-shadow: 0 0 20px rgba(14, 165, 233, 0.5); }
+        
+        /* RESTORED COOL REWARD CARD EFFECTS */
+        .reward-card { 
+            background: var(--glass); 
+            border: 1px solid var(--border); 
+            border-radius: 20px; 
+            padding: 40px 20px; 
+            text-align: center; 
+            position: relative; 
+            overflow: hidden; 
+            margin-bottom: 30px; 
+            backdrop-filter: blur(10px); 
+        }
+        .reward-card::before {
+            content: ''; position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: conic-gradient(transparent, var(--primary), transparent 40%);
+            animation: rotate 4s linear infinite;
+            opacity: 0.2;
+        }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .reward-inner { position: relative; z-index: 2; }
+        
+        .reward-value { font-family: 'Orbitron'; font-size: 5rem; font-weight: 900; color: var(--accent); text-shadow: 0 0 30px rgba(251, 191, 36, 0.4); }
+        .section-title { font-size: 0.9rem; font-weight: 700; letter-spacing: 5px; color: var(--primary); border-left: 3px solid var(--primary); padding-left: 15px; margin: 40px 0 20px; text-transform: uppercase; }
+        .task-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); margin-bottom: 12px; border-radius: 12px; display: flex; align-items: center; padding: 20px; animation: slideIn 0.5s ease-out forwards; }
+        @keyframes slideIn { from { transform: translateX(-30px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        .task-icon { font-family: 'Orbitron'; font-size: 1.2rem; font-weight: 900; color: var(--primary); opacity: 0.3; margin-right: 20px; }
+        .task-cn { font-size: 1rem; font-weight: 700; color: #fff; }
+        .task-fr { font-size: 0.8rem; color: #64748b; font-style: italic; }
+        .empty-msg { text-align: center; padding: 40px; color: var(--accent); font-family: 'Orbitron'; font-size: 0.8rem; letter-spacing: 2px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .action-box { background: var(--glass); border: 1px solid var(--border); padding: 25px; border-radius: 15px; text-decoration: none; color: inherit; transition: 0.3s; }
+        .action-box:hover { border-color: var(--primary); transform: translateY(-5px); }
+        .action-box h3 { color: var(--primary); font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 10px; }
+        .btn-launch { grid-column: span 2; background: linear-gradient(90deg, var(--primary), var(--secondary)); padding: 30px; border-radius: 15px; text-align: center; color: #000; font-weight: 900; font-family: 'Orbitron'; font-size: 1.5rem; text-decoration: none; box-shadow: 0 10px 0 #0369a1; transition: 0.1s; margin-bottom: 15px; }
+        .btn-launch:active { transform: translateY(5px); box-shadow: 0 5px 0 #0369a1; }
+        footer { text-align: center; margin-top: 100px; padding-bottom: 50px; color: #334155; font-size: 0.6rem; letter-spacing: 3px; font-weight: 700; }
+    
+        body { line-height:1.55; }
+        .bg-grid { pointer-events:none; }
+        .container { position:relative; }
+        .grade-tag { color:#94a3b8;font-size:.75rem;letter-spacing:3px;margin-top:12px; }
+        .reward-card { margin-bottom:24px; }
+        .reward-label { font-size:.7rem;letter-spacing:2px;color:#38bdf8; }
+        .reward-note { color:#94a3b8;font-size:.7rem;margin-top:12px; }
+        .reward-value { font-size:clamp(3.3rem,13vw,5rem);line-height:1.4; }
+        .reward-unit { font-size:1.2rem;vertical-align:middle; }
+        .section-title { letter-spacing:3px; }
+        .section-title span { color:#94a3b8;font-size:.75rem;letter-spacing:1px;display:block;margin-top:4px; }
+        .mission-panel { background:var(--glass);border:1px solid var(--border);border-radius:12px;padding:20px;animation:slideIn .5s ease-out both; }
+        .bar { display:flex;align-items:center;gap:12px;justify-content:space-between;margin:12px 0 18px; }
+        .status,.muted { color:#94a3b8;font-size:.75rem; }
+        button { font:inherit;min-width:44px;min-height:44px;border:1px solid var(--border);border-radius:8px;background:var(--glass);color:#38bdf8;cursor:pointer; }
+        button:disabled { opacity:.5; }
+        .metrics { display:flex;justify-content:space-around;gap:12px;margin-top:18px; }
+        .metric { min-width:0; }
+        .metric strong { display:block;font-family:'Orbitron',monospace;font-size:1.35rem;color:var(--accent); }
+        .metric span { font-size:.7rem;color:#94a3b8; }
+        #today-progress .metrics { padding-top:16px;border-top:1px solid var(--border); }
+        .grid-2 .action-box { min-width:0;animation:slideIn .5s ease-out both; }
+        .action-box:nth-child(2n) { animation-delay:.08s; }
+        .action-box:nth-child(3n) { animation-delay:.16s; }
+        .action-box p { font-size:.8rem;color:#94a3b8; }
+        .action-box h3 { color:#38bdf8; }
+        .wide { grid-column:span 2; }
+        .btn-launch { display:block;margin:20px 0 30px; }
+        .btn-launch small { display:block;font:600 .85rem/1.7 'Rajdhani',sans-serif;letter-spacing:1px; }
+        .record h3 { font-size:1rem; }.record p { color:#cbd5e1;font-size:.85rem;margin:10px 0; }
+        a { color:#38bdf8;text-underline-offset:4px;touch-action:manipulation; }
+        a:focus-visible,button:focus-visible { outline:2px solid var(--accent);outline-offset:5px; }
+        footer { margin-top:55px;color:#94a3b8;letter-spacing:2px; }
+        footer a { display:inline-block;padding:14px;font-size:.85rem;letter-spacing:1px; }
+        @media(max-width:380px) { .container { padding:16px; } h1 { font-size:1.45rem; }.action-box { padding:18px 14px; }.metrics { gap:8px; }.metric strong { font-size:1.1rem; } }
+        @media(prefers-reduced-motion:reduce) { *,*::before,*::after { animation:none!important;transition:none!important; } }
+</style>
+<script src="config.js?v=4.5.0" defer></script><script src="learning_read.js?v=20260916" defer></script><script src="student_hub.js?v=20260916-scifi" defer></script></head>
+<body><div class="bg-grid" aria-hidden="true"></div><div class="container">
+<header><div class="date-badge" id="today-label">CM2 · 2026–2027</div><h1>TONGTONG's SPACE<br><span style="opacity:.65;font-size:1.2rem">童童空间</span></h1><p class="grade-tag">CM2 · LEARNING COMMAND · 2026–2027</p></header>
+<section class="reward-card" id="rewards" aria-label="我的奖金与奖励"><div class="reward-inner">
+<div class="reward-value"><span id="reward-amount">115.0</span> <span class="reward-unit">EUR</span></div>
+<div class="reward-label">CREDIT BALANCE AVAILABLE · 奖金余额</div>
+<p class="reward-note" id="reward-balance">家长账本快照 · 核对于 2026-09-16</p>
+<div class="metrics" id="reward-metrics" aria-live="polite"><p class="muted">星星与奖杯读取中…</p></div>
+</div></section>
+<section id="today"><h2 class="section-title">Active Mission List<span>今日任务 · 每一点进步，都是新的能量</span></h2>
+<div class="bar"><p id="cloud-status" class="status" role="status">正在连接学习记录…</p><button id="refresh" aria-label="刷新学习记录">↻</button></div>
+<div class="mission-panel" id="today-progress" aria-live="polite">正在读取今日进度…</div>
+<a href="french_mot.html" class="btn-launch">Le Trésor des Mots<small>启动背单词任务 · CM2 →</small></a></section>
+<section id="subjects"><h2 class="section-title">Knowledge Interface<span>知识接口 · 选择你的探索方向</span></h2><div class="grid-2">
+<a href="cm2_words.html" class="action-box wide" style="border-color:#818cf8"><h3>✦ ATELIER CM2</h3><p>CM2 单词工坊 · 词性、性数、变位与听写</p></a>
+<a href="french_grammar.html" class="action-box" style="border-color:#a78bfa"><h3>GRAMMAIRE</h3><p>法语语法学习</p></a>
+<a href="study_stats.html" class="action-box"><h3>MISSION LOG</h3><p>单词本与学习日历</p></a>
+<a href="earth_europe_learning_v14.html" class="action-box wide" style="border-color:#10b981"><h3>🌍 3D 地球 · 欧洲国家学习</h3><p>Apprendre les pays européens en 3D</p></a>
+<a href="chinese_learning.html" class="action-box wide" style="border-color:#ef4444"><h3>🇨🇳 汉语学习 / CHINOIS</h3><p>课文、朗读与学习资料</p></a>
+<a href="school_vocabulary_complete.html" class="action-box" style="border-color:#818cf8"><h3>LEXIQUE</h3><p>历史学校法语生词本</p></a>
+<a href="french_poetry.html" class="action-box"><h3>POÉSIE</h3><p>法语诗歌 · 阅读与背诵</p></a>
+<a href="https://tongtong-private-staging.euripscope.workers.dev/english_learning_hub.html" class="action-box"><h3>ENGLISH</h3><p>英语网课 · 阅读与写作</p></a>
+<a href="https://tongtong-private-staging.euripscope.workers.dev/violin_learning_hub.html" class="action-box"><h3>VIOLIN</h3><p>小提琴 · 曲谱与练习</p></a>
+<a href="exam_hub.html" class="action-box wide" style="border-color:var(--accent)"><h3>REVISION</h3><p>复习备考中心 · 历史已学主题</p></a>
+<a href="revision/" class="action-box wide" style="border-color:#E8503A"><h3>🌺 暑假复习营 CM1 → CM2</h3><p>30天复习巩固 · 历史资料</p></a>
+</div></section>
+<section><h2 class="section-title">Mission Briefing<span>课程作业与练习</span></h2><div class="mission-panel" id="homework-list">正在读取作业记录…</div><p class="muted" style="margin-top:12px">学校作业以 agenda 和 Ecole Directe 为准。</p></section>
+<p class="muted" style="margin-top:25px;text-align:center">每日背单词与复习 100 ⭐ · 每 1,000 ⭐ 一座奖杯<br>每座奖杯对应 5 €，沿用家长核算，不重复发放。</p>
+<noscript><p>请启用 JavaScript 读取学习进度。</p></noscript>
+<footer>CM2 · VIBE RESTORED | © ATOM TONG 2026<br><span id="records-updated"></span><br><a href="https://tongtong-private-staging.euripscope.workers.dev/parent/">家长空间 · 单独登录</a></footer>
+</div></body></html>
