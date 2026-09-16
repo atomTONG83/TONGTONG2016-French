@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
+<head><meta name="robots" content="noindex,nofollow"><script>window.TONGTONG_PUBLIC_SITE=true;</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>💎 Le Trésor des Mots de Jingyi</title>
@@ -123,10 +123,12 @@
     <!-- Supabase 客户端库 -->
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <!-- 法语学习 Supabase 集成 -->
-    <script src="./config.js?v=4.3.3"></script>
-    <script src="./french_supabase.js?v=4.3.3"></script>
+    <script src="./config.js?v=4.5.0"></script>
+    <script src="./french_supabase.js?v=4.5.0"></script>
     <!-- 诊断工具 -->
     <script src="./french_diagnostic.js"></script>
+    <script src="./cm2_vocabulary.js?v=20260916"></script>
+    <script src="./cm2_learning.js?v=20260916"></script>
 </head>
 <body>
     <div class="container">
@@ -134,11 +136,12 @@
             <div style="text-align: left; margin-bottom: 10px;">
                 <a href="index.html" style="text-decoration: none; color: var(--p); font-weight: bold; font-size: 0.9em;">← Retour</a>
             </div>
-            <h1>💎 Le Trésor des Mots de Jingyi <span class="lvl-badge" style="background:var(--w); color:black; padding:6px 12px; font-size:0.5em;">CM1</span></h1>
+            <h1>💎 Le Trésor des Mots de Jingyi <span class="lvl-badge" style="background:var(--w); color:black; padding:6px 12px; font-size:0.5em;">CM2</span></h1>
             <p id="ui-date" style="font-weight: bold; color: var(--p); font-size: 1.1em; margin: 10px 0;"></p>
-            <p style="color: #666; font-size: 0.9em;">Mission : Maîtrise tous les mots !</p>
+            <p style="color: #666; font-size: 0.9em;">CM2 · 2026–2027 · Comprendre, écrire et réutiliser les mots.</p>
         </div>
 
+        <div class="card"><strong>Mon atelier CM2</strong><p>Nature des mots · accords · conjugaison · dictée</p><a href="cm2_words.html">Ouvrir mes listes et mon atelier →</a><p style="font-size:.85em">Les mots de la classe sont ajoutés par mes parents. Les mots proposés par le site sont des entraînements complémentaires.</p></div>
         <div class="stats-bar">
             <div class="stat-item">⭐ <span id="ui-stars">0</span> Stars</div>
             <div class="stat-item">🏆 <span id="ui-trophies">0</span> Trophées</div>
@@ -171,7 +174,7 @@
                     <button id="mode-r" class="mode-btn" onclick="setQuizMode('rev')">Révision</button>
                 </div>
             </div>
-            <p style="font-size:0.85em;color:#666;margin:0 0 10px 0;font-style:italic;">💡 Règle : Réponds correctement 2 fois de suite pour maîtriser un mot et gagner +100⭐ !</p>
+            <p style="font-size:0.85em;color:#666;margin:0 0 10px 0;font-style:italic;">💡 Règle : Réponds correctement 2 fois de suite pour maîtriser un mot. Termine toute la séance pour gagner +100⭐ !</p>
             <div style="display: flex; justify-content: space-between; align-items: baseline;">
                 <p>Définition de <strong id="q-word" style="color:var(--p)">?</strong></p>
                 <div id="q-mastery" class="mastery-indicator"></div>
@@ -243,6 +246,7 @@
         let gGameMode = 'new';
         let gCombo = 0;
         let gIsLocked = false;
+        let gSyncConflict = false;
         let gSaveInFlight = false;
         let gSaveAgain = false;
         let gPendingSource = null;
@@ -287,9 +291,10 @@
         const FULL_DB_PATH = "./french_full_db.json";
         
         // 版本信息
-        const APP_VERSION = "4.3.3";
-        const LAST_UPDATE = "2026-06-20";
+        const APP_VERSION = "4.5.0";
+        const LAST_UPDATE = "2026-09-16";
         const VERSION_CHANGES = [
+            "v4.5.0 (2026-09-16): CM2, listes scolaires et atelier nature/accords/conjugaison; progression conservée",
             "v4.3.3 (2026-06-20): 今日新词按钮按 added_words 判断，点击 Ajouter 后才显示 Ajouté",
             "v4.3.2 (2026-06-20): 分离今日必做复习与积压复习，修复 backlog 抢占普通复习模式",
             "v4.3.1 (2026-06-20): 恢复今日单词 Ajouté/Ajouter 按钮显示，保留答题区练习提示",
@@ -312,6 +317,7 @@
         
         // ===== HELPER FUNCTIONS =====
         async function loadFullDatabase() {
+            if (window.CM2Learning) await window.CM2Learning.ready;
             // 词库只有几十 KB，本地静态文件是首屏最稳路径；Supabase 只做后台刷新。
             try {
                 const response = await fetch(FULL_DB_PATH + "?t=" + Date.now());
@@ -365,8 +371,18 @@
                 });
         }
         
+        function escapeWordHTML(value) {
+            return String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+        }
+        function escapeWordAction(value) {
+            return escapeWordHTML(String(value).replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/\r/g, '\\r').replace(/\n/g, '\\n'));
+        }
+
         function getCurrentDB() {
-            return FULL_DB || BASE_DB;
+            const entries = FULL_DB || BASE_DB;
+            const merged = entries.slice();
+            BASE_DB.forEach(v => { if (!merged.some(e => e.word === v.word)) merged.push(v); });
+            return window.CM2Learning ? window.CM2Learning.merge(merged) : merged;
         }
         
         function findWordInDB(word) {
@@ -551,6 +567,13 @@
         }
 
         function chooseBestLearningSource(sources, today) {
+            const cloud = sources.find(s => s.name === 'cloud' && isUsableLearningData(s.data));
+            if (cloud && isWebPrimaryRuntime()) {
+                const pending = sources.find(s => s.name === 'local' && s.data?.cloud_updated_at &&
+                    s.data.cloud_updated_at === cloud.data.cloud_updated_at &&
+                    s.data.daily_stats?.date === today && !isTodayCompletedData(cloud.data, today));
+                return pending || cloud;
+            }
             const usableSources = sources.filter(function(source) { return isUsableLearningData(source.data); });
             const completedSources = usableSources.filter(function(source) {
                 return isTodayCompletedData(source.data, today);
@@ -600,11 +623,8 @@
             const notebookWords = new Set((gData.notebook || []).map(function(n) { return n.word; }));
             const unlearnedCount = getCurrentDB().filter(function(v) { return !notebookWords.has(v.word); }).length;
             const duplicatedDaily = new Set(gData.daily_stats.words).size !== gData.daily_stats.words.length;
-            const dailyAlreadyInNotebook = gData.daily_stats.words.filter(function(word) {
-                return notebookWords.has(word);
-            }).length;
-
-            return gData.daily_stats.words.length < 5 || duplicatedDaily || (dailyAlreadyInNotebook > 0 && unlearnedCount > 0);
+            // A word the child just added is still part of today's lesson.
+            return duplicatedDaily || gData.daily_stats.words.some(w => !findWordInDB(w));
         }
 
         function repairDailyWordsIfNeeded(today) {
@@ -706,7 +726,7 @@
                 // 否则多设备学习时会长期使用旧的 french_data.json。
                 if (window.FrenchSupabase && window.FrenchSupabase.supabaseReady) {
                     try {
-                        cloudData = await withTimeout(window.FrenchSupabase.loadFromSupabase(), 3500, 'Supabase progress load');
+                        cloudData = await withTimeout(window.FrenchSupabase.loadFromSupabase(), 15000, 'Supabase progress load');
                         if (cloudData) {
                             cloudData = normalizeLearningData(cloudData);
                             console.log('✅ 从云端加载数据成功:', cloudData.stars, '星星');
@@ -816,14 +836,17 @@
                 if (!gData.daily_stats) gData.daily_stats = { date: "", completed: false, words: [] };
                 
                 // 生成每日单词的条件：1) 日期不是今天 或 2) 日期是今天但单词列表为空
-                if (gData.daily_stats.date !== today || 
-                    (gData.daily_stats.date === today && (!gData.daily_stats.words || gData.daily_stats.words.length === 0))) {
+                if (gData.daily_stats.date !== today) {
                     await generateDailyWords(today);
                 }
                 
                 // 🔧 关键修复：先恢复会话状态（sessionMastery），再生成复习清单
                 // 否则 buildDailyReviewWords 看不到已掌握的单词，导致复习数量永远不减少
-                loadSession();
+                if (bestSource !== 'cloud' || localData?.cloud_updated_at === cloudData?.cloud_updated_at) {
+                    loadSession();
+                } else { sessionMastery = {}; errorStreak = {}; }
+                if (gData.daily_stats.session_mastery) sessionMastery = { ...sessionMastery, ...gData.daily_stats.session_mastery };
+                if (gData.daily_stats.error_streak) errorStreak = { ...gData.daily_stats.error_streak };
                 
                 const repairedDailyWords = completedDayLocked ? false : repairDailyWordsIfNeeded(today);
                 const repairedReviewWords = completedDayLocked ? false : ensureDailyReviewWords(today);
@@ -866,112 +889,19 @@
         }
         
         async function generateDailyWords(today) {
-            const currentDB = getCurrentDB();
-            
-            // 🆕 第一步：将过期单词的复习日期更新到今天（延续机制）
-            const yesterday = new Date();
-            yesterday.setDate(yesterday.getDate() - 1);
-            const yesterdayStr = dateIsoLocal(yesterday);
-            
-            let extendedCount = 0;
-            gData.notebook.forEach(function(n) {
-                // 如果单词的复习日期是昨天或更早，且不是今天新学的，延续到今天
-                if (n.next <= yesterdayStr) {
-                    // 检查这个单词是否不是今天的新词
-                    const isNewWordToday = gData.daily_stats && 
-                                          gData.daily_stats.date === today && 
-                                          gData.daily_stats.words && 
-                                          gData.daily_stats.words.includes(n.word);
-                    if (!isNewWordToday) {
-                        n.next = today;
-                        extendedCount++;
-                    }
-                }
-            });
-            
-            if (extendedCount > 0) {
-                console.log(`🔄 已延续 ${extendedCount} 个过期单词到今天复习`);
-            }
-            
-            // 🆕 优化2：每日新词必须从【不在生词本】的单词中选取
-            let newDaily = [];
-            
-            // 1. 获取未学习池（不在生词本中的单词）
-            let unlearnedPool = currentDB.filter(function(v) { 
-                return !gData.notebook.some(function(n) { return n.word === v.word; }); 
-            });
-            
-            // 🆕 v4.2.3 修复：未学习池为空时，回收已掌握的高等级词作为"复习新词"
-            // 解决"全部词都学过 → 每天自动选已添加词 → 显示Ajouté"的死循环
-            if (unlearnedPool.length < 5) {
-                console.log(`⚠️ 未学习池仅剩 ${unlearnedPool.length} 个单词，尝试回收已掌握的高等级词`);
-                // 回收策略：已掌握(lvl>=3)且近期正确率高的高等级词，重置后作为新词出现
-                const notebookWords = new Set(gData.notebook.map(function(n) { return n.word; }));
-                let recycledPool = currentDB.filter(function(v) {
-                    const n = gData.notebook.find(function(e) { return e.word === v.word; });
-                    return n && (n.lvl || 0) >= 3; // 只回收 lvl >= 3 的词
-                }).map(function(v) {
-                    // 重置该词：从生词本移除，降级为未学习状态
-                    const nbEntry = gData.notebook.find(function(e) { return e.word === v.word; });
-                    if (nbEntry) {
-                        nbEntry.lvl = 0;
-                        nbEntry.next = today;
-                        nbEntry.err_days = 0;
-                    }
-                    return v;
-                });
-                
-                // 合并未学习池和回收池
-                const recycledWords = recycledPool.filter(function(v) { 
-                    return !unlearnedPool.some(function(u) { return u.word === v.word; }); 
-                });
-                unlearnedPool = unlearnedPool.concat(recycledWords);
-                console.log(`♻️ 回收了 ${recycledWords.length} 个已掌握词作为新词`);
-            }
-            
-            // 如果还是不足，使用整个词库（最后的手段，但排除今日已在生词本且刚添加的词）
-            if (unlearnedPool.length < 5) {
-                console.log(`⚠️ 词库资源极度紧张，使用全库（跳过刚添加的词）`);
-                unlearnedPool = currentDB.filter(function(v) {
-                    // 排除：已在生词本中且 next==today 的词（避免重复）
-                    const n = gData.notebook.find(function(e) { return e.word === v.word; });
-                    return !n || n.next !== today;
-                });
-            }
-            
-            // 2. 根据日期种子选择5个单词
-            newDaily = seededDailySelection(unlearnedPool, today, 5);
-            
-            // 检查有多少个单词已经在生词本中（应该是0）
-            const alreadyInNotebook = newDaily.filter(function(word) {
-                return gData.notebook.some(function(n) { return n.word === word; });
-            }).length;
-            
-            if (alreadyInNotebook > 0) {
-                console.log(`⚠️ 注意：${alreadyInNotebook} 个当日新词已在生词本中`);
-            }
-            
-            gData.daily_stats = {
-                date: today,
-                completed: false,
-                words: newDaily,
-                added_words: [],
-                review_words: buildDailyReviewWords(today, newDaily)
-            };
+            const known = new Set(gData.notebook.map(n => n.word.normalize('NFC').toLocaleLowerCase('fr')));
+            const unlearned = getCurrentDB().filter(v => !known.has(v.word.normalize('NFC').toLocaleLowerCase('fr')));
+            const pools = window.CM2Learning ? window.CM2Learning.pools(unlearned, today) : [unlearned];
+            const words = [];
+            for (const pool of pools) words.push(...seededDailySelection(pool.filter(w=>!words.includes(w.word)), today, 5-words.length));
             sessionMastery = {};
-            try { localStorage.removeItem('french_session_mastery'); } catch(e) {}
-            console.log(`✅ 生成当日学习词 (${newDaily.length}个): ${newDaily.join(', ')}`);
-            
-            // 🆕 重要：立即保存，锁定今日单词和当日复习清单
-            if (typeof saveData === 'function') {
-                console.log('💾 立即保存当日学习清单...');
-                try {
-                    await saveData();
-                    console.log('💾 当日学习清单已保存');
-                } catch (saveError) {
-                    console.error('保存当日学习清单失败:', saveError);
-                }
-            }
+            errorStreak = {};
+            gMistakes = {};
+            gData.daily_stats = { date: today, completed: false, words, added_words: [], completed_review_words: [] };
+            gData.daily_stats.review_words = buildDailyReviewWords(today, words);
+            gData.daily_stats.review_plan_version = 1;
+            saveSession();
+            await saveData();
         }
 
         // 🆕 v4.2.0 (2026-05-30): iPad优化 - 每日复习上限 + 积压词保护
@@ -990,11 +920,6 @@
                         }
                         if (completedReview.has(n.word)) {
                             return false;
-                        }
-                        if ((n.err_days || 0) >= MAX_ERR_DAYS && (n.lvl || 0) <= 2) {
-                            n.lvl = 0;
-                            n.err_days = 0;
-                            n.next = today;
                         }
                         return true;
                     }
@@ -1057,12 +982,15 @@
                 gData.daily_stats.backlog_review = [];
                 changed = true;
             }
+            if (gData.daily_stats.review_plan_version === 1) return changed;
             const expectedReviewWords = buildDailyReviewWords(today, gData.daily_stats.words);
             const currentReviewWords = Array.isArray(gData.daily_stats.review_words) ? gData.daily_stats.review_words : [];
+            gData.daily_stats.review_plan_version = 1;
             const sameReviewWords = currentReviewWords.length === expectedReviewWords.length &&
                 currentReviewWords.every(function(word, index) { return word === expectedReviewWords[index]; });
             if (!sameReviewWords && !gData.daily_stats.completed) {
                 gData.daily_stats.review_words = expectedReviewWords;
+                gData.daily_stats.review_plan_version = 1;
                 changed = true;
                 console.log("🔧 今日复习清单已修复:", expectedReviewWords.length, "个词, backlog:", gData.daily_stats.backlog_review.length);
             }
@@ -1077,7 +1005,7 @@
             // sessionMastery 在页面刷新时从 localStorage 恢复，已完成的词会被过滤掉
             if (gData.daily_stats && Array.isArray(gData.daily_stats.review_words)) {
                 const remaining = gData.daily_stats.review_words.filter(function(w) {
-                    return (sessionMastery[w] || 0) < MASTERY_GOAL;
+                    return !(gData.daily_stats.completed_review_words || []).includes(w) && (sessionMastery[w] || 0) < MASTERY_GOAL;
                 });
                 // 如果所有复习词都已完成，返回空数组（防止重新计算）
                 return remaining;
@@ -1123,9 +1051,7 @@
                 return false;
             }
 
-            gData.daily_stats.review_words = [];
-            if (!gData.daily_stats.rewarded_stars) gData.daily_stats.rewarded_stars = 100;
-            if (!gData.daily_stats.stars_earned) gData.daily_stats.stars_earned = gData.daily_stats.rewarded_stars;
+            // Keep the original review plan and actual reward history for parent reports.
 
             (gData.daily_stats.words || []).forEach(function(word) {
                 sessionMastery[word] = MASTERY_GOAL;
@@ -1258,10 +1184,10 @@
                     wordsListEl.innerHTML = gTodayWords.map(function(w) {
                         if (!w || !w.word) return '';
                         var isAdded = isDailyWordAdded(w.word);
-                        var escapedWord = w.word.replace(/'/g, "\\'");
+                        var escapedWord = escapeWordAction(w.word);
                         var addButton = '<button class="action-btn" style="background:' + (isAdded ? '#95a5a6' : 'var(--p)') + '" onclick="addWord(\'' + escapedWord + '\')">' + (isAdded ? 'Ajouté' : 'Ajouter') + '</button>';
                         var practiceHint = isAdded ? ' <span style="color:#2ecc71;font-size:0.9em;">✅ 直接在答题区练习</span>' : '';
-                        return '<div class="daily-item"><div class="mot">' + w.word + '</div><div class="definition">' + (w.definition || w.def || '') + '</div><div class="exemple">"' + (w.example || w.ex || '') + '"</div><div style="margin-top:10px"><button class="action-btn" onclick="speak(\'' + escapedWord + '\')">Ecouter</button> ' + addButton + practiceHint + '</div></div>';
+                        return '<div class="daily-item"><div class="mot">' + escapeWordHTML(w.word) + '</div><div class="definition">' + escapeWordHTML(w.definition || w.def || '') + '</div><div class="exemple">"' + escapeWordHTML(w.example || w.ex || '') + '"</div><div style="margin-top:10px"><button class="action-btn" onclick="speak(\'' + escapedWord + '\')">Ecouter</button> ' + addButton + practiceHint + '</div></div>';
                     }).join('');
                 } else {
                     wordsListEl.innerHTML = '<p style="padding:20px; color:#999; text-align:center;">Aucun mot à apprendre aujourd\'hui.</p>';
@@ -1300,10 +1226,7 @@
                 }
                 
                 // 2. 星星必须是100的倍数（如果不是，自动修复）
-                if (data.stars % 100 !== 0) {
-                    console.warn(`⚠️ 星星数不是100的倍数: ${data.stars} → ${Math.round(data.stars / 100) * 100} (自动修复)`);
-                    data.stars = Math.round(data.stars / 100) * 100;
-                }
+                if (!Number.isSafeInteger(data.stars) || data.stars < 0) return false;
                 
                 // 3. notebook必须是数组
                 if (!Array.isArray(data.notebook)) {
@@ -1381,6 +1304,9 @@
 
             gSaveInFlight = true;
             try {
+                gData.daily_stats.session_mastery = { ...sessionMastery };
+                gData.daily_stats.error_streak = { ...errorStreak };
+                gData.daily_stats.mistakes = { ...gMistakes };
                 const dataToSave = normalizeLearningData(JSON.parse(JSON.stringify(gData)));
 
                 // 0. 数据验证
@@ -1399,12 +1325,14 @@
                         console.warn('⚠️ LocalStorage 配额超限，只保存关键字段');
                         // 只保存关键字段
                         const minimalData = {
+                            cloud_updated_at: dataToSave.cloud_updated_at,
                             stars: dataToSave.stars,
                             last_milestone: dataToSave.last_milestone,
-                            notebook: dataToSave.notebook.slice(0, 50), // 只保存前50个单词
+                            notebook: dataToSave.notebook,
                             daily_stats: dataToSave.daily_stats
                         };
-                        localStorage.setItem(PAGE_CACHE_KEYS.learningData, JSON.stringify(minimalData));
+                        try { localStorage.setItem(PAGE_CACHE_KEYS.learningData, JSON.stringify(minimalData)); }
+                        catch (storageError) { updateSyncStatus('Stockage plein · sauvegarde cloud en cours', '#e67e22'); }
                     } else {
                         throw e;
                     }
@@ -1427,6 +1355,7 @@
                 
                 // 4. 同时尝试保存到云端（Supabase）和本地服务器
                 let cloudSaved = false;
+                let detailSync = true;
                 let localServerSaved = false;
                 const canWriteLocal = isLocalServerWritable();
                 
@@ -1441,8 +1370,15 @@
                         const cloudResult = await window.FrenchSupabase.saveToSupabase(dataToSave);
                         console.log('🔄 Supabase 返回:', cloudResult);
                         if (cloudResult.status === 'success') {
+                            detailSync = cloudResult.detailSync !== false;
+                            gData.cloud_updated_at = cloudResult.updated_at;
+                            gData.stars = Math.max(gData.stars, cloudResult.stars);
+                            try { localStorage.setItem(PAGE_CACHE_KEYS.learningData, JSON.stringify(gData)); } catch(e) {}
                             cloudSaved = true;
                             console.log('✅ 云端保存成功');
+                        } else if (cloudResult.status === 'conflict') {
+                            showSyncConflict();
+                            return;
                         } else if (cloudResult.status === 'queued') {
                             console.log('📦 数据已加入同步队列');
                         } else {
@@ -1494,7 +1430,7 @@
                         statusEl.innerText = "主源保存 ✓";
                         statusEl.style.background = "#2ecc71";
                     } else if (cloudSaved) {
-                        statusEl.innerText = "云端保存 ✓";
+                        statusEl.innerText = detailSync ? "云端保存 ✓" : "基础进度已保存 · 练习明细保留在本机";
                         statusEl.style.background = "#3498db";
                     } else {
                         statusEl.innerText = "保存待重试";
@@ -1507,7 +1443,7 @@
                             statusEl.innerText = "保存待重试";
                             statusEl.style.background = "#f39c12";
                         } else if (navigator.onLine && window.FrenchSupabase && window.FrenchSupabase.isOnline()) {
-                            statusEl.innerText = "在线";
+                            statusEl.innerText = detailSync ? "云端保存 ✓" : "基础进度已保存 · 练习明细保留在本机";
                             statusEl.style.background = "#3498db";
                         } else {
                             statusEl.innerText = "离线模式";
@@ -1535,12 +1471,18 @@
         
         function saveSession() {
             try {
+                if (gData.daily_stats?.date === todayIso()) {
+                    gData.daily_stats.session_mastery = { ...sessionMastery };
+                    gData.daily_stats.error_streak = { ...errorStreak };
+                    localStorage.setItem(PAGE_CACHE_KEYS.learningData, JSON.stringify(gData));
+                }
                 // 保存会话状态，防止页面刷新导致进度丢失
                 var today = todayIso();
                 var sessionData = {
                     sessionMastery: sessionMastery,
                     gMistakes: gMistakes || {},
                     gCombo: gCombo || 0,
+                    errorStreak: errorStreak,
                     date: today,  // 添加日期标记
                     timestamp: new Date().toISOString()
                 };
@@ -1568,6 +1510,7 @@
                         sessionMastery = sessionData.sessionMastery || {};
                         gMistakes = sessionData.gMistakes || {};
                         gCombo = sessionData.gCombo || 0;
+                        errorStreak = sessionData.errorStreak || {};
                         console.log('Session loaded for date:', today, 'sessionMastery:', Object.keys(sessionMastery).length, 'words');
                         
                         // 🔧 v4.0.4 修复：不再重置已掌握的sessionMastery
@@ -1662,6 +1605,7 @@
         }
         
         function updateQuiz() {
+            if (gSyncConflict) { showSyncConflict(); return; }
             const today = todayIso();
             let pool = [];
             
@@ -1697,7 +1641,7 @@
             if (pool.length < 1) { 
                 var isNew = gGameMode === 'new';
                 var msg = isNew
-                    ? (gTodayWords.filter(function(tw) { return tw && isDailyWordAdded(tw.word); }).length < gTodayWords.length ? "Ajoute les 5 mots du jour pour commencer !" : "Nouveaux mots maitrises !")
+                    ? (gTodayWords.length === 0 ? "Plus de mots nouveaux disponibles. Continue les révisions !" : (gTodayWords.filter(function(tw) { return tw && isDailyWordAdded(tw.word); }).length < gTodayWords.length ? "Choisis Ajouter sur les mots du jour pour commencer !" : "Nouveaux mots maîtrisés !"))
                     : (gBacklogModeActive ? "Rattrapage termine !" : "Revisions du jour terminees !");
                 if (optionsEl) optionsEl.innerHTML = '<p style="padding:20px; color:var(--p); font-weight:bold; text-align:center;">' + msg + '</p>';
                 if (wordEl) wordEl.innerText = "Salut !";
@@ -1729,21 +1673,20 @@
                 return;
             }
             
-            let all = currentDB.map(function(v) { return v.definition || v.def || ''; });
-            while(opts.length < 3) {
-                let r = all[Math.floor(Math.random() * all.length)];
-                if(!opts.includes(r)) opts.push(r);
-            }
+            const alternatives = [...new Set(currentDB.map(v => v.definition || v.def || '').filter(Boolean))]
+                .filter(definition => !opts.includes(definition)).sort(() => Math.random() - 0.5);
+            opts.push(...alternatives.slice(0, 2));
             opts.sort(function() { return Math.random() - 0.5; });
             
             if (optionsEl) {
                 if (opts && Array.isArray(opts)) {
-                    optionsEl.innerHTML = opts.map(function(o) {
-                        // 转义选项文本和单词中的单引号
-                        var escapedOpt = o.replace(/'/g, "\\'");
-                        var escapedWord = target.word.replace(/'/g, "\\'");
-                        return '<button class="opt-btn" onclick="checkQuiz(this, \'' + escapedOpt + '\', \'' + escapedWord + '\')">' + o + '</button>';
-                    }).join('');
+                    optionsEl.replaceChildren(...opts.map(function(o) {
+                        const button = document.createElement('button');
+                        button.className = 'opt-btn';
+                        button.textContent = o;
+                        button.onclick = () => checkQuiz(button, o, target.word);
+                        return button;
+                    }));
                 } else {
                     console.error('❌ opts无效:', opts);
                     optionsEl.innerHTML = '<p style="padding:20px; color:red; text-align:center;">Erreur: options non disponibles</p>';
@@ -1752,6 +1695,7 @@
         }
         
         function checkQuiz(btn, sel, w) {
+            if (gData.daily_stats.date !== todayIso()) { location.reload(); return; }
             if (gIsLocked) return;
             gIsLocked = true;
             
@@ -1790,10 +1734,10 @@
                 // gData.stars += 10; 
                 
                 if (sessionMastery[w] >= MASTERY_GOAL && n) {
-                    n.lvl = Math.min(6, n.lvl + 1);
+                    n.lvl = Math.min(7, n.lvl + 1);
                     n.err_days = 0;
                     let d = new Date();
-                    d.setDate(d.getDate() + INTERVALS[n.lvl]);
+                    d.setDate(d.getDate() + INTERVALS[Math.max(0, n.lvl - 1)]);
                     n.next = dateIsoLocal(d);
                     if (gBacklogModeActive && gBacklogBatchWords.includes(w) && gData.daily_stats && Array.isArray(gData.daily_stats.backlog_review)) {
                         gData.daily_stats.backlog_review = gData.daily_stats.backlog_review.filter(function(word) { return word !== w; });
@@ -1842,9 +1786,9 @@
                         
                         // 关键：连续两天都错（err_days >= 2）就踢出生词本
                         if (n.err_days >= 2) {
-                            gData.notebook = gData.notebook.filter(function(e) { return e.word !== w; });
+                            // Keep the record for cloud consistency and extra practice.
                             if (feedbackEl) {
-                                feedbackEl.innerHTML = "❌ Mot retiré du carnet";
+                                feedbackEl.innerHTML = "À revoir doucement demain";
                             }
                             speak("Mot retiré");
                         } else {
@@ -1867,6 +1811,8 @@
                     saveSession(); // 会话保存
                 }, 1800);
             }
+            saveSession();
+            saveData();
         }
         
         function getReviewCompletionStatus() {
@@ -1878,19 +1824,10 @@
                     completed: true
                 };
             }
-            let reviewWords = [];
-            if (gData.notebook) {
-                const requiredReviewWords = getDailyReviewWords(today);
-                reviewWords = gData.notebook.filter(function(n) {
-                    return requiredReviewWords.includes(n.word);
-                });
-            }
-            let masteredReview = 0;
-            reviewWords.forEach(function(n) {
-                if ((sessionMastery[n.word] || 0) >= MASTERY_GOAL) {
-                    masteredReview++;
-                }
-            });
+            const reviewWords = [...new Set(gData.daily_stats.review_words || [])];
+            const completed = new Set(gData.daily_stats.completed_review_words || []);
+            const masteredReview = reviewWords.filter(w => completed.has(w) ||
+                (sessionMastery[w] || 0) >= MASTERY_GOAL).length;
             return {
                 total: reviewWords.length,
                 mastered: masteredReview,
@@ -1917,22 +1854,9 @@
             var isToday = gData.daily_stats && gData.daily_stats.date === today;
             
             // 如果掌握了所有今日新词 AND 完成了所有待复习旧词，且尚未标记为完成，且日期是今天
-            if (masteredToday >= todayWords.length && reviewStatus.completed && isToday && !gData.daily_stats.completed) {
+            if ((todayWords.length + (gData.daily_stats.review_words || []).length) > 0 && masteredToday >= todayWords.length && reviewStatus.completed && isToday && !gData.daily_stats.completed) {
                 var backlogAfterGoal = getBacklogWords(today).length;
-                // 🆕 关键修复：将 sessionMastery 同步到 gData.notebook
-                // 确保服务器保存的 notebook 中 lvl 正确更新
-                todayWords.forEach(function(tw) {
-                    if (sessionMastery[tw.word] >= MASTERY_GOAL) {
-                        var n = gData.notebook.find(function(e) { return e.word === tw.word; });
-                        if (n && n.lvl < 2) {
-                            n.lvl = 2;
-                            var nextDate = new Date();
-                            nextDate.setDate(nextDate.getDate() + 7);
-                            n.next = dateIsoLocal(nextDate);
-                            console.log('✅ 同步掌握状态到 notebook:', tw.word, '-> lvl 2');
-                        }
-                    }
-                });
+                // Each mastered word has already advanced exactly one level.
                 
                 gData.daily_stats.completed = true;
                 if (!gData.stars) gData.stars = 0;
@@ -1961,11 +1885,15 @@
                 });
                 if (backlogCompleted) {
                     // 积压还清完成，给额外奖励
-                    gData.stars += 20; // 额外奖励20星星
+                    const batchId = gBacklogBatchWords.slice().sort().join('|');
+                    const rewarded = gData.daily_stats.backlog_reward_batches || [];
+                    const earnedBonus = !rewarded.includes(batchId);
+                    if (earnedBonus) { gData.stars += 20; rewarded.push(batchId); }
+                    gData.daily_stats.backlog_reward_batches = rewarded;
                     gBacklogModeActive = false;
                     gBacklogBatchWords = [];
                     setTimeout(function() {
-                        document.getElementById('rew-val').innerText = "🧹 Rattrapage terminé !\nTu as terminé tous les mots en retard !\n+20 étoiles bonus !";
+                        document.getElementById('rew-val').innerText = "🧹 Rattrapage terminé !\nTu as terminé ce groupe de mots." + (earnedBonus ? "\n+20 étoiles bonus !" : "");
                         openModal('rewardModal');
                         speak("Bravo");
                         saveData();
@@ -2192,15 +2120,15 @@
                     var dueBadge = isDue ? ' <span style="color:#f39c12;font-size:0.8em;">⏰</span>' : '';
                     var errorBadge = hasError ? ' <span style="color:#e74c3c;font-size:0.8em;">⚠️' + n.err_days + '</span>' : '';
                     
-                    html += '<div class="notebook-item ' + dueClass + '" onclick="showDetail(\'' + n.word + '\')">';
+                    html += '<div class="notebook-item ' + dueClass + '" onclick="showDetail(\'' + escapeWordAction(n.word) + '\')">';
                     html += '<div style="display:flex;flex-direction:column;flex:1;">';
-                    html += '<span style="font-size:1.1em;"><strong>' + n.word + '</strong>' + dueBadge + errorBadge + '</span>';
-                    html += '<span style="font-size:0.85em;color:#666;margin-top:3px;">' + (n.data.definition || n.data.def || '').substring(0, 50) + '...</span>';
+                    html += '<span style="font-size:1.1em;"><strong>' + escapeWordHTML(n.word) + '</strong>' + dueBadge + errorBadge + '</span>';
+                    html += '<span style="font-size:0.85em;color:#666;margin-top:3px;">' + escapeWordHTML((n.data.definition || n.data.def || '').substring(0, 50)) + '...</span>';
                     html += '<span style="font-size:0.75em;color:#999;margin-top:2px;">Prochaine: ' + n.next + '</span>';
                     html += '</div>';
                     html += '<div style="display:flex;align-items:center;gap:8px;">';
                     html += '<span class="lvl-badge">Lvl ' + n.lvl + '</span>';
-                    html += '<button onclick="event.stopPropagation(); speak(\'' + n.word + '\')" style="background:var(--s);border:none;width:35px;height:35px;border-radius:50%;color:white;font-size:1.2em;cursor:pointer;">&#128266;</button>';
+                    html += '<button onclick="event.stopPropagation(); speak(\'' + escapeWordAction(n.word) + '\')" style="background:var(--s);border:none;width:35px;height:35px;border-radius:50%;color:white;font-size:1.2em;cursor:pointer;">&#128266;</button>';
                     html += '</div></div>';
                 });
                 
@@ -2208,7 +2136,7 @@
             }
             
             if (!hasContent && filterText) {
-                html = "<div class='nb-empty'>Aucun mot ne correspond à \"" + filterText + "\".</div>";
+                html = "<div class='nb-empty'>Aucun mot ne correspond à \"" + escapeWordHTML(filterText) + "\".</div>";
             }
             
             if (nbListEl) nbListEl.innerHTML = html;
@@ -2246,7 +2174,7 @@
             if (!d) return;
             var detailCard = document.getElementById('detail-card');
             if (detailCard) {
-                detailCard.innerHTML = '<h2>' + d.word + '</h2><p><strong>Definition:</strong><br>' + (d.definition || d.def || '') + '</p><p><strong>Exemple:</strong><br><i>"' + (d.example || d.ex || '') + '"</i></p><button class="action-btn" style="width:100%;margin-top:20px" onclick="speak(\'' + d.word + '\')">Ecouter</button>';
+                detailCard.innerHTML = '<h2>' + escapeWordHTML(d.word) + '</h2><p><strong>Definition:</strong><br>' + escapeWordHTML(d.definition || d.def || '') + '</p><p><strong>Exemple:</strong><br><i>"' + escapeWordHTML(d.example || d.ex || '') + '"</i></p><button class="action-btn" style="width:100%;margin-top:20px" onclick="speak(\'' + escapeWordAction(d.word) + '\')">Ecouter</button>';
             }
             openModal('detailModal');
             speak(w);
@@ -2266,6 +2194,7 @@
             try {
                 var m = new SpeechSynthesisUtterance(t);
                 m.lang = 'fr-FR';
+                window.speechSynthesis.cancel();
                 window.speechSynthesis.speak(m);
             } catch(e) {}
         }
@@ -2289,9 +2218,25 @@
         });
         
         window.onload = init;
+        function showSyncConflict() {
+            gSyncConflict = true;
+            gIsLocked = true;
+            updateSyncStatus('Progression modifiée ailleurs · recharge la page', '#e67e22');
+            document.querySelectorAll('.opt-btn').forEach(b => b.disabled = true);
+            const feedback = document.getElementById('q-feedback');
+            if (feedback) feedback.textContent = 'La progression cloud a changé. Recharge la page pour continuer. Ta copie locale est conservée.';
+        }
+        window.addEventListener('french-sync', event => {
+            if (event.detail.status === 'reserved') gData.cloud_updated_at = event.detail.updated_at;
+            if (event.detail.status === 'conflict') showSyncConflict();
+            if (event.detail.status === 'success' && event.detail.updated_at) {
+                gData.cloud_updated_at = event.detail.updated_at;
+                gData.stars = Math.max(gData.stars, event.detail.stars);
+            }
+        });
     </script>
     <div style="text-align: center; padding: 30px 20px; margin-top: 50px; border-top: 1px solid #ddd; color: #94a3b8; font-size: 0.75em;">
-        <span style="color: #38bdf8; font-weight: bold;">v4.3.3</span> · 2026-06-20 · 点击 Ajouter 后才显示 Ajouté
+        <span style="color: #38bdf8; font-weight: bold;">v4.4.0</span> · 2026-09-05
     </div>
 </body>
 </html>
