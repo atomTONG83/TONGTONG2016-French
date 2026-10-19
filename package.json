@@ -1,0 +1,10 @@
+{
+  "name": "tongtong2016-site",
+  "private": true,
+  "description": "童童空间静态站点。仅用于本地测试脚本；站点本身无需构建。",
+  "type": "module",
+  "scripts": {
+    "test": "node --test \"tests/music-quest/*.test.js\"",
+    "serve": "python3 -m http.server 8080"
+  }
+}
