@@ -169,8 +169,8 @@ main { max-width: 960px; margin: 0 auto; padding: 16px 16px 40px; outline: none;
 @media (max-width: 480px) { .lesson-world { display: none; } .lesson-head { grid-template-columns: 44px 1fr; } }
 .intro-card, .q, .summary, .det-done { background: rgba(35, 29, 88, .8); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 18px; }
 .intro-steps { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
-.intro-steps span { font-size: .78rem; padding: 3px 10px; border-radius: 99px; color: var(--muted); border: 1px solid var(--line); }
-.intro-steps span.on { background: var(--wc, var(--glow)); color: var(--ink); border-color: transparent; font-weight: 700; }
+.intro-steps > span { font-size: .78rem; padding: 3px 10px; border-radius: 99px; color: var(--muted); border: 1px solid var(--line); }
+.intro-steps > span.on { background: var(--wc, var(--glow)); color: var(--ink); border-color: transparent; font-weight: 700; }
 .intro-main { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start; }
 .intro-main p { font-size: 1.04rem; }
 .widget { margin: 14px 0; }

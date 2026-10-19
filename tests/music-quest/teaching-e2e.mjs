@@ -30,8 +30,8 @@ try{
  const before=await p.locator('.note-name').innerText();await p.locator('.scene-staff .q-actions button').nth(0).click();check('staff elevator changes the note',before!==await p.locator('.note-name').innerText());await p.locator('.scene-staff .q-actions button').nth(1).click();
  await p.locator('[data-voice=fr]').click();await p.waitForTimeout(300);check('French Microsoft MP3 requested',requests.some(u=>/audio\/voice\/[a-f0-9]+\.mp3/.test(u)));
  await p.locator('[data-voice=zh]').click();await p.waitForTimeout(200);check('only one explanation speaks at a time',await p.locator('.voice-btn.speaking').count()<=1);
- await p.locator('.language-choice').nth(2).click();check('French display switch keeps current workshop',await p.locator('.scene-staff').count()===1&&await p.locator('.lang-zh').first().evaluate(e=>getComputedStyle(e).display)==='none');
- await p.locator('.language-choice').nth(0).click();
+ await p.locator('.studio-settings>summary').click();await p.locator('.language-choice').nth(2).click();check('French display switch keeps current workshop',await p.locator('.scene-staff').count()===1&&await p.locator('.lang-zh').first().evaluate(e=>getComputedStyle(e).display)==='none');
+ await p.locator('.language-choice').nth(0).click();await p.locator('.studio-settings>summary').click();
  for(let i=0;i<4;i++)await p.locator('.workshop-footer>.btn.primary').click();await p.locator('.practice-bridge').waitFor();check('exploration awards 5 XP separately',await xp()===15);
  check('practice and review and game assessment are separate entries',await p.locator('.practice-bridge a').count()===3);
  for(const id of ['sharps','accidentals','steps','rhythm','violin','ear','detective']){await goto('#/learn/'+id);await finishFilm();await p.locator('.cinema-shell>.btn.primary').click();await p.locator('.teaching-workspace').waitFor();check('interactive teaching scene '+id,await p.locator('.scene-'+(id==='sharps'?'chain':id)).count()===1);await p.locator('.teaching-workspace button').first().click();}

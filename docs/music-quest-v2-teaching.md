@@ -1,3 +1,5 @@
+> 最新界面：V2 Studio Edition（2.1.0）已部署至Worker 13257e15-6f75-44c8-bd59-0e3d2563f967，iPad导航与按钮升级见docs/music-quest-v2-studio.md。下文保留教学版首次实现/部署记录；最新状态以开发记录为准。
+
 # Music Quest v2 · 配音动画教学与游戏化学习
 
 2026-10-19，本地完成；未合并main、未正式部署、未发布Pages。正式Worker版本不能用此文代替现场查询。维护源仍为童童学习空间项目。
@@ -62,12 +64,12 @@ python3 scripts/render_music_quest_videos.py --force
 python3 scripts/build_assets.py
 ```
 
-## 测试与正式发布门槛
+## 测试与正式发布状态
 
 以本轮开发记录和audit/music-quest-v2-*最终结果为准。单元测试包含347题法语覆盖、所有选项答案不变、旧进度保留、奖励防重复和所有144音频哈希。媒体测试核对范围读取与路径边界。浏览器测试隔离网络，全部生产学习写入为0；测试视频解锁用自动化seek-to-end，不冒称孩子实际完整观看或真机验收。
 
-接下来用户在局域网Safari测试版检查：先看完整动画、选择中法语音、字幕/拖动/暂停、看完进入互动、至少两种操作后进入练习、复习/闯关流程、后台返回。正式发布前必须完成iPhone/iPad Safari实测，并核对当前Worker版本/资源快照。GitHub PR保持草稿；合并会发布Pages公开副本，必须先处理统一Worker入口与公开路径问题。
+2026-10-19用户随后明确要求“请部署上童童空间tongtong2016.com”，本轮已据此发布受保护Worker，版本3df31958-b486-46eb-ab16-9bca9f4301a5。该部署指令更新了此前等待真机验收的发布安排；没有将未做的iPhone/iPad Safari实测记为通过。tongtong2016.com沿用既有跳转进入统一受保护Worker；没有变更DNS、发布Pages或合并GitHub草稿PR。真机仍需检查完整动画、中法语音、字幕/拖动/暂停、看完进入互动、至少两种操作后进入练习、复习/闯关流程、后台返回。线上文件及浏览器最终验收见开发记录续记与audit/music-quest-deploy-*。GitHub PR保持草稿；合并会发布Pages公开副本，必须先处理统一Worker入口与公开路径问题。
 
 ## 回滚
 
-本轮没有正式发布，无需云端回滚。v1模块备份private/music-quest-v1-before-bilingual-20261019；撤回时逐文件恢复模块，不清理tt_music_quest_v1/tt_mq_bpm，不碰原站数据。删除本轮media helper及其调用时仅撤回本轮后端差异，保留其他未提交工作。真正部署前现场记录Worker独立回滚版本，不能用GitHub revert代替Worker回滚。
+已现场确认发布前正式版本010a0cb8-3912-4fb7-9766-fdd89b8d4398；必要时在worker/运行npx wrangler rollback 010a0cb8-3912-4fb7-9766-fdd89b8d4398。该操作只回退Worker代码与资产，保留数据库、进行中计划、真实练琴、旧词本/奖金及所有浏览器学习数据；不恢复数据库快照或清理tt_music_quest_v1/tt_mq_bpm。v1模块备份private/music-quest-v1-before-bilingual-20261019，接入前备份private/music-quest-before-20261019；只恢复本轮相关文件，保留其他未提交工作。GitHub revert不能代替Worker回滚。

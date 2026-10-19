@@ -6,7 +6,7 @@ import { audio } from './audio.js';
 import { primarySkill } from './content/index.js';
 import { hallPage, mapPage, lessonPage, reviewPage, tasksPage, parentPage, challengePage, notFound, VIOLIN_URL, HOME_URL } from './ui/pages.js';
 import {installFrench} from './content/french.js';
-import {setLanguage, setText} from './i18n.js';
+import {setLanguage, setText, register} from './i18n.js';
 import {classroomIndex,classroomPage} from './ui/classroom.js';
 import {stopNarration,voiceRateControl} from './voice.js';
 
@@ -27,7 +27,7 @@ const soundBtn = $('#sound-toggle');
 
 function updateSoundBtn() {
   const on = audio.ready && !audio.muted;
-  setText(soundBtn,audio.muted ? '🔇 已静音' : on ? '🔊 声音开' : '🔈 开启声音');
+  setText(soundBtn,audio.muted ? '🔇 已静音' : on ? '🔊 声音开' : '🔈 开启声音',audio.muted ? 'Son coupé' : on ? 'Son activé' : 'Activer le son');
   soundBtn.setAttribute('aria-pressed', String(on));
 }
 soundBtn.addEventListener('click', async () => {
@@ -45,8 +45,12 @@ audio.onChange(updateSoundBtn);
 window.addEventListener('mq:narration-start',()=>audio.stop());
 document.addEventListener('visibilitychange',()=>{if(document.hidden){stopNarration();audio.stop();document.querySelector('video')?.pause();}});
 const languageBar=h('div',{class:'language-bar',role:'group','aria-label':'显示语言 / Langue d’affichage'},...[['both','中法双语'],['zh','中文'],['fr','Français']].map(([mode,label])=>h('button',{class:'language-choice',type:'button','aria-pressed':String((store.state.settings.language||'both')===mode),onclick:e=>{setLanguage(mode);store.setSetting('language',mode);languageBar.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b===e.currentTarget)));}},label)),voiceRateControl());
-document.querySelector('.crumbs').after(languageBar);
-document.querySelectorAll('.topnav a,.crumbs a').forEach(a=>setText(a,a.textContent));
+document.querySelector('#language-controls').append(languageBar);
+document.querySelectorAll('.crumbs a').forEach(a=>setText(a,a.textContent));
+const preferences=document.querySelector('.studio-settings');
+document.addEventListener('pointerdown',e=>{if(!preferences.contains(e.target))preferences.open=false;});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&preferences.open){preferences.open=false;preferences.querySelector('summary').focus();}});
+register('我的音乐工作台','Ton studio musical');register('学习大厅','Accueil');register('温故知新','Réviser');register('知识闯关','Défis');
 // 从后台回来时，iOS 可能把 AudioContext 挂起：下一次点击时自动恢复
 document.addEventListener('pointerdown', () => { if (audio.ctx && audio.ctx.state !== 'running') audio.unlock(); }, { capture: true });
 
@@ -76,7 +80,11 @@ function route() {
     view = h('div', { class: 'page empty' }, h('h1', {}, '页面出错了'), h('p', {}, '请刷新页面重试。学习记录不会因此丢失。'), h('a', { class: 'btn primary', href: '#/' }, '回到冒险大厅'));
   }
   app.replaceChildren(view);
-  document.querySelectorAll('.topnav a').forEach((a) => a.toggleAttribute('aria-current', a.getAttribute('href') === `#/${parts[0] ?? ''}` || (a.getAttribute('href') === '#/' && !parts.length)));
+  const active=parts[0]==='lesson'?'map':parts[0]||'';
+  document.querySelectorAll('.topnav a').forEach(a=>{if(a.getAttribute('href')===`#/${active}`)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+  const titles={learn:['动画课堂','Cinéma musical'],map:['冒险地图','Carte des aventures'],lesson:['练习工作室','Studio d’entraînement'],review:['温故知新','Réviser'],challenge:['知识闯关','Défis'],tasks:['课程任务','Missions du cours'],parent:['学习报告','Bilan des progrès']};
+  const [zh,fr]=titles[parts[0]]||['我的音乐工作台','Ton studio musical'];setText(document.querySelector('#section-title'),zh,fr);
+  document.body.dataset.view=parts[0]||'home';preferences.open=false;
   const h1 = app.querySelector('h1, h2');
   if (h1) { h1.setAttribute('tabindex', '-1'); h1.focus({ preventScroll: true }); }
   window.scrollTo(0, 0);
