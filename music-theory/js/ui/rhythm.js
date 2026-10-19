@@ -1,3 +1,4 @@
+import {setText} from '../i18n.js';
 // 节奏竞技场：节拍器 + 真实敲击时间采集与评分
 // 时间基准：AudioContext.currentTime（与节拍器同一时钟），并扣除输出延迟。
 import { h } from './dom.js';
@@ -41,18 +42,18 @@ export function rhythmGame(q, { onResult, onNext }) {
 
   demoBtn.addEventListener('click', async () => {
     if (run) return;
-    if (!(await audio.unlock())) { status.textContent = '声音无法开启：请检查设备静音开关后再点一次。'; return; }
+    if (!(await audio.unlock())) { setText(status, '声音无法开启：请检查设备静音开关后再点一次。'); return; }
     const spb = 60 / bpm;
     const t0 = audio.now() + 0.15;
     for (let b = 0; b < 4; b++) audio.click(t0 + b * spb, b === 0);
     p.durs.forEach((d, i) => audio.note(71, { at: t0 + onsets[i] * spb, dur: Math.max(0.15, ({ h: 2, q: 1, '8': 0.5, w: 4 }[d]) * spb - 0.06) }));
-    status.textContent = '示范：每个音开始时，就是你要敲的时刻。';
+    setText(status, '示范：每个音开始时，就是你要敲的时刻。');
   });
 
   startBtn.addEventListener('click', async () => {
     if (run) return;
-    if (!(await audio.unlock())) { status.textContent = '声音无法开启：请检查设备静音开关后再点一次。'; return; }
-    if (audio.muted) { status.textContent = '声音被关闭了：先在右上角打开声音，才能听到节拍器。'; return; }
+    if (!(await audio.unlock())) { setText(status, '声音无法开启：请检查设备静音开关后再点一次。'); return; }
+    if (audio.muted) { setText(status, '声音被关闭了：先在右上角打开声音，才能听到节拍器。'); return; }
     begin();
   });
 
@@ -82,7 +83,7 @@ export function rhythmGame(q, { onResult, onNext }) {
       if (!run) return;
       const b = Math.floor((audio.now() - t0) / spb);
       beatDots.querySelectorAll('span').forEach((s, i) => s.classList.toggle('on', b >= 0 && b % 4 === i));
-      status.textContent = b < 0 ? '准备……' : b < countIn ? `预备拍 ${b + 1} / 4 · 先别敲` : '现在跟着节奏敲！';
+      setText(status, b < 0 ? '准备……' : b < countIn ? `预备拍 ${b + 1} / 4 · 先别敲` : '现在跟着节奏敲！');
       run.raf = requestAnimationFrame(tick);
     };
     tick();
@@ -115,18 +116,19 @@ export function rhythmGame(q, { onResult, onNext }) {
       h('p', { class: 'muted' }, `对上 ${s.hits}/${s.total} 个音（${s.good} 个很准）${s.meanAbsMs != null ? `，平均偏差 ${s.meanAbsMs} 毫秒` : ''}${s.extra ? `，多敲 ${s.extra} 下` : ''}。`),
       ...fb.tips.map((t) => h('p', { class: 'tip' }, t)),
       h('div', { class: 'q-actions' },
-        h('button', { class: 'btn ghost', type: 'button', onclick: () => { result.replaceChildren(); status.textContent = '再来一次：先听预备拍。'; } }, '再来一次'),
+        h('button', { class: 'btn ghost', type: 'button', onclick: () => { result.replaceChildren(); setText(status, '再来一次：先听预备拍。'); } }, '再来一次'),
         h('button', { class: 'btn primary', type: 'button', onclick: () => onNext() }, '下一题')),
     );
-    status.textContent = '完成！';
+    setText(status, '完成！');
     onResult({ ...s, bpm, pattern: p.id }, runs);
   }
 
   function abort(reason) {
+    audio.stop();
     if (!run) return;
     stopRun();
     run = null;
-    status.textContent = reason;
+    setText(status, reason);
   }
 
   pad.addEventListener('pointerdown', (e) => run?.onTap(e));

@@ -1,3 +1,4 @@
+import {setText} from '../i18n.js';
 // 识谱侦探：调号 → 音名 → 实际音高 → 琴弦/把位/指法 → 节奏 → 听示范 → 独立再读
 import { h } from './dom.js';
 import { staffView } from './staff.js';
@@ -53,11 +54,11 @@ export function detectiveView(exId, { record, onFinish }) {
     const status = h('p', { class: 'muted', 'aria-live': 'polite' }, '解码完成！现在听标准示范，眼睛跟着发光的音符走。');
     const play = h('button', { class: 'btn primary', type: 'button' }, '▶ 播放示范');
     play.addEventListener('click', async () => {
-      if (!(await audio.unlock())) { status.textContent = '声音无法开启：请检查设备静音开关。'; return; }
+      if (!(await audio.unlock())) { setText(status, '声音无法开启：请检查设备静音开关。'); return; }
       const items = det.actual.map((n, i) => ({ midi: midi(n), beats: DURATIONS[ex.notes[i].dur].beats }));
       play.disabled = true;
       const dur = audio.sequence(items, { bpm: ex.bpm, onNote: (i) => sv.redraw(staffFor(ex, { highlight: [i] })) });
-      setTimeout(() => { play.disabled = false; sv.redraw(staffFor(ex)); status.textContent = '可以再听一遍，或者继续最后一步。'; }, dur * 1000 + 300);
+      setTimeout(() => { play.disabled = false; sv.redraw(staffFor(ex)); setText(status, '可以再听一遍，或者继续最后一步。'); }, dur * 1000 + 300);
     });
     return h('div', { class: 'det-listen' }, sv, status, h('p', { class: 'muted small' }, `示范速度 ${ex.bpm} BPM。听熟旋律很好，但下一步还是要靠自己看谱读出来。`),
       h('div', { class: 'q-actions' }, audio.ready ? null : soundGate(), play,

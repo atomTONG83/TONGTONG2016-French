@@ -1,4 +1,5 @@
 // 极简 DOM 工具（无框架，沿用站点原有的原生 JS 写法）
+import {bilingual, accessible} from '../i18n.js';
 export function h(tag, attrs = {}, ...kids) {
   const el = document.createElement(tag);
   for (const [k, v] of Object.entries(attrs || {})) {
@@ -8,11 +9,11 @@ export function h(tag, attrs = {}, ...kids) {
     else if (k.startsWith('on') && typeof v === 'function') el.addEventListener(k.slice(2).toLowerCase(), v);
     else if (k === 'html') el.innerHTML = v;
     else if (v === true) el.setAttribute(k, '');
-    else el.setAttribute(k, v);
+    else el.setAttribute(k, ['aria-label','title'].includes(k) ? accessible(String(v)) : v);
   }
   for (const kid of kids.flat(Infinity)) {
     if (kid == null || kid === false) continue;
-    el.append(kid instanceof Node ? kid : document.createTextNode(String(kid)));
+    el.append(kid instanceof Node ? kid : bilingual(String(kid)));
   }
   return el;
 }
@@ -30,7 +31,7 @@ let toastTimer;
 export function toast(msg) {
   let t = document.getElementById('mq-toast');
   if (!t) { t = h('div', { id: 'mq-toast', role: 'status', 'aria-live': 'polite' }); document.body.append(t); }
-  t.textContent = msg;
+  t.replaceChildren(bilingual(msg));
   t.classList.add('show');
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => t.classList.remove('show'), 2600);

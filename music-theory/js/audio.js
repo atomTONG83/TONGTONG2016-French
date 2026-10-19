@@ -10,6 +10,8 @@ class AudioEngine {
     this.master = null;
     this.muted = false;
     this.listeners = new Set();
+    this.sources = new Set();
+    this.timers = new Set();
   }
   get supported() {
     return typeof window !== 'undefined' && !!(window.AudioContext || window.webkitAudioContext);
@@ -52,6 +54,12 @@ class AudioEngine {
 
   now() { return this.ctx ? this.ctx.currentTime : 0; }
 
+  track(source) { this.sources.add(source);source.addEventListener('ended',()=>this.sources.delete(source),{once:true}); }
+  stop() {
+    this.sources.forEach(s=>{try{s.stop();}catch{}});this.sources.clear();
+    this.timers.forEach(clearTimeout);this.timers.clear();
+  }
+
   /** 类弦乐音色：锯齿波 + 三角波，经低通滤波，带起音和释音（不加揉弦，保证音高清晰） */
   note(midiNum, { at = null, dur = 0.7, vel = 0.32 } = {}) {
     if (!this.ready || this.muted) return false;
@@ -74,6 +82,7 @@ class AudioEngine {
     g.gain.exponentialRampToValueAtTime(vel, t0 + a);
     g.gain.setValueAtTime(vel, t0 + Math.max(a, dur - r));
     g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    this.track(o1);this.track(o2);
     o1.start(t0); o2.start(t0);
     o1.stop(t0 + dur + 0.05); o2.stop(t0 + dur + 0.05);
     return true;
@@ -90,7 +99,7 @@ class AudioEngine {
       if (it.midi != null) this.note(it.midi, { at: t, dur: Math.max(0.12, dur - gap) });
       if (onNote) {
         const delay = (t - this.ctx.currentTime) * 1000;
-        setTimeout(() => onNote(i), Math.max(0, delay));
+        const timer=setTimeout(() => {this.timers.delete(timer);onNote(i);}, Math.max(0, delay));this.timers.add(timer);
       }
       t += dur;
     });
@@ -109,7 +118,7 @@ class AudioEngine {
     g.gain.exponentialRampToValueAtTime(this.muted ? 0.0001 : 0.25, at + 0.002);
     g.gain.exponentialRampToValueAtTime(0.0001, at + 0.05);
     o.connect(g); g.connect(this.master ?? ctx.destination);
-    o.start(at); o.stop(at + 0.06);
+    this.track(o);o.start(at); o.stop(at + 0.06);
     return true;
   }
 }

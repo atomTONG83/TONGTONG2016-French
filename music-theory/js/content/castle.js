@@ -97,7 +97,7 @@ export function buildDetective(ex) {
       id: `${ex.id}.name.${i}`, type: 'choice', skills: ['reading.note_identification', 'reading.independent_decoding'], difficulty: 1,
       staff: staffFor(ex, { highlight: [i] }), prompt: `第 ${i + 1} 个音（发光的那个）在谱上叫什么？先不管升降号。`,
       options: nameOpts(), answer: FR_NAME[n.step],
-      explain: `它在 ${FR_NAME[n.step]}${n.octave} 的位置。`,
+      explain: `它在 ${FR_NAME[n.step]}${n.octave - 1} 的位置。`,
     })),
   });
 

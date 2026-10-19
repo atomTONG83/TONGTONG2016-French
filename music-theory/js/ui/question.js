@@ -1,3 +1,4 @@
+import {setText,bilingual} from '../i18n.js';
 // 题目渲染与判定（选择、多选、排序、键盘音阶；节奏题交给 rhythm.js）
 import { h, sparkle, shuffle } from './dom.js';
 import { staffView } from './staff.js';
@@ -116,12 +117,12 @@ export function renderQuestion(q, ctx, opts = {}) {
         if (finished || idx >= q.answer.length) return;
         if (m === q.answer[idx]) {
           kb.mark(m, 'ok'); idx += 1;
-          progress.textContent = '已点：' + q.names.slice(0, idx).join(' – ');
+          setText(progress, '已点：' + q.names.slice(0, idx).join(' – '));
           if (idx === q.answer.length) { setReady(true); checkBtn.click(); }
         } else {
           mistakes += 1;
           kb.mark(m, 'bad'); setTimeout(() => kb.clear('bad'), 500);
-          feedback.replaceChildren(h('p', { class: 'soft' }, `这个音不对。下一个音和 ${q.names[idx - 1] ?? '前一个音'} 应该相差${idx === 0 ? '……从 Ré 开始' : [2, 2, 1, 2, 2, 2, 1][idx - 1] === 1 ? '半音（紧挨着的键）' : '全音（中间隔一个键）'}。`));
+          feedback.replaceChildren(h('p', { class: 'soft' }, bilingual(`这个音不对。下一个音和 ${q.names[idx - 1] ?? '前一个音'} 应该相差${idx === 0 ? '……从 Ré 开始' : [2, 2, 1, 2, 2, 2, 1][idx - 1] === 1 ? '半音（紧挨着的键）' : '全音（中间隔一个键）'}。`,idx===0?'Commence par Ré.':`Depuis ${q.names[idx-1]}, avance de ${[2,2,1,2,2,2,1][idx-1]===1?'un demi-ton : une touche voisine':'un ton : deux demi-tons'}.`)));
         }
       },
     });
@@ -199,7 +200,7 @@ export function soundGate() {
   const b = h('button', { class: 'btn sound-gate small', type: 'button' }, '🔈 先开启声音');
   b.addEventListener('click', async () => {
     const ok = await audio.unlock();
-    b.textContent = ok ? '🔊 声音已开启' : '无法开启声音，请检查静音开关';
+    setText(b, ok ? '🔊 声音已开启' : '无法开启声音，请检查静音开关');
     if (ok) setTimeout(() => b.remove(), 900);
   });
   return b;

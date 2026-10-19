@@ -168,6 +168,22 @@ export function createStore(storage = globalThis.localStorage, clock = () => new
     save();
   }
 
+  // Teaching rewards are distinct from answers, mastery, money and real practice.
+  // Only these fixed categories can earn a one-time reward for an authored course.
+  function awardActivity(course, kind) {
+    if (!['staff','sharps','accidentals','steps','rhythm','violin','ear','detective'].includes(course)) return {xpGained:0};
+    const amount = {film: 10, workshop: 5}[kind];
+    if (!amount) return {xpGained:0};
+    const rewards = (state.settings.activityRewards ??= {});
+    const key = course+':'+kind;
+    if (rewards[key]) return {xpGained:0};
+    rewards[key] = {at:clock().toISOString(), xp:amount};
+    state.xp += amount;
+    const d = dayRec(); d.xp += amount; d.activities = (d.activities || 0)+1;
+    save();
+    return {xpGained:amount};
+  }
+
   /** 到期需要复习的题目 ID（按到期日排序） */
   function dueItems(limit = 20) {
     const t = today();
@@ -187,10 +203,10 @@ export function createStore(storage = globalThis.localStorage, clock = () => new
       .slice(0, limit);
   }
 
-  /** 连续学习天数（今天或昨天有完成关卡才算连续） */
+  /** 连续学习天数（今天或昨天有真实完成的课程活动或关卡才算连续） */
   function streak() {
     let k = today();
-    const active = (d) => (state.days[d]?.lessons ?? 0) > 0;
+    const active = (d) => (state.days[d]?.lessons ?? 0) > 0 || (state.days[d]?.activities ?? 0) > 0;
     if (!active(k)) k = addDays(k, -1);
     let n = 0;
     while (active(k)) {
@@ -226,7 +242,7 @@ export function createStore(storage = globalThis.localStorage, clock = () => new
     let days = 0, lessons = 0, answers = 0, correct = 0;
     for (let i = 0; i <= dow; i++) {
       const rec = state.days[addDays(monday, i)];
-      if (rec && (rec.lessons > 0 || rec.answers > 0)) days += 1;
+      if (rec && (rec.lessons > 0 || rec.answers > 0 || (rec.activities || 0) > 0)) days += 1;
       lessons += rec?.lessons ?? 0;
       answers += rec?.answers ?? 0;
       correct += rec?.correct ?? 0;
@@ -248,7 +264,7 @@ export function createStore(storage = globalThis.localStorage, clock = () => new
   return {
     get state() { return state; },
     get persistent() { return persistent; },
-    today, recordAnswer, completeLesson, recordRhythm, setTaskChecked, setSetting,
+    today, recordAnswer, completeLesson, recordRhythm, setTaskChecked, setSetting, awardActivity,
     dueItems, weakItems, streak, skillStatus, setItemSkillResolver, weekSummary,
     exportJSON, importJSON,
     subscribe(fn) { listeners.add(fn); return () => listeners.delete(fn); },

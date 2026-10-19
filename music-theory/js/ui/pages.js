@@ -1,12 +1,16 @@
 // 页面：冒险大厅、地图、关卡、复习、老师任务、家长视图
 import { h, shuffle, toast } from './dom.js';
+import {narration} from '../voice.js';
+import {register, french} from '../i18n.js';
+import {studioForWorld} from './classroom.js';
+import {learningDashboard} from './rewards.js';
 import { mino, keyboard, fingerboard, spacingDiagram, playSeq, playNoteStr } from './widgets.js';
 import { staffView } from './staff.js';
 import { renderQuestion, soundGate } from './question.js';
 import { detectiveView } from './detective.js';
 import { audio } from '../audio.js';
 import { levelFromXp } from '../store.js';
-import { WORLDS, LESSONS, lessonsOf, lessonById, getQuestion, SKILLS } from '../content/index.js';
+import { WORLDS, LESSONS, lessonsOf, lessonById, getQuestion, SKILLS, bank } from '../content/index.js';
 import { SPACING_SETS } from '../content/lab.js';
 import { TEACHER_WEEKS, REPERTOIRE } from '../content/tasks.js';
 import { midi as toMidi, noteToString, DURATIONS } from '../theory.js';
@@ -42,8 +46,9 @@ export function hallPage(store) {
       h('div', { class: 'hero-text' },
         h('h1', {}, '乐理冒险岛', h('span', { class: 'en' }, 'Music Quest')),
         h('p', { class: 'bubble' }, h('strong', {}, '小音 Mino：'), greet))),
-    h('section', { class: 'today card' },
-      h('h2', {}, '今日任务'),
+    learningDashboard(store),
+    h('section', { class: 'today card practice-after-teaching' },
+      h('h2', {}, registerLabel('已经学过？继续练习','Déjà découvert ? Entraîne-toi')),
       h('a', { class: 'mission', href: `#/lesson/${rec.id}` },
         h('span', { class: 'm-emoji', style: { color: world.color } }, world.emoji),
         h('span', {}, h('strong', {}, rec.title), h('small', {}, `${world.name} · 约 ${rec.minutes} 分钟`)),
@@ -86,7 +91,7 @@ export function mapPage(store) {
       ...WORLDS.map((w, wi) => h('section', { class: `island side-${wi % 2 ? 'r' : 'l'}`, style: { '--wc': w.color }, id: `world-${w.id}` },
         h('div', { class: 'island-head' },
           h('span', { class: 'i-emoji', 'aria-hidden': 'true' }, w.emoji),
-          h('div', {}, h('h2', {}, w.name), h('p', { class: 'fr' }, w.fr), h('p', { class: 'muted small' }, w.desc))),
+          h('div', {}, h('h2', {}, w.name), h('p', { class: 'fr' }, w.fr), h('p', { class: 'muted small' }, w.desc), h('a',{class:'btn primary small',href:`#/learn/${studioForWorld(w.id).id}`},'🎬 '+registerLabel('先看动画课','Voir le film d’abord')))),
         h('ol', { class: 'nodes' }, ...lessonsOf(w.id).map((l) => {
           const s = lessonState(store, l);
           return h('li', {}, h('a', { class: `node${s.done ? ' done' : ''}${l.id === rec.id ? ' rec' : ''}`, href: `#/lesson/${l.id}` },
@@ -144,6 +149,7 @@ export function lessonPage(store, id) {
     body.append(h('section', { class: 'intro-card' },
       h('div', { class: 'intro-steps', 'aria-label': '学习步骤' }, ...['观察', '试听', '发现规律', '动手操作', '独立作答'].map((s) => h('span', { class: s === c.step ? 'on' : '' }, s))),
       h('div', { class: 'intro-main' }, mino(ci === 0 ? 'happy' : 'think', 72), h('div', {}, h('h2', {}, lesson.title), h('h3', {}, c.title), h('p', {}, c.text))),
+      narration(c.text),
       c.widget ? widgetFor(c.widget) : null,
       lesson.needsAudio && !audio.ready ? h('div', { class: 'q-actions' }, soundGate()) : null,
       h('div', { class: 'q-actions' },
@@ -182,7 +188,9 @@ export function lessonPage(store, id) {
     const { bonus } = store.completeLesson(lesson.id, acc);
     body.append(h('section', { class: 'summary' },
       mino(acc >= 0.8 ? 'cheer' : 'happy', 96),
+      h('div',{class:'treasure-rating','aria-label':registerLabel('独立作答星级','Étoiles de réussite autonome')},acc>=1?'✦ ✦ ✦':acc>=.8?'✦ ✦ ☆':acc>=.6?'✦ ☆ ☆':'☆ ☆ ☆'),
       h('h2', {}, acc >= 0.8 ? '关卡完成！' : '关卡完成，继续加油！'),
+      h('p',{class:'small muted'},registerLabel('星级按第一次独立答对计算；重试帮助学习，不会把错误藏起来。','Les étoiles reflètent les réponses autonomes du premier essai. Réessayer aide à apprendre sans masquer les erreurs.')),
       h('p', { class: 'big-num' }, `${ok} / ${n}`, h('small', {}, ' 第一次就答对')),
       bonus ? h('p', {}, `完成奖励 +${bonus} XP`) : h('p', { class: 'muted small' }, acc < 0.6 ? '正确率 60% 以上才有完成奖励。错题会自动安排到明天复习。' : '同一关今天已经领过完成奖励。'),
       endNav(0, wrongOf(results))));
@@ -198,7 +206,7 @@ function endNav(bonus, wrong) {
     wrong.length ? h('details', { class: 'wrong-list' }, h('summary', {}, `这次需要再看看的 ${wrong.length} 题`), h('ul', {}, ...wrong.map((q) => h('li', {}, h('strong', {}, q.prompt), h('p', { class: 'muted' }, q.explain))))) : null,
     h('div', { class: 'q-actions' },
       h('a', { class: 'btn primary', href: '#/map' }, '回到地图'),
-      h('a', { class: 'btn ghost', href: '#/' }, '冒险大厅')));
+      h('a', { class: 'btn ghost', href: '#/review' }, registerLabel('🔁 复习巩固','🔁 Réviser')),h('a',{class:'btn ghost',href:'#/challenge'},registerLabel('🏆 综合闯关','🏆 Défi final')),h('a', { class: 'btn ghost', href: '#/' }, '冒险大厅')));
 }
 function cleanupRhythm(root) { root.querySelectorAll('.rhythm').forEach((r) => r._cleanup?.()); }
 
@@ -295,7 +303,7 @@ export function parentPage(store) {
     catch (e) { toast(`恢复失败：${e.message}`); }
   });
   return h('div', { class: 'page parent' },
-    h('header', { class: 'page-head' }, h('h1', {}, '家长视图'), h('p', { class: 'muted' }, '以下数字全部来自本设备上真实的作答记录。')),
+    h('header', { class: 'page-head' }, h('h1', {}, '家长视图'), h('p', { class: 'muted' }, registerLabel('以下数据来自本设备的实际学习活动，观看和作答分开记录。','Les données viennent des activités enregistrées sur cet appareil. Visionnage et réponses sont comptés séparément.'))),
     h('section', { class: 'stats' },
       stat(String(w.days), '本周学习天数'), stat(String(w.lessons), '本周完成关卡'), stat(String(w.answers), '本周作答'),
       stat(w.answers ? `${Math.round((w.correct / w.answers) * 100)}%` : '—', '第一次答对率')),
@@ -329,3 +337,15 @@ export function notFound() {
   return h('div', { class: 'page empty' }, mino('think', 90), h('h1', {}, '没有找到这一关'), h('a', { class: 'btn primary', href: '#/map' }, '回到地图'));
 }
 export { VIOLIN_URL, HOME_URL, playNoteStr, staffView, noteToString };
+
+function registerLabel(zh,fr){register(zh,fr);return zh;}
+export function challengePage(store){
+ const ready=LESSONS.some(l=>(store.state.lessons[l.id]?.completed||0)>0);
+ if(!ready)return h('section',{class:'page challenge-lock practice-bridge'},h('span',{class:'big-symbol'},'🗝'),h('h1',{},registerLabel('先收集第一把知识钥匙','Gagne ta première clé de connaissance')),h('p',{},registerLabel('先看一堂动画课，完成探索和一个练习关卡，再来开启综合闯关。看视频的 XP 不会代替作答能力。','Regarde un film, explore l’atelier et termine un niveau d’entraînement pour ouvrir le défi. Les XP du film ne remplacent pas les réponses.')),h('a',{class:'btn primary',href:'#/learn'},registerLabel('▶ 从动画课堂开始','▶ Commencer par le film')));
+ const eligible=[...bank().values()].filter(q=>q.type!=='tap' && !q.noHints && q.type!=='keyboard-scale');
+ const familiar=eligible.filter(q=>q.skills.some(s=>(store.state.skills[s]?.recent.length||0)>0));
+ const pool=shuffle(familiar.length>=8?familiar:eligible).slice(0,10).map(q=>q.id);
+ const lesson={id:'challenge',world:'w6',title:registerLabel('Mino 知识宝藏闯关','Le trésor des connaissances'),intro:[{step:'独立作答',title:registerLabel('十个线索，找回音乐宝藏','Dix indices pour retrouver le trésor'),text:registerLabel('每道题先独立作答，答错可以学习后重试。先做过的技能会优先出现；没有倒计时，也不会扣除原站奖励。','Réponds seul, puis apprends de tes erreurs. Le défi privilégie les compétences déjà rencontrées. Pas de compte à rebours ni de perte des récompenses du site.')}],pool:()=>pool,count:pool.length};
+ LESSONS_REVIEW.set('challenge',lesson);
+ return lessonPage(store,'challenge');
+}

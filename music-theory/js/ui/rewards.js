@@ -1,0 +1,17 @@
+import {h} from './dom.js';
+import {register} from '../i18n.js';
+import {STUDIOS} from '../teaching-content.js';
+import {levelFromXp} from '../store.js';
+const B=(z,f)=>{register(z,f);return z;};
+export function learningDashboard(store){
+ const st=store.state,watched=st.settings.teachingWatched||{},rewards=st.settings.activityRewards||{},day=st.days[store.today()]||{};
+ const course=STUDIOS.find(s=>!watched[s.id])||STUDIOS.find(s=>!rewards[s.id+':workshop'])||STUDIOS[0];
+ const goal=Number(st.settings.dailyGoal)||40,earned=day.xp||0,ratio=Math.min(1,earned/goal),lv=levelFromXp(st.xp);
+ const films=Object.values(watched).filter(Boolean).length,workshops=Object.keys(rewards).filter(k=>k.endsWith(':workshop')).length;
+ const badges=[['🎬','第一堂动画课','Premier film',films>=1],['🧩','探索小能手','Explorateur',workshops>=3],['🔥','三日同行','Trois jours de suite',store.streak()>=3],['🗺','八课收藏家','Huit films découverts',films>=8]];
+ const target=h('div',{class:'daily-xp'},h('span',{class:'goal-ring',style:{'--goal':`${ratio*100}%`}},h('strong',{},`${Math.round(ratio*100)}%`)),h('div',{},h('h3',{},B('今日小目标','Ton petit objectif')),h('p',{},`${earned} / ${goal} XP`),h('label',{class:'small'},B('选择目标：','Choisir :'),h('select',{'aria-label':'每日XP目标 / Objectif XP',onchange:e=>{store.setSetting('dailyGoal',Number(e.target.value));target.replaceWith(learningDashboard(store).querySelector('.daily-xp'));}},...[20,40,60].map(n=>h('option',{value:n,selected:n===goal},`${n} XP`))))));
+ return h('section',{class:'teaching-dashboard'},h('div',{class:'cinema-hero'},h('div',{class:'hero-copy'},h('p',{class:'eyebrow'},'REGARDER · COMPRENDRE · JOUER'),h('h2',{},B('让音乐动起来，跟着 Mino 学','La musique prend vie avec Mino')),h('p',{},B('先看配音动画，理解一个小规律；再亲手探索，最后用游戏验证。','Un film commenté pour comprendre, un atelier pour essayer, puis un jeu pour vérifier.')),h('a',{class:'btn primary big',href:`#/learn/${course.id}`},B('▶ 继续我的动画课','▶ Continuer mon cours animé')),h('a',{class:'text-link',href:'#/learn'},B('浏览全部 8 堂动画课','Voir les huit films'))),h('a',{class:'hero-film',href:`#/learn/${course.id}`},h('img',{src:`video/${course.id}-zh.jpg`,alt:course.title[0],width:640,height:360}),h('span',{class:'play-orb','aria-hidden':'true'},'▶'),h('span',{class:'film-label'},B(...course.title)))),
+ h('div',{class:'quest-strip'},target,h('div',{class:'quest-count'},h('strong',{},`🔥 ${store.streak()}`),h('span',{},B('连学天数','Jours de suite'))),h('div',{class:'quest-count'},h('strong',{},`Lv.${lv.level}`),h('span',{},`${st.xp} XP`)),h('div',{class:'quest-count'},h('strong',{},`🎬 ${films}/8`),h('span',{},B('看过的动画课','Films regardés')))),
+ h('div',{class:'badge-shelf'},...badges.map(([icon,zh,fr,done])=>h('div',{class:`achievement ${done?'earned':'locked'}`,'aria-label':B(`${zh}：${done?'已获得':'待解锁'}`,`${fr} : ${done?'obtenu':'à débloquer'}`)},h('span',{},icon),h('strong',{},B(zh,fr)),h('small',{},B(done?'已获得':zh==='探索小能手'?'完成 3 个探索任务':zh==='三日同行'?'连续学习 3 天':zh==='八课收藏家'?'看完 8 堂动画课':'看完首堂动画课',done?'Obtenu':zh==='探索小能手'?'Terminer 3 ateliers':zh==='三日同行'?'3 jours de suite':zh==='八课收藏家'?'Regarder les 8 films':'Regarder le premier film'))))),
+ h('p',{class:'small muted reward-boundary'},B('本模块奖励：动画首次看完 +10 XP，探索任务首次完成 +5 XP；答题 XP 与关卡奖励另计。观看不等于掌握，不兑换原站奖金。','Récompenses de ce module : premier visionnage +10 XP, premier atelier terminé +5 XP. Les réponses et niveaux ont leurs propres récompenses. Regarder ne prouve pas la maîtrise et ne donne pas d’argent.')));
+}

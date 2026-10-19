@@ -138,11 +138,11 @@ export function explainAccidental(ctx) {
   if (src && src.i === hi) {
     parts.push(`这个音前面直接写着 ${ACCIDENTALS[src.acc].symbol}（${ACCIDENTALS[src.acc].fr}），所以是 ${result}。`);
   } else if (src) {
-    parts.push(`同一小节里、同一位置（${FR_NAME[t.step]}${t.octave}）前面已经出现 ${ACCIDENTALS[src.acc].symbol}（${ACCIDENTALS[src.acc].fr}），它一直管到这一小节结束，所以还是 ${result}。`);
+    parts.push(`同一小节里、同一位置（${FR_NAME[t.step]}${t.octave - 1}）前面已经出现 ${ACCIDENTALS[src.acc].symbol}（${ACCIDENTALS[src.acc].fr}），它一直管到这一小节结束，所以还是 ${result}。`);
   } else {
     const other = notes.find((x, i) => i < hi && x.step === t.step && x.acc && (x.measure !== t.measure || x.octave !== t.octave));
     if (other && other.measure !== t.measure) parts.push('前一小节的临时记号过了小节线就失效了。');
-    if (other && other.measure === t.measure && other.octave !== t.octave) parts.push(`临时记号只管同一个谱位：前面的 ${ACCIDENTALS[other.acc].symbol} 写在 ${FR_NAME[other.step]}${other.octave}，管不到 ${FR_NAME[t.step]}${t.octave}。`);
+    if (other && other.measure === t.measure && other.octave !== t.octave) parts.push(`临时记号只管同一个谱位：前面的 ${ACCIDENTALS[other.acc].symbol} 写在 ${FR_NAME[other.step]}${other.octave - 1}，管不到 ${FR_NAME[t.step]}${t.octave - 1}。`);
     parts.push(inKey ? `没有临时记号，就按调号：调号里有 ${FR_NAME[t.step]}${kSym}，所以是 ${result}。` : `没有临时记号，调号里也没有 ${FR_NAME[t.step]}，所以是本位音 ${result}。`);
   }
   return parts.join('');

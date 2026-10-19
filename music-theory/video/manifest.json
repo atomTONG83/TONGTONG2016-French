@@ -1,0 +1,387 @@
+{
+  "author": "Music Quest original instructional animation",
+  "voices": {
+    "zh": "Microsoft Xiaoxiao Neural",
+    "fr": "Microsoft Denise Neural"
+  },
+  "videos": [
+    {
+      "id": "staff",
+      "lang": "zh",
+      "duration": 62.904,
+      "bytes": 1051520,
+      "steps": [
+        {
+          "start": 0,
+          "end": 13.656,
+          "text": "欢迎来到音符电梯。先看高音谱号的卷圈：它围着第二条线。这就是 Sol 的家。只记住这个路标，我们就能找到其他音。"
+        },
+        {
+          "start": 13.656,
+          "end": 29.712,
+          "text": "现在，音符自己向上走。从线到间，是一步；从间到下一条线，又是一步。Sol 后面是 La，再往上是 Si。线和间都要数，不能跳过间。"
+        },
+        {
+          "start": 29.712,
+          "end": 46.056,
+          "text": "看整条音阶，线上的音从下往上是 Mi、Sol、Si、Ré、Fa；间里的音是 Fa、La、Do、Mi。它们不是两串互不相干的名单，而是同一架楼梯的两部分。"
+        },
+        {
+          "start": 46.056,
+          "end": 62.904,
+          "text": "音符向下走，来到中央 Do。它在五线谱下面第一条短短的加线上。五条线不够时就加一小段，数音的方法仍然相同。接下来，你可以自己开动音符电梯。"
+        }
+      ]
+    },
+    {
+      "id": "staff",
+      "lang": "fr",
+      "duration": 54.072,
+      "bytes": 867774,
+      "steps": [
+        {
+          "start": 0,
+          "end": 12.984,
+          "text": "Bienvenue dans l’ascenseur des notes. Regarde la boucle de la clé de sol : elle entoure la deuxième ligne, la maison de Sol. Ce seul repère permet de retrouver les autres notes."
+        },
+        {
+          "start": 12.984,
+          "end": 27.12,
+          "text": "La note monte maintenant. D’une ligne à un interligne, elle avance d’un pas ; puis encore un pas vers la ligne suivante. Après Sol viennent La et Si. Il faut compter les lignes et les interlignes."
+        },
+        {
+          "start": 27.12,
+          "end": 39.816,
+          "text": "Les lignes donnent Mi, Sol, Si, Ré, Fa ; les interlignes Fa, La, Do, Mi. Ce ne sont pas deux listes séparées, mais les deux parties du même escalier de notes."
+        },
+        {
+          "start": 39.816,
+          "end": 54.072,
+          "text": "La note descend jusqu’au Do central, sur la première petite ligne sous la portée. Les lignes supplémentaires prolongent simplement l’escalier. Ensuite, tu pourras conduire toi-même l’ascenseur."
+        }
+      ]
+    },
+    {
+      "id": "sharps",
+      "lang": "zh",
+      "duration": 47.88,
+      "bytes": 1037392,
+      "steps": [
+        {
+          "start": 0,
+          "end": 14.448,
+          "text": "升号列车出发。第一节车厢是 Fa，后面依次接上 Do、Sol、Ré、La、Mi、Si。调号中的升号总是按这个顺序出现，不会插队。"
+        },
+        {
+          "start": 14.448,
+          "end": 33.072,
+          "text": "为什么 Fa 后面是 Do？我们把出发的 Fa 算作第一名：Fa、Sol、La、Si、Do。第五个音名是 Do。再从 Do 数五个，就到 Sol。这是纯五度的规律。"
+        },
+        {
+          "start": 33.072,
+          "end": 47.88,
+          "text": "现在列车换方向。降号顺序正好是升号顺序倒过来：Si、Mi、La、Ré、Sol、Do、Fa。先听旁白跟着读，之后再自己拼一次列车。"
+        }
+      ]
+    },
+    {
+      "id": "sharps",
+      "lang": "fr",
+      "duration": 41.424,
+      "bytes": 874901,
+      "steps": [
+        {
+          "start": 0,
+          "end": 11.856,
+          "text": "Le train des dièses part de Fa, puis ajoute Do, Sol, Ré, La, Mi et Si. Les dièses apparaissent toujours dans cet ordre à l’armure, sans sauter de wagon."
+        },
+        {
+          "start": 11.856,
+          "end": 27.024,
+          "text": "Pourquoi Do vient-il après Fa ? Compte aussi le départ : Fa, Sol, La, Si, Do. Le cinquième nom est Do. En repartant de Do, on arrive à Sol : c’est la règle de la quinte."
+        },
+        {
+          "start": 27.024,
+          "end": 41.424,
+          "text": "Le train change de sens. Les bémols suivent exactement l’ordre inverse : Si, Mi, La, Ré, Sol, Do, Fa. Récite avec la voix, puis tu pourras assembler ton propre train."
+        }
+      ]
+    },
+    {
+      "id": "accidentals",
+      "lang": "zh",
+      "duration": 47.832,
+      "bytes": 800818,
+      "steps": [
+        {
+          "start": 0,
+          "end": 16.128,
+          "text": "这是 Ré 大调，调号里有 Fa 升号和 Do 升号。看几个不同位置的 Fa，它们默认都升半音。调号管理所有八度，不需要在每个音前面重复写。"
+        },
+        {
+          "start": 16.128,
+          "end": 32.16,
+          "text": "还原号出现了。第一个 Fa 变成了本位音。同一小节、同一个八度后面的 Fa 也跟着还原。可是高一个八度的 Fa 没有变，它仍然按调号升高。"
+        },
+        {
+          "start": 32.16,
+          "end": 47.832,
+          "text": "光点跨过小节线，还原号的护照到期。下一小节重新按调号，Fa 又是升 Fa。判断时要问：同一小节吗？同一个音名吗？同一个八度吗？"
+        }
+      ]
+    },
+    {
+      "id": "accidentals",
+      "lang": "fr",
+      "duration": 38.448,
+      "bytes": 632893,
+      "steps": [
+        {
+          "start": 0,
+          "end": 10.296,
+          "text": "Voici Ré majeur, avec Fa dièse et Do dièse à l’armure. Les Fa sont dièses dans toutes les octaves, sans répéter le signe devant chaque note."
+        },
+        {
+          "start": 10.296,
+          "end": 24.576,
+          "text": "Un bécarre apparaît. Le premier Fa devient naturel, ainsi que le Fa suivant de la même mesure et de la même octave. Le Fa plus aigu reste dièse : le bécarre ne concerne pas cette autre octave."
+        },
+        {
+          "start": 24.576,
+          "end": 38.448,
+          "text": "Après la barre de mesure, le bécarre précédent ne s’applique plus. Le Fa redevient dièse selon l’armure. Pour vérifier, demande-toi : même mesure, même nom et même octave ?"
+        }
+      ]
+    },
+    {
+      "id": "steps",
+      "lang": "zh",
+      "duration": 48.96,
+      "bytes": 849155,
+      "steps": [
+        {
+          "start": 0,
+          "end": 15.0,
+          "text": "看 Mi 到 Fa。它们是紧挨着的两个键，中间没有黑键，也没有别的键。这种最近的距离叫半音。计算距离时，黑键和白键都要算。"
+        },
+        {
+          "start": 15.0,
+          "end": 30.552,
+          "text": "小光球从 Do 走到 Do 升，再走到 Ré。一步半音，再一步半音，两步合起来就是一个全音。音符之间的距离，现在变成了看得见的小桥。"
+        },
+        {
+          "start": 30.552,
+          "end": 48.96,
+          "text": "Ré 大调的小桥按全、全、半、全、全、全、半来搭。为了保持这些距离，Fa 和 Do 必须升高。两个升号有原因，不是随便加的。接下来你可以自己走一遍。"
+        }
+      ]
+    },
+    {
+      "id": "steps",
+      "lang": "fr",
+      "duration": 41.88,
+      "bytes": 720768,
+      "steps": [
+        {
+          "start": 0,
+          "end": 12.528,
+          "text": "Regarde Mi et Fa : ces touches sont voisines, sans autre touche entre elles. Cette plus petite distance est un demi-ton. Il faut compter les touches noires autant que les blanches."
+        },
+        {
+          "start": 12.528,
+          "end": 25.512,
+          "text": "La lumière avance de Do à Do dièse, puis à Ré. Un demi-ton, puis encore un demi-ton : les deux ensemble font un ton. Le pont rend visible la distance entre les notes."
+        },
+        {
+          "start": 25.512,
+          "end": 41.88,
+          "text": "Ré majeur suit ce chemin : ton, ton, demi-ton, ton, ton, ton, demi-ton. Il faut Fa dièse et Do dièse pour conserver ces distances. Les deux dièses ont donc une raison. À toi d’explorer ensuite."
+        }
+      ]
+    },
+    {
+      "id": "rhythm",
+      "lang": "zh",
+      "duration": 61.56,
+      "bytes": 1115524,
+      "steps": [
+        {
+          "start": 0,
+          "end": 15.528,
+          "text": "节拍小火车经过四个车站，每个车站是一拍。火车匀速前进，每拍之间的时间一样。四分音符占一站，也就是一拍。只在每个音开始时敲一下。"
+        },
+        {
+          "start": 15.528,
+          "end": 31.056,
+          "text": "二分音符的车厢更长，跨过两个车站。虽然占两拍，却只在开头敲一次。第二拍仍然在前进，要让声音坐满两站，不能中途结束，也不用再敲一次。"
+        },
+        {
+          "start": 31.056,
+          "end": 44.16,
+          "text": "八分音符把一拍分成相等的两半。两个小车厢刚好装进一个车站。可以数“一、和、二、和”，每个数字和“和”各占半拍。"
+        },
+        {
+          "start": 44.16,
+          "end": 61.56,
+          "text": "最后，一拍、半拍、半拍、两拍，刚好装满四拍。小节线像车站的边界，不管音符怎么组合，总拍数都要对上。看完后，你可以亲手拼一小节，再听它的节奏。"
+        }
+      ]
+    },
+    {
+      "id": "rhythm",
+      "lang": "fr",
+      "duration": 53.016,
+      "bytes": 946171,
+      "steps": [
+        {
+          "start": 0,
+          "end": 13.752,
+          "text": "Le train traverse quatre gares : chacune représente un temps. Il avance régulièrement. La noire occupe une gare, donc un temps. On frappe seulement au début de chaque note."
+        },
+        {
+          "start": 13.752,
+          "end": 25.824,
+          "text": "Le wagon de la blanche occupe deux gares. Il dure deux temps, mais on frappe une seule fois au début. Le deuxième temps continue : tiens le son jusqu’au bout sans refrapper."
+        },
+        {
+          "start": 25.824,
+          "end": 38.64,
+          "text": "La croche partage le temps en deux moitiés égales. Deux petits wagons tiennent dans une seule gare. On peut compter « un et deux et » : chaque nombre et chaque « et » vaut un demi-temps."
+        },
+        {
+          "start": 38.64,
+          "end": 53.016,
+          "text": "Une noire, deux croches et une blanche remplissent exactement quatre temps. La mesure fixe la limite, quelle que soit la combinaison. Après le film, tu pourras composer et écouter ta propre mesure."
+        }
+      ]
+    },
+    {
+      "id": "violin",
+      "lang": "zh",
+      "duration": 49.608,
+      "bytes": 882246,
+      "steps": [
+        {
+          "start": 0,
+          "end": 15.408,
+          "text": "小提琴有四根不同的弦，从低到高是 Sol、Ré、La、Mi。每根弦的起点不同，所以只看到一个手指数字，不能知道音名。还要认出音符和琴弦。"
+        },
+        {
+          "start": 15.408,
+          "end": 31.2,
+          "text": "同一个 Ré 在 La 弦上，第一把位用三指。看整只手向高音方向移动，来到第三把位，Ré 改用一指。音高没有改变，变的是手的位置和手指。"
+        },
+        {
+          "start": 31.2,
+          "end": 49.608,
+          "text": "低二指和高二指都叫二指，但位置不同。音与音之间是半音，手指就靠拢；相差全音，就分开。靠拢的位置会随音、琴弦和把位变化。实际换把动作仍要跟老师学。"
+        }
+      ]
+    },
+    {
+      "id": "violin",
+      "lang": "fr",
+      "duration": 43.152,
+      "bytes": 783190,
+      "steps": [
+        {
+          "start": 0,
+          "end": 14.88,
+          "text": "Le violon a quatre cordes : Sol, Ré, La, Mi, de la plus grave à la plus aiguë. Chaque corde a son propre départ. Un chiffre de doigté ne suffit pas : il faut aussi lire la note et la corde."
+        },
+        {
+          "start": 14.88,
+          "end": 28.32,
+          "text": "Sur la corde de La, Ré se joue avec le troisième doigt en première position. La main monte en troisième position : le même Ré se joue alors avec le premier doigt. La hauteur ne change pas."
+        },
+        {
+          "start": 28.32,
+          "end": 43.152,
+          "text": "Le deuxième doigt bas et le deuxième doigt haut portent le même numéro, mais pas la même position. Un demi-ton rapproche les doigts voisins ; un ton les écarte. Pour le geste réel du démanché, suis ton professeur."
+        }
+      ]
+    },
+    {
+      "id": "ear",
+      "lang": "zh",
+      "duration": 29.592,
+      "bytes": 537760,
+      "steps": [
+        {
+          "start": 0,
+          "end": 15.096,
+          "text": "看声音的小光球。第二个音更高，轨迹就向上；更低，就向下；一样高，就停在同一高度。真正听的时候，可以先闭眼想方向，再用图核对。"
+        },
+        {
+          "start": 15.096,
+          "end": 29.592,
+          "text": "半音像一个小台阶，全音像两个小台阶。图帮助理解距离，不是音高的精确尺子。接下来，你会先听声音，再揭开轨迹，让耳朵先做决定。"
+        }
+      ]
+    },
+    {
+      "id": "ear",
+      "lang": "fr",
+      "duration": 29.688,
+      "bytes": 529194,
+      "steps": [
+        {
+          "start": 0,
+          "end": 15.72,
+          "text": "Regarde le trajet du son. Si le deuxième son est plus aigu, la lumière monte ; plus grave, elle descend ; identique, elle reste à la même hauteur. Ensuite, écoute les yeux fermés avant de vérifier avec le dessin."
+        },
+        {
+          "start": 15.72,
+          "end": 29.688,
+          "text": "Un demi-ton ressemble à un petit pas ; un ton en fait deux. Le dessin explique la distance sans être une échelle exacte. Dans l’activité suivante, écoute d’abord puis révèle la trajectoire."
+        }
+      ]
+    },
+    {
+      "id": "detective",
+      "lang": "zh",
+      "duration": 46.152,
+      "bytes": 855095,
+      "steps": [
+        {
+          "start": 0,
+          "end": 15.768,
+          "text": "识谱侦探先观察，再行动。谱号告诉你怎样认音，调号告诉你哪些音要升降，拍号告诉你怎样数拍。先读地图的规则，不要拿起琴就急着拉。"
+        },
+        {
+          "start": 15.768,
+          "end": 30.456,
+          "text": "线索按顺序打开：看调号，认音名，加上升降与还原，确定琴弦、把位和手指，最后读清节奏。只盯着手指数字，会漏掉其他线索。"
+        },
+        {
+          "start": 30.456,
+          "end": 46.152,
+          "text": "先独立解码，再听示范核对，然后关掉提示重新读一遍。接着换一段陌生的短谱，试试同样的方法。能把方法用在新谱上，才是真正学会独立读谱。"
+        }
+      ]
+    },
+    {
+      "id": "detective",
+      "lang": "fr",
+      "duration": 39.84,
+      "bytes": 702983,
+      "steps": [
+        {
+          "start": 0,
+          "end": 13.152,
+          "text": "Le détective observe avant d’agir. La clé aide à nommer les notes, l’armure indique les altérations et le chiffrage organise les temps. Lis d’abord les règles de la carte avant de jouer."
+        },
+        {
+          "start": 13.152,
+          "end": 26.04,
+          "text": "Ouvre les indices dans l’ordre : armure, noms des notes, altérations, corde, position et doigté, puis rythme. Regarder seulement les chiffres de doigté fait perdre les autres indices."
+        },
+        {
+          "start": 26.04,
+          "end": 39.84,
+          "text": "Déchiffre seul, écoute le modèle pour vérifier, puis relis sans indices. Essaie ensuite une nouvelle courte partition avec la même méthode. C’est ainsi qu’on apprend à lire de façon autonome."
+        }
+      ]
+    }
+  ]
+}
