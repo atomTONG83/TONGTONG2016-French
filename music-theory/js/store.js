@@ -82,13 +82,15 @@ export function createStore(storage = globalThis.localStorage, clock = () => new
    * 记录一次作答。firstTry：本题第一次作答是否正确（提示/重试后答对算 false）。
    * 返回 { xpGained }。
    */
-  function recordAnswer({ qid, skills = [], ok, firstTry = ok, hinted = false }) {
+  function recordAnswer({ qid, skills = [], ok, firstTry = ok, hinted = false, followup = false }) {
     const t = today();
     const it = (state.items[qid] ??= { c: 0, w: 0, stage: 0, due: null, lastAt: null, xpDay: null });
     it.lastAt = clock().toISOString();
     let xpGained = 0;
     if (ok) {
       it.c += 1;
+      // 键盘题在点完音阶后统一提交，错按也必须进入薄弱题记录。
+      if (!firstTry && !followup) it.w += 1;
       if (firstTry && !hinted) {
         it.stage = Math.min(it.stage + 1, INTERVALS.length);
         it.due = addDays(t, INTERVALS[it.stage - 1]);
@@ -110,16 +112,16 @@ export function createStore(storage = globalThis.localStorage, clock = () => new
     for (const s of skills) {
       const sk = (state.skills[s] ??= { correct: 0, wrong: 0, recent: [] });
       // 技能统计只看「第一次作答」，避免重试把正确率刷高
-      if (firstTry !== null) {
+      if (!followup && firstTry !== null) {
         if (ok && firstTry && !hinted) sk.correct += 1;
-        else if (!ok) sk.wrong += 1;
+        else sk.wrong += 1;
         sk.recent.push(ok && firstTry && !hinted ? 1 : 0);
         if (sk.recent.length > 12) sk.recent.shift();
       }
     }
     const d = dayRec();
-    d.answers += 1;
-    if (ok && firstTry && !hinted) d.correct += 1;
+    if (!followup) d.answers += 1;
+    if (!followup && ok && firstTry && !hinted) d.correct += 1;
     d.xp += xpGained;
     state.xp += xpGained;
     state.log.push({ at: clock().toISOString(), qid, ok: !!ok, first: !!firstTry, skill: skills[0] ?? null });

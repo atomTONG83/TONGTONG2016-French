@@ -30,7 +30,7 @@ async function introToQuestions() {
     await btn.click();
   }
 }
-async function answerCurrent({ wrongFirst = false } = {}) {
+async function answerCurrent({ wrongFirst = false, wrongKeyboard = false } = {}) {
   const sec = page.locator('section.q').first();
   const id = await sec.getAttribute('data-qid');
   const item = getQuestion(id);
@@ -45,7 +45,10 @@ async function answerCurrent({ wrongFirst = false } = {}) {
   if (item.type === 'choice') await sec.locator(`.opt[data-value=${q(item.answer)}]`).click();
   else if (item.type === 'multi') for (const a of item.answer) await sec.locator(`.opt[data-value=${q(a)}]`).click();
   else if (item.type === 'order') for (const t of item.answer) await sec.locator(`.order-pool .tile[data-tile=${q(t)}]`).click();
-  else if (item.type === 'keyboard-scale') { for (const m of item.answer) await sec.locator(`.kbd .key[data-midi="${m}"]`).dispatchEvent('pointerdown'); }
+  else if (item.type === 'keyboard-scale') {
+    if (wrongKeyboard) await sec.locator('.kbd .key[data-midi="60"]').dispatchEvent('pointerdown');
+    for (const m of item.answer) await sec.locator(`.kbd .key[data-midi="${m}"]`).dispatchEvent('pointerdown');
+  }
   if (item.type !== 'keyboard-scale') await sec.locator('button:has-text("检查答案")').click();
   await sec.locator('.q-feedback.good').waitFor({ timeout: 4000 });
   await sec.locator('.q-feedback button:has-text("继续")').click();
@@ -58,7 +61,7 @@ async function playLesson(id, opts = {}) {
   const seen = [];
   for (let i = 0; i < 20; i++) {
     if (await page.locator('.summary').count()) break;
-    seen.push(await answerCurrent({ wrongFirst: opts.wrongFirst && i === 0 }));
+    seen.push(await answerCurrent({ wrongFirst: opts.wrongFirst && i === 0, wrongKeyboard: opts.wrongKeyboard }));
   }
   return { seen, summary: await page.locator('.summary').innerText() };
 }
@@ -81,13 +84,20 @@ ok('升号关卡完成且全部第一次答对', /7 \/ 7/.test(r.summary), r.see
 await page.screenshot({ path: `${OUT}/02-sharps-summary.png`, fullPage: true });
 
 // 4. 还原号关卡：第一题先答错再答对
+const beforeRetry = await page.evaluate(() => Object.values(JSON.parse(localStorage.getItem('tt_music_quest_v1')).days).reduce((n, d) => n + d.answers, 0));
 r = await playLesson('w2.accidentals', { wrongFirst: true });
 ok('还原号关卡：错一次后重试，第一次答对数如实为 5/6', /5 \/ 6/.test(r.summary), r.summary.split('\n').join(' | '));
 const wrongQid = r.seen[0];
+const afterRetry = await page.evaluate(() => Object.values(JSON.parse(localStorage.getItem('tt_music_quest_v1')).days).reduce((n, d) => n + d.answers, 0));
+ok('重试不重复计入家长作答总数', afterRetry - beforeRetry === r.seen.length);
 
 // 5. 键盘 + D 大调
 r = await playLesson('w4.keyboard');
 ok('键盘关卡（含 D 大调逐键构建）完成', r.seen.includes('scale.build.D') && /6 \/ 6/.test(r.summary));
+await page.goto(APP);
+r = await playLesson('w4.keyboard', { wrongKeyboard: true });
+ok('键盘错按仍计入关卡分母与错题回顾', /5 \/ 6/.test(r.summary) && /需要再看看的 1 题/.test(r.summary));
+ok('键盘错按保留薄弱题记录', await page.evaluate(() => JSON.parse(localStorage.getItem('tt_music_quest_v1')).items['scale.build.D'].w === 1));
 
 // 6. 第一把位、第三把位、空弦、指法间距、识谱、节奏知识、听觉
 for (const id of ['w4.first', 'w4.third', 'w4.open', 'w4.spacing', 'w1.clef', 'w1.ledger', 'w1.finger', 'w2.flats', 'w2.keysig', 'w3.durations', 'w5.direction', 'w5.steps', 'w5.melody']) {

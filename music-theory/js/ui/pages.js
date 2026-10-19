@@ -115,8 +115,8 @@ export function lessonPage(store, id) {
   const record = (q, r) => {
     if (r.rhythm) store.recordRhythm({ bpm: r.rhythm.bpm, pattern: r.rhythm.pattern, meanAbsMs: r.rhythm.meanAbsMs, meanSignedMs: r.rhythm.meanSignedMs, hits: r.rhythm.hits, total: r.rhythm.total, extra: r.rhythm.extra, score: Math.round(r.rhythm.score * 100) / 100 });
     if (r.retry) return;
-    const res = store.recordAnswer({ qid: q.id, skills: q.skills, ok: r.ok, firstTry: r.firstTry, hinted: r.hinted });
-    if (r.firstTry) results.push({ q, ok: r.ok && !r.hinted });
+    const res = store.recordAnswer({ qid: q.id, skills: q.skills, ok: r.ok, firstTry: r.firstTry, hinted: r.hinted, followup: r.followup });
+    if (!r.followup) results.push({ q, ok: r.ok && r.firstTry && !r.hinted });
     if (res.xpGained) toast(`+${res.xpGained} XP`);
   };
 

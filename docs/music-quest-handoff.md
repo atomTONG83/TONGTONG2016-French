@@ -3,6 +3,8 @@
 > 版本 v1.0.0 · 2026-10-19 · 作者：Claude（本地开发、测试）  
 > **本次开发没有部署、没有 push、没有改动任何线上配置或生产数据。** 部署由接手工程师审核后执行。
 
+> 接手审核与最新验证状态见 [music-quest-review.md](music-quest-review.md)。下文测试数量为原始交接记录。Worker 使用独立构建，必须单独发布和回滚；GitHub revert 不会恢复 Worker。
+
 ---
 
 ## 0. 一页摘要

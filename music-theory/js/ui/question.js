@@ -146,7 +146,7 @@ export function renderQuestion(q, ctx, opts = {}) {
     root._mark(ok);
     if (ok) {
       finished = true;
-      ctx.record({ ok: true, firstTry, hinted });
+      ctx.record({ ok: true, firstTry, hinted, followup: attempts > 1 });
       sparkle(checkBtn);
       showFeedback(true, firstTry);
     } else {

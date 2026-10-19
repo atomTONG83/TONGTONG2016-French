@@ -26,6 +26,26 @@ test('提示后答对：不升级，次日复习；经验减少', () => {
   assert.equal(r.xpGained, 4);
   assert.equal(st.state.items.q2.due, '2026-10-20');
 });
+test('重试答对不重复计入第一次作答统计', () => {
+  const st = createStore(mem(), () => new Date('2026-10-19T10:00:00Z'));
+  st.recordAnswer({ qid: 'retry', skills: ['x'], ok: false, firstTry: true });
+  st.recordAnswer({ qid: 'retry', skills: ['x'], ok: true, firstTry: false, followup: true });
+  assert.equal(st.weekSummary().answers, 1);
+  assert.equal(st.weekSummary().correct, 0);
+  assert.deepEqual(st.state.skills.x, { correct: 0, wrong: 1, recent: [0] });
+  assert.equal(st.state.items.retry.w, 1);
+  assert.equal(st.state.items.retry.due, '2026-10-20');
+  assert.equal(st.state.xp, 4);
+});
+test('键盘题错按后完成仍记录一次薄弱题并安排次日复习', () => {
+  const st = createStore(mem(), () => new Date('2026-10-19T10:00:00Z'));
+  st.recordAnswer({ qid: 'scale.build.D', skills: ['x'], ok: true, firstTry: false });
+  assert.equal(st.weekSummary().answers, 1);
+  assert.equal(st.weekSummary().correct, 0);
+  assert.equal(st.state.skills.x.wrong, 1);
+  assert.equal(st.weakItems()[0].id, 'scale.build.D');
+  assert.equal(st.state.items['scale.build.D'].due, '2026-10-20');
+});
 test('防刷分：同一题同一天只计一次经验', () => {
   const st = createStore(mem(), () => new Date('2026-10-19T10:00:00Z'));
   assert.equal(st.recordAnswer({ qid: 'q3', skills: [], ok: true }).xpGained, 10);
