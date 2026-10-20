@@ -1,0 +1,866 @@
+{
+  "03fd8da8": {
+    "lang": "zh",
+    "text": "欢迎来到音符电梯。先看高音谱号的卷圈：它围着第二条线。这就是 Sol 的家。只记住这个路标，我们就能找到其他音。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "5779df277bee502cc15dd119e32575541f843d02749ae23954586f471631a565"
+  },
+  "5df17577": {
+    "lang": "fr",
+    "text": "Bienvenue dans l’ascenseur des notes. Regarde la boucle de la clé de sol : elle entoure la deuxième ligne, la maison de Sol. Ce seul repère permet de retrouver les autres notes.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "c88d129da3d3cfc838a701cb1251a0d154473e86714c4f28b8078be13f7a5cdd"
+  },
+  "fb4561fc": {
+    "lang": "zh",
+    "text": "现在，音符自己向上走。从线到间，是一步；从间到下一条线，又是一步。Sol 后面是 La，再往上是 Si。线和间都要数，不能跳过间。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "768b6cc27fba361f3780fb7428ff2f0523905f5dd49bcecd6f30986c656408ef"
+  },
+  "05a02a3b": {
+    "lang": "fr",
+    "text": "La note monte maintenant. D’une ligne à un interligne, elle avance d’un pas ; puis encore un pas vers la ligne suivante. Après Sol viennent La et Si. Il faut compter les lignes et les interlignes.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "8970f26825dab2bd201101a1dffbaff2651b237a72517d6c41766d7383906aea"
+  },
+  "cbe6563d": {
+    "lang": "zh",
+    "text": "看整条音阶，线上的音从下往上是 Mi、Sol、Si、Ré、Fa；间里的音是 Fa、La、Do、Mi。它们不是两串互不相干的名单，而是同一架楼梯的两部分。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "92b500de04464e876a3c322bc52b52657595851196fdac23e94f67e9e041eac4"
+  },
+  "efb7a8a0": {
+    "lang": "fr",
+    "text": "Les lignes donnent Mi, Sol, Si, Ré, Fa ; les interlignes Fa, La, Do, Mi. Ce ne sont pas deux listes séparées, mais les deux parties du même escalier de notes.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "465ea8c5efcfdfebdff8dd7bb13ce18b8076b1f0096914c138c046158568f5fe"
+  },
+  "35a44729": {
+    "lang": "zh",
+    "text": "音符向下走，来到中央 Do。它在五线谱下面第一条短短的加线上。五条线不够时就加一小段，数音的方法仍然相同。接下来，你可以自己开动音符电梯。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "47ae716ef98beebfda5074d22cfd9e17994565178e61d576e3ff6c3b709256b2"
+  },
+  "0ea70fbd": {
+    "lang": "fr",
+    "text": "La note descend jusqu’au Do central, sur la première petite ligne sous la portée. Les lignes supplémentaires prolongent simplement l’escalier. Ensuite, tu pourras conduire toi-même l’ascenseur.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "763a11cf3bfe9ac86274b19db2214e49592193bc82c5132a03a33a92bd6995fb"
+  },
+  "f3d5183c": {
+    "lang": "zh",
+    "text": "升号列车出发。第一节车厢是 Fa，后面依次接上 Do、Sol、Ré、La、Mi、Si。调号中的升号总是按这个顺序出现，不会插队。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "6eda18d9fa5901dda80aed80a544760c693ad2e5ca998f8affee281e9fc50b6e"
+  },
+  "26059bef": {
+    "lang": "fr",
+    "text": "Le train des dièses part de Fa, puis ajoute Do, Sol, Ré, La, Mi et Si. Les dièses apparaissent toujours dans cet ordre à l’armure, sans sauter de wagon.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "11595b64a6919a4dbeef54c32646e4ccd2da53e577262dadbe07be1b7405cf82"
+  },
+  "4f1e791e": {
+    "lang": "zh",
+    "text": "为什么 Fa 后面是 Do？我们把出发的 Fa 算作第一名：Fa、Sol、La、Si、Do。第五个音名是 Do。再从 Do 数五个，就到 Sol。这是纯五度的规律。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "c37cf50b91303f7f95f47023d499eedc90c4a85f60490b7376f967588aca7045"
+  },
+  "c7b1715d": {
+    "lang": "fr",
+    "text": "Pourquoi Do vient-il après Fa ? Compte aussi le départ : Fa, Sol, La, Si, Do. Le cinquième nom est Do. En repartant de Do, on arrive à Sol : c’est la règle de la quinte.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "a4901213d06832e29c7d1e2b38b80a0f6d9472b710fec6b9974551ec6782b87c"
+  },
+  "a5869b66": {
+    "lang": "zh",
+    "text": "现在列车换方向。降号顺序正好是升号顺序倒过来：Si、Mi、La、Ré、Sol、Do、Fa。先听旁白跟着读，之后再自己拼一次列车。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "4e978e27adb23a8a54da81857f6368bfb9f8f8912f3bec01f6610804ea432d7a"
+  },
+  "6a50e950": {
+    "lang": "fr",
+    "text": "Le train change de sens. Les bémols suivent exactement l’ordre inverse : Si, Mi, La, Ré, Sol, Do, Fa. Récite avec la voix, puis tu pourras assembler ton propre train.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "0c6c2ccb517b9c2ce6687cacf1c652554f6ddede4453e448643f21e0be1c766e"
+  },
+  "4cc125dc": {
+    "lang": "zh",
+    "text": "这是 Ré 大调，调号里有 Fa 升号和 Do 升号。看几个不同位置的 Fa，它们默认都升半音。调号管理所有八度，不需要在每个音前面重复写。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "b143debab0000b0de8eee63671d4d71f70a5e616fccd3547e118bdebcf90d775"
+  },
+  "3503dded": {
+    "lang": "fr",
+    "text": "Voici Ré majeur, avec Fa dièse et Do dièse à l’armure. Les Fa sont dièses dans toutes les octaves, sans répéter le signe devant chaque note.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "bd7f1c56c7cf48b08a23ad188e565272de0a447904034e33a30a6ece434e355f"
+  },
+  "e2604ae1": {
+    "lang": "zh",
+    "text": "还原号出现了。第一个 Fa 变成了本位音。同一小节、同一个八度后面的 Fa 也跟着还原。可是高一个八度的 Fa 没有变，它仍然按调号升高。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "c8bd26bfa8d3985239aed8da7809b3928253b5965185eacd025b1109addab227"
+  },
+  "61d9c187": {
+    "lang": "fr",
+    "text": "Un bécarre apparaît. Le premier Fa devient naturel, ainsi que le Fa suivant de la même mesure et de la même octave. Le Fa plus aigu reste dièse : le bécarre ne concerne pas cette autre octave.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "20f485189726780b525974d78751e1a17ab2e59cc5cfbfca6d7ecc521dd972da"
+  },
+  "8b8b6204": {
+    "lang": "zh",
+    "text": "光点跨过小节线，还原号的护照到期。下一小节重新按调号，Fa 又是升 Fa。判断时要问：同一小节吗？同一个音名吗？同一个八度吗？",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "5437ec8d8a82f57a7f50411de62254898113c5983284ef3a24130c96763cbbd4"
+  },
+  "694163f5": {
+    "lang": "fr",
+    "text": "Après la barre de mesure, le bécarre précédent ne s’applique plus. Le Fa redevient dièse selon l’armure. Pour vérifier, demande-toi : même mesure, même nom et même octave ?",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "be8816627e3fd64489467b292f298382d3bdf78ae2b3bfd820375e148f8d4ee9"
+  },
+  "b74fa970": {
+    "lang": "zh",
+    "text": "看 Mi 到 Fa。它们是紧挨着的两个键，中间没有黑键，也没有别的键。这种最近的距离叫半音。计算距离时，黑键和白键都要算。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "c9337e01c51ea0bac4e55c2c591db8d86c2709ccef52b09486d05683e3e1da48"
+  },
+  "4b156109": {
+    "lang": "fr",
+    "text": "Regarde Mi et Fa : ces touches sont voisines, sans autre touche entre elles. Cette plus petite distance est un demi-ton. Il faut compter les touches noires autant que les blanches.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "357862e5bc9f72660ebb6b9033ac8924f9e87e44350b1f8ad248e041c33649ae"
+  },
+  "52efaa31": {
+    "lang": "zh",
+    "text": "小光球从 Do 走到 Do 升，再走到 Ré。一步半音，再一步半音，两步合起来就是一个全音。音符之间的距离，现在变成了看得见的小桥。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "9b4f1886e6b79ec7ae3297042b6765750f5a2b3120216c0da1e233a1722e7278"
+  },
+  "35be23a3": {
+    "lang": "fr",
+    "text": "La lumière avance de Do à Do dièse, puis à Ré. Un demi-ton, puis encore un demi-ton : les deux ensemble font un ton. Le pont rend visible la distance entre les notes.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "e9745a5345bb836298b29336933e1e20c205b27db5714cc90c2b352e0901a121"
+  },
+  "169687c7": {
+    "lang": "zh",
+    "text": "Ré 大调的小桥按全、全、半、全、全、全、半来搭。为了保持这些距离，Fa 和 Do 必须升高。两个升号有原因，不是随便加的。接下来你可以自己走一遍。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "490558acbad83fbffb2db550758d4eaa4a280cefca9b6d8e334e8d10584ff55a"
+  },
+  "9c1360aa": {
+    "lang": "fr",
+    "text": "Ré majeur suit ce chemin : ton, ton, demi-ton, ton, ton, ton, demi-ton. Il faut Fa dièse et Do dièse pour conserver ces distances. Les deux dièses ont donc une raison. À toi d’explorer ensuite.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "295de0269769b97246d8393240420f64468ee1e35c4bd93bd5a6086793db3666"
+  },
+  "3e7d7737": {
+    "lang": "zh",
+    "text": "节拍小火车经过四个车站，每个车站是一拍。火车匀速前进，每拍之间的时间一样。四分音符占一站，也就是一拍。只在每个音开始时敲一下。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "ade49c559c6e9c978fa9b8b6933e37d3df3daa3427e39493083ba5e767160711"
+  },
+  "8dc08fa9": {
+    "lang": "fr",
+    "text": "Le train traverse quatre gares : chacune représente un temps. Il avance régulièrement. La noire occupe une gare, donc un temps. On frappe seulement au début de chaque note.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "dde74ba3ab49c8c516e0697eead50164916edf85f45d2d10d61c45bd155c8ce5"
+  },
+  "ceefc0c8": {
+    "lang": "zh",
+    "text": "二分音符的车厢更长，跨过两个车站。虽然占两拍，却只在开头敲一次。第二拍仍然在前进，要让声音坐满两站，不能中途结束，也不用再敲一次。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "243f20ab07a642ae2f45eab1b92c711b3fce6dd239567b3afc760856783881bb"
+  },
+  "8184baf9": {
+    "lang": "fr",
+    "text": "Le wagon de la blanche occupe deux gares. Il dure deux temps, mais on frappe une seule fois au début. Le deuxième temps continue : tiens le son jusqu’au bout sans refrapper.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "9a9ee136de03ebeda6a51164437d8390540d3145ac7d29652d0739f1e024f9a6"
+  },
+  "11b87c5c": {
+    "lang": "zh",
+    "text": "八分音符把一拍分成相等的两半。两个小车厢刚好装进一个车站。可以数“一、和、二、和”，每个数字和“和”各占半拍。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "f801e9b8e0b48693b6c52d1ec90655f2dd5911fd35cf6899e101a0ad3087e026"
+  },
+  "55df7c1f": {
+    "lang": "fr",
+    "text": "La croche partage le temps en deux moitiés égales. Deux petits wagons tiennent dans une seule gare. On peut compter « un et deux et » : chaque nombre et chaque « et » vaut un demi-temps.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "7b07fabe62de5931ff5baf14f153fae281e416b5cacd47f1c7dad1fb9c414b08"
+  },
+  "011377c4": {
+    "lang": "zh",
+    "text": "最后，一拍、半拍、半拍、两拍，刚好装满四拍。小节线像车站的边界，不管音符怎么组合，总拍数都要对上。看完后，你可以亲手拼一小节，再听它的节奏。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "868604a3577840e31f43352308f1406807312586f0af31e3005f522de6d0b268"
+  },
+  "5d6c8a6e": {
+    "lang": "fr",
+    "text": "Une noire, deux croches et une blanche remplissent exactement quatre temps. La mesure fixe la limite, quelle que soit la combinaison. Après le film, tu pourras composer et écouter ta propre mesure.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "9dca5ec62e5d0c7cefd3cdbed757df6329919be31c4db421009c9a04a0d63910"
+  },
+  "32da1aea": {
+    "lang": "zh",
+    "text": "小提琴有四根不同的弦，从低到高是 Sol、Ré、La、Mi。每根弦的起点不同，所以只看到一个手指数字，不能知道音名。还要认出音符和琴弦。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "502bcb72f50bf10838f2ca2a570b7b561933863af0938e60eeedb2cb3b143acd"
+  },
+  "54154dbd": {
+    "lang": "fr",
+    "text": "Le violon a quatre cordes : Sol, Ré, La, Mi, de la plus grave à la plus aiguë. Chaque corde a son propre départ. Un chiffre de doigté ne suffit pas : il faut aussi lire la note et la corde.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "ebe56f2b2fa1ad871148cd63f11e68adc78bbb3463981cd1fcf7d7c9485cc563"
+  },
+  "8f224d14": {
+    "lang": "zh",
+    "text": "同一个 Ré 在 La 弦上，第一把位用三指。看整只手向高音方向移动，来到第三把位，Ré 改用一指。音高没有改变，变的是手的位置和手指。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "d542c316263704aa59c21dd511f9bd412900e6496e95939d4911203c049f1148"
+  },
+  "b2582621": {
+    "lang": "fr",
+    "text": "Sur la corde de La, Ré se joue avec le troisième doigt en première position. La main monte en troisième position : le même Ré se joue alors avec le premier doigt. La hauteur ne change pas.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "d6e198034cb942a5d78295b83880a60613637cf6bebcd5d38d82b78fd45bf800"
+  },
+  "a03761f5": {
+    "lang": "zh",
+    "text": "低二指和高二指都叫二指，但位置不同。音与音之间是半音，手指就靠拢；相差全音，就分开。靠拢的位置会随音、琴弦和把位变化。实际换把动作仍要跟老师学。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "6e21d6054b6b1fdc4cc2628fc1f7409137d28b77b07d1d601203029148a57efe"
+  },
+  "867dd587": {
+    "lang": "fr",
+    "text": "Le deuxième doigt bas et le deuxième doigt haut portent le même numéro, mais pas la même position. Un demi-ton rapproche les doigts voisins ; un ton les écarte. Pour le geste réel du démanché, suis ton professeur.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "2a627393254416fe688200e59269d561e54ebb7a63b927ed4e941486c08d0d59"
+  },
+  "8c6319a6": {
+    "lang": "zh",
+    "text": "看声音的小光球。第二个音更高，轨迹就向上；更低，就向下；一样高，就停在同一高度。真正听的时候，可以先闭眼想方向，再用图核对。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "18df68f54081d1d2d3edb30e3f6ce6d62b8d5d3fbd231a0e57d1f9341ff935fe"
+  },
+  "98027b73": {
+    "lang": "fr",
+    "text": "Regarde le trajet du son. Si le deuxième son est plus aigu, la lumière monte ; plus grave, elle descend ; identique, elle reste à la même hauteur. Ensuite, écoute les yeux fermés avant de vérifier avec le dessin.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "03e5f0f227cd2d842ea1f2996fd900adae401d32a1eb03757e1f583059a25bcd"
+  },
+  "52268809": {
+    "lang": "zh",
+    "text": "半音像一个小台阶，全音像两个小台阶。图帮助理解距离，不是音高的精确尺子。接下来，你会先听声音，再揭开轨迹，让耳朵先做决定。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "0c8d62eea21b02174652d0f30cb461f9d2549d9879dc71b1178d7649f65fe427"
+  },
+  "93ca61dd": {
+    "lang": "fr",
+    "text": "Un demi-ton ressemble à un petit pas ; un ton en fait deux. Le dessin explique la distance sans être une échelle exacte. Dans l’activité suivante, écoute d’abord puis révèle la trajectoire.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "244997c9cf7c113fa1768df8e3cc8fe2ad0d47f4ac060259f40f8779a9b1c467"
+  },
+  "98bb3651": {
+    "lang": "zh",
+    "text": "识谱侦探先观察，再行动。谱号告诉你怎样认音，调号告诉你哪些音要升降，拍号告诉你怎样数拍。先读地图的规则，不要拿起琴就急着拉。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "f4f8d5df6a12584db3deee222ab3b6df7fcb580368c482409a5aff83bd6ef463"
+  },
+  "a7012367": {
+    "lang": "fr",
+    "text": "Le détective observe avant d’agir. La clé aide à nommer les notes, l’armure indique les altérations et le chiffrage organise les temps. Lis d’abord les règles de la carte avant de jouer.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "b5a249b7b4723b869a6d75edea0a00b4ec83c9a386fcc8158b79c428492260c9"
+  },
+  "2eca3491": {
+    "lang": "zh",
+    "text": "线索按顺序打开：看调号，认音名，加上升降与还原，确定琴弦、把位和手指，最后读清节奏。只盯着手指数字，会漏掉其他线索。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "6ae82b8e17f1c89a2b1483c0c5219d8776ea519ccca6281ef393b18dd8350e06"
+  },
+  "d0bfa3a5": {
+    "lang": "fr",
+    "text": "Ouvre les indices dans l’ordre : armure, noms des notes, altérations, corde, position et doigté, puis rythme. Regarder seulement les chiffres de doigté fait perdre les autres indices.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "37c1ca27946e069aa7dd4fd2a5af8c42b666ebac1a7ce0e3b07b07b9d6c8e9a8"
+  },
+  "6b4153e1": {
+    "lang": "zh",
+    "text": "先独立解码，再听示范核对，然后关掉提示重新读一遍。接着换一段陌生的短谱，试试同样的方法。能把方法用在新谱上，才是真正学会独立读谱。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "c816c84442a3254829aed3c43f33b3e64b37c24c37e6a7148e613f9146835a74"
+  },
+  "83029c13": {
+    "lang": "fr",
+    "text": "Déchiffre seul, écoute le modèle pour vérifier, puis relis sans indices. Essaie ensuite une nouvelle courte partition avec la même méthode. C’est ainsi qu’on apprend à lire de façon autonome.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "b9fef8a37ee02592f392639cbc4c6e7e874942810e8d42dcd1cff8c80dd66d19"
+  },
+  "192f3e52": {
+    "lang": "zh",
+    "text": "先别背一大串音名。看高音谱号的卷圈，它围着第二条线。这条线就是 Sol 的家。点一下 Sol，听听它的声音。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "e0746a05c2a2d287b74c92020c767f5745fe21fa7c39225efe8967c6ff27d8b6"
+  },
+  "64fb49a7": {
+    "lang": "fr",
+    "text": "Commence avec un seul repère. La boucle de la clé de sol entoure la deuxième ligne : c’est la maison de Sol. Touche Sol pour l’entendre.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "e97c81ef965b668c8ee690a62e496b12d0ec69edab5f7e3450d61e84f94f1dd3"
+  },
+  "ccdbed2c": {
+    "lang": "zh",
+    "text": "点上箭头，让音符从线走到间。Sol 后面是 La，再往上一格是 Si。线和间都算一步，不能跳过间。试着上下移动，边走边读音名。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "dccd40770fb9065380aa4a33bf429cc4eae45dabd077141bd59be7f4a3f00af1"
+  },
+  "1f7fcf04": {
+    "lang": "fr",
+    "text": "Fais monter la note avec la flèche. Après Sol vient La, puis Si. Une ligne et un interligne comptent chacun pour un pas. Monte et descends en nommant les notes.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "64417198a8bd576ca2396dd73eb4aeab274c90221869811d39ed073653199511"
+  },
+  "75197e59": {
+    "lang": "zh",
+    "text": "现在先看音符的位置，再说它的名字，最后点音符听一听。线上的音从下往上是 Mi、Sol、Si、Ré、Fa。间里的音是 Fa、La、Do、Mi。它们来自同一条连续的音阶。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "6bbc53b84563228f12bcb0594f8ebfe85d5a0f1c237a0c6b5d8f0e45eb048be4"
+  },
+  "211fbc80": {
+    "lang": "fr",
+    "text": "Regarde la position, prononce le nom, puis touche la note pour vérifier. Les lignes donnent Mi, Sol, Si, Ré, Fa ; les interlignes Fa, La, Do, Mi. C’est une seule suite de notes.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "e15b55e9cbfb6c72067ebc7a218426c669314519e878e52152dc8bd8dacecd96"
+  },
+  "4206ca6e": {
+    "lang": "zh",
+    "text": "把电梯移到中央 Do。五条线不够时，就添一小段加线，数音的方法仍然一样。中央 Do 在下加一线上。先用一个熟悉的音作路标，再一格一格数过去。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "fee30d41a56fdd37e749a79534d61620b8a5633d39fc664153f4e062e40957ef"
+  },
+  "3a33ccd5": {
+    "lang": "fr",
+    "text": "Descends jusqu’au Do central, sur la première ligne supplémentaire sous la portée. Ces petites lignes prolongent la portée. La règle reste la même : avance d’un nom à chaque pas.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "d49b94aa187e32965844b7646541349402ca12a5c740e3174c9c063e767bfc83"
+  },
+  "a89c77f2": {
+    "lang": "zh",
+    "text": "升号不是随便排队的。第一节车厢是 Fa。按下一节，看看谁来接上：Do、Sol、Ré、La、Mi、Si。每次只加一节，边听边念。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "3432c32d18f8ef23448ad2be2cc203769a27455f1e4d761e37a5307fb54047f9"
+  },
+  "7662b599": {
+    "lang": "fr",
+    "text": "Les dièses ont un ordre précis. Le premier wagon est Fa. Ajoute les suivants : Do, Sol, Ré, La, Mi, Si. Écoute et récite à chaque étape.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "c4ccad6285e1c1ec551aae984b997a0688b3854c3642da2d4119462ae96c0903"
+  },
+  "3f67366b": {
+    "lang": "zh",
+    "text": "为什么 Fa 后面是 Do？从 Fa 本身算第一名：Fa、Sol、La、Si、Do。第五个就是 Do。这叫纯五度。试着从 Do 数到第五个，下一节就会是 Sol。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "753bf773a9dcb92d57e01d3c2f4899274e35cb537d5861aa34c4600f32abb983"
+  },
+  "31517e94": {
+    "lang": "fr",
+    "text": "Pourquoi Do suit-il Fa ? Compte Fa comme premier : Fa, Sol, La, Si, Do. Le cinquième nom est Do : une quinte. Repars de Do et tu arrives à Sol.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "eaaea0e522da027f57fceb98b0d14a172c47fc0a223683eef372dd0096bc47e1"
+  },
+  "0bb1fcab": {
+    "lang": "zh",
+    "text": "切换到降号。把刚才的升号顺序倒着念，就是 Si、Mi、La、Ré、Sol、Do、Fa。拖动或点选车厢，把它们接回队伍。这里是练习操作，不计分。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "fed77832595a803da91a99a09b8a7754e5a3c9feff3fff3533be5c062f17d5f7"
+  },
+  "eecce18c": {
+    "lang": "fr",
+    "text": "Passe aux bémols. Lis l’ordre des dièses à l’envers : Si, Mi, La, Ré, Sol, Do, Fa. Touche les wagons pour reconstituer le train. Ici, on expérimente sans score.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "dedaaa7d002c6e44b3db99ae01400bec0f241efdb3aada25850f365c3304727e"
+  },
+  "0a01dc9d": {
+    "lang": "zh",
+    "text": "这里是 Ré 大调，调号里有 Fa 升号和 Do 升号。所以这几个 Fa 默认都要升半音，即使音符前面没有再写升号。点每个音，比较它们。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "5bb29f5fb9837bc61987a959587676bccfa811f5c77aa1c079a6df25cb10ccd7"
+  },
+  "ca5426f9": {
+    "lang": "fr",
+    "text": "En Ré majeur, l’armure contient Fa dièse et Do dièse. Tous les Fa sont donc dièses, même sans signe devant chaque note. Touche les notes et compare.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "cc41d12eba1f357664377b6d25505450fd47b5422eeb2e4cddde537de571829a"
+  },
+  "f07f6186": {
+    "lang": "zh",
+    "text": "点“放入还原号”。第一个 Fa 变成本位的 Fa。同一小节、同一个八度后面的 Fa，也跟着还原。但别的八度不会受它影响。观察哪个音变了，哪个没变。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "700d439ff2cc9abebfd0adee295a65ae8def7ba4b19410fdcadb122b16d37552"
+  },
+  "aa9cc8a1": {
+    "lang": "fr",
+    "text": "Ajoute le bécarre. Le premier Fa devient naturel, ainsi que le Fa suivant de la même mesure et de la même octave. Le Fa d’une autre octave n’est pas concerné. Observe ceux qui changent.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "446ec7fbff9da2dd07f608d210dd91968ca06c8112f8ba03fd7375a734575ca0"
+  },
+  "8e846d54": {
+    "lang": "zh",
+    "text": "让光点跨过小节线。临时还原号的护照到期了，下一小节重新按调号，Fa 又要升高。记住三个问题：同一小节吗？同一个音名吗？同一个八度吗？",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "e20e292d63f5b4e2d6fc76e1848ae2a2449d4b27825f3fe99cdc04016ce3a9a0"
+  },
+  "335c70c3": {
+    "lang": "fr",
+    "text": "Passe la barre de mesure. Le bécarre précédent ne s’applique plus : le Fa redevient dièse selon l’armure. Vérifie toujours la mesure, le nom de note et l’octave.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "f20600a8d2f55e072f319a78f8463c4184a4de8d841fa535d4693225c33cde87"
+  },
+  "4deae00b": {
+    "lang": "zh",
+    "text": "点 Mi，再点 Fa。它们紧挨着，中间没有黑键，也没有别的键。这是半音。半音看的是相邻的所有键，不是只看白键。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "5a9648526d83d3d8a5a9b96eea9a69d6007dc1d1422d68c5f100fdc4efee08cc"
+  },
+  "7a86fb4d": {
+    "lang": "fr",
+    "text": "Touche Mi puis Fa. Ce sont deux touches voisines, sans touche entre elles : un demi-ton. Compte toutes les touches, les noires aussi, et pas seulement les blanches.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "a59eca8b339b123a9c1e5f1dc11656e9634412f5fc35fa5d74422f6a8d8b0391"
+  },
+  "13fba388": {
+    "lang": "zh",
+    "text": "从 Do 出发，先走到黑键 Do 升，再走到 Ré。两次半音加起来，就是一个全音。按“一步”或“两步”，观察桥上小光球移动，再听它走过的声音。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "cdb01e8df10c29a17d90268a6288e2a081bec9c1d0831f802a87a8330df82309"
+  },
+  "1b6736c1": {
+    "lang": "fr",
+    "text": "Depuis Do, passe par Do dièse puis Ré. Deux demi-tons font un ton. Utilise les boutons un pas et deux pas, regarde le déplacement, puis écoute le trajet.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "9e88d46ee59b6e2959db1ce36f4b92689ef131449d3b9c43a7e8533e5b8d3123"
+  },
+  "eff645bc": {
+    "lang": "zh",
+    "text": "切换到 Ré 大调。照着“全、全、半、全、全、全、半”走。为了走对距离，Fa 和 Do 要升高。不是先背两个升号，而是让手和耳朵发现为什么需要它们。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "90a02d8521d877f5a6949045e5fb3158db70180b2fe3f54a0e2b27cd0b0ed36c"
+  },
+  "379d0e5b": {
+    "lang": "fr",
+    "text": "Construis Ré majeur : ton, ton, demi-ton, ton, ton, ton, demi-ton. Il faut Fa dièse et Do dièse pour garder ces distances. Découvre la raison des deux dièses avec les yeux et les oreilles.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "3ac81d36e598820175f69c1513313093c023f96934864da2de5d5b208fd7238b"
+  },
+  "c87a1d92": {
+    "lang": "zh",
+    "text": "看四个车站。它们代表四拍，火车匀速经过每一站。四分音符占一拍，在每个音开始时敲一下。不是越快越好，而是每拍之间的时间一样。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "ab8697907459945b159bf6c0a8434c3af259d330ff9e711819926c063fa9b512"
+  },
+  "2e5a0ffe": {
+    "lang": "fr",
+    "text": "Les quatre gares représentent quatre temps. Le train les traverse régulièrement. Une noire dure un temps : frappe au début de chaque note. L’important est la régularité, pas la vitesse.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "05d61d2066293664a625ee43fba8e6595d8113236e9fd6ecf994928967451b83"
+  },
+  "8d3d43af": {
+    "lang": "zh",
+    "text": "选二分音符。它占两拍，但只在开头敲一次。看光带经过两个车站，手指等它走满，不要在第二拍再敲。长音也有在前进的拍子。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "65dcc931458e53baec1cc8c2a1b7149612030e527aadb6e26aab9534450a3ae8"
+  },
+  "9980d5c9": {
+    "lang": "fr",
+    "text": "Choisis la blanche. Elle occupe deux temps mais demande une seule frappe au départ. Suis la bande lumineuse pendant les deux temps, sans refrapper au deuxième.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "d9cdc0c357812684acc3c0423e95ed399e445cca95521391c55945c891c346d5"
+  },
+  "01e60130": {
+    "lang": "zh",
+    "text": "选八分音符。一拍里有两个相等的小格，可以念“一、和、二、和”。点播放，看两个短音怎样挤进同一拍，再试着跟着敲。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "3045c0f274a8a7f1c15bf743a2784fad15c710b92ade7befc3c01090fd9f19a1"
+  },
+  "0635ea09": {
+    "lang": "fr",
+    "text": "Choisis les croches. Un temps se partage en deux moitiés égales : « un et deux et ». Regarde deux croches occuper un seul temps, puis frappe avec elles.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "c7fbe5ea33c9b5a289c3c7a48a7eea5f3675850a3ee44ab962f58edc54b3a636"
+  },
+  "04139d4d": {
+    "lang": "zh",
+    "text": "把音符拖进车站，或者点音符按钮，拼成四拍。空的位置还没装满，超过四拍就先拿回一个。听听你拼的小节。这是探索，不会给真实练琴计时或代打卡。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "6095e3b1dd9566d617785d3d8f9e7fc885d6acbdb979ce4d67c9f5d57a3810aa"
+  },
+  "ea8cc694": {
+    "lang": "fr",
+    "text": "Ajoute des notes avec les boutons pour remplir quatre temps. S’il manque du temps, continue ; si ça dépasse, retire une note. Écoute ta mesure. Cette exploration ne compte pas comme une séance réelle de violon.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "5d73a6fd8fa6ac18ef1c74c6a24ebb3b3276fe979eba5517191cc0484c334efb"
+  },
+  "77be0fe0": {
+    "lang": "zh",
+    "text": "先点四根空弦，听 Sol、Ré、La、Mi，从低到高。每根弦都有自己的起点。只看到一个手指数字，还不能知道会发出什么音。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "35e86ec84b377d1387a7bf89e5e20c65b8a156f7bd86231da834c3aa50ac2fca"
+  },
+  "d2c1b551": {
+    "lang": "fr",
+    "text": "Écoute les cordes à vide : Sol, Ré, La, Mi, de la plus grave à la plus aiguë. Chaque corde a son point de départ. Un chiffre de doigté seul ne donne donc pas le nom de la note.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "abc49d113579a1320b44a6184af413fefaf7d3031f0b6283acca975aa47ec8d0"
+  },
+  "0b2ac54f": {
+    "lang": "zh",
+    "text": "看 La 弦上的 Ré。第一把位用三指。切换到第三把位，整只手向高音方向移动，Ré 现在用一指。声音没有变，变的是手的位置和手指。点按钮比较。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "7458374320d800ff356b4089234d92a23e66b8b1191e593c4f84ed2c2bf62d20"
+  },
+  "ac8f2a0b": {
+    "lang": "fr",
+    "text": "Regarde Ré sur la corde de La. En première position, c’est le troisième doigt. En troisième position, la main monte et c’est le premier doigt. La hauteur reste identique. Compare les deux.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "952f4d3aaedcd09217da2e8673b02f74cd304ac8625ddf125d5a0186332e063d"
+  },
+  "7760a985": {
+    "lang": "zh",
+    "text": "比较 La 弦的 Do 和 Do 升。低二指靠近一指；高二指靠近三指。手指距离跟着音高改变，所以不能永远背“一二靠拢”或者“二三靠拢”。实际换把动作仍按老师指导。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "1e6391ed8e707a317d8296c7c77bf3d93576671e09a48b62899bf3c5d1f0ffeb"
+  },
+  "d890adfe": {
+    "lang": "fr",
+    "text": "Sur La, compare Do et Do dièse. Le deuxième doigt bas est proche du premier ; le deuxième doigt haut est proche du troisième. L’écartement dépend des notes. Pour le geste réel du démanché, suis ton professeur.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "797a4b2db1fc45db1df8cb57c951b0e80e9e9fd240449a1b1528353a75db6ea0"
+  },
+  "7eab27a6": {
+    "lang": "zh",
+    "text": "闭一下眼睛，点播放，听两个音。第二个是往高处走、往低处走，还是留在原地？先用手在空气中画方向，再点“揭开轨迹”，看看小光球怎样移动。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "a81a76b5c1373849c48a30679a11d1a8d53605c90c8126e67a1e038db3fced9c"
+  },
+  "828e4021": {
+    "lang": "fr",
+    "text": "Écoute deux notes les yeux fermés. Le deuxième son monte-t-il, descend-il ou reste-t-il à la même hauteur ? Dessine le mouvement avec la main avant de révéler la trajectoire.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "4740132d1019164a3366b2cee6a87bb3a8d1e5d88ed7ee9f32a71c8af4d64696"
+  },
+  "cd855d2e": {
+    "lang": "zh",
+    "text": "选择半音或全音，反复比较。半音是一个小台阶，全音是两个小台阶。这里的轨迹帮助理解距离，不是实际音高的尺子。准备好后，把图藏起来再听。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "ee0db9aa484d8998fd1051aff6ee2579bd94fe100c8cedb528903a1a6d67374d"
+  },
+  "a3598a42": {
+    "lang": "fr",
+    "text": "Compare le demi-ton et le ton. Le demi-ton fait un petit pas ; le ton en fait deux. Le dessin illustre la distance sans être une échelle exacte. Cache-le ensuite pour écouter seul.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "e91bf1ad9f25be27eea6ec10e8213f489e28d0134b764b4a6705cc6db3f62ecb"
+  },
+  "7f1b74e6": {
+    "lang": "zh",
+    "text": "拿到新谱子，先别急着拉。像侦探一样，先看谱号、调号和拍号，知道这张地图的规则。点亮第一张线索卡，再依次打开后面的卡。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "05fbbaad46ee19b170b5cba5b8820a43034f73a02185aba9194c9d2cbe35865b"
+  },
+  "4296f16c": {
+    "lang": "fr",
+    "text": "Devant une nouvelle partition, attends avant de jouer. Observe la clé, l’armure et le chiffrage : ce sont les règles de ta carte. Ouvre les indices dans l’ordre.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "c7ed3957b37b85658b459cc3e6f47f272ecd4a52d6cae728511e1373023c487e"
+  },
+  "bb77518f": {
+    "lang": "zh",
+    "text": "认出音名后，还要看调号和临时记号。接着结合琴弦、把位和手指。最后读清节奏，心里数一小节。每一步都有用，不能只盯着手指数字。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "7343d7fd9132f87102f48f77616e84bdc98a4d07b57cae372f7cccde350c1be2"
+  },
+  "66234adf": {
+    "lang": "fr",
+    "text": "Après le nom, applique l’armure et les altérations. Trouve ensuite la corde, la position et le doigté. Lis enfin le rythme et compte une mesure. Chaque indice est utile.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "fa07c6fdb052d904bc3332fd5cff8ed5439875731f24082df6a403fcef05de4a"
+  },
+  "9aeea21f": {
+    "lang": "zh",
+    "text": "先独立读一遍，再听示范检查。然后把提示藏起来，换一段短谱再读。能读陌生的短谱，才说明你学会了一种可以带走的方法，而不只是记住一首旋律。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "4c6a4fd2e322f857695a5b9a350e3185b7a4f26dd5ec23815aac385dcf368b7b"
+  },
+  "acb552a7": {
+    "lang": "fr",
+    "text": "Lis seul, puis écoute le modèle pour vérifier. Cache ensuite les indices et essaie une autre courte mélodie. Déchiffrer un nouvel extrait montre que tu sais utiliser la méthode, pas seulement mémoriser un air.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "335acacbe9f675d118095b024955bef65a53414e13659e1ec87bfef65793e148"
+  },
+  "65ebb247": {
+    "lang": "zh",
+    "text": "小提琴谱都用 clé de sol。它的螺旋从第二线开始绕——第二线就是 Sol3。八度号用法国音乐学院的习惯：中央 Do 叫 Do3，La3 = 440 Hz（和老师说的一样）。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "820123878e514ca272ff5746596f491aab03e5b9ee3d2c0a130fb819b6c285ea"
+  },
+  "bf6b2c96": {
+    "lang": "fr",
+    "text": "Le violon utilise la clé de sol. Sa boucle entoure la deuxième ligne : Sol3. Ici, les octaves suivent l’usage français : le Do central est Do3 et La3 vaut 440 hertz.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "b69afd62b9d1dd964164b1fe51ae9b45c79dab5c358a63034d586a98e817ba61"
+  },
+  "5684e73f": {
+    "lang": "zh",
+    "text": "线上的音从下往上：Mi–Sol–Si–Ré–Fa；间里的音：Fa–La–Do–Mi。音往上走一格（线→间→线），音名就往后数一个。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "d040cc2ac23c5c2fd4c1d8a66a983d981374881da0f76f1a10d04fa15c893ee5"
+  },
+  "2be11770": {
+    "lang": "fr",
+    "text": "De bas en haut, les lignes donnent Mi, Sol, Si, Ré, Fa ; les interlignes Fa, La, Do, Mi. Une ligne puis un interligne font avancer d’un nom.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "93212653948246f7fb43288fa8e79c64df5adaa709d0cdc63bebe52cfd7a6883"
+  },
+  "25320e2e": {
+    "lang": "zh",
+    "text": "Sol 弦的空弦 Sol2 在下加二线下方。从 Mi3（第一线）往下数：Ré3 → Do3（下加一线）→ Si2 → La2（下加二线）→ Sol2。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "2627ca1ea8e97d68950fd1b7cb322ddec850be5f81305a70ae8d150b27e544ff"
+  },
+  "45b280b0": {
+    "lang": "fr",
+    "text": "Sol2, la corde la plus grave, se trouve sous la deuxième ligne supplémentaire. Depuis Mi3, descends : Ré3, Do3, Si2, La2, Sol2.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "ee8c511bfb3512077cc14d5cdddc3587d57f1832adcebb33bcdfd9075ec58e6d"
+  },
+  "c42f3501": {
+    "lang": "zh",
+    "text": "谱上的「2」只说明用中指，不说明是什么音。同一个 2 指，在 La 弦第一把位可能是 Do 或 Do♯，在 Ré 弦可能是 Fa 或 Fa♯。所以要先认音符，再用指法确认琴弦和把位。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "66b5b4dbe7f59851297f62213f7d6478851d02a0739a5ed574b621be830c6a03"
+  },
+  "67bce9fa": {
+    "lang": "fr",
+    "text": "Le chiffre 2 dit d’utiliser le majeur, pas quelle note jouer. Sur La en première position, il peut donner Do ou Do dièse ; sur Ré, Fa ou Fa dièse. Lis donc la note avant le doigté.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "dfda4f36571d2fabdf785df49451cf0306291ced3d5d347fb0a7481320902c82"
+  },
+  "296910ae": {
+    "lang": "zh",
+    "text": "升号总是按同一个顺序加入调号：Fa – Do – Sol – Ré – La – Mi – Si。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "377964378cebdb61b384e0bc89d875e3c5ef185f31297e19617ed7a7a4def36f"
+  },
+  "49627784": {
+    "lang": "fr",
+    "text": "Les dièses s’ajoutent toujours dans cet ordre : Fa, Do, Sol, Ré, La, Mi, Si.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "72ec64fbb6f2a5f267f49179144fb807bd6d3a738e5db75b648e035efc3ae355"
+  },
+  "d4a67dea": {
+    "lang": "zh",
+    "text": "从这个升号算起，数到第 5 个音名就是下一个升号（纯五度）：Fa、Sol、La、Si、Do → Do；Do、Ré、Mi、Fa、Sol → Sol……念熟它：Fa Do Sol Ré La Mi Si！",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "d854d4d70e10761d51b5e8e19bcaa112f20646a83f1e0b8d00c56203105fb5c5"
+  },
+  "843b0835": {
+    "lang": "fr",
+    "text": "En comptant le nom de départ comme premier, le cinquième nom donne le prochain dièse : Fa, Sol, La, Si, Do ; puis Do, Ré, Mi, Fa, Sol.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "a6a8a988d559f7ed5b087cf9d50b8d35aa52384a1a6a68e7c222843dfaa1e81f"
+  },
+  "99efbc86": {
+    "lang": "zh",
+    "text": "降号顺序是升号顺序倒过来：Si – Mi – La – Ré – Sol – Do – Fa。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "29bd0521f1534f55a284c0a90f66797e5f502edbd9209a30d19e8a94fe7eb700"
+  },
+  "51c17c3c": {
+    "lang": "fr",
+    "text": "Les bémols suivent l’ordre inverse : Si, Mi, La, Ré, Sol, Do, Fa.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "e5ceb72fbe6671d9530295cac84890a6d16df8a1b40c7f22155a0bcf520344f4"
+  },
+  "db504822": {
+    "lang": "zh",
+    "text": "谱号后面的升降号叫调号（armure）。它管整首曲子、所有八度的这些音。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "6d075dc35f99a17ddbea861b412822bf1cd867e75c41bbb135725ae84ee94844"
+  },
+  "9c1c064f": {
+    "lang": "fr",
+    "text": "Les altérations après la clé forment l’armure. Elles concernent les notes correspondantes dans toutes les octaves. Dans cette portée, les deux Fa sont dièses.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "27fb3a1348ea51c48f20c170623071521763303fc93c8ac831a5b2e044757946"
+  },
+  "73627a9a": {
+    "lang": "zh",
+    "text": "♯ dièse 升高半音；♭ bémol 降低半音；♮ bécarre 还原成本位音（取消调号或前面的升降）。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "f350b750e9e522f86a9b9e471768f0230963686e7f41616e03792ce00c26d825"
+  },
+  "05d8fa56": {
+    "lang": "fr",
+    "text": "Le dièse monte d’un demi-ton, le bémol descend d’un demi-ton et le bécarre rend la note naturelle.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "e4338e41249c7443fdd928c8cbfa5ba11dd440525041749026b461e5a809a96e"
+  },
+  "9e1ed1c4": {
+    "lang": "zh",
+    "text": "写在音符前面的临时记号，只管同一小节里、同一个位置的音；过了小节线就失效，又回到调号。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "c686807234183e9d7a35378f77b271f7a91f89c7ad1b641b88dc937ee598766b"
+  },
+  "1f8b9f14": {
+    "lang": "fr",
+    "text": "Une altération accidentelle concerne la même note à la même octave jusqu’à la fin de la mesure. Après la barre, l’armure reprend effet.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "08e5d3f596706709dddb7e43d27848cd87d326020977dac43d844d70fe69c49a"
+  },
+  "b4b3cb80": {
+    "lang": "zh",
+    "text": "以 noire（四分音符）为 1 拍：ronde 4 拍、blanche 2 拍、noire 1 拍、croche 半拍。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "9353f24cb634950ff1ea7a7a05db0253ff71928b26c40cfd594538c0c6848ccd"
+  },
+  "d9b13087": {
+    "lang": "fr",
+    "text": "Si la noire vaut un temps : ronde quatre temps, blanche deux temps, noire un temps, croche un demi-temps.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "6a5c088d30d078fe3444d44483ad1655a74b4b4ffa6fdab6554e1eac18bbcaf4"
+  },
+  "d25d8d02": {
+    "lang": "zh",
+    "text": "老师说：不要急着拉！先看调号、拍号和节奏，摆好姿势，在心里数一小节，再稳稳进入。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "80246c935bab7185a234bda93382c2ab081f9efd2d9495d02ebf1651d0c44ebf"
+  },
+  "efcfdc45": {
+    "lang": "fr",
+    "text": "Avant de jouer, regarde l’armure, le chiffrage et le rythme. Place-toi, compte une mesure, puis entre calmement.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "d5a820557816fc035218b7b8a51c1fbbe525d6ddb158f9eb0578e78804443dcc"
+  },
+  "6a552bfb": {
+    "lang": "zh",
+    "text": "先听一小节「预备拍」，然后在每个音开始的地方敲一下（点按钮、点屏幕或按空格键）。blanche 只敲一下，让它响满 2 拍。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "e8364f39475f44cc687363d8eff164a8e21955f07b53ae35e158acd1d83b6381"
+  },
+  "be9866a8": {
+    "lang": "fr",
+    "text": "Écoute quatre pulsations de préparation. Ensuite, frappe au début de chaque note. Pour une blanche, frappe une fois et tiens pendant deux temps.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "9db78bfebdb334fde281076b1a9ca9190d7858de0d0032a3bbf64cae636f4173"
+  },
+  "42a315aa": {
+    "lang": "zh",
+    "text": "数「1 和 2 和」：两个 croches 落在「1」和「和」上。速度可以先放慢到 50 或 60。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "cdd8395b64ae2f27f79e790dda75cd95b38c76072b6107b7bacf6ec9d9c1dbc8"
+  },
+  "6694a46f": {
+    "lang": "fr",
+    "text": "Deux croches font un temps. Compte « un et deux et » : les croches tombent sur les nombres et sur les « et ». Commence lentement, à cinquante ou soixante pulsations par minute.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "386b0b8857d11693cedcf9630315fe4563de29d99bf6ab0234d0cc6f508a9ff7"
+  },
+  "d110b892": {
+    "lang": "zh",
+    "text": "点一点键盘：紧挨着的两个键（包括黑键）相差一个半音 demi-ton；隔一个键是全音 ton。Mi–Fa 和 Si–Do 之间没有黑键，天生就是半音。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "da29c1f79e3534e0d851a1f5e5d358f0dc5f886c8bc47c1a1065ede979c8751e"
+  },
+  "811ca49c": {
+    "lang": "fr",
+    "text": "Touche le clavier. Deux touches voisines, noires comprises, sont séparées d’un demi-ton. Un ton comprend deux demi-tons. Entre Mi et Fa, puis Si et Do, il n’y a pas de touche noire.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "e946ae2f73435b4a443c37bb25f7feba95a9658368ba03eedfcb421eb0c50b97"
+  },
+  "1a8245ff": {
+    "lang": "zh",
+    "text": "点一点四根空弦，听它们的声音。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "9a36b785349bad62fc362a67bec425b39e89bd18369b6b1ec27b3aeb3fd411de"
+  },
+  "ed14170d": {
+    "lang": "fr",
+    "text": "Touche les quatre cordes à vide et écoute : Sol, Ré, La, Mi.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "a9485e7a4a8a785ea26acfff4abc932edd2a5341bc488a81cee8d61c2c99055b"
+  },
+  "431a45ab": {
+    "lang": "zh",
+    "text": "点亮的圆点是第一把位已核对的音位。点一点，看音名和手指。注意：低2指、高2指都叫「2 指」。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "ee3dcc90ab4e9adeab915b091b950480685fdd7cf1e356b3fe71fed28b261cb0"
+  },
+  "84f3b699": {
+    "lang": "fr",
+    "text": "Les points indiquent les notes vérifiées en première position. Touche-les pour voir le nom et le doigt. Un deuxième doigt peut être bas ou haut.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "548cafc9b3c2512031a1c6982f9ed206e52659961ddf30b901c9aa358b749598"
+  },
+  "796c4124": {
+    "lang": "zh",
+    "text": "同一根弦上，两个音相差半音，两根手指就要靠拢；相差全音就分开。这取决于具体的音、琴弦和把位，不是固定的「几指和几指永远靠拢」。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "4908baec31982b4ab2c82cbd29d1ad8d6031bd290086004d911c5d43f6158546"
+  },
+  "11e31728": {
+    "lang": "fr",
+    "text": "Sur une même corde, deux doigts voisins se rapprochent pour un demi-ton et s’écartent pour un ton. Cela dépend des notes, de la corde, de la tonalité et de la position.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "614fcc87cad336c72c3eb1205e6bcb38f714f7a5bbe332008ce91621b8ef1c30"
+  },
+  "732cf108": {
+    "lang": "zh",
+    "text": "第三把位时，1 指落在空弦往上数第 4 个音名（空弦本身算第 1 个）：La 弦上 La→Si→Do→Ré，1 指就是 Ré4——也就是第一把位 3 指的位置。同一个音换了把位，手指数字也会变。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "6f59c379c9ca9bc6cf3095d25bf0ab754501e18253a301f25e975a2ef83df452"
+  },
+  "ff8d8ca2": {
+    "lang": "fr",
+    "text": "En troisième position, le premier doigt se place à une quarte au-dessus de la corde à vide : compte quatre noms en incluant le départ. Sur La : La, Si, Do, Ré. C’est la place du troisième doigt en première position.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "120fd8aa8df308f79ce2c95930b90aaca93487f3d1550ecdc99c31cb2d4617a1"
+  },
+  "8181081b": {
+    "lang": "zh",
+    "text": "这一关全靠耳朵。每题可以重复听，听清楚再选。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "670a8718d1075f072bfbf74a9a130023bee20adfdb468ba0e4029586aa02fc2e"
+  },
+  "f3dcffcd": {
+    "lang": "fr",
+    "text": "Active le son. Écoute chaque paire aussi souvent que nécessaire, puis choisis ta réponse.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "2716541b85cd64e36f8f1700017b877b247d3bdc95e4c28d6294d089f3d63727"
+  },
+  "a9da57ea": {
+    "lang": "zh",
+    "text": "半音很近、有点「紧」；全音宽一倍。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "3a54c0a18862b6916a8d60b0ee9809e8c9945c8894f7d75646d8015b9ecca9b2"
+  },
+  "04c41743": {
+    "lang": "fr",
+    "text": "Un demi-ton est très proche ; un ton est deux fois plus large. Compare les deux exemples sur le clavier.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "d35e29a254d251deaaff5b035df6ea146b32795d0ecf926a74e1af74c2cfe746"
+  },
+  "e29f4ad4": {
+    "lang": "zh",
+    "text": "听旋律时用手指跟着乐谱走：声音往上，音符也往上。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "sha256": "63f28a4e722144d672378a8b3e725769e42f3c3e4a1e10d593fb673b2484dd0c"
+  },
+  "91339df7": {
+    "lang": "fr",
+    "text": "Écoute en suivant la portée du doigt. Quand le son monte, les notes montent aussi.",
+    "voice": "fr-FR-DeniseNeural",
+    "sha256": "e66e3cb431c9632bbfdcbc7c9a9f612220e7a6948b0ac8c4d13332a7ad00b290"
+  }
+}

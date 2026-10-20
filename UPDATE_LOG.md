@@ -1,5 +1,12 @@
 # 童童空间更新日志 (Update Log)
 
+## 2026-10-19 乐理冒险岛 Music Quest（本地开发，待审核部署）
+
+- 新增 `/music-theory/` 独立模块：六个世界、26 个关卡、347 道题（升降号、调号与还原号、全音半音、第一/第三把位、节奏敲击、听觉、识谱侦探）
+- 主页 Knowledge Interface 增加「🎵 乐理冒险岛」入口卡片；小提琴页顶部增加乐理入口
+- 学习记录保存在本机 localStorage（`tt_music_quest_v1`），不跨设备同步；家长视图可导出备份
+- 详见 `docs/music-quest-handoff.md`、`docs/music-quest-dev-log.md`
+
 ## 2026-08-28 修正主页日期
 
 - 顶部日期由硬编码改为按巴黎时间自动显示当天日期
