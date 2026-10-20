@@ -12,10 +12,10 @@ let filmMetadata;
 const filmTimings=()=>filmMetadata??=fetch(new URL('../../video/manifest.json',import.meta.url)).then(r=>r.ok?r.json():null).catch(()=>null);
 const B=(zh,fr)=>{register(zh,fr);return zh;};
 export const studioForWorld=w=>STUDIOS.find(s=>s.world===w);
-export function classroomIndex(){return h('div',{class:'page classroom-index'},
+export function classroomIndex(store){return h('div',{class:'page classroom-index'},
  h('header',{class:'page-head'},h('p',{class:'eyebrow'},'MINO’S MUSIC CINEMA'),h('h1',{},B('先看懂，再动手','Regarde, comprends, puis essaie')),h('p',{class:'muted'},B('每一课都从原创配音动画开始。先看教学，再互动、练习、复习和闯关。','Chaque cours commence par un film animé original : regarde, manipule, entraîne-toi, révise, puis relève un défi.'))),
- h('div',{class:'studio-grid'},...STUDIOS.map((s,i)=>h('a',{class:'studio-card',href:`#/learn/${s.id}`},h('span',{class:'studio-number'},`FILM ${String(i+1).padStart(2,'0')}`),h('img',{src:`video/${s.id}-zh.jpg`,alt:s.title[0],loading:'lazy',width:640,height:360}),h('h2',{},B(...s.title)),h('p',{},B(...s.subtitle)),h('span',{class:'btn primary small'},B('▶ 看动画课','▶ Regarder le cours'))))));}
-export function classroomPage(id,store){
+ h('div',{class:'studio-grid'},...STUDIOS.map((s,i)=>h('a',{class:'studio-card',href:`#/learn/${s.id}`},h('span',{class:'studio-number'},`FILM ${String(i+1).padStart(2,'0')}`),h('span',{class:'course-state'},B(store?.state.settings.activityRewards?.[s.id+':workshop']?'✓ 探索已完成':store?.state.settings.teachingWatched?.[s.id]?'✓ 动画已看完':'从动画开始',store?.state.settings.activityRewards?.[s.id+':workshop']?'✓ Atelier terminé':store?.state.settings.teachingWatched?.[s.id]?'✓ Film regardé':'Commencer par le film')),h('img',{src:`video/${s.id}-zh.jpg`,alt:s.title[0],loading:'lazy',width:640,height:360}),h('h2',{},B(...s.title)),h('p',{},B(...s.subtitle)),h('span',{class:'btn primary small'},B('▶ 看动画课','▶ Regarder le cours'))))));}
+export function classroomPage(id,store,requestedPhase){
  const s=STUDIOS.find(x=>x.id===id);if(!s)return classroomIndex();
  s.steps.forEach(x=>{register(...x.title);register(x.zh,x.fr);});register(...s.title);register(...s.subtitle);
  const root=h('div',{class:'page classroom', 'data-studio':id});let phase=0,workspace=null;
@@ -35,7 +35,7 @@ export function classroomPage(id,store){
   const updateCaption=()=>{const records=timings?.videos?.find(v=>v.id===id&&v.lang===language)?.steps;const n=records?records.findIndex(x=>video.currentTime>=x.start&&video.currentTime<x.end):0;const index=n<0?s.steps.length-1:n;if(index===captionIndex)return;captionIndex=index;const c=FILMS.find(f=>f.id===id).steps[index];liveCaption.replaceChildren(h('h3',{},B(...c.title)),h('p',{},bilingual(c.zh,c.fr)));};
   filmTimings().then(data=>{timings=data;captionIndex=-1;if(root.isConnected)updateCaption();});
   video.addEventListener('timeupdate',updateCaption);updateCaption();
-  const proceed=h('button',{class:'btn primary big',type:'button',disabled:!watched,onclick:()=>{video.pause();showWorkshop();}},B('看完了，去动手试试 →','J’ai regardé, passons à l’atelier →'));
+  const proceed=h('button',{class:'btn primary big',type:'button',disabled:!watched,onclick:()=>{video.pause();showWorkshop();}},B(watched?'继续动手探索 →':'看完了，去动手试试 →',watched?'Continuer l’atelier →':'J’ai regardé, passons à l’atelier →'));
   video.addEventListener('ended',()=>{watched=true;store.setSetting('teachingWatched',{...(store.state.settings.teachingWatched||{}),[id]:true});const reward=store.awardActivity(id,'film');proceed.disabled=false;setText(caption,B('动画课看完了！现在亲手试一试刚才的规律。','Film terminé ! À toi d’explorer la règle avec tes mains.'));sparkle(proceed);});
   const langs=h('div',{class:'cinema-languages',role:'group','aria-label':'视频语言 / Langue du film'},...['zh','fr'].map(lang=>h('button',{class:'btn ghost small',type:'button','aria-pressed':String(lang===language),onclick:e=>{
    if(lang===language)return;language=lang;video.pause();video.src=`video/${id}-${lang}.mp4`;video.poster=`video/${id}-${lang}.jpg`;video.load();captionIndex=-1;updateCaption();langs.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b===e.currentTarget)));
@@ -58,7 +58,7 @@ export function classroomPage(id,store){
  }
  function showPractice(){workspace?._cleanup?.();stopNarration();audio.stop?.();updatePhase(2);content.replaceChildren(h('section',{class:'practice-bridge'},h('span',{class:'big-symbol'},'✦'),h('h2',{},B('现在用自己的方法试一试','Maintenant, essaie sans aide')),h('p',{},B('你已经看过动画、亲手探索过规律。练习里先自己判断，答错后再看讲解。','Après le film et l’atelier, réponds seul. En cas d’erreur, relis l’explication avant de réessayer.')),h('div',{class:'q-actions'},h('a',{class:'btn primary big',href:`#/lesson/${s.practice}`},B('进入游戏练习 →','Commencer l’entraînement →')),h('a',{class:'btn ghost',href:'#/review'},B('🔁 间隔复习','🔁 Révision espacée')),h('a',{class:'btn ghost',href:'#/challenge'},B('🏆 综合闯关','🏆 Défi des connaissances')))));}
  root._cleanup=()=>{workspace?._cleanup?.();root.querySelector('video')?.pause();stopNarration();};
- showFilm();return root;
+ if(requestedPhase==='workshop'&&watched)showWorkshop();else showFilm();return root;
 }
 function makeWorkspace(kind,step){
  const root=h('div',{class:`teaching-workspace scene-${kind}`});const status=h('p',{class:'explore-status','aria-live':'polite'});let timers=[];

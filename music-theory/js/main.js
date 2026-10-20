@@ -8,6 +8,7 @@ import { hallPage, mapPage, lessonPage, reviewPage, tasksPage, parentPage, chall
 import {installFrench} from './content/french.js';
 import {setLanguage, setText, register} from './i18n.js';
 import {classroomIndex,classroomPage} from './ui/classroom.js';
+import {mountJourneyHud,guardianPage} from './ui/adventure.js';
 import {stopNarration,voiceRateControl} from './voice.js';
 
 installFrench();
@@ -67,8 +68,9 @@ function route() {
   let view;
   try {
     if (!parts.length) view = hallPage(store);
-    else if (parts[0] === 'learn') view = parts[1]?classroomPage(parts[1],store):classroomIndex();
-    else if (parts[0] === 'map') view = mapPage(store);
+    else if (parts[0] === 'learn') view = parts[1]?classroomPage(parts[1],store,parts[2]):classroomIndex(store);
+    else if (parts[0] === 'map') view = mapPage(store,parts[1]);
+    else if (parts[0] === 'guardian') view = guardianPage(store,parts[1]);
     else if (parts[0] === 'challenge') view = challengePage(store);
     else if (parts[0] === 'lesson' && parts[1]) view = lessonPage(store, decodeURIComponent(parts[1]));
     else if (parts[0] === 'review') view = reviewPage(store);
@@ -80,15 +82,16 @@ function route() {
     view = h('div', { class: 'page empty' }, h('h1', {}, '页面出错了'), h('p', {}, '请刷新页面重试。学习记录不会因此丢失。'), h('a', { class: 'btn primary', href: '#/' }, '回到冒险大厅'));
   }
   app.replaceChildren(view);
-  const active=parts[0]==='lesson'?'map':parts[0]||'';
+  const active=['lesson','guardian'].includes(parts[0])?'map':parts[0]||'';
   document.querySelectorAll('.topnav a').forEach(a=>{if(a.getAttribute('href')===`#/${active}`)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
-  const titles={learn:['动画课堂','Cinéma musical'],map:['冒险地图','Carte des aventures'],lesson:['练习工作室','Studio d’entraînement'],review:['温故知新','Réviser'],challenge:['知识闯关','Défis'],tasks:['课程任务','Missions du cours'],parent:['学习报告','Bilan des progrès']};
+  const titles={guardian:['守护者挑战','Défi du gardien'],learn:['动画课堂','Cinéma musical'],map:['冒险地图','Carte des aventures'],lesson:['练习工作室','Studio d’entraînement'],review:['温故知新','Réviser'],challenge:['知识闯关','Défis'],tasks:['课程任务','Missions du cours'],parent:['学习报告','Bilan des progrès']};
   const [zh,fr]=titles[parts[0]]||['我的音乐工作台','Ton studio musical'];setText(document.querySelector('#section-title'),zh,fr);
   document.body.dataset.view=parts[0]||'home';preferences.open=false;
   const h1 = app.querySelector('h1, h2');
   if (h1) { h1.setAttribute('tabindex', '-1'); h1.focus({ preventScroll: true }); }
   window.scrollTo(0, 0);
 }
+mountJourneyHud(store);
 window.addEventListener('hashchange', route);
 updateSoundBtn();
 if (!store.persistent) console.warn('Music Quest: 存储不可用，记录不会保存');

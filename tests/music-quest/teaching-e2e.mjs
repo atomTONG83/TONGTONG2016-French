@@ -10,7 +10,7 @@ try{
  await ctx.route('**/*',r=>new URL(r.request().url()).origin===new URL(BASE).origin&&['GET','HEAD'].includes(r.request().method())?r.continue():r.abort());
  if(BASE.startsWith('https:')){const response=await ctx.request.post(BASE+'/auth/login',{headers:{Origin:BASE},data:{username:'tongtong',password:'local-music-preview-only'}});check('isolated local Worker cookie login',response.status()===200);}
  const p=await ctx.newPage();p.on('pageerror',e=>errors.push(e.message));p.on('request',r=>requests.push(r.url()));p.on('response',r=>responses.push(r.url()));
- const goto=async hash=>{await p.goto(BASE+'/music-theory/'+hash);await p.waitForTimeout(180);};
+ const goto=async hash=>{await p.goto(BASE+'/music-theory/'+hash);await p.locator('#app>.page').waitFor();};
  const xp=()=>p.evaluate(()=>(JSON.parse(localStorage.getItem('tt_music_quest_v1'))?.xp||0));
  const finishFilm=async()=>{await p.locator('video').evaluate(async v=>{if(v.readyState<1)await new Promise(r=>v.addEventListener('loadedmetadata',r,{once:true}));v.currentTime=v.duration-.2;await v.play();});await p.waitForFunction(()=>document.querySelector('video').ended);};
  await goto('');check('teaching-first home with daily goal and four badges',await p.locator('.teaching-dashboard').count()===1&&await p.locator('.achievement').count()===4);

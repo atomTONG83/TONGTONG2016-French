@@ -17,6 +17,8 @@ const ok = (name, cond, extra = '') => { results.push({ name, pass: !!cond, extr
 
 const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
 const ctx = await browser.newContext({ viewport: { width: 1024, height: 900 } });
+// Isolated checks may only read this local preview, never production services.
+await ctx.route('**/*', route => { const u = new URL(route.request().url()); return (u.origin === new URL(BASE).origin && ['GET', 'HEAD'].includes(route.request().method())) ? route.continue() : route.abort(); });
 const page = await ctx.newPage();
 const errors = [];
 page.on('pageerror', (e) => errors.push(e.message));
@@ -176,6 +178,7 @@ await page2.close();
 
 // 12. 手机尺寸：无横向溢出
 const mob = await browser.newContext({ viewport: { width: 375, height: 760 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2 });
+await mob.route('**/*', route => { const u = new URL(route.request().url()); return (u.origin === new URL(BASE).origin && ['GET', 'HEAD'].includes(route.request().method())) ? route.continue() : route.abort(); });
 const mp = await mob.newPage();
 mp.on('pageerror', (e) => errors.push(e.message));
 for (const route of ['', '#/map', '#/lesson/w4.first', '#/lesson/w6.det.d3', '#/lesson/w3.tap2', '#/tasks', '#/parent', '#/lesson/w2.sharps']) {

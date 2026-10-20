@@ -1,5 +1,7 @@
 {
   "author": "Music Quest original instructional animation",
+  "edition": "Adventure Cinema 2.2",
+  "fps": 24,
   "voices": {
     "zh": "Microsoft Xiaoxiao Neural",
     "fr": "Microsoft Denise Neural"
@@ -9,7 +11,8 @@
       "id": "staff",
       "lang": "zh",
       "duration": 62.904,
-      "bytes": 1051520,
+      "bytes": 1194173,
+      "fps": 24,
       "steps": [
         {
           "start": 0,
@@ -37,7 +40,8 @@
       "id": "staff",
       "lang": "fr",
       "duration": 54.072,
-      "bytes": 867774,
+      "bytes": 1010720,
+      "fps": 24,
       "steps": [
         {
           "start": 0,
@@ -65,7 +69,8 @@
       "id": "sharps",
       "lang": "zh",
       "duration": 47.88,
-      "bytes": 1037392,
+      "bytes": 1168711,
+      "fps": 24,
       "steps": [
         {
           "start": 0,
@@ -88,7 +93,8 @@
       "id": "sharps",
       "lang": "fr",
       "duration": 41.424,
-      "bytes": 874901,
+      "bytes": 991435,
+      "fps": 24,
       "steps": [
         {
           "start": 0,
@@ -111,7 +117,8 @@
       "id": "accidentals",
       "lang": "zh",
       "duration": 47.832,
-      "bytes": 800818,
+      "bytes": 949482,
+      "fps": 24,
       "steps": [
         {
           "start": 0,
@@ -134,7 +141,8 @@
       "id": "accidentals",
       "lang": "fr",
       "duration": 38.448,
-      "bytes": 632893,
+      "bytes": 756420,
+      "fps": 24,
       "steps": [
         {
           "start": 0,
@@ -157,7 +165,8 @@
       "id": "steps",
       "lang": "zh",
       "duration": 48.96,
-      "bytes": 849155,
+      "bytes": 926971,
+      "fps": 24,
       "steps": [
         {
           "start": 0,
@@ -180,7 +189,8 @@
       "id": "steps",
       "lang": "fr",
       "duration": 41.88,
-      "bytes": 720768,
+      "bytes": 792298,
+      "fps": 24,
       "steps": [
         {
           "start": 0,
@@ -203,7 +213,8 @@
       "id": "rhythm",
       "lang": "zh",
       "duration": 61.56,
-      "bytes": 1115524,
+      "bytes": 1279179,
+      "fps": 24,
       "steps": [
         {
           "start": 0,
@@ -231,7 +242,8 @@
       "id": "rhythm",
       "lang": "fr",
       "duration": 53.016,
-      "bytes": 946171,
+      "bytes": 1081538,
+      "fps": 24,
       "steps": [
         {
           "start": 0,
@@ -259,7 +271,8 @@
       "id": "violin",
       "lang": "zh",
       "duration": 49.608,
-      "bytes": 882246,
+      "bytes": 917271,
+      "fps": 24,
       "steps": [
         {
           "start": 0,
@@ -282,7 +295,8 @@
       "id": "violin",
       "lang": "fr",
       "duration": 43.152,
-      "bytes": 783190,
+      "bytes": 806035,
+      "fps": 24,
       "steps": [
         {
           "start": 0,
@@ -305,7 +319,8 @@
       "id": "ear",
       "lang": "zh",
       "duration": 29.592,
-      "bytes": 537760,
+      "bytes": 611108,
+      "fps": 24,
       "steps": [
         {
           "start": 0,
@@ -323,7 +338,8 @@
       "id": "ear",
       "lang": "fr",
       "duration": 29.688,
-      "bytes": 529194,
+      "bytes": 602737,
+      "fps": 24,
       "steps": [
         {
           "start": 0,
@@ -341,7 +357,8 @@
       "id": "detective",
       "lang": "zh",
       "duration": 46.152,
-      "bytes": 855095,
+      "bytes": 971817,
+      "fps": 24,
       "steps": [
         {
           "start": 0,
@@ -364,7 +381,8 @@
       "id": "detective",
       "lang": "fr",
       "duration": 39.84,
-      "bytes": 702983,
+      "bytes": 834808,
+      "fps": 24,
       "steps": [
         {
           "start": 0,

@@ -4,6 +4,8 @@ import {narration} from '../voice.js';
 import {register, french} from '../i18n.js';
 import {studioForWorld} from './classroom.js';
 import {learningDashboard} from './rewards.js';
+import {adventureMap,journeyBanner} from './adventure.js';
+import {journey,lessonPassed} from '../progression.js';
 import { mino, keyboard, fingerboard, spacingDiagram, playSeq, playNoteStr } from './widgets.js';
 import { staffView } from './staff.js';
 import { renderQuestion, soundGate } from './question.js';
@@ -21,7 +23,7 @@ const HOME_URL = '../index.html';
 /* ───────── 公共：推荐下一关 ───────── */
 export function recommendedLesson(store) {
   const L = store.state.lessons;
-  return LESSONS.find((l) => !L[l.id]) ?? LESSONS.slice().sort((a, b) => (L[a.id].bestAcc - L[b.id].bestAcc))[0];
+  return LESSONS.find((l) => !lessonPassed(L[l.id])) ?? LESSONS.slice().sort((a, b) => (L[a.id].bestAcc - L[b.id].bestAcc))[0];
 }
 function lessonState(store, l) {
   const r = store.state.lessons[l.id];
@@ -46,6 +48,7 @@ export function hallPage(store) {
       h('div', { class: 'hero-text' },
         h('h1', {}, '乐理冒险岛', h('span', { class: 'en' }, 'Music Quest')),
         h('p', { class: 'bubble' }, h('strong', {}, '小音 Mino：'), greet))),
+    journeyBanner(store),
     learningDashboard(store),
     h('section', { class: 'today card practice-after-teaching' },
       h('h2', {}, registerLabel('已经学过？继续练习','Déjà découvert ? Entraîne-toi')),
@@ -83,24 +86,7 @@ function recentList(store) {
 }
 
 /* ───────── 冒险地图：一条蜿蜒的五线谱 ───────── */
-export function mapPage(store) {
-  const rec = recommendedLesson(store);
-  return h('div', { class: 'page map' },
-    h('header', { class: 'page-head' }, h('h1', {}, '冒险地图'), h('p', { class: 'muted' }, '六个世界沿着一条五线谱展开。发光的音符是推荐的下一关；所有关卡都可以随时进入、反复练习。')),
-    h('div', { class: 'staff-path' },
-      ...WORLDS.map((w, wi) => h('section', { class: `island side-${wi % 2 ? 'r' : 'l'}`, style: { '--wc': w.color }, id: `world-${w.id}` },
-        h('div', { class: 'island-head' },
-          h('span', { class: 'i-emoji', 'aria-hidden': 'true' }, w.emoji),
-          h('div', {}, h('h2', {}, w.name), h('p', { class: 'fr' }, w.fr), h('p', { class: 'muted small' }, w.desc), h('a',{class:'btn primary small',href:`#/learn/${studioForWorld(w.id).id}`},'🎬 '+registerLabel('先看动画课','Voir le film d’abord')))),
-        h('ol', { class: 'nodes' }, ...lessonsOf(w.id).map((l) => {
-          const s = lessonState(store, l);
-          return h('li', {}, h('a', { class: `node${s.done ? ' done' : ''}${l.id === rec.id ? ' rec' : ''}`, href: `#/lesson/${l.id}` },
-            h('span', { class: 'note-head', 'aria-hidden': 'true' }, s.done ? '✓' : ''),
-            h('span', { class: 'n-title' }, l.title),
-            h('span', { class: 'n-meta' }, s.done ? `最好 ${s.best}%` : l.id === rec.id ? '推荐' : `${l.minutes} 分钟`)));
-        }))))),
-  );
-}
+export function mapPage(store,selected) { return adventureMap(store,selected); }
 
 /* ───────── 关卡 ───────── */
 export function lessonPage(store, id) {
@@ -132,7 +118,7 @@ export function lessonPage(store, id) {
         setProgress(1);
         const acc = total ? ok / total : 0;
         const { bonus } = store.completeLesson(lesson.id, acc);
-        body.append(endNav(bonus, wrongOf(results)));
+        body.append(endNav(bonus, wrongOf(results),store));
       },
     }));
     return wrap;
@@ -193,15 +179,17 @@ export function lessonPage(store, id) {
       h('p',{class:'small muted'},registerLabel('星级按第一次独立答对计算；重试帮助学习，不会把错误藏起来。','Les étoiles reflètent les réponses autonomes du premier essai. Réessayer aide à apprendre sans masquer les erreurs.')),
       h('p', { class: 'big-num' }, `${ok} / ${n}`, h('small', {}, ' 第一次就答对')),
       bonus ? h('p', {}, `完成奖励 +${bonus} XP`) : h('p', { class: 'muted small' }, acc < 0.6 ? '正确率 60% 以上才有完成奖励。错题会自动安排到明天复习。' : '同一关今天已经领过完成奖励。'),
-      endNav(0, wrongOf(results))));
+      endNav(0, wrongOf(results),store)));
   }
   showIntro();
   return wrap;
 }
 function shuffleKeepMustFirst(arr, k) { return [...arr.slice(0, k), ...shuffle(arr.slice(k))]; }
 function wrongOf(results) { return results.filter((r) => !r.ok).map((r) => r.q); }
-function endNav(bonus, wrong) {
+function endNav(bonus, wrong,store) {
+  const next=store?journey(store.state).next:null;
   return h('div', { class: 'end-nav' },
+    next?h('a',{class:'btn primary next-quest',href:next.href},registerLabel('下一站：继续冒险 →','Prochaine étape : continuer →')):null,
     bonus ? h('p', {}, `完成奖励 +${bonus} XP`) : null,
     wrong.length ? h('details', { class: 'wrong-list' }, h('summary', {}, `这次需要再看看的 ${wrong.length} 题`), h('ul', {}, ...wrong.map((q) => h('li', {}, h('strong', {}, q.prompt), h('p', { class: 'muted' }, q.explain))))) : null,
     h('div', { class: 'q-actions' },
@@ -340,8 +328,8 @@ export { VIOLIN_URL, HOME_URL, playNoteStr, staffView, noteToString };
 
 function registerLabel(zh,fr){register(zh,fr);return zh;}
 export function challengePage(store){
- const ready=LESSONS.some(l=>(store.state.lessons[l.id]?.completed||0)>0);
- if(!ready)return h('section',{class:'page challenge-lock practice-bridge'},h('span',{class:'big-symbol'},'🗝'),h('h1',{},registerLabel('先收集第一把知识钥匙','Gagne ta première clé de connaissance')),h('p',{},registerLabel('先看一堂动画课，完成探索和一个练习关卡，再来开启综合闯关。看视频的 XP 不会代替作答能力。','Regarde un film, explore l’atelier et termine un niveau d’entraînement pour ouvrir le défi. Les XP du film ne remplacent pas les réponses.')),h('a',{class:'btn primary',href:'#/learn'},registerLabel('▶ 从动画课堂开始','▶ Commencer par le film')));
+ const ready=LESSONS.some(l=>lessonPassed(store.state.lessons[l.id]));
+ if(!ready)return h('section',{class:'page challenge-lock practice-bridge'},h('span',{class:'big-symbol'},'🗝'),h('h1',{},registerLabel('先收集第一把知识钥匙','Gagne ta première clé de connaissance')),h('p',{},registerLabel('先看动画、完成探索，再在一个练习关卡中独立答对至少60%，即可开启综合闯关。看视频的 XP 不会代替作答能力。','Regarde un film, explore puis réussis au moins 60 % d’un niveau seul pour ouvrir le défi. Les XP du film ne remplacent pas les réponses.')),h('a',{class:'btn primary',href:'#/learn'},registerLabel('▶ 从动画课堂开始','▶ Commencer par le film')));
  const eligible=[...bank().values()].filter(q=>q.type!=='tap' && !q.noHints && q.type!=='keyboard-scale');
  const familiar=eligible.filter(q=>q.skills.some(s=>(store.state.skills[s]?.recent.length||0)>0));
  const pool=shuffle(familiar.length>=8?familiar:eligible).slice(0,10).map(q=>q.id);

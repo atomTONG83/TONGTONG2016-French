@@ -1,3 +1,4 @@
+import {chapterProgress} from './progression.js';
 // Music Quest · 学习记录与间隔复习
 // 持久化：沿用本站已有约定（复习营 /revision/ 使用 localStorage 单键 JSON）。
 // 仅保存在当前浏览器；不宣称跨设备同步。存储键：tt_music_quest_v1
@@ -65,7 +66,7 @@ export function createStore(storage = globalThis.localStorage, clock = () => new
   }
   const listeners = new Set();
 
-  function save() {
+  function save(event = {}) {
     try {
       if (!storage) throw new Error('no storage');
       storage.setItem(STORE_KEY, JSON.stringify(state));
@@ -73,7 +74,7 @@ export function createStore(storage = globalThis.localStorage, clock = () => new
     } catch {
       persistent = false; // 隐私模式或存储已满：仍可练习，但提示无法保存
     }
-    listeners.forEach((fn) => fn(state));
+    listeners.forEach((fn) => fn(state, event));
   }
   const today = () => dayKey(clock());
   const dayRec = () => (state.days[today()] ??= { lessons: 0, answers: 0, correct: 0, xp: 0 });
@@ -126,7 +127,7 @@ export function createStore(storage = globalThis.localStorage, clock = () => new
     state.xp += xpGained;
     state.log.push({ at: clock().toISOString(), qid, ok: !!ok, first: !!firstTry, skill: skills[0] ?? null });
     if (state.log.length > MAX_LOG) state.log.splice(0, state.log.length - MAX_LOG);
-    save();
+    save({type:'answer',xpGained});
     return { xpGained };
   }
 
@@ -146,7 +147,7 @@ export function createStore(storage = globalThis.localStorage, clock = () => new
     d.lessons += 1;
     d.xp += bonus;
     state.xp += bonus;
-    save();
+    save({type:'lesson',xpGained:bonus});
     return { bonus };
   }
 
@@ -180,8 +181,20 @@ export function createStore(storage = globalThis.localStorage, clock = () => new
     rewards[key] = {at:clock().toISOString(), xp:amount};
     state.xp += amount;
     const d = dayRec(); d.xp += amount; d.activities = (d.activities || 0)+1;
-    save();
+    save({type:'activity',xpGained:amount});
     return {xpGained:amount};
+  }
+
+  /** Guardians use only completed real chapter work; no retroactive or repeated bonus. */
+  function completeGuardian(world, acc) {
+    if (!Number.isFinite(acc) || acc<0 || acc>1 || !chapterProgress(state,world)?.guardian.ready) return {accepted:false,bonus:0};
+    const records=(state.settings.campaignGuardians??={});
+    const previous=records[world]||{attempts:0,bestAcc:0};
+    const firstClear=acc>=.6&&!previous.clearedAt;
+    records[world]={...previous,attempts:previous.attempts+1,bestAcc:Math.max(previous.bestAcc,acc),lastAt:clock().toISOString(),...(firstClear?{clearedAt:clock().toISOString()}: {})};
+    const bonus=firstClear?30:0;
+    if(bonus){state.xp+=bonus;const d=dayRec();d.xp+=bonus;d.activities=(d.activities||0)+1;}
+    save({type:'guardian',xpGained:bonus});return {accepted:true,bonus,cleared:acc>=.6};
   }
 
   /** 到期需要复习的题目 ID（按到期日排序） */
@@ -264,7 +277,7 @@ export function createStore(storage = globalThis.localStorage, clock = () => new
   return {
     get state() { return state; },
     get persistent() { return persistent; },
-    today, recordAnswer, completeLesson, recordRhythm, setTaskChecked, setSetting, awardActivity,
+    today, recordAnswer, completeLesson, recordRhythm, setTaskChecked, setSetting, awardActivity, completeGuardian,
     dueItems, weakItems, streak, skillStatus, setItemSkillResolver, weekSummary,
     exportJSON, importJSON,
     subscribe(fn) { listeners.add(fn); return () => listeners.delete(fn); },
